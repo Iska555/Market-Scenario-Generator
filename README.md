@@ -1,63 +1,57 @@
-📈 Market Scenario Generator
+Market Scenario Generator
 
-A modular pipeline for financial time-series retrieval, preprocessing, and scenario simulation.
+This repository contains an early-stage implementation of a project focused on retrieving historical market data, preprocessing price series, and computing daily log returns. The goal of the project is to eventually generate realistic market scenarios for applications in simulation, portfolio analysis, and risk management.
 
-<p align="center"> <img src="https://media.giphy.com/media/YnkW5c9X91d7a/giphy.gif" width="480"/> </p>
-📘 Project Overview
+The project follows a structured multi-day development plan, with incremental updates, debugging, and feature extensions.
 
-The Market Scenario Generator is a quantitative finance project focused on building a structured workflow for:
+📘 Project Motivation
 
-Downloading historical market data
+Modern financial analysis often requires realistic scenario generation for tasks such as:
 
-Preprocessing and transforming price series
+Portfolio stress testing
 
-Computing daily log returns
+Monte Carlo simulation
 
-(Future) Generating realistic market scenarios for risk and portfolio analytics
+Risk management and forecasting
 
-The project will evolve over a 9–10 day development timeline, with daily commits documenting progress and refinement.
+Strategy robustness evaluation
 
-🚀 Current Progress (Day 1)
-🗂️ 1. Data Acquisition Module — data_download.py
+To support these tasks, the project begins with the foundational components of any quantitative workflow:
 
-This module retrieves historical price data using yfinance.
+Clean acquisition of historical price data
 
-Features:
+Proper preprocessing and transformation of returns
 
-Adjustable history window (e.g., 1–5 years)
+A reproducible structure that supports later modeling and simulation
 
-Clean handling of missing data
+These early modules form the base for more advanced scenario-generation algorithms to be added in the coming days.
 
-Standardized output format:
+📂 Repository Structure
+market-scenario-generator/
+│
+├── README.md
+├── .gitignore
+└── src/
+    ├── data_download.py         # Historical price retrieval via yfinance
+    ├── returns_preprocess.py    # Computation and attachment of log returns
+    └── main.py                  # Example script for downloading data & plotting
 
-Index: Date
+🧩 Current Methodology (Day 1)
+1. Data Download
 
-Column: price
+Pulls daily historical prices using yfinance
 
-Works with adjusted or raw close prices
+Supports adjustable look-back periods (e.g., 1–5 years)
 
-<p align="center"> <img src="https://media.giphy.com/media/3o7btNhMBytxAM6YBa/giphy.gif" width="480"/> </p>
-🐞 2. Debugging & Verification — Day 1
+Automatically cleans data and outputs a standardized DataFrame:
 
-Day 1 also involved initial debugging to ensure baseline stability:
+date | price
+-----|-------
+...  | ...
 
-Fixed incorrect import names
+2. Log Return Computation
 
-Resolved Series/DataFrame inconsistencies
-
-Removed redundant code
-
-Improved exception handling
-
-This establishes a solid foundation for building more advanced components.
-
-📉 3. Returns Preprocessing — returns_preprocess.py
-
-This module computes and attaches daily log returns.
-
-✔ Log Return Computation
-
-Daily log returns follow the standard formula:
+Daily log returns are computed using:
 
 𝑟
 𝑡
@@ -90,25 +84,57 @@ t−1
 	​
 
 )
-Module Features
 
-Clean mathematical transformations
+Two utilities are implemented:
 
-Input validation
+compute_log_returns() → returns a clean Series
 
-Output as a labeled Series (log_return)
+attach_log_returns() → adds a log_return column to the DataFrame
 
-Optional version that attaches returns back into the original DataFrame
+Both include validation and automatic NaN removal.
 
-<p align="center"> <img src="https://media.giphy.com/media/JtBZm3Getg3dMBHOke/giphy.gif" width="480"/> </p>
-🛠️ Planned Development (Next 9–10 Days)
-Day	Planned Work
-2	Return distributions, histograms, diagnostics
-3	Scenario generation engine (bootstrap, random sampling)
-4	Basic Monte Carlo simulations
-5	Volatility modeling (EWMA)
-6	Multi-asset support
-7	Visualization suite
-8	Backtesting helpers
-9	Documentation and cleanup
-10	Release v1.0
+🗓️ Planned Development (Next 9–10 Days)
+
+Return distribution diagnostics
+
+Scenario generation (bootstrap, random sampling)
+
+Monte Carlo simulation framework
+
+Volatility modeling (EWMA, GARCH-style extensions)
+
+Multi-asset support
+
+Visualization tools
+
+Backtesting utilities
+
+Documentation & cleanup
+
+Release of version 1.0
+
+🖥️ Running the Project
+
+Install dependencies:
+
+pip install -r requirements.txt
+
+
+Example usage:
+
+python src/main.py
+
+
+This downloads price data, computes log returns, and generates basic plots.
+
+🔮 Future Extensions
+
+Planned enhancements include:
+
+Fatter-tailed return distributions
+
+Correlated multi-asset scenario generation
+
+Integration with portfolio risk models
+
+Support for regime-switching simulations
