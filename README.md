@@ -1,92 +1,127 @@
-Current Project Status (Day 1)
-────────────────────────────────
+📈 Market Scenario Generator
 
-1. Data Acquisition Module — data_download.py
+A modular pipeline for financial time-series retrieval, preprocessing, and scenario simulation.
 
-The data ingestion component is complete.
-Key capabilities:
+<div align="center">
 
-Automatic download of daily price history using yfinance
+</div>
+🌐 Project Overview
 
-Adjustable time horizon (1 to 5 years or more)
+The Market Scenario Generator is a quantitative finance project designed to build a robust workflow for:
 
-Handling of missing or incomplete data
+📥 Downloading financial market data
 
-Standardized output as a pandas.DataFrame with:
+🧹 Preprocessing price series
 
-Date index
+📊 Computing log returns
 
-Single price column
+🔮 (Future) Generating realistic market scenarios for risk and portfolio analysis
 
-Support for adjusted or raw closing prices
+The project will evolve over 9–10 days, with daily commits reflecting incremental development and debugging.
 
-This module provides reliable input data for all downstream tasks.
+🚀 Current Progress (Day 1)
+🗂️ 1. Data Acquisition Module — data_download.py
 
-2. Debug and Validation
+Responsible for collecting daily historical prices using yfinance.
 
-Initial debugging resolved issues such as missing functions, incorrect imports, Series vs DataFrame mismatches, and redundant code.
+Features:
 
-Validation steps included:
+📅 Adjustable lookback window (e.g., 1–5 years)
 
-Consistent naming across modules
+🔧 Handles missing data + ensures clean indexing
 
-Proper conversion of downloaded price data
+📊 Outputs a tidy DataFrame with:
 
-Elimination of duplicated logic
+index = date
 
-Explicit error handling for clearer failures
+column = price
 
-This ensures reproducibility and stable behavior as more features are added.
+🔄 Works with both adjusted and raw close prices
 
-3. Returns Preprocessing Module — returns_preprocess.py
+<div align="center">
 
-A dedicated preprocessing module for return transformations has been implemented.
+</div>
+🐞 2. Debugging & Verification — Day 1
 
-Current features:
+Today’s debugging focused on ensuring reproducibility and code consistency:
 
-Log Return Computation
-Computes daily log returns using:
+🧩 Fixed mismatched function names (download_price_history → download_price_data)
 
-r_t = ln(P_t) - ln(P_{t-1})
+🔍 Solved Series / DataFrame inconsistencies
 
+🧼 Removed duplicate code and redundant transformations
 
-Produces a clean, labeled pandas.Series.
+⚠️ Added cleaner exception handling
 
-Pipeline Integration
-Supports two workflows:
+This establishes a strong foundation before expanding the system.
 
-Stand-alone log return computation
+📉 3. Returns Preprocessing — returns_preprocess.py
 
-Augmenting an existing DataFrame using attach_log_returns
+Handles the computation and attachment of log returns.
 
-Data Validation
+✔ Log return computation:
+𝑟
+𝑡
+=
+ln
+⁡
+(
+𝑃
+𝑡
+)
+−
+ln
+⁡
+(
+𝑃
+𝑡
+−
+1
+)
+r
+t
+	​
 
-Confirms presence of a valid price column
+=ln(P
+t
+	​
 
-Ensures numeric types
+)−ln(P
+t−1
+	​
 
-Removes NaNs from differencing
+)
+✔ Module features:
 
-This establishes the mathematical foundation for simulation and modeling.
+📐 Clean mathematical transformations
 
-Planned Development (Next 9–10 Days)
+🧪 Input structure validation
 
-Upcoming features include:
+💾 Output as a labeled Series (log_return)
 
-Scenario generation engine
+🔗 Optional version that attaches returns back into the price DataFrame
 
-Return distribution modeling (Gaussian, fat-tailed, regime-switching)
+<div align="center">
 
-Volatility estimation (EWMA, GARCH-type structures)
-
-Multi-asset extensions
-
-Visualization components
-
-Monte Carlo simulation framework
-
-Backtesting tools
-
-Expanded documentation
-
-Each day will introduce new functionality with corresponding commits and notes.
+</div>
+🛠️ Planned Development Over the Next 9–10 Days
+Day	Goal
+2	Return distributions, histograms, diagnostics
+3	Scenario generation engine (bootstrap, random sampling)
+4	Basic Monte Carlo simulations
+5	Volatility modeling (EWMA)
+6	Multi-asset support
+7	Visualization suite
+8	Backtesting helpers
+9	Documentation + cleanup
+10	Release v1.0
+🗃️ Repository Structure
+market-scenario-generator/
+│
+├── README.md          <- You're reading this!
+├── .gitignore
+├── src/
+│   ├── data_download.py
+│   ├── returns_preprocess.py
+│   └── ...
+└── ...
