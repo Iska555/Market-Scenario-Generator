@@ -2,64 +2,63 @@
 
 A modular pipeline for financial time-series retrieval, preprocessing, and scenario simulation.
 
-<div align="center">
+<p align="center"> <img src="https://media.giphy.com/media/YnkW5c9X91d7a/giphy.gif" width="480"/> </p>
+📘 Project Overview
 
-</div>
-🌐 Project Overview
+The Market Scenario Generator is a quantitative finance project focused on building a structured workflow for:
 
-The Market Scenario Generator is a quantitative finance project designed to build a robust workflow for:
+Downloading historical market data
 
-📥 Downloading financial market data
+Preprocessing and transforming price series
 
-🧹 Preprocessing price series
+Computing daily log returns
 
-📊 Computing log returns
+(Future) Generating realistic market scenarios for risk and portfolio analytics
 
-🔮 (Future) Generating realistic market scenarios for risk and portfolio analysis
-
-The project will evolve over 9–10 days, with daily commits reflecting incremental development and debugging.
+The project will evolve over a 9–10 day development timeline, with daily commits documenting progress and refinement.
 
 🚀 Current Progress (Day 1)
 🗂️ 1. Data Acquisition Module — data_download.py
 
-Responsible for collecting daily historical prices using yfinance.
+This module retrieves historical price data using yfinance.
 
 Features:
 
-📅 Adjustable lookback window (e.g., 1–5 years)
+Adjustable history window (e.g., 1–5 years)
 
-🔧 Handles missing data + ensures clean indexing
+Clean handling of missing data
 
-📊 Outputs a tidy DataFrame with:
+Standardized output format:
 
-index = date
+Index: Date
 
-column = price
+Column: price
 
-🔄 Works with both adjusted and raw close prices
+Works with adjusted or raw close prices
 
-<div align="center">
-
-</div>
+<p align="center"> <img src="https://media.giphy.com/media/3o7btNhMBytxAM6YBa/giphy.gif" width="480"/> </p>
 🐞 2. Debugging & Verification — Day 1
 
-Today’s debugging focused on ensuring reproducibility and code consistency:
+Day 1 also involved initial debugging to ensure baseline stability:
 
-🧩 Fixed mismatched function names (download_price_history → download_price_data)
+Fixed incorrect import names
 
-🔍 Solved Series / DataFrame inconsistencies
+Resolved Series/DataFrame inconsistencies
 
-🧼 Removed duplicate code and redundant transformations
+Removed redundant code
 
-⚠️ Added cleaner exception handling
+Improved exception handling
 
-This establishes a strong foundation before expanding the system.
+This establishes a solid foundation for building more advanced components.
 
 📉 3. Returns Preprocessing — returns_preprocess.py
 
-Handles the computation and attachment of log returns.
+This module computes and attaches daily log returns.
 
-✔ Log return computation:
+✔ Log Return Computation
+
+Daily log returns follow the standard formula:
+
 𝑟
 𝑡
 =
@@ -91,21 +90,19 @@ t−1
 	​
 
 )
-✔ Module features:
+Module Features
 
-📐 Clean mathematical transformations
+Clean mathematical transformations
 
-🧪 Input structure validation
+Input validation
 
-💾 Output as a labeled Series (log_return)
+Output as a labeled Series (log_return)
 
-🔗 Optional version that attaches returns back into the price DataFrame
+Optional version that attaches returns back into the original DataFrame
 
-<div align="center">
-
-</div>
-🛠️ Planned Development Over the Next 9–10 Days
-Day	Goal
+<p align="center"> <img src="https://media.giphy.com/media/JtBZm3Getg3dMBHOke/giphy.gif" width="480"/> </p>
+🛠️ Planned Development (Next 9–10 Days)
+Day	Planned Work
 2	Return distributions, histograms, diagnostics
 3	Scenario generation engine (bootstrap, random sampling)
 4	Basic Monte Carlo simulations
@@ -113,15 +110,5 @@ Day	Goal
 6	Multi-asset support
 7	Visualization suite
 8	Backtesting helpers
-9	Documentation + cleanup
+9	Documentation and cleanup
 10	Release v1.0
-🗃️ Repository Structure
-market-scenario-generator/
-│
-├── README.md          <- You're reading this!
-├── .gitignore
-├── src/
-│   ├── data_download.py
-│   ├── returns_preprocess.py
-│   └── ...
-└── ...
