@@ -2,6 +2,7 @@ import numpy as np
 from data_download import download_price_data
 from returns_preprocess import compute_log_returns
 from generative_model import fit_gaussian, sample_gaussian
+from gmm_model import fit_gmm, sample_gmm
 
 
 def build_paths_from_returns(start_price, returns_matrix):
@@ -25,38 +26,51 @@ def compute_risk_stats(final_returns):
         "prob_loss": float(prob_loss)
     }
 
-def run_gaussian_scenario(ticker, years, horizon, num_paths):
+def run_scenario(
+    ticker: str,
+    years: int,
+    horizon: int,
+    num_paths: int,
+    model: str = "gaussian",
+):
     # 1. Get history
     df = download_price_data(ticker, years)
     log_returns = compute_log_returns(df)
 
-    # 2. Fit model
-    mu, sigma = fit_gaussian(log_returns)
-
-    # 3. Sample future log returns
-    sims = sample_gaussian(mu, sigma, horizon, num_paths)
-
-    # 4. Build price paths
     start_price = float(df["price"].iloc[-1])
-    paths = build_paths_from_returns(start_price, sims)
 
-    # 5. Final simple returns: P_T / P_0 - 1
+    # 2. Fit model + sample returns
+    if model == "gaussian":
+        mu, sigma = fit_gaussian(log_returns)
+        returns_matrix = sample_gaussian(mu, sigma, horizon, num_paths)
+
+    elif model == "gmm":
+        gmm = fit_gmm(log_returns, n_components=3)
+        returns_matrix = sample_gmm(gmm, horizon, num_paths)
+
+    else:
+        raise ValueError(f"Unknown model: {model}")
+
+    # 3. Price paths
+    paths = build_paths_from_returns(start_price, returns_matrix)
+
+    # 4. Final simple returns
     final_prices = paths[:, -1]
     final_returns = final_prices / start_price - 1
+
     stats = compute_risk_stats(final_returns)
 
     return paths, stats
 
-
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
 
-    paths, stats = run_gaussian_scenario("SPY", 3, 252, 1000)
+    paths, stats = run_scenario("SPY", 3, 252, 1000, model="gmm")
 
     print("Risk stats:")
     for k, v in stats.items():
         print(k, v)
 
     plt.plot(paths[:30].T, alpha=0.4)
-    plt.title("Simulated Gaussian Paths")
+    plt.title("Simulated GMM Paths")
     plt.show()
