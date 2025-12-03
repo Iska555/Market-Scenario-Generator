@@ -218,18 +218,79 @@ P_t = P_0 * exp(cumulative_log_returns)
 Confirms that the Gaussian engine works correctly.
 
 ---
+# Day 3 — Gaussian Mixture Models (GMM)
+
+Day 3 introduces the first non-Gaussian scenario model.  
+A Gaussian Mixture Model improves realism by capturing fat tails and multiple market regimes.
+
+## 1. GMM Module — `gmm_model.py`
+
+This module implements the statistical mixture model for log returns.
+
+### Capabilities:
+- Fit a K-component Gaussian Mixture (default: 3)
+- Estimate component-level:
+  - means  
+  - volatilities  
+  - mixture weights  
+- Sample synthetic returns from the fitted mixture distribution
+
+The GMM captures volatility shifts, heavy tails, and multi-modal distributions.
+
+---
+
+## 2. Unified Scenario API — `run_scenario`
+
+The simulation pipeline now supports:
+- Gaussian model  
+- Gaussian Mixture Model  
+
+The API interface:
+
+```python
+run_scenario(
+    ticker="SPY",
+    years=3,
+    horizon=252,
+    num_paths=1000,
+    model="gmm"
+)
+```
+
+This design supports future models such as:
+- fat-tailed distributions
+- t-distributions
+- VAE-based generators
+- bootstrap models
+- regime-switching models
+
+---
+
+## 3. Output Behavior
+
+GMM produces paths with:
+- higher kurtosis  
+- more realistic downside risk  
+- improved VaR and CVaR accuracy  
+
+Visual inspection confirms heavier tails compared to Gaussian-only results.
+
+Day 3 establishes the foundation for advanced return modeling and prepares the project for volatility modeling in upcoming development days.
 
 # 🔮 Future Extensions
 
-Upcoming modules will include:
+The project will continue to evolve into a full-featured risk simulation system.  
+Planned additions include:
 
-- Gaussian Mixture Models (GMM)  
-- block bootstrap sampling  
-- fat-tailed distributions  
-- VAE-based generative modeling  
-- EWMA and GARCH volatility models  
-- multi-asset correlation modeling  
-- complete Monte Carlo framework  
-- API (FastAPI) and web UI (Next.js)  
+- Enhanced GMM tuning and diagnostics  
+- Block bootstrap and regime-aware bootstrap sampling  
+- Fat-tailed and skewed distribution models  
+- Variational Autoencoder (VAE) generative return models  
+- EWMA and GARCH-style volatility structures  
+- Multi-asset correlation modeling  
+- Full Monte Carlo framework with scenario sets  
+- REST API (FastAPI) and a dedicated front-end (Next.js)  
+- Visualization dashboards for scenario analysis  
 
-These will be added over the next development days.
+These modules will be added progressively across upcoming development days.
+
