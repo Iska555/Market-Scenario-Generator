@@ -277,6 +277,118 @@ Visual inspection confirms heavier tails compared to Gaussian-only results.
 
 Day 3 establishes the foundation for advanced return modeling and prepares the project for volatility modeling in upcoming development days.
 
+# Day 4 — Visualization Layer & Unified Scenario Runner
+
+Day 4 introduces a complete visualization system and a unified scenario-execution pipeline.  
+This addition transforms the project from a backend simulation engine into a research-ready analytical toolkit capable of producing clear diagnostic plots and structured risk outputs.
+
+---
+
+## 1. Unified Scenario Execution — `run_scenario`
+
+A consolidated API now manages the entire simulation workflow:
+
+- downloading historical prices  
+- computing log returns  
+- selecting and fitting a return model (Gaussian or GMM)  
+- sampling synthetic future returns  
+- building price paths  
+- computing final returns  
+- deriving risk metrics  
+
+Example usage:
+
+```python
+df, paths, final_returns, stats = run_scenario(
+    ticker="SPY",
+    years=3,
+    horizon=252,
+    num_paths=1000,
+    model="gmm"
+)
+```
+
+This structure ensures reproducibility and modularity, making it easy to incorporate new models (t-distribution, bootstrap, VAE, GARCH) in later development phases.
+
+---
+
+## 2. Visualization Module — `visualization.py`
+
+A dedicated visualization layer has been added to standardize how simulation results are displayed.  
+The module provides three core plots:
+
+### Historical Price Chart
+Visualizes the input price series for the selected ticker.
+
+```python
+plot_historical_price(df, ticker)
+```
+
+### Simulated Scenario Paths
+Shows a subset of simulated price trajectories to illustrate dispersion.
+
+```python
+plot_simulated_paths(paths, model)
+```
+
+### Final Return Distribution
+Plots the distribution of ending returns and overlays VaR/CVaR thresholds.
+
+```python
+plot_final_return_distribution(final_returns, stats, model)
+```
+
+These plots form the visual backbone for scenario diagnostics, model comparison, and risk assessment.
+
+---
+
+## 3. Integrated Risk Statistics
+
+Day 4 incorporates a set of standard risk metrics directly into the simulation pipeline:
+
+- **mean return**  
+- **volatility (standard deviation)**  
+- **Value-at-Risk (VaR 95%)**  
+- **Conditional VaR (CVaR 95%)**  
+- **probability of loss**  
+
+These statistics provide a concise summary of simulated tail risk and are computed from the full distribution of simulated final returns.
+
+---
+
+## 4. End-to-End Execution (Main Script)
+
+The `simulate_paths.py` script now supports complete end-to-end execution.  
+Running:
+
+```
+python -m src.simulate_paths
+```
+
+produces:
+
+- historical price plot  
+- simulated scenario paths  
+- final return distribution  
+- printed risk statistics  
+
+This enables immediate visual and quantitative evaluation of model behavior and simulation accuracy.
+
+---
+
+## Day 4 Summary
+
+Day 4 establishes the core analytical visualization and execution framework for the project:
+
+- ✔ unified scenario API  
+- ✔ Gaussian and GMM model support  
+- ✔ complete plotting layer (historical, simulated paths, final distribution)  
+- ✔ integrated tail-risk metrics  
+- ✔ reproducible end-to-end workflow  
+
+These additions prepare the system for a user-facing interface in Day 5 and for advanced generative and volatility models in later stages.
+
+
 # 🔮 Future Extensions
 
 The project will continue to evolve into a full-featured risk simulation system.  
