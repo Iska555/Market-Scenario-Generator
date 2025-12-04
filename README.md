@@ -276,7 +276,7 @@ GMM produces paths with:
 Visual inspection confirms heavier tails compared to Gaussian-only results.
 
 Day 3 establishes the foundation for advanced return modeling and prepares the project for volatility modeling in upcoming development days.
-
+---
 # Day 4 — Visualization Layer & Unified Scenario Runner
 
 Day 4 introduces a complete visualization system and a unified scenario-execution pipeline.  
