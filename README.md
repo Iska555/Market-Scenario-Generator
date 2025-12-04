@@ -39,10 +39,12 @@ The long-term goal is to support:
 ```
 src/
     data_download.py          # Download historical prices
-    returns_preprocess.py     # Compute log returns + validation
-    generative_model.py       # Gaussian model fitting and sampling (Day 2)
-    simulate_paths.py         # Full Gaussian simulation pipeline (Day 2)
-    debug_day1.py             # Data and returns visualization tool
+    returns_preprocess.py     # Compute log returns & validate input
+    generative_model.py       # Gaussian model (Day 2)
+    gmm_model.py              # Gaussian Mixture Model (Day 3)
+    visualization.py          # Historical/paths/distribution plots (Day 4)
+    simulate_paths.py         # Unified scenario runner + visualization (Day 4)
+    debug_day1.py             # Price & returns diagnostic tool (Day 1)
 
 requirements.txt
 .gitignore
@@ -276,7 +278,9 @@ GMM produces paths with:
 Visual inspection confirms heavier tails compared to Gaussian-only results.
 
 Day 3 establishes the foundation for advanced return modeling and prepares the project for volatility modeling in upcoming development days.
+
 ---
+
 # Day 4 — Visualization Layer & Unified Scenario Runner
 
 Day 4 introduces a complete visualization system and a unified scenario-execution pipeline.  
