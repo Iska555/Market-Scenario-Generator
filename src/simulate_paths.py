@@ -9,6 +9,12 @@ from src.visualization import (
     plot_historical_price,
     plot_simulated_paths,
     plot_final_return_distribution,
+    plot_ewma_vol,
+)
+from src.ewma_vol import (
+    compute_ewma_vol,
+    forecast_ewma_vol,
+    sample_ewma_returns,
 )
 
 
@@ -59,6 +65,14 @@ def run_scenario(
         gmm = fit_gmm(log_returns, n_components=3)
         returns_matrix = sample_gmm(gmm, horizon, num_paths)
 
+    elif model == "ewma":
+        ewma_series = compute_ewma_vol(log_returns)
+        mu = log_returns.mean()
+        last_vol = ewma_series.iloc[-1]
+
+        vol_forecast = forecast_ewma_vol(last_vol, lam=0.94, horizon=horizon)
+        returns_matrix = sample_ewma_returns(mu, vol_forecast, num_paths)
+
     else:
         raise ValueError(f"Unknown model: {model}")
 
@@ -72,7 +86,7 @@ def run_scenario(
     # 5. Compute risk statistics
     stats = compute_risk_stats(final_returns)
 
-    return df, paths, final_returns, stats
+    return df, paths, final_returns, stats, log_returns
 
 
 # -----------------------------------------------------------------------
@@ -83,9 +97,11 @@ if __name__ == "__main__":
     YEARS = 3
     HORIZON = 252
     NUM_PATHS = 1000
-    MODEL = "gmm"
 
-    df, paths, final_returns, stats = run_scenario(
+    # CHANGE THIS TO SEE EWMA MODEL
+    MODEL = "ewma"   # <- Day 5 model
+
+    df, paths, final_returns, stats, log_returns = run_scenario(
         TICKER, YEARS, HORIZON, NUM_PATHS, model=MODEL
     )
 
@@ -93,9 +109,13 @@ if __name__ == "__main__":
     for k, v in stats.items():
         print(f"{k}: {v:.4f}")
 
-    # --- Visualization ---
+    # --- Day 4 Plots ---
     plot_historical_price(df, TICKER)
     plot_simulated_paths(paths, MODEL)
     plot_final_return_distribution(final_returns, stats, MODEL)
+
+    # --- Day 5 Plot ---
+    ewma_series = compute_ewma_vol(log_returns)
+    plot_ewma_vol(ewma_series, TICKER)
 
     plt.show()
