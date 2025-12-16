@@ -1,5 +1,5 @@
 # 📈 Market Scenario Generator
-
+[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://market-scenario-generator.vercel.app/)
 **An advanced financial simulation and risk analysis engine capable of modeling fat-tailed return distributions and generating volatility-aware synthetic market scenarios.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
