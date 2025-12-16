@@ -1,162 +1,97 @@
-# Market Scenario Generator
+# 📈 Market Scenario Generator
 
-This repository contains the foundation of a financial simulation and risk analysis engine.  
-The goal is to generate synthetic future return paths for market assets and compute risk metrics such as VaR, CVaR, volatility, and probability of loss.
+**An advanced financial simulation and risk analysis engine capable of modeling fat-tailed return distributions and generating volatility-aware synthetic market scenarios.**
 
-The project focuses on building a modular, extensible pipeline for scenario generation, return modeling, and simulation-based risk evaluation.  
-Upcoming stages will include advanced distribution modeling, volatility forecasting, multi-asset simulation, and a public-facing UI.
-
----
-
-# 📘 Project Motivation
-
-Risk management relies on understanding possible future market paths rather than predicting a single outcome.  
-Scenario generation is used in:
-
-- portfolio stress testing  
-- Value-at-Risk (VaR) calculations  
-- capital planning  
-- quantitative research  
-- algorithmic strategy evaluation  
-
-This project builds a clean, flexible framework for generating thousands of plausible market paths using historical data and statistical models.
-
-The long-term goal is to support:
-
-- Gaussian return models  
-- fat-tailed models  
-- Gaussian mixtures  
-- VAEs for generative modeling  
-- GARCH-style volatility dynamics  
-- bootstrap and block bootstrap sampling  
-- multi-asset simulation  
-- web-based visualization and API endpoints  
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
+[![React](https://img.shields.io/badge/react-%5E19.0-61DAFB.svg)](https://react.dev/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-009688.svg)](https://fastapi.tiangolo.com/)
 
 ---
 
-# 📂 Repository Structure
+## 📖 Overview
 
-```
-src/
-    data_download.py          # Download historical prices
-    returns_preprocess.py     # Compute log returns & validate input
-    generative_model.py       # Gaussian model (Day 2)
-    gmm_model.py              # Gaussian Mixture Model (Day 3)
-    visualization.py          # Historical/paths/distribution plots (Day 4)
-    simulate_paths.py         # Unified scenario runner + visualization (Day 4)
-    debug_day1.py             # Price & returns diagnostic tool (Day 1)
+The **Market Scenario Generator** is a full-stack quantitative finance application designed to simulate future market paths using advanced statistical models. Unlike traditional tools that rely on simple normal distributions, this engine incorporates **Gaussian Mixture Models (GMM)** and **EWMA Volatility** to capture "fat tails" and realistic market crashes.
 
-requirements.txt
-.gitignore
-README.md
-```
+This project serves as a modular framework for portfolio stress testing, Value-at-Risk (VaR) calculation, and quantitative research.
 
 ---
 
-# 🧩 Methodology Overview
+## 🚀 Key Features
 
-The project is organized into sequential modules:
-
-### 1. Data Acquisition
-- Download daily market prices  
-- Clean and standardize the series  
-- Provide a consistent foundation for return modeling  
-
-### 2. Return Transformation
-- Convert raw prices into daily log returns  
-- Validate clean numerical outputs  
-- Prepare inputs for distribution fitting and sampling  
-
-### 3. Generative Modeling
-- Fit statistical models to return distributions  
-- Sample synthetic returns  
-- Build multi-day forward paths  
-
-(Current: Gaussian baseline model)
-
-### 4. Risk Evaluation
-- Convert simulated returns to price paths  
-- Compute risk metrics: mean, volatility, VaR, CVaR  
-- Generate diagnostic visualizations  
+* **Monte Carlo Simulation**: Generate thousands of plausible future price paths for any US equity (S&P 500, AAPL, etc.).
+* **Advanced Modeling**:
+    * **Gaussian Mixture Models (GMM)**: Captures multi-regime market behavior (e.g., bull vs. bear markets) and fat-tailed risks.
+    * **EWMA Volatility**: Models time-varying volatility clusters (RiskMetrics style).
+    * **Gaussian Baseline**: Standard random walk for comparison.
+* **Risk Analytics**: Automatically computes **VaR (95%)**, **CVaR (Expected Shortfall)**, Volatility, and Probability of Loss.
+* **Interactive Dashboard**: A modern React-based UI to configure simulations and visualize complex return distributions in real-time.
 
 ---
 
-# 🖥️ Running the Project
+## 🛠️ Project Structure
 
-### Install dependencies
-```
-pip install -r requirements.txt
-```
+The codebase is split into a Python backend API and a React frontend.
+bash MARKET_SCENARIO_GENERATOR/ ├── backend/ # Python (FastAPI) Simulation Engine │ ├── env/ # Virtual Environment │ ├── src/ │ │ ├── data_download.py # YFinance data ingestion │ │ ├── gmm_model.py # Gaussian Mixture Logic │ │ ├── ewma_vol.py # Volatility forecasting │ │ ├── generative_model.py # Core simulation logic │ │ ├── simulate_paths.py # Unified scenario runner │ │ └── main.py # FastAPI endpoints │ └── requirements.txt │ ├── frontend/ # React (Vite + Tailwind) User Interface │ ├── src/ │ │ ├── components/ # Recharts visualizations & Dashboards │ │ ├── services/ # API connection logic │ │ └── App.jsx # Main application layout │ └── package.json
+`
 
-### Run Day 1 validation
-```
-python -m src.debug_day1
-```
-Outputs:
-- price history  
-- log return histogram  
+-----
 
-### Run Day 2 simulation
-```
-python -m src.simulate_paths
-```
-Outputs:
-- simulated price trajectories  
-- printed risk statistics  
+## ⚡ Quick Start
 
----
+### 1\. Backend Setup (Python)
 
-# 📈 Project Progress
+Navigate to the backend folder and start the API server.
+bash cd backend python -m venv env # Activate: .\env\Scripts\activate (Windows) or source env/bin/activate (Mac/Linux) pip install -r requirements.txt # Run the API Server (Reloads on code changes, ignores env folder) uvicorn main:app --reload --reload-exclude "env"
+*The API will run at `http://localhost:8000`*
 
-## Day 1 — Data Pipeline Foundation
-- Implemented reliable data ingestion (`data_download.py`)
-- Log return computation and validation (`returns_preprocess.py`)
-- Diagnostic price/returns visualization (`debug_day1.py`)
+### 2\. Frontend Setup (React)
 
-## Day 2 — Gaussian Simulation Engine
-- Baseline Normal return model  
-- Price path construction  
-- VaR/CVaR and volatility metrics  
-- First simulation pipeline
+Open a new terminal and launch the dashboard.
+bash cd frontend npm install npm run dev
+*The UI will launch at `http://localhost:5173`*
 
-## Day 3 — Gaussian Mixture Models (GMM)
-- Added multi-regime fat-tailed return modeling  
-- Support for 3-component mixture  
-- Unified API: `run_scenario(..., model="gmm")`
+-----
 
-## Day 4 — Visualization & Unified Runner
-- Added plotting module (`visualization.py`)  
-- Historical prices, simulated paths, final return histograms  
-- Integrated risk statistics  
-- Unified scenario runner supporting Gaussian and GMM
+## 🧩 Methodology & Models
 
-## Day 5 — EWMA Volatility Forecasting
-Day 5 introduces a dynamic volatility model using RiskMetrics-style EWMA:
+### Data Pipeline
 
-- `compute_ewma_vol` — backward-looking volatility estimator  
-- `forecast_ewma_vol` — smooth forward volatility curve  
-- `sample_ewma_returns` — Monte Carlo returns using time-varying σ(t)  
-- `run_scenario(..., model="ewma")` now fully supported  
-- Visualization updated to display EWMA volatility curves
+1.  **Ingestion**: Fetches daily adjusted close prices via `yfinance`.
+2.  **Preprocessing**: Computes Log Returns ($r_t = \ln(P_t / P_{t-1})$) to ensure stationarity.
 
-EWMA simulations produce smoother, volatility-aware forward paths and more realistic risk metrics than constant-volatility Gaussian models.
+### Simulation Models
 
----
+| Model | Description | Best For |
+| :--- | :--- | :--- |
+| **Gaussian (Normal)** | Assumes returns follow a bell curve with constant volatility. | Simple, stable baselines. |
+| **GMM (Fat-Tailed)** | Fits multiple Gaussian distributions to capture extreme events (tails). | **Realistic stress testing** and crash simulation. |
+| **EWMA Volatility** | Recursively weights recent data more heavily ($\sigma_t^2 = \lambda \sigma_{t-1}^2 + (1-\lambda)r_{t-1}^2$). | Short-term volatility forecasting. |
 
-# 🔮 Future Extensions
+### Risk Metrics
 
-The project will continue to evolve into a full-featured risk simulation system.  
-Planned additions include:
+  * **VaR (Value at Risk)**: The maximum loss expected with 95% confidence.
+  * **CVaR (Conditional VaR)**: The average loss *given* that the loss exceeds the VaR (tail risk).
 
-- Enhanced GMM tuning and diagnostics  
-- Block bootstrap and regime-aware bootstrap sampling  
-- Fat-tailed and skewed distribution models  
-- Variational Autoencoder (VAE) generative return models  
-- EWMA and GARCH-style volatility structures  
-- Multi-asset correlation modeling  
-- Full Monte Carlo framework with scenario sets  
-- REST API (FastAPI) and a dedicated front-end (Next.js)  
-- Visualization dashboards for scenario analysis  
+-----
 
-These modules will be added progressively across upcoming development days.
+## 🔮 Roadmap
 
+  * [x] **Phase 1**: Data Pipeline & Gaussian Models
+  * [x] **Phase 2**: Advanced GMM & Fat-Tail Modeling
+  * [x] **Phase 3**: React UI & Interactive Visualization
+  * [ ] **Phase 4**: Multi-Asset Correlation (Cholesky Decomposition)
+  * [ ] **Phase 5**: GARCH(1,1) Volatility Models
+  * [ ] **Phase 6**: Portfolio-Level Simulation
+
+-----
+
+## 🤝 Contributing
+
+Contributions are welcome\! Please fork the repository and submit a pull request for any new features or bug fixes.
+
+-----
+
+## 📜 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
