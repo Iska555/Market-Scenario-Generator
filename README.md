@@ -52,6 +52,7 @@ MARKET_SCENARIO_GENERATOR/
 │   │   ├── services/      # API connection logic
 │   │   └── App.jsx        # Main application layout
 │   └── package.json
+```
 
 -----
 
