@@ -11,7 +11,7 @@
 
 ## 📖 Overview
 
-The **Market Scenario Generator** is a full-stack quantitative finance application designed to simulate future market paths using advanced statistical models. Unlike traditional tools that rely on simple normal distributions, this engine incorporates **Gaussian Mixture Models (GMM)** and **EWMA Volatility** to capture "fat tails" and realistic market crashes.
+The **Market Scenario Generator** is a full-stack finance application designed to simulate future market paths using advanced statistical models. Unlike traditional tools that rely on simple normal distributions, this engine incorporates **Gaussian Mixture Models (GMM)** and **EWMA Volatility** to capture "fat tails" and realistic market crashes.
 
 This project serves as a modular framework for portfolio stress testing, Value-at-Risk (VaR) calculation, and quantitative research.
 
@@ -32,8 +32,26 @@ This project serves as a modular framework for portfolio stress testing, Value-a
 ## 🛠️ Project Structure
 
 The codebase is split into a Python backend API and a React frontend.
-bash MARKET_SCENARIO_GENERATOR/ ├── backend/ # Python (FastAPI) Simulation Engine │ ├── env/ # Virtual Environment │ ├── src/ │ │ ├── data_download.py # YFinance data ingestion │ │ ├── gmm_model.py # Gaussian Mixture Logic │ │ ├── ewma_vol.py # Volatility forecasting │ │ ├── generative_model.py # Core simulation logic │ │ ├── simulate_paths.py # Unified scenario runner │ │ └── main.py # FastAPI endpoints │ └── requirements.txt │ ├── frontend/ # React (Vite + Tailwind) User Interface │ ├── src/ │ │ ├── components/ # Recharts visualizations & Dashboards │ │ ├── services/ # API connection logic │ │ └── App.jsx # Main application layout │ └── package.json
-`
+
+```bash
+MARKET_SCENARIO_GENERATOR/
+├── backend/               # Python (FastAPI) Simulation Engine
+│   ├── env/               # Virtual Environment
+│   ├── src/
+│   │   ├── data_download.py       # YFinance data ingestion
+│   │   ├── gmm_model.py           # Gaussian Mixture Logic
+│   │   ├── ewma_vol.py            # Volatility forecasting
+│   │   ├── generative_model.py    # Core simulation logic
+│   │   ├── simulate_paths.py      # Unified scenario runner
+│   │   └── main.py                # FastAPI endpoints
+│   └── requirements.txt
+│
+├── frontend/              # React (Vite + Tailwind) User Interface
+│   ├── src/
+│   │   ├── components/    # Recharts visualizations & Dashboards
+│   │   ├── services/      # API connection logic
+│   │   └── App.jsx        # Main application layout
+│   └── package.json
 
 -----
 
