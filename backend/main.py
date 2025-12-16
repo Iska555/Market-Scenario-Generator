@@ -19,9 +19,9 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173",                                      # For local testing
-        "https://market-scenario-generator-production.up.railway.app", # Your Railway Backend
-        "https://market-scenario-generator.vercel.app",                # <--- YOUR NEW VERCEL FRONTEND
+        "http://localhost:5173",
+        "https://market-scenario-generator-production.up.railway.app",
+        "https://market-scenario-generator.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
