@@ -5,7 +5,7 @@ import {
 } from 'recharts';
 import { TrendingUp, Activity, AlertTriangle, BarChart3 } from 'lucide-react';
 
-const API_URL = 'http://localhost:8000';
+const API_URL = "https://market-scenario-generator-production.up.railway.app";
 
 export default function MarketScenarioGenerator() {
   const [ticker, setTicker] = useState('SPY');
