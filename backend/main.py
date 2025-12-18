@@ -139,8 +139,9 @@ async def simulate_scenarios(request: SimulationRequest):
         
         elif request.model == "gmm":
             gmm = fit_gmm(log_returns, n_components=3)
-            # Sample returns (these are daily log returns)
             returns_matrix = sample_gmm(gmm, request.horizon, request.num_paths)
+            sample_mean = np.mean(returns_matrix, axis=1, keepdims=True)
+            returns_matrix = returns_matrix - sample_mean
         
         elif request.model == "ewma":
             ewma_series = compute_ewma_vol(log_returns)
