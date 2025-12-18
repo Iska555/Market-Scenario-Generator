@@ -138,15 +138,20 @@ async def simulate_scenarios(request: SimulationRequest):
             returns_matrix = sample_gaussian(adj_mu, sigma, request.horizon, request.num_paths, request.random_seed)
         
         elif request.model == "gmm":
+            # 1. Fit the GMM to history
             gmm = fit_gmm(log_returns, n_components=3)
+            
+            # 2. Generate raw samples (These currently include the "Moon" trend)
             returns_matrix = sample_gmm(gmm, request.horizon, request.num_paths)
             
-            # --- CORRECTED FIX: Global Drift Adjustment ---
-            # 1. Calculate the average drift across ALL paths and ALL days (a single number)
-            overall_drift = np.mean(returns_matrix)
+            # --- CRITICAL FIX: Global Drift Removal ---
+            # Calculate the average daily return across the ENTIRE simulation
+            global_mean_daily_return = np.mean(returns_matrix)
             
-            # 2. Subtract that global trend from everything. 
-            returns_matrix = returns_matrix - overall_drift
+            # Subtract this average from every single day.
+            # This forces the simulation to be "trend neutral" (Mean Return ~ 0%)
+            # while keeping all the wild volatility for risk analysis.
+            returns_matrix = returns_matrix - global_mean_daily_return
         
         elif request.model == "ewma":
             ewma_series = compute_ewma_vol(log_returns)
