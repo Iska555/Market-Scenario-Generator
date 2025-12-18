@@ -80,36 +80,45 @@ export default function MarketScenarioGenerator() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-gray-100 font-sans selection:bg-blue-500/30">
-      
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950">
+      {/* Animated Background */}
+      <div className="fixed inset-0 opacity-20">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 animate-pulse"></div>
+      </div>
+
       <div className="relative z-10">
         {/* Header */}
-        <div className="border-b border-gray-800 bg-black/50 backdrop-blur-md sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="border-b border-white/10 backdrop-blur-xl bg-slate-900/50">
+          <div className="max-w-7xl mx-auto px-8 py-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="bg-gray-900 p-2.5 rounded-xl border border-gray-800">
-                  <TrendingUp className="w-6 h-6 text-blue-500" />
+                {/* Changed Icon Background to Grayish White */}
+                <div className="bg-slate-200 p-3 rounded-2xl shadow-lg shadow-slate-200/20">
+                  <TrendingUp className="w-8 h-8 text-slate-900" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-white tracking-tight">
-                    Market<span className="text-blue-500">Scenario</span>
+                  {/* Changed Text to Solid White */}
+                  <h1 className="text-3xl font-bold text-white">
+                    Market Scenario Generator
                   </h1>
+                  <p className="text-slate-400 text-sm mt-1">
+                    Advanced Monte Carlo Risk Simulation Platform
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
-                  System Operational
+                <div className="px-4 py-2 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-sm font-semibold">
+                  <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse mr-2"></span>
+                  Live
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 py-8">
+        <div className="max-w-7xl mx-auto px-8 py-8">
           {/* Tabs */}
-          <div className="flex gap-2 mb-8 bg-gray-900/50 p-1 rounded-xl w-fit border border-gray-800">
+          <div className="flex gap-2 mb-8">
             {[
               { id: 'simulate', label: 'Simulate', icon: Zap },
               { id: 'compare', label: 'Compare Models', icon: BarChart3 }
@@ -119,10 +128,11 @@ export default function MarketScenarioGenerator() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-5 py-2.5 rounded-lg font-medium text-sm transition-all flex items-center gap-2 ${
+                  className={`px-6 py-3 rounded-xl font-semibold transition-all flex items-center gap-2 ${
                     activeTab === tab.id
-                      ? 'bg-gray-800 text-white shadow-sm border border-gray-700'
-                      : 'text-gray-500 hover:text-gray-300'
+                      /* Active Tab: Grayish White */
+                      ? 'bg-slate-200 text-slate-900 shadow-lg shadow-slate-200/20'
+                      : 'bg-slate-800/50 text-slate-400 hover:bg-slate-800 hover:text-white border border-slate-700/50'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -135,52 +145,52 @@ export default function MarketScenarioGenerator() {
           {activeTab === 'simulate' && (
             <>
               {/* Configuration Card */}
-              <div className="bg-gray-900/40 backdrop-blur-sm rounded-2xl p-6 mb-8 border border-gray-800">
+              <div className="bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl rounded-3xl p-8 mb-8 border border-white/10 shadow-2xl">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 rounded-lg bg-gray-800/50">
-                    <Activity className="w-5 h-5 text-gray-400" />
+                  <div className="p-2 rounded-xl bg-blue-500/20">
+                    <Activity className="w-5 h-5 text-blue-400" />
                   </div>
-                  <h2 className="text-lg font-semibold text-white">Simulation Parameters</h2>
+                  <h2 className="text-2xl font-bold text-white">Configuration</h2>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                   <div className="group">
-                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Ticker Symbol</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-3">Ticker Symbol</label>
                     <input
                       type="text"
                       value={ticker}
                       onChange={(e) => setTicker(e.target.value.toUpperCase())}
-                      className="w-full bg-black border border-gray-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-mono"
+                      className="w-full bg-slate-800/50 border border-slate-700/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-transparent transition-all group-hover:border-slate-600"
                       placeholder="SPY"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">History (Years)</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-3">Historical Years</label>
                     <input
                       type="number"
                       value={years}
                       onChange={(e) => setYears(parseInt(e.target.value))}
                       min="1"
                       max="10"
-                      className="w-full bg-black border border-gray-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-mono"
+                      className="w-full bg-slate-800/50 border border-slate-700/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-slate-200 transition-all"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Horizon (Days)</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-3">Simulation Horizon (days)</label>
                     <input
                       type="number"
                       value={horizon}
                       onChange={(e) => setHorizon(parseInt(e.target.value))}
                       min="1"
                       max="1000"
-                      className="w-full bg-black border border-gray-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-mono"
+                      className="w-full bg-slate-800/50 border border-slate-700/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-slate-200 transition-all"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Paths</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-3">Number of Paths</label>
                     <input
                       type="number"
                       value={numPaths}
@@ -188,30 +198,30 @@ export default function MarketScenarioGenerator() {
                       min="100"
                       max="10000"
                       step="100"
-                      className="w-full bg-black border border-gray-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-mono"
+                      className="w-full bg-slate-800/50 border border-slate-700/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-slate-200 transition-all"
                     />
                   </div>
 
                   <div className="md:col-span-2">
-                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Statistical Model</label>
+                    <label className="block text-sm font-semibold text-slate-300 mb-3">Model Type</label>
                     <div className="grid grid-cols-3 gap-3">
                       {models.map(m => {
                         const Icon = m.icon;
+                        const isActive = model === m.value;
                         return (
                           <button
                             key={m.value}
                             onClick={() => setModel(m.value)}
-                            className={`p-3 rounded-lg transition-all border text-left ${
-                              model === m.value
-                                ? 'bg-blue-600/10 border-blue-500/50 text-blue-400'
-                                : 'bg-black border-gray-800 text-gray-400 hover:border-gray-700'
+                            className={`p-4 rounded-xl transition-all border-2 ${
+                              isActive
+                                /* Active Button: Grayish White with Dark Text */
+                                ? 'bg-slate-200 border-transparent shadow-lg shadow-slate-200/20'
+                                : 'bg-slate-800/50 border-slate-700/50 hover:border-slate-600'
                             }`}
                           >
-                            <div className="flex items-center gap-2 mb-1">
-                              <Icon className="w-4 h-4" />
-                              <span className="font-semibold text-sm">{m.label}</span>
-                            </div>
-                            <div className="text-[10px] opacity-70 truncate">{m.desc}</div>
+                            <Icon className={`w-5 h-5 mb-2 mx-auto ${isActive ? 'text-slate-900' : 'text-white'}`} />
+                            <div className={`text-sm font-bold ${isActive ? 'text-slate-900' : 'text-white'}`}>{m.label}</div>
+                            <div className={`text-xs mt-1 ${isActive ? 'text-slate-600' : 'text-slate-400'}`}>{m.desc}</div>
                           </button>
                         );
                       })}
@@ -222,28 +232,29 @@ export default function MarketScenarioGenerator() {
                 <button
                   onClick={runSimulation}
                   disabled={loading}
-                  className="w-full bg-blue-600 hover:bg-blue-500 disabled:bg-gray-800 disabled:text-gray-500 text-white font-semibold py-4 px-8 rounded-lg transition-all shadow-lg shadow-blue-900/20 flex items-center justify-center gap-3"
+                  /* Run Button: Grayish White */
+                  className="w-full bg-slate-200 hover:bg-white disabled:bg-slate-700 disabled:text-slate-500 text-slate-900 font-bold py-4 px-8 rounded-xl transition-all shadow-lg shadow-slate-200/20 hover:shadow-xl hover:shadow-slate-200/30 flex items-center justify-center gap-3 group"
                 >
                   {loading ? (
                     <>
                       <RefreshCw className="w-5 h-5 animate-spin" />
-                      Processing...
+                      Running Simulation...
                     </>
                   ) : (
                     <>
-                      <Sparkles className="w-5 h-5" />
+                      <Sparkles className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                       Run Simulation
-                      <ChevronRight className="w-5 h-5 opacity-70" />
+                      <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </>
                   )}
                 </button>
 
                 {error && (
-                  <div className="mt-6 bg-red-900/10 border border-red-900/30 rounded-lg p-4 flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                  <div className="mt-6 bg-red-500/10 border border-red-500/30 rounded-xl p-4 flex items-start gap-3">
+                    <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-red-400 font-semibold text-sm">Simulation Error</p>
-                      <p className="text-red-400/70 text-sm mt-1">{error}</p>
+                      <p className="text-red-200 font-semibold">Simulation Error</p>
+                      <p className="text-red-300/80 text-sm mt-1">{error}</p>
                     </div>
                   </div>
                 )}
@@ -258,36 +269,34 @@ export default function MarketScenarioGenerator() {
                       title="Mean Return"
                       value={`${(results.risk_stats.mean * 100).toFixed(2)}%`}
                       icon={TrendingUp}
-                      accentColor="text-blue-400"
-                      borderColor="border-blue-500/30"
+                      gradient="from-emerald-500 to-teal-600"
+                      trend="positive"
                     />
                     <StatCard
                       title="Volatility"
                       value={`${(results.risk_stats.vol * 100).toFixed(2)}%`}
                       icon={Activity}
-                      accentColor="text-gray-300"
-                      borderColor="border-gray-600/30"
+                      gradient="from-violet-500 to-purple-600"
                     />
                     <StatCard
                       title="VaR (95%)"
                       value={`${(results.risk_stats.VaR_95 * 100).toFixed(2)}%`}
                       icon={Shield}
-                      accentColor="text-blue-300"
-                      borderColor="border-blue-400/30"
+                      gradient="from-rose-500 to-red-600"
+                      trend="negative"
                     />
                     <StatCard
                       title="CVaR (95%)"
                       value={`${(results.risk_stats.CVaR_95 * 100).toFixed(2)}%`}
                       icon={TrendingDown}
-                      accentColor="text-gray-400"
-                      borderColor="border-gray-500/30"
+                      gradient="from-orange-500 to-amber-600"
+                      trend="negative"
                     />
                     <StatCard
                       title="Prob. Loss"
                       value={`${(results.risk_stats.prob_loss * 100).toFixed(1)}%`}
                       icon={AlertTriangle}
-                      accentColor="text-gray-400"
-                      borderColor="border-gray-500/30"
+                      gradient="from-yellow-500 to-orange-600"
                     />
                   </div>
 
@@ -297,16 +306,23 @@ export default function MarketScenarioGenerator() {
                     <ChartCard title="Simulated Price Paths" icon={TrendingUp}>
                       <ResponsiveContainer width="100%" height={320}>
                         <LineChart data={chartData}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" vertical={false} />
-                          <XAxis dataKey="day" stroke="#4b5563" type="number" domain={[0, horizon]} tick={{fontSize: 12}} />
-                          <YAxis stroke="#4b5563" tick={{fontSize: 12}} />
+                          <defs>
+                            <linearGradient id="pathGradient" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                              <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                            </linearGradient>
+                          </defs>
+                          <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
+                          <XAxis dataKey="day" stroke="#94a3b8" type="number" domain={[0, horizon]} />
+                          <YAxis stroke="#94a3b8" />
                           <Tooltip
                             contentStyle={{ 
-                              backgroundColor: '#000', 
-                              border: '1px solid #333',
-                              borderRadius: '8px',
+                              backgroundColor: '#1e293b', 
+                              border: '1px solid #475569',
+                              borderRadius: '12px',
+                              boxShadow: '0 10px 25px rgba(0,0,0,0.5)'
                             }}
-                            labelStyle={{ color: '#9ca3af' }}
+                            labelStyle={{ color: '#e2e8f0', fontWeight: 'bold' }}
                           />
                           {results.paths_sample.map((_, idx) => (
                             <Line
@@ -314,15 +330,16 @@ export default function MarketScenarioGenerator() {
                               type="monotone"
                               dataKey={`path_${idx}`}
                               stroke="#3b82f6"
-                              strokeWidth={1}
+                              strokeWidth={1.5}
                               dot={false}
-                              strokeOpacity={0.15}
+                              strokeOpacity={0.4}
                               isAnimationActive={false}
                             />
                           ))}
                         </LineChart>
                       </ResponsiveContainer>
-                      <p className="text-xs text-gray-500 mt-4 font-mono">
+                      <p className="text-sm text-slate-400 mt-4 flex items-center gap-2">
+                        <Sparkles className="w-4 h-4" />
                         Showing 50 of {numPaths} paths | Start: ${results.start_price.toFixed(2)}
                       </p>
                     </ChartCard>
@@ -331,27 +348,33 @@ export default function MarketScenarioGenerator() {
                     <ChartCard title="Return Distribution" icon={BarChart3}>
                       <ResponsiveContainer width="100%" height={320}>
                         <BarChart data={histogramData}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" vertical={false} />
+                          <defs>
+                            <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.9}/>
+                              <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.9}/>
+                            </linearGradient>
+                          </defs>
+                          <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
                           <XAxis
                             dataKey="return"
-                            stroke="#4b5563"
+                            stroke="#94a3b8"
                             tickFormatter={(val) => `${(val * 100).toFixed(0)}%`}
-                            tick={{fontSize: 12}}
                           />
-                          <YAxis stroke="#4b5563" tick={{fontSize: 12}} />
+                          <YAxis stroke="#94a3b8" />
                           <Tooltip
                             contentStyle={{ 
-                              backgroundColor: '#000', 
-                              border: '1px solid #333',
-                              borderRadius: '8px',
+                              backgroundColor: '#1e293b', 
+                              border: '1px solid #475569',
+                              borderRadius: '12px',
+                              boxShadow: '0 10px 25px rgba(0,0,0,0.5)'
                             }}
                             labelFormatter={(val) => `Return: ${(val * 100).toFixed(1)}%`}
-                            labelStyle={{ color: '#9ca3af' }}
                           />
-                          <Bar dataKey="count" fill="#3b82f6" radius={[2, 2, 0, 0]} />
+                          <Bar dataKey="count" fill="url(#barGradient)" radius={[8, 8, 0, 0]} />
                         </BarChart>
                       </ResponsiveContainer>
-                      <p className="text-xs text-gray-500 mt-4 font-mono">
+                      <p className="text-sm text-slate-400 mt-4 flex items-center gap-2">
+                        <Target className="w-4 h-4" />
                         Model: {results.model.toUpperCase()} | Paths: {numPaths}
                       </p>
                     </ChartCard>
@@ -362,12 +385,18 @@ export default function MarketScenarioGenerator() {
           )}
 
           {activeTab === 'compare' && (
-            <div className="bg-gray-900/40 rounded-2xl p-12 text-center border border-gray-800">
-              <div className="inline-flex p-4 rounded-full bg-gray-800 mb-6">
-                <BarChart3 className="w-12 h-12 text-blue-500" />
+            <div className="bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl rounded-3xl p-12 text-center border border-white/10">
+              <div className="inline-flex p-6 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 mb-6">
+                <BarChart3 className="w-16 h-16 text-blue-400" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">Model Comparison</h3>
-              <p className="text-gray-500 mb-6">Coming soon</p>
+              <h3 className="text-3xl font-bold text-white mb-3">Model Comparison</h3>
+              <p className="text-slate-400 mb-6 max-w-md mx-auto">
+                Compare Gaussian, GMM, and EWMA models side-by-side with advanced analytics
+              </p>
+              <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400">
+                <Sparkles className="w-4 h-4 animate-pulse" />
+                <span className="text-sm font-semibold">Coming Soon</span>
+              </div>
             </div>
           )}
         </div>
@@ -376,28 +405,33 @@ export default function MarketScenarioGenerator() {
   );
 }
 
-function StatCard({ title, value, icon: Icon, accentColor, borderColor }) {
+function StatCard({ title, value, icon: Icon, gradient, trend }) {
   return (
-    <div className={`bg-black rounded-xl p-5 border ${borderColor} hover:border-gray-600 transition-all`}>
-      <div className="flex items-start justify-between mb-3">
-        <div className="p-2 rounded-lg bg-gray-900">
-          <Icon className={`w-4 h-4 ${accentColor}`} />
+    <div className="group relative">
+      <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-10 rounded-2xl blur-xl transition-opacity group-hover:opacity-20`}></div>
+      <div className="relative bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all">
+        <div className="flex items-start justify-between mb-3">
+          <div className={`p-2 rounded-xl bg-gradient-to-br ${gradient} bg-opacity-20`}>
+            <Icon className="w-5 h-5 text-white" />
+          </div>
+          {trend === 'positive' && <TrendingUp className="w-4 h-4 text-emerald-400" />}
+          {trend === 'negative' && <TrendingDown className="w-4 h-4 text-rose-400" />}
         </div>
+        <p className="text-slate-400 text-sm font-medium mb-1">{title}</p>
+        <p className="text-3xl font-bold text-white">{value}</p>
       </div>
-      <p className="text-gray-500 text-xs font-medium uppercase tracking-wider mb-1">{title}</p>
-      <p className={`text-2xl font-bold ${accentColor}`}>{value}</p>
     </div>
   );
 }
 
 function ChartCard({ title, icon: Icon, children }) {
   return (
-    <div className="bg-gray-900/20 rounded-2xl p-6 border border-gray-800">
+    <div className="bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl rounded-3xl p-6 border border-white/10 shadow-2xl">
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-2 rounded-lg bg-gray-800">
-          <Icon className="w-4 h-4 text-blue-500" />
+        <div className="p-2 rounded-xl bg-blue-500/20">
+          <Icon className="w-5 h-5 text-blue-400" />
         </div>
-        <h3 className="text-sm font-bold text-gray-200 uppercase tracking-wide">{title}</h3>
+        <h3 className="text-xl font-bold text-white">{title}</h3>
       </div>
       {children}
     </div>
