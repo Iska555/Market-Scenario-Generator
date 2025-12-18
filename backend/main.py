@@ -1,9 +1,12 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from typing import Literal, Optional, List
+from typing import Literal, Optional, List, Dict, Any
 import numpy as np
+import pandas as pd
 
+# Import your helper modules
+# Ensure these files exist in your backend/src/ folder
 from src.data_download import download_price_data
 from src.returns_preprocess import compute_log_returns
 from src.generative_model import fit_gaussian, sample_gaussian
@@ -19,9 +22,9 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173",
-        "https://market-scenario-generator-production.up.railway.app",
-        "https://market-scenario-generator.vercel.app"
+        "http://localhost:5173",  # Local React Dev
+        "https://market-scenario-generator.vercel.app", # Vercel Frontend
+        "https://market-scenario-generator.onrender.com" # Render Backend (self)
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -57,15 +60,8 @@ class SimulationResponse(BaseModel):
     paths_sample: List[List[float]]
     message: str
 
-class HistoricalDataResponse(BaseModel):
-    ticker: str
-    dates: List[str]
-    prices: List[float]
-    returns: List[float]
-    stats: dict
-
 class ModelComparisonRequest(BaseModel):
-    ticker: str = Field(..., description="Stock ticker symbol", json_schema_extra={"example": "SPY"})
+    ticker: str = Field(..., description="Stock ticker symbol")
     years: int = Field(3, ge=1, le=10)
     horizon: int = Field(252, ge=1, le=1000)
     num_paths: int = Field(1000, ge=100, le=10000)
@@ -73,10 +69,6 @@ class ModelComparisonRequest(BaseModel):
         ["gaussian", "gmm", "ewma"],
         description="List of models to compare"
     )
-
-class ModelComparisonResponse(BaseModel):
-    ticker: str
-    results: dict
 
 # ============================================================================
 # Helper Functions
@@ -95,14 +87,14 @@ def compute_risk_stats(final_returns: np.ndarray, annualized_vol: float) -> Risk
     """
     mean = float(final_returns.mean())
     
-    # VaR and CVaR
+    # VaR and CVaR (95%)
     var_95 = float(np.percentile(final_returns, 5))
-    cvar_95 = float(final_returns[final_returns <= var_95].mean())
+    cvar_95 = float(final_returns[final_returns <= var_95].mean()) if len(final_returns[final_returns <= var_95]) > 0 else var_95
     prob_loss = float((final_returns < 0).mean())
     
     return RiskStats(
         mean=mean,
-        vol=annualized_vol, # Use the correctly calculated annualized vol
+        vol=annualized_vol, 
         VaR_95=var_95,
         CVaR_95=cvar_95,
         prob_loss=prob_loss
@@ -114,7 +106,7 @@ def compute_risk_stats(final_returns: np.ndarray, annualized_vol: float) -> Risk
 
 @app.get("/")
 def root():
-    return {"status": "running", "version": "1.0.1"}
+    return {"status": "running", "version": "1.0.1", "docs": "/docs"}
 
 @app.post("/api/simulate", response_model=SimulationResponse)
 async def simulate_scenarios(request: SimulationRequest):
@@ -124,12 +116,15 @@ async def simulate_scenarios(request: SimulationRequest):
         
         # 1. Download historical data
         df = download_price_data(request.ticker, request.years)
+        
+        if df.empty or len(df) < 50:
+            raise HTTPException(status_code=404, detail=f"Not enough data found for {request.ticker}")
+
         log_returns = compute_log_returns(df)
         
         # --- Safety: Clean Data ---
-        # Remove any daily move > 20% (likely data errors in yfinance for splits)
-        # unless it's a meme stock, but this prevents the 400% mean return bug.
-        log_returns = log_returns[log_returns.abs() < 0.2]
+        # Remove any daily move > 30% (prevents bad data bugs, allows crypto)
+        log_returns = log_returns[log_returns.abs() < 0.3]
 
         start_price = float(df["price"].iloc[-1])
         
@@ -146,8 +141,6 @@ async def simulate_scenarios(request: SimulationRequest):
             gmm = fit_gmm(log_returns, n_components=3)
             # Sample returns (these are daily log returns)
             returns_matrix = sample_gmm(gmm, request.horizon, request.num_paths)
-            # GMM samples often need a slight mean adjustment if fitting short history, 
-            # but we will leave raw GMM samples for now to capture fat tails.
         
         elif request.model == "ewma":
             ewma_series = compute_ewma_vol(log_returns)
@@ -180,7 +173,8 @@ async def simulate_scenarios(request: SimulationRequest):
         # 6. Compute stats passing the correct Vol
         risk_stats = compute_risk_stats(final_returns, annualized_vol)
         
-        # 7. Sample paths (first 50)
+        # 7. Sample paths (Send only 50 to frontend to keep JSON light)
+        # The frontend chart uses these to draw the "cloud"
         paths_sample = paths[:50].tolist()
         
         return SimulationResponse(
@@ -198,3 +192,12 @@ async def simulate_scenarios(request: SimulationRequest):
         import traceback
         traceback.print_exc() # Print error to server logs for debugging
         raise HTTPException(status_code=500, detail=str(e))
+
+# Placeholder endpoint for the "Compare" tab
+@app.post("/api/compare")
+async def compare_models(request: ModelComparisonRequest):
+    return {
+        "message": "Comparison feature coming soon!",
+        "ticker": request.ticker,
+        "models_requested": request.models
+    }
