@@ -9,7 +9,7 @@ import {
   ChevronRight, Sparkles, Shield, TrendingDown
 } from 'lucide-react';
 
-const API_URL = 'https://market-scenario-backend.onrender.com';
+const API_URL = 'https://market-scenario-generator.onrender.com';
 
 export default function MarketScenarioGenerator() {
   const [ticker, setTicker] = useState('SPY');
