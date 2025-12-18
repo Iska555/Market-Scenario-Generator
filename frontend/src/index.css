@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-color: #050505; /* Deep, deep black */
+  --card-bg: #111111; /* Slightly lighter for cards */
+  --accent-green: #00ff9d; /* The "Quantro" Neon Green */
+  --accent-green-dim: rgba(0, 255, 157, 0.1);
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --border-color: #222222;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+}
+
+/* The New "Fintech" Card */
+.fintech-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 24px; /* Highly rounded corners like the reference */
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+.fintech-input {
+  background-color: #0a0a0a;
+  border: 1px solid #333;
+  color: white;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.fintech-input:focus {
+  border-color: var(--accent-green);
+  box-shadow: 0 0 0 2px var(--accent-green-dim);
+  outline: none;
+}
+
+/* Neon Button */
+.neon-button {
+  background-color: var(--accent-green);
+  color: black;
+  font-weight: 700;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+}
+
+.neon-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
+}
+
+.neon-button:disabled {
+  background-color: #333;
+  color: #666;
+  box-shadow: none;
+}
