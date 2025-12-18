@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-def compute_log_returns(price_df: pd.DataFrame,price_col: str = "price") -> pd.series:
+def compute_log_returns(price_df: pd.DataFrame,price_col: str = "price") -> pd.Series:
     """
     Given a DataFrame with a price column, compute daily log returns.
 

@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn.mixture import GaussianMixture
 
-def fit_gmm(returns: pd.series, n_components: int = 3):
+def fit_gmm(returns: pd.Series, n_components: int = 3):
     """Fit a Gaussian Mixture Model (GMM) to daily log returns."""
     clean = returns.dropna().astype(float).values.reshape(-1,1)
 

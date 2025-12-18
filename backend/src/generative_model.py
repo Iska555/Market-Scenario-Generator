@@ -3,7 +3,7 @@ import pandas as pd
 
 
 
-def fit_gaussian(returns: pd.series):
+def fit_gaussian(returns: pd.Series):
     '''Fit mean and standard deviation to log returns .'''
 
     clean = returns.dropna().astype(float)
