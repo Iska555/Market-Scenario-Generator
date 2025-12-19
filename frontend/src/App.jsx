@@ -55,11 +55,11 @@ export default function MarketScenarioGenerator() {
   const [theme, setTheme] = useState('dark'); // Default to Dark Mode
   const isDark = theme === 'dark';
 
-  const [ticker, setTicker] = useState('SPY');
+  const [ticker, setTicker] = useState('BTC-USD');
   const [years, setYears] = useState(3);
   const [horizon, setHorizon] = useState(252);
   const [numPaths, setNumPaths] = useState(1000);
-  const [model, setModel] = useState('gaussian');
+  const [model, setModel] = useState('gmm');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState(null);
   const [error, setError] = useState(null);
@@ -70,9 +70,11 @@ export default function MarketScenarioGenerator() {
   const runSimulation = async () => {
     setLoading(true);
     setError(null);
+    setResults(null); // Clear previous results to show loading state clearly
     
     try {
-      const response = await fetch(`${API_URL}/api/simulate`, {
+      // FIX: Added timestamp query param to force fresh request (bypasses browser cache)
+      const response = await fetch(`${API_URL}/api/simulate?t=${Date.now()}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ticker, years, horizon, num_paths: numPaths, model })
