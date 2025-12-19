@@ -159,7 +159,7 @@ async def simulate_scenarios(request: SimulationRequest):
             final_returns=final_returns.tolist(),
             risk_stats=risk_stats,
             paths_sample=paths_sample,
-            message="Success"
+            message="Success - Drift fixed"
         )
     
     except Exception as e:
