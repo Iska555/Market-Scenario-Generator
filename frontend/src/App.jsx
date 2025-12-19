@@ -6,34 +6,43 @@ import {
 import { 
   TrendingUp, Activity, AlertTriangle, BarChart3, 
   Zap, Target, PieChart, RefreshCw,
-  ChevronRight, Sparkles, Shield, TrendingDown, Database
+  ChevronRight, Sparkles, Shield, TrendingDown, Database,
+  Sun, Moon
 } from 'lucide-react';
 
 const API_URL = 'https://market-scenario-generator.onrender.com';
 
-// --- Dark Mode Efficient Tooltip ---
-const CustomTooltip = ({ active, payload, label }) => {
+// --- Theme Aware Tooltip ---
+const CustomTooltip = ({ active, payload, label, isDark }) => {
   if (active && payload && payload.length) {
     const prices = payload.map(p => p.value);
     const max = Math.max(...prices);
     const min = Math.min(...prices);
     const avg = prices.reduce((a, b) => a + b, 0) / prices.length;
 
+    // Dark Mode Tooltip Styles vs Light Mode Tooltip Styles
+    const containerClass = isDark 
+      ? "bg-slate-900 border border-slate-700" 
+      : "bg-white border border-slate-200";
+    
+    const textLabel = isDark ? "text-slate-400" : "text-slate-600";
+    const textValue = isDark ? "text-white" : "text-slate-900";
+
     return (
-      <div className="bg-slate-900 border border-slate-700 p-4 rounded-xl shadow-2xl backdrop-blur-md">
-        <p className="text-slate-400 font-bold mb-2 text-xs uppercase tracking-wider">Day {label}</p>
+      <div className={`${containerClass} p-4 rounded-xl shadow-2xl backdrop-blur-md`}>
+        <p className={`${textLabel} font-bold mb-2 text-xs uppercase tracking-wider`}>Day {label}</p>
         <div className="space-y-1 text-sm font-mono">
           <div className="flex justify-between gap-6">
-            <span className="text-emerald-400">High:</span>
-            <span className="text-white font-semibold">${max.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+            <span className={isDark ? "text-emerald-400" : "text-emerald-600"}>High:</span>
+            <span className={`${textValue} font-semibold`}>${max.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
           </div>
           <div className="flex justify-between gap-6">
-            <span className="text-blue-400">Avg:</span>
-            <span className="text-white font-semibold">${avg.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+            <span className={isDark ? "text-blue-400" : "text-slate-600"}>Avg:</span>
+            <span className={`${textValue} font-semibold`}>${avg.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
           </div>
           <div className="flex justify-between gap-6">
-            <span className="text-rose-400">Low:</span>
-            <span className="text-white font-semibold">${min.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+            <span className={isDark ? "text-rose-400" : "text-rose-600"}>Low:</span>
+            <span className={`${textValue} font-semibold`}>${min.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
           </div>
         </div>
       </div>
@@ -43,15 +52,20 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export default function MarketScenarioGenerator() {
-  const [ticker, setTicker] = useState('BTC-USD');
+  const [theme, setTheme] = useState('dark'); // Default to Dark Mode
+  const isDark = theme === 'dark';
+
+  const [ticker, setTicker] = useState('SPY');
   const [years, setYears] = useState(3);
   const [horizon, setHorizon] = useState(252);
   const [numPaths, setNumPaths] = useState(1000);
-  const [model, setModel] = useState('gmm');
+  const [model, setModel] = useState('gaussian');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState(null);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('simulate');
+
+  const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
 
   const runSimulation = async () => {
     setLoading(true);
@@ -104,39 +118,107 @@ export default function MarketScenarioGenerator() {
     { value: 'ewma', label: 'EWMA', icon: Activity, desc: 'Time-varying volatility' }
   ];
 
+  // --- Style Logic ---
+  const styles = {
+    mainBg: isDark 
+      ? "bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950" 
+      : "bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50",
+    header: isDark 
+      ? "border-white/10 bg-slate-900/50 backdrop-blur-xl" 
+      : "border-slate-200 bg-white/80 backdrop-blur-xl",
+    headerIconBox: isDark 
+      ? "bg-slate-200 shadow-slate-200/20 text-slate-900" 
+      : "bg-slate-900 shadow-lg text-white",
+    headerText: isDark ? "text-white" : "text-slate-900",
+    headerSubText: isDark ? "text-slate-400" : "text-slate-600",
+    
+    // Tabs
+    tabActive: isDark 
+      ? "bg-slate-200 text-slate-900 shadow-lg shadow-slate-200/20" 
+      : "bg-slate-900 text-white shadow-lg shadow-slate-900/20",
+    tabInactive: isDark 
+      ? "bg-slate-800/50 text-slate-400 hover:bg-slate-800 hover:text-white border border-slate-700/50" 
+      : "bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-900 border border-slate-200 shadow-sm",
+    
+    // Config Card
+    configCard: isDark 
+      ? "bg-gradient-to-br from-slate-900/90 to-slate-800/90 border-white/10 shadow-2xl" 
+      : "bg-white border-slate-200 shadow-xl shadow-slate-200/50",
+    configIconBox: isDark ? "bg-blue-500/20 text-blue-400" : "bg-slate-900 text-white",
+    configTitle: isDark ? "text-white" : "text-slate-900",
+    
+    // Inputs
+    inputLabel: isDark ? "text-slate-300" : "text-slate-700",
+    inputField: isDark 
+      ? "bg-slate-800/50 border-slate-700/50 text-white focus:ring-slate-200 group-hover:border-slate-600" 
+      : "bg-slate-50 border-slate-200 text-slate-900 focus:ring-slate-900 group-hover:border-slate-300",
+    
+    // Model Buttons
+    modelBtnActive: isDark 
+      ? "bg-slate-200 border-transparent shadow-lg shadow-slate-200/20 text-slate-900" 
+      : "bg-slate-900 border-slate-900 shadow-lg shadow-slate-900/20 text-white",
+    modelBtnInactive: isDark 
+      ? "bg-slate-800/50 border-slate-700/50 hover:border-slate-600 text-white" 
+      : "bg-white border-slate-200 hover:border-slate-300 shadow-sm text-slate-900",
+    modelDescActive: isDark ? "text-slate-600" : "text-slate-300",
+    modelDescInactive: isDark ? "text-slate-400" : "text-slate-600",
+
+    // Run Button
+    runBtn: isDark 
+      ? "bg-slate-200 hover:bg-white text-slate-900 shadow-slate-200/20 hover:shadow-slate-200/30 disabled:bg-slate-700" 
+      : "bg-slate-900 hover:bg-slate-800 text-white shadow-slate-900/20 hover:shadow-slate-900/30 disabled:bg-slate-300",
+
+    // Chart Lines
+    gridStroke: isDark ? "#334155" : "#e2e8f0",
+    axisStroke: isDark ? "#94a3b8" : "#64748b",
+    lineOpacity: isDark ? 0.4 : 0.15,
+    barFill: isDark ? "url(#barGradient)" : "#0f172a"
+  };
+  
   return (
-    <div className="min-h-screen bg-[#0B1120] text-white">
-      {/* Background Ambience */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px]" />
-      </div>
+    <div className={`min-h-screen transition-colors duration-500 ${styles.mainBg}`}>
+      {/* Animated Background (Dark Mode Only) */}
+      {isDark && (
+        <div className="fixed inset-0 opacity-20 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 animate-pulse"></div>
+        </div>
+      )}
 
       <div className="relative z-10">
         {/* Header */}
-        <div className="border-b border-white/5 bg-slate-900/50 backdrop-blur-xl">
+        <div className={`border-b ${styles.header}`}>
           <div className="max-w-7xl mx-auto px-8 py-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="bg-white p-2.5 rounded-xl shadow-lg shadow-white/5">
-                  <TrendingUp className="w-6 h-6 text-slate-900" />
+                <div className={`p-3 rounded-2xl shadow-lg ${styles.headerIconBox}`}>
+                  <TrendingUp className="w-8 h-8" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-white tracking-tight">
+                  <h1 className={`text-3xl font-bold ${styles.headerText}`}>
                     Market Scenario Generator
                   </h1>
-                  <p className="text-slate-400 text-xs font-medium tracking-wide uppercase mt-0.5">
-                    Advanced Monte Carlo Risk Simulation
+                  <p className={`${styles.headerSubText} text-sm mt-1`}>
+                    Advanced Monte Carlo Risk Simulation Platform
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold flex items-center gap-2">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                  </span>
-                  Live System
+              
+              <div className="flex items-center gap-4">
+                {/* Theme Toggle Button */}
+                <button 
+                  onClick={toggleTheme}
+                  className={`p-2 rounded-full transition-all border ${
+                    isDark 
+                      ? 'bg-slate-800 border-slate-700 text-yellow-400 hover:bg-slate-700' 
+                      : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                  }`}
+                >
+                  {isDark ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
+                </button>
+
+                <div className="px-4 py-2 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-sm font-semibold">
+                  <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse mr-2"></span>
+                  Live
                 </div>
               </div>
             </div>
@@ -155,10 +237,8 @@ export default function MarketScenarioGenerator() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-5 py-2.5 rounded-lg font-medium text-sm transition-all flex items-center gap-2 ${
-                    activeTab === tab.id
-                      ? 'bg-slate-200 text-slate-900 shadow-lg shadow-white/5'
-                      : 'bg-slate-800/50 text-slate-400 hover:bg-slate-800 hover:text-white border border-transparent hover:border-white/5'
+                  className={`px-6 py-3 rounded-xl font-semibold transition-all flex items-center gap-2 ${
+                    activeTab === tab.id ? styles.tabActive : styles.tabInactive
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -171,52 +251,52 @@ export default function MarketScenarioGenerator() {
           {activeTab === 'simulate' && (
             <>
               {/* Configuration Card */}
-              <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-8 shadow-2xl shadow-black/20">
-                <div className="flex items-center gap-3 mb-8">
-                  <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                    <Activity className="w-5 h-5 text-blue-400" />
+              <div className={`${styles.configCard} backdrop-blur-xl rounded-3xl p-8 mb-8 border`}>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className={`p-2 rounded-xl ${styles.configIconBox}`}>
+                    <Activity className="w-5 h-5" />
                   </div>
-                  <h2 className="text-xl font-bold text-white">Configuration</h2>
+                  <h2 className={`text-2xl font-bold ${styles.configTitle}`}>Configuration</h2>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                   <div className="group">
-                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Ticker Symbol</label>
+                    <label className={`block text-sm font-semibold mb-3 ${styles.inputLabel}`}>Ticker Symbol</label>
                     <input
                       type="text"
                       value={ticker}
                       onChange={(e) => setTicker(e.target.value.toUpperCase())}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all font-mono"
-                      placeholder="BTC-USD"
+                      className={`w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 transition-all ${styles.inputField}`}
+                      placeholder="SPY"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">History (Years)</label>
+                    <label className={`block text-sm font-semibold mb-3 ${styles.inputLabel}`}>Historical Years</label>
                     <input
                       type="number"
                       value={years}
                       onChange={(e) => setYears(parseInt(e.target.value))}
                       min="1"
                       max="10"
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all font-mono"
+                      className={`w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 transition-all ${styles.inputField}`}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Horizon (Days)</label>
+                    <label className={`block text-sm font-semibold mb-3 ${styles.inputLabel}`}>Simulation Horizon (days)</label>
                     <input
                       type="number"
                       value={horizon}
                       onChange={(e) => setHorizon(parseInt(e.target.value))}
                       min="1"
                       max="1000"
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all font-mono"
+                      className={`w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 transition-all ${styles.inputField}`}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Monte Carlo Paths</label>
+                    <label className={`block text-sm font-semibold mb-3 ${styles.inputLabel}`}>Number of Paths</label>
                     <input
                       type="number"
                       value={numPaths}
@@ -224,13 +304,13 @@ export default function MarketScenarioGenerator() {
                       min="100"
                       max="10000"
                       step="100"
-                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all font-mono"
+                      className={`w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 transition-all ${styles.inputField}`}
                     />
                   </div>
 
                   <div className="md:col-span-2">
-                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Statistical Model</label>
-                    <div className="grid grid-cols-3 gap-4">
+                    <label className={`block text-sm font-semibold mb-3 ${styles.inputLabel}`}>Model Type</label>
+                    <div className="grid grid-cols-3 gap-3">
                       {models.map(m => {
                         const Icon = m.icon;
                         const isActive = model === m.value;
@@ -238,15 +318,13 @@ export default function MarketScenarioGenerator() {
                           <button
                             key={m.value}
                             onClick={() => setModel(m.value)}
-                            className={`p-4 rounded-xl transition-all border ${
-                              isActive
-                                ? 'bg-slate-200 border-white text-slate-900 shadow-lg shadow-white/5'
-                                : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                            className={`p-4 rounded-xl transition-all border-2 ${
+                              isActive ? styles.modelBtnActive : styles.modelBtnInactive
                             }`}
                           >
-                            <Icon className={`w-5 h-5 mb-2 mx-auto ${isActive ? 'text-slate-900' : 'text-slate-500'}`} />
+                            <Icon className="w-5 h-5 mb-2 mx-auto" />
                             <div className="text-sm font-bold">{m.label}</div>
-                            <div className={`text-[10px] mt-1 ${isActive ? 'text-slate-600' : 'text-slate-600'}`}>{m.desc}</div>
+                            <div className={`text-xs mt-1 ${isActive ? styles.modelDescActive : styles.modelDescInactive}`}>{m.desc}</div>
                           </button>
                         );
                       })}
@@ -257,28 +335,28 @@ export default function MarketScenarioGenerator() {
                 <button
                   onClick={runSimulation}
                   disabled={loading}
-                  className="w-full bg-slate-200 hover:bg-white disabled:bg-slate-800 disabled:text-slate-600 text-slate-900 font-bold py-4 px-8 rounded-xl transition-all shadow-lg shadow-white/5 hover:shadow-xl hover:shadow-white/10 flex items-center justify-center gap-3 group relative overflow-hidden"
+                  className={`w-full font-bold py-4 px-8 rounded-xl transition-all shadow-lg flex items-center justify-center gap-3 group ${styles.runBtn}`}
                 >
                   {loading ? (
                     <>
                       <RefreshCw className="w-5 h-5 animate-spin" />
-                      Initializing Engine...
+                      Running Simulation...
                     </>
                   ) : (
                     <>
-                      <Sparkles className="w-5 h-5 text-indigo-600 group-hover:rotate-12 transition-transform" />
-                      Run Risk Simulation
-                      <ChevronRight className="w-5 h-5 text-slate-400 group-hover:translate-x-1 transition-transform" />
+                      <Sparkles className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                      Run Simulation
+                      <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </>
                   )}
                 </button>
 
                 {error && (
-                  <div className="mt-6 bg-red-500/10 border border-red-500/20 rounded-xl p-4 flex items-start gap-3">
+                  <div className="mt-6 bg-red-500/10 border border-red-500/30 rounded-xl p-4 flex items-start gap-3">
                     <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-red-200 font-semibold text-sm">Simulation Error</p>
-                      <p className="text-red-400/80 text-xs mt-1">{error}</p>
+                      <p className="text-red-800 dark:text-red-200 font-semibold">Simulation Error</p>
+                      <p className="text-red-600 dark:text-red-300/80 text-sm mt-1">{error}</p>
                     </div>
                   </div>
                 )}
@@ -295,12 +373,14 @@ export default function MarketScenarioGenerator() {
                       icon={TrendingUp}
                       color="emerald"
                       trend="positive"
+                      isDark={isDark}
                     />
                     <StatCard
                       title="Volatility"
                       value={`${(results.risk_stats.vol * 100).toFixed(2)}%`}
                       icon={Activity}
                       color="violet"
+                      isDark={isDark}
                     />
                     <StatCard
                       title="VaR (95%)"
@@ -308,6 +388,7 @@ export default function MarketScenarioGenerator() {
                       icon={Shield}
                       color="rose"
                       trend="negative"
+                      isDark={isDark}
                     />
                     <StatCard
                       title="CVaR (95%)"
@@ -315,72 +396,85 @@ export default function MarketScenarioGenerator() {
                       icon={TrendingDown}
                       color="orange"
                       trend="negative"
+                      isDark={isDark}
                     />
                     <StatCard
                       title="Prob. Loss"
                       value={`${(results.risk_stats.prob_loss * 100).toFixed(1)}%`}
                       icon={AlertTriangle}
                       color="amber"
+                      isDark={isDark}
                     />
                   </div>
 
                   {/* Charts Grid */}
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {/* Paths Chart */}
-                    <ChartCard title="Simulated Price Paths" icon={TrendingUp}>
+                    <ChartCard title="Simulated Price Paths" icon={TrendingUp} isDark={isDark}>
                       <ResponsiveContainer width="100%" height={320}>
                         <LineChart data={chartData}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                          <XAxis dataKey="day" stroke="#64748b" type="number" domain={[0, horizon]} tick={{fontSize: 12}} />
-                          <YAxis stroke="#64748b" tick={{fontSize: 12}} />
-                          <Tooltip content={<CustomTooltip />} />
+                          <defs>
+                            <linearGradient id="pathGradient" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                              <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                            </linearGradient>
+                          </defs>
+                          <CartesianGrid strokeDasharray="3 3" stroke={styles.gridStroke} opacity={0.3} />
+                          <XAxis dataKey="day" stroke={styles.axisStroke} type="number" domain={[0, horizon]} />
+                          <YAxis stroke={styles.axisStroke} />
+                          <Tooltip content={<CustomTooltip isDark={isDark} />} />
                           {results.paths_sample.map((_, idx) => (
                             <Line
                               key={idx}
                               type="monotone"
                               dataKey={`path_${idx}`}
-                              stroke="#3b82f6"
-                              strokeWidth={1}
+                              stroke={isDark ? "#3b82f6" : "#0f172a"}
+                              strokeWidth={1.5}
                               dot={false}
-                              strokeOpacity={0.2} // Reduced opacity for GMM look
+                              strokeOpacity={styles.lineOpacity}
                               isAnimationActive={false}
                             />
                           ))}
                         </LineChart>
                       </ResponsiveContainer>
-                      <p className="text-xs text-slate-500 mt-4 flex items-center gap-2 font-mono">
-                        <Database className="w-3 h-3" />
+                      <p className={`text-sm mt-4 flex items-center gap-2 ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                        <Database className="w-4 h-4" />
                         Showing 50 of {numPaths} paths | Start: ${results.start_price.toFixed(2)}
                       </p>
                     </ChartCard>
 
                     {/* Distribution Chart */}
-                    <ChartCard title="Return Distribution" icon={BarChart3}>
+                    <ChartCard title="Return Distribution" icon={BarChart3} isDark={isDark}>
                       <ResponsiveContainer width="100%" height={320}>
                         <BarChart data={histogramData}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                          <defs>
+                            <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.9}/>
+                              <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.9}/>
+                            </linearGradient>
+                          </defs>
+                          <CartesianGrid strokeDasharray="3 3" stroke={styles.gridStroke} opacity={0.3} />
                           <XAxis
                             dataKey="return"
-                            stroke="#64748b"
-                            tick={{fontSize: 12}}
+                            stroke={styles.axisStroke}
                             tickFormatter={(val) => `${(val * 100).toFixed(0)}%`}
                           />
-                          <YAxis stroke="#64748b" tick={{fontSize: 12}} />
+                          <YAxis stroke={styles.axisStroke} />
                           <Tooltip
-                            cursor={{fill: '#1e293b'}}
                             contentStyle={{ 
-                              backgroundColor: '#0f172a', 
-                              border: '1px solid #334155',
+                              backgroundColor: isDark ? '#1e293b' : '#ffffff', 
+                              border: isDark ? '1px solid #475569' : '1px solid #e2e8f0',
                               borderRadius: '12px',
-                              color: '#fff'
+                              boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
+                              color: isDark ? '#fff' : '#000'
                             }}
                             labelFormatter={(val) => `Return: ${(val * 100).toFixed(1)}%`}
                           />
-                          <Bar dataKey="count" fill="#6366f1" radius={[4, 4, 0, 0]} />
+                          <Bar dataKey="count" fill={styles.barFill} radius={[8, 8, 0, 0]} />
                         </BarChart>
                       </ResponsiveContainer>
-                      <p className="text-xs text-slate-500 mt-4 flex items-center gap-2 font-mono">
-                        <Target className="w-3 h-3" />
+                      <p className={`text-sm mt-4 flex items-center gap-2 ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                        <Target className="w-4 h-4" />
                         Model: {results.model.toUpperCase()} | Paths: {numPaths}
                       </p>
                     </ChartCard>
@@ -391,15 +485,15 @@ export default function MarketScenarioGenerator() {
           )}
 
           {activeTab === 'compare' && (
-            <div className="bg-slate-900 rounded-3xl p-12 text-center border border-slate-800 shadow-2xl">
-              <div className="inline-flex p-6 rounded-full bg-slate-950 mb-6 border border-slate-800">
-                <BarChart3 className="w-16 h-16 text-slate-700" />
+            <div className={`${styles.configCard} backdrop-blur-xl rounded-3xl p-12 text-center border`}>
+              <div className={`inline-flex p-6 rounded-full mb-6 ${isDark ? 'bg-gradient-to-br from-blue-500/20 to-purple-500/20' : 'bg-slate-50'}`}>
+                <BarChart3 className={`w-16 h-16 ${isDark ? 'text-blue-400' : 'text-slate-900'}`} />
               </div>
-              <h3 className="text-3xl font-bold text-white mb-3">Model Comparison</h3>
-              <p className="text-slate-400 mb-8 max-w-md mx-auto">
-                Compare Gaussian, GMM, and EWMA models side-by-side
+              <h3 className={`text-3xl font-bold mb-3 ${styles.configTitle}`}>Model Comparison</h3>
+              <p className={`mb-6 max-w-md mx-auto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                Compare Gaussian, GMM, and EWMA models side-by-side with advanced analytics
               </p>
-              <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400">
+              <div className={`inline-flex items-center gap-2 px-6 py-3 rounded-full ${isDark ? 'bg-blue-500/10 border border-blue-500/30 text-blue-400' : 'bg-slate-900 text-white'}`}>
                 <Sparkles className="w-4 h-4 animate-pulse" />
                 <span className="text-sm font-semibold">Coming Soon</span>
               </div>
@@ -411,40 +505,78 @@ export default function MarketScenarioGenerator() {
   );
 }
 
-function StatCard({ title, value, icon: Icon, color, trend }) {
-  const colors = {
-    emerald: 'from-emerald-500/20 to-teal-500/5 text-emerald-400 border-emerald-500/20',
-    violet: 'from-violet-500/20 to-purple-500/5 text-violet-400 border-violet-500/20',
-    rose: 'from-rose-500/20 to-red-500/5 text-rose-400 border-rose-500/20',
-    orange: 'from-orange-500/20 to-amber-500/5 text-orange-400 border-orange-500/20',
-    amber: 'from-amber-500/20 to-yellow-500/5 text-amber-400 border-amber-500/20'
+function StatCard({ title, value, icon: Icon, color, trend, isDark }) {
+  const darkColors = {
+    emerald: 'from-emerald-500 to-teal-600',
+    violet: 'from-violet-500 to-purple-600',
+    rose: 'from-rose-500 to-red-600',
+    orange: 'from-orange-500 to-amber-600',
+    amber: 'from-amber-500 to-yellow-600'
   };
 
-  return (
-    <div className="group relative">
-      <div className={`bg-slate-900 rounded-2xl p-6 border ${colors[color].split(' ').pop()} transition-all hover:bg-slate-800`}>
-        <div className="flex items-start justify-between mb-3">
-          <div className={`p-2 rounded-lg bg-gradient-to-br ${colors[color].split(' ').slice(0, 2).join(' ')}`}>
-            <Icon className={`w-5 h-5 ${colors[color].split(' ')[2]}`} />
+  const lightColors = {
+    emerald: 'from-emerald-500 to-teal-600',
+    violet: 'from-violet-500 to-purple-600',
+    rose: 'from-rose-500 to-red-600',
+    orange: 'from-orange-500 to-amber-600',
+    amber: 'from-amber-500 to-yellow-600'
+  };
+
+  if (isDark) {
+    return (
+      <div className="group relative">
+        <div className={`absolute inset-0 bg-gradient-to-br ${darkColors[color]} opacity-10 rounded-2xl blur-xl transition-opacity group-hover:opacity-20`}></div>
+        <div className="relative bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-white/20 transition-all">
+          <div className="flex items-start justify-between mb-3">
+            <div className={`p-2 rounded-xl bg-gradient-to-br ${darkColors[color]} bg-opacity-20`}>
+              <Icon className="w-5 h-5 text-white" />
+            </div>
+            {trend === 'positive' && <TrendingUp className="w-4 h-4 text-emerald-400" />}
+            {trend === 'negative' && <TrendingDown className="w-4 h-4 text-rose-400" />}
           </div>
-          {trend === 'positive' && <TrendingUp className="w-4 h-4 text-emerald-500" />}
-          {trend === 'negative' && <TrendingDown className="w-4 h-4 text-rose-500" />}
+          <p className="text-slate-400 text-sm font-medium mb-1">{title}</p>
+          <p className="text-3xl font-bold text-white">{value}</p>
         </div>
-        <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">{title}</p>
-        <p className="text-2xl font-bold text-white">{value}</p>
       </div>
-    </div>
-  );
+    );
+  } else {
+    // Light Mode Card
+    return (
+      <div className="group relative">
+        <div className="bg-white rounded-2xl p-6 border border-slate-200 hover:border-slate-300 transition-all shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-200/60">
+          <div className="flex items-start justify-between mb-3">
+            <div className={`p-2 rounded-xl bg-gradient-to-br ${lightColors[color]} shadow-lg`}>
+              <Icon className="w-5 h-5 text-white" />
+            </div>
+            {trend === 'positive' && <TrendingUp className="w-4 h-4 text-emerald-600" />}
+            {trend === 'negative' && <TrendingDown className="w-4 h-4 text-rose-600" />}
+          </div>
+          <p className="text-slate-600 text-sm font-semibold mb-1">{title}</p>
+          <p className="text-3xl font-bold text-slate-900">{value}</p>
+        </div>
+      </div>
+    );
+  }
 }
 
-function ChartCard({ title, icon: Icon, children }) {
+function ChartCard({ title, icon: Icon, children, isDark }) {
+  const containerClass = isDark
+    ? "bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl border-white/10 shadow-2xl"
+    : "bg-white border-slate-200 shadow-xl shadow-slate-200/50";
+  
+  const iconBox = isDark
+    ? "bg-blue-500/20 text-blue-400"
+    : "bg-slate-900 text-white";
+
+  const titleText = isDark ? "text-white" : "text-slate-900";
+
   return (
-    <div className="bg-slate-900 rounded-3xl p-6 border border-slate-800 shadow-xl">
+    <div className={`${containerClass} rounded-3xl p-6 border`}>
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-2 rounded-lg bg-slate-800 border border-slate-700">
-          <Icon className="w-5 h-5 text-blue-400" />
+        <div className={`p-2 rounded-xl ${iconBox}`}>
+          <Icon className="w-5 h-5" />
         </div>
-        <h3 className="text-lg font-bold text-white">{title}</h3>
+        <h3 className={`text-xl font-bold ${titleText}`}>{title}</h3>
       </div>
       {children}
     </div>
