@@ -125,8 +125,14 @@ async def simulate_scenarios(request: SimulationRequest):
             gmm = fit_gmm(log_returns, n_components=3)
             returns_matrix = sample_gmm(gmm, request.horizon, request.num_paths)
             
+            # 1. Remove Drift (Center on 0)
             global_mean = np.mean(returns_matrix)
             returns_matrix = returns_matrix - global_mean
+            
+            # 2. SAFETY CLAMP: Limit daily moves to +/- 15% 
+            # This prevents one "exploding" path from ruining the statistics.
+            # (Bitcoin rarely moves >15% in a day, this is a realistic cap for risk models)
+            returns_matrix = np.clip(returns_matrix, -0.15, 0.15)
         
         elif request.model == "ewma":
             ewma_series = compute_ewma_vol(log_returns)
