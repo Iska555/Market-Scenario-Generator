@@ -5,8 +5,8 @@ import {
 } from 'recharts';
 import { 
   TrendingUp, Activity, AlertTriangle, BarChart3, 
-  Zap, Target, PieChart, RefreshCw, ChevronRight, Sparkles, 
-  Shield, TrendingDown, Database, Plus, X, Briefcase, Layers,
+  Zap, Target, PieChart, RefreshCw, Sparkles, 
+  Shield, TrendingDown, Plus, X, Briefcase, Layers,
   Sun, Moon, Info, ArrowRight
 } from 'lucide-react';
 
@@ -91,7 +91,7 @@ const ExtremeScenarios = ({ returns, isDark }) => {
   ];
 
   return (
-    <div className={`${isDark ? 'bg-[#151e32] border-slate-700' : 'bg-white border-slate-200 shadow-xl shadow-slate-200/50'} rounded-3xl overflow-hidden border transition-all h-full flex flex-col`}>
+    <div className={`${isDark ? 'bg-[#151e32] border-slate-700' : 'bg-white border-slate-200 shadow-xl shadow-slate-200/50'} rounded-3xl overflow-hidden border transition-all h-fit flex flex-col`}>
       <div className={`p-5 border-b ${isDark ? 'border-slate-700' : 'border-slate-100'}`}>
          <div className="flex items-center gap-2 mb-1">
              <AlertTriangle className="w-5 h-5 text-amber-500" />
@@ -434,7 +434,7 @@ function SingleAssetConfig({ ticker, setTicker, years, setYears, horizon, setHor
   return (
     <div className={`${isDark ? 'bg-[#151e32] border-slate-700/50' : 'bg-white border-slate-200 shadow-xl shadow-slate-200/50'} rounded-3xl p-8 mb-8 border transition-all`}>
       <div className="flex items-center gap-3 mb-6">
-        <div className={`p-2 rounded-xl ${isDark ? 'bg-blue-500/10 text-blue-400' : 'bg-slate-900 text-white'}`}>
+        <div className={`p-2 rounded-xl ${isDark ? 'bg-slate-800 text-white' : 'bg-slate-900 text-white'}`}>
           <Activity className="w-5 h-5" />
         </div>
         <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Configuration</h2>
@@ -471,12 +471,12 @@ function SingleAssetConfig({ ticker, setTicker, years, setYears, horizon, setHor
                 onClick={() => setModel(m.value)}
                 className={`p-4 rounded-xl border text-left transition-all ${
                   isActive 
-                    ? (isDark ? 'bg-blue-600/10 border-blue-500 text-white shadow-lg shadow-blue-900/10' : 'bg-slate-900 border-slate-900 text-white shadow-lg') 
+                    ? (isDark ? 'bg-slate-800 border-slate-600 text-white' : 'bg-slate-900 border-slate-900 text-white shadow-lg') 
                     : (isDark ? 'bg-[#0f172a] border-slate-800 text-slate-400 hover:border-slate-600' : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300')
                 }`}
               >
                 <div className="flex items-center gap-3 mb-1">
-                    <Icon className={`w-4 h-4 ${isActive ? 'text-blue-400' : 'opacity-70'}`} />
+                    <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'opacity-70'}`} />
                     <span className="font-bold text-sm">{m.label}</span>
                 </div>
                 <div className="text-xs opacity-60 pl-7">{m.desc}</div>
@@ -494,7 +494,6 @@ function SingleAssetConfig({ ticker, setTicker, years, setYears, horizon, setHor
         } disabled:opacity-50 disabled:cursor-not-allowed`}
       >
         {loading ? <RefreshCw className="w-5 h-5 animate-spin" /> : null} 
-        {/* Fixed: Removed Sparkles/Star icon */}
         {loading ? 'Processing Simulation...' : 'Run Risk Simulation'}
       </button>
 
@@ -516,7 +515,7 @@ function PortfolioConfig({ portfolioAssets, updateAsset, removeAsset, addAsset, 
     <div className={`${isDark ? 'bg-[#151e32] border-slate-700/50' : 'bg-white border-slate-200 shadow-xl shadow-slate-200/50'} rounded-3xl p-8 mb-8 border transition-all`}>
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-3">
-          <div className={`p-2 rounded-xl ${isDark ? 'bg-blue-500/10 text-blue-400' : 'bg-slate-900 text-white'}`}>
+          <div className={`p-2 rounded-xl ${isDark ? 'bg-slate-800 text-white' : 'bg-slate-900 text-white'}`}>
             <Briefcase className="w-5 h-5" />
           </div>
           <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Portfolio Builder</h2>
@@ -588,7 +587,6 @@ function PortfolioConfig({ portfolioAssets, updateAsset, removeAsset, addAsset, 
 
             <div>
                 <label className={`block text-xs font-bold uppercase tracking-wider mb-3 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Correlation Model</label>
-                {/* Fixed: Updated model selection to use logos/names similar to Single Asset */}
                 <div className="grid grid-cols-2 gap-3">
                     {models.filter(m => m.value !== 'ewma').map(m => {
                         const Icon = m.icon;
@@ -598,11 +596,11 @@ function PortfolioConfig({ portfolioAssets, updateAsset, removeAsset, addAsset, 
                                 key={m.value} onClick={() => setModel(m.value)}
                                 className={`p-4 rounded-xl border text-left transition-all flex flex-col items-center justify-center gap-2 ${
                                     isActive 
-                                    ? (isDark ? 'bg-blue-600/10 border-blue-500 text-white' : 'bg-slate-900 border-slate-900 text-white') 
+                                    ? (isDark ? 'bg-slate-800 border-slate-600 text-white' : 'bg-slate-900 border-slate-900 text-white') 
                                     : (isDark ? 'bg-[#0f172a] border-slate-800 text-slate-400' : 'bg-white border-slate-200 text-slate-600')
                                 }`}
                             >
-                                <Icon className={`w-5 h-5 ${isActive ? 'text-blue-400' : 'opacity-70'}`} />
+                                <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'opacity-70'}`} />
                                 <span className="text-sm font-bold">{m.label}</span>
                             </button>
                         );
@@ -697,6 +695,9 @@ function PortfolioResults({ portfolioResults, portfolioChartData, correlationDat
     corr: "Correlation Matrix: +1.0 means assets move together, -1.0 means opposite.",
     contrib: "Risk Contribution: How much each asset adds to total portfolio volatility."
   };
+
+  // Guard against missing data to prevent crash
+  if (!portfolioResults || !portfolioResults.portfolio_stats) return null;
   
   return (
     <>
@@ -716,7 +717,7 @@ function PortfolioResults({ portfolioResults, portfolioChartData, correlationDat
                 <XAxis dataKey="day" stroke={isDark ? "#64748b" : "#94a3b8"} hide />
                 <YAxis stroke={isDark ? "#64748b" : "#94a3b8"} domain={['auto', 'auto']} />
                 <Tooltip content={<CustomTooltip isDark={isDark} />} />
-                {portfolioResults.portfolio_paths_sample.map((_, idx) => (
+                {portfolioResults.portfolio_paths_sample?.map((_, idx) => (
                     <Line key={idx} type="monotone" dataKey={`path_${idx}`} stroke={isDark ? "#818cf8" : "#4f46e5"} strokeWidth={1.5} dot={false} strokeOpacity={0.15} isAnimationActive={false} />
                 ))}
                 </LineChart>
@@ -735,8 +736,8 @@ function PortfolioResults({ portfolioResults, portfolioChartData, correlationDat
                     <div className="h-[180px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <RePieChart>
-                                <Pie data={portfolioResults.asset_stats} dataKey="contribution" nameKey="ticker" cx="50%" cy="50%" innerRadius={55} outerRadius={75} paddingAngle={5}>
-                                    {portfolioResults.asset_stats.map((entry, index) => (
+                                <Pie data={portfolioResults.asset_stats || []} dataKey="contribution" nameKey="ticker" cx="50%" cy="50%" innerRadius={55} outerRadius={75} paddingAngle={5}>
+                                    {(portfolioResults.asset_stats || []).map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={pieColors[index % pieColors.length]} />
                                     ))}
                                 </Pie>
@@ -745,7 +746,7 @@ function PortfolioResults({ portfolioResults, portfolioChartData, correlationDat
                         </ResponsiveContainer>
                     </div>
                     <div className="space-y-2 mt-2">
-                        {portfolioResults.asset_stats.map((asset, index) => (
+                        {(portfolioResults.asset_stats || []).map((asset, index) => (
                             <div key={asset.ticker} className="flex justify-between text-sm">
                                 <span className={`font-semibold flex items-center gap-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                                     <span className="w-2 h-2 rounded-full" style={{ backgroundColor: pieColors[index % pieColors.length] }}></span>
