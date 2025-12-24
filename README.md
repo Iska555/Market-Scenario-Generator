@@ -1,7 +1,7 @@
 # 📈 Market Scenario Generator
 [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://market-scenario-generator.vercel.app/)
 
-**An advanced financial simulation and risk analysis engine capable of modeling fat-tailed return distributions and generating volatility-aware synthetic market scenarios.**
+**An advanced financial simulation and risk analysis engine capable of modeling fat-tailed return distributions, volatility clustering, and multi-asset portfolio correlations.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
@@ -12,7 +12,7 @@
 
 ## 📖 Overview
 
-The **Market Scenario Generator** is a full-stack finance application designed to simulate future market paths using advanced statistical models. Unlike traditional tools that rely on simple normal distributions, this engine incorporates **Gaussian Mixture Models (GMM)** and **EWMA Volatility** to capture "fat tails" and realistic market crashes.
+The **Market Scenario Generator** is a full-stack finance application designed to simulate future market paths using advanced statistical models. Moving beyond simple random walks, this engine incorporates **Gaussian Mixture Models (GMM)** for "fat tail" risks and **Cholesky Decomposition** to model realistic correlations between multiple assets.
 
 This project serves as a modular framework for portfolio stress testing, Value-at-Risk (VaR) calculation, and quantitative research.
 
@@ -20,97 +20,79 @@ This project serves as a modular framework for portfolio stress testing, Value-a
 
 ## 🚀 Key Features
 
-* **Monte Carlo Simulation**: Generate thousands of plausible future price paths for any US equity (S&P 500, AAPL, etc.).
-* **Advanced Modeling**:
-    * **Gaussian Mixture Models (GMM)**: Captures multi-regime market behavior (e.g., bull vs. bear markets) and fat-tailed risks.
+* **Multi-Asset Portfolio Simulation**: Construct portfolios with custom weights (e.g., "50% SPY, 30% BTC, 20% AAPL") and simulate their combined performance.
+* **Correlation Modeling**: Uses **Cholesky Decomposition** to preserve the historical correlation structure between assets, ensuring that if assets typically move together, they do so in the simulation.
+* **Advanced Statistical Models**:
+    * **Gaussian Mixture Models (GMM)**: Captures multi-regime market behavior (e.g., bull vs. bear markets) and extreme outlier risks.
     * **EWMA Volatility**: Models time-varying volatility clusters (RiskMetrics style).
     * **Gaussian Baseline**: Standard random walk for comparison.
-* **Risk Analytics**: Automatically computes **VaR (95%)**, **CVaR (Expected Shortfall)**, Volatility, and Probability of Loss.
-* **Interactive Dashboard**: A modern React-based UI to configure simulations and visualize complex return distributions in real-time.
+* **Risk Analytics**: Automatically computes **VaR (95%)**, **CVaR (Expected Shortfall)**, Sharpe Ratio, and Probability of Loss for both single assets and full portfolios.
+* **Interactive Dashboard**: A modern React-based UI with dark/light mode, interactive charts, and real-time portfolio configuration.
 
 ---
 
 ## 🛠️ Project Structure
 
 The codebase is split into a Python backend API and a React frontend.
-
-```bash
-MARKET_SCENARIO_GENERATOR/
-├── backend/               # Python (FastAPI) Simulation Engine
-│   ├── env/               # Virtual Environment
-│   ├── src/
-│   │   ├── data_download.py       # YFinance data ingestion
-│   │   ├── gmm_model.py           # Gaussian Mixture Logic
-│   │   ├── ewma_vol.py            # Volatility forecasting
-│   │   ├── generative_model.py    # Core simulation logic
-│   │   ├── simulate_paths.py      # Unified scenario runner
-│   │   └── main.py                # FastAPI endpoints
-│   └── requirements.txt
-│
-├── frontend/              # React (Vite + Tailwind) User Interface
-│   ├── src/
-│   │   ├── components/    # Recharts visualizations & Dashboards
-│   │   ├── services/      # API connection logic
-│   │   └── App.jsx        # Main application layout
-│   └── package.json
-```
-
------
+bash MARKET_SCENARIO_GENERATOR/ ├── backend/ # Python (FastAPI) Simulation Engine │ ├── env/ # Virtual Environment │ ├── src/ │ │ ├── correlation.py # Multi-asset Cholesky logic (NEW) │ │ ├── data_download.py # YFinance data ingestion │ │ ├── gmm_model.py # Gaussian Mixture Logic │ │ ├── ewma_vol.py # Volatility forecasting │ │ ├── generative_model.py # Core simulation logic │ │ └── main.py # FastAPI endpoints │ └── requirements.txt │ ├── frontend/ # React (Vite + Tailwind) User Interface │ ├── src/ │ │ ├── components/ # Recharts visualizations & Dashboards │ │ ├── services/ # API connection logic │ │ └── App.jsx # Main application layout │ └── package.json
+---
 
 ## ⚡ Quick Start
 
-### 1\. Backend Setup (Python)
+### 1. Backend Setup (Python)
 
 Navigate to the backend folder and start the API server.
 bash cd backend python -m venv env # Activate: .\env\Scripts\activate (Windows) or source env/bin/activate (Mac/Linux) pip install -r requirements.txt # Run the API Server (Reloads on code changes, ignores env folder) uvicorn main:app --reload --reload-exclude "env"
-*The API will run at `http://localhost:8000`*
+*The API will run at `http://localhost:8000*`
 
-### 2\. Frontend Setup (React)
+### 2. Frontend Setup (React)
 
 Open a new terminal and launch the dashboard.
 bash cd frontend npm install npm run dev
-*The UI will launch at `http://localhost:5173`*
+*The UI will launch at `http://localhost:5173*`
 
------
+---
 
 ## 🧩 Methodology & Models
 
 ### Data Pipeline
 
-1.  **Ingestion**: Fetches daily adjusted close prices via `yfinance`.
-2.  **Preprocessing**: Computes Log Returns ($r_t = \ln(P_t / P_{t-1})$) to ensure stationarity.
+1. **Ingestion**: Fetches daily adjusted close prices via `yfinance`.
+2. **Preprocessing**: Computes Log Returns () to ensure stationarity.
 
 ### Simulation Models
 
 | Model | Description | Best For |
-| :--- | :--- | :--- |
+| --- | --- | --- |
 | **Gaussian (Normal)** | Assumes returns follow a bell curve with constant volatility. | Simple, stable baselines. |
 | **GMM (Fat-Tailed)** | Fits multiple Gaussian distributions to capture extreme events (tails). | **Realistic stress testing** and crash simulation. |
-| **EWMA Volatility** | Recursively weights recent data more heavily ($\sigma_t^2 = \lambda \sigma_{t-1}^2 + (1-\lambda)r_{t-1}^2$). | Short-term volatility forecasting. |
+| **EWMA Volatility** | Recursively weights recent data more heavily (). | Short-term volatility forecasting. |
+| **Cholesky (Multi-Asset)** | Decomposes the Covariance Matrix () to generate correlated random shocks. | **Portfolio Diversification Analysis**. |
 
 ### Risk Metrics
 
-  * **VaR (Value at Risk)**: The maximum loss expected with 95% confidence.
-  * **CVaR (Conditional VaR)**: The average loss *given* that the loss exceeds the VaR (tail risk).
+* **VaR (Value at Risk)**: The maximum loss expected with 95% confidence.
+* **CVaR (Conditional VaR)**: The average loss *given* that the loss exceeds the VaR (tail risk).
+* **Sharpe Ratio**: Risk-adjusted return metric for portfolios.
 
------
+---
 
 ## 🔮 Roadmap
 
-  * [x] **Phase 1**: Data Pipeline & Gaussian Models
-  * [x] **Phase 2**: Advanced GMM & Fat-Tail Modeling
-  * [x] **Phase 3**: React UI & Interactive Visualization
-  * [ ] **Phase 4**: Multi-Asset Correlation (Cholesky Decomposition)
-  * [ ] **Phase 5**: GARCH(1,1) Volatility Models
-  * [ ] **Phase 6**: Portfolio-Level Simulation
+* [x] **Phase 1**: Data Pipeline & Gaussian Models
+* [x] **Phase 2**: Advanced GMM & Fat-Tail Modeling
+* [x] **Phase 3**: React UI & Interactive Visualization
+* [x] **Phase 4**: Multi-Asset Correlation (Cholesky Decomposition)
+* [x] **Phase 5**: Portfolio-Level Simulation & Allocation UI
+* [ ] **Phase 6**: GARCH(1,1) Volatility Models
 
------
+---
 
 ## 🤝 Contributing
 
-Contributions are welcome\! Please fork the repository and submit a pull request for any new features or bug fixes.
+Contributions are welcome! Please fork the repository and submit a pull request for any new features or bug fixes.
 
------
+---
 
 ## 📜 License
 
