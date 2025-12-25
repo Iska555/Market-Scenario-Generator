@@ -12,9 +12,6 @@ import {
 
 const API_URL = 'https://market-scenario-generator.onrender.com';
 
-// --- Components ---
-
-// 1. Theme-Aware Tooltip for Charts
 const CustomTooltip = ({ active, payload, label, isDark }) => {
   if (active && payload && payload.length) {
     const values = payload.map(p => p.value);
@@ -45,7 +42,6 @@ const CustomTooltip = ({ active, payload, label, isDark }) => {
   return null;
 };
 
-// 2. Info Tooltip Component (The "i" icon)
 const InfoTooltip = ({ text, isDark }) => (
   <div className="group relative inline-block ml-2">
     <Info className={`w-3 h-3 cursor-help ${isDark ? 'text-slate-500 hover:text-slate-300' : 'text-slate-400 hover:text-slate-600'}`} />
@@ -60,9 +56,9 @@ const InfoTooltip = ({ text, isDark }) => (
   </div>
 );
 
-// 3. Extreme Scenarios Table Component
 const ExtremeScenarios = ({ returns, isDark }) => {
-  // Helper to calculate percentiles
+  if (!returns || returns.length === 0) return null;
+
   const getPercentile = (arr, q) => {
     const sorted = [...arr].sort((a, b) => a - b);
     const pos = (sorted.length - 1) * q;
@@ -80,7 +76,6 @@ const ExtremeScenarios = ({ returns, isDark }) => {
   const bearish = getPercentile(returns, 0.25);
   const worst = getPercentile(returns, 0.01);
 
-  // Mock price base for visualization (assuming $100 start if not provided)
   const basePrice = 1000; 
   const scenarios = [
     { label: "Best Case (99%)", prob: "1%", val: best },
@@ -131,7 +126,7 @@ const ExtremeScenarios = ({ returns, isDark }) => {
 };
 
 export default function MarketScenarioGenerator() {
-  const [theme, setTheme] = useState('dark'); // Default to dark per request image
+  const [theme, setTheme] = useState('light'); // FIXED: Default to light as requested
   const isDark = theme === 'dark';
   
   const [ticker, setTicker] = useState('SPY');
@@ -144,8 +139,6 @@ export default function MarketScenarioGenerator() {
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('single');
 
-  // Portfolio state
-  // Initialized with strings to handle empty inputs cleanly
   const [portfolioAssets, setPortfolioAssets] = useState([
     { ticker: 'SPY', weight: '33.33' },
     { ticker: 'AAPL', weight: '33.33' },
@@ -180,7 +173,6 @@ export default function MarketScenarioGenerator() {
     setError(null);
     try {
       const tickers = portfolioAssets.map(a => a.ticker);
-      // Ensure we parse strings to floats safely
       const weights = portfolioAssets.map(a => (parseFloat(a.weight) || 0) / 100);
       
       const response = await fetch(`${API_URL}/api/simulate-portfolio?t=${Date.now()}`, {
@@ -189,17 +181,21 @@ export default function MarketScenarioGenerator() {
         body: JSON.stringify({ tickers, weights, years, horizon, num_paths: numPaths, model })
       });
       
-      if (!response.ok) throw new Error('Portfolio simulation failed');
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.detail || 'Portfolio simulation failed');
+      }
       const data = await response.json();
+      console.log('Portfolio Results:', data); // Debug log
       setPortfolioResults(data);
     } catch (err) {
       setError(err.message);
+      console.error('Portfolio Error:', err); // Debug log
     } finally {
       setPortfolioLoading(false);
     }
   };
 
-  // Asset Management
   const addAsset = () => {
     if (portfolioAssets.length >= 10) return;
     setPortfolioAssets([...portfolioAssets, { ticker: '', weight: '' }]);
@@ -212,9 +208,7 @@ export default function MarketScenarioGenerator() {
 
   const updateAsset = (index, field, value) => {
     const newAssets = [...portfolioAssets];
-    
     if (field === 'weight') {
-        // Allow empty string for clearing input, otherwise restrict to numbers
         if (value === '' || /^\d*\.?\d*$/.test(value)) {
             newAssets[index][field] = value;
         }
@@ -236,7 +230,6 @@ export default function MarketScenarioGenerator() {
 
   const totalWeight = portfolioAssets.reduce((sum, a) => sum + (parseFloat(a.weight) || 0), 0);
 
-  // Memoized Data
   const chartData = useMemo(() => {
     if (!results?.paths_sample) return [];
     return Array.from({ length: horizon }, (_, dayIndex) => {
@@ -299,24 +292,20 @@ export default function MarketScenarioGenerator() {
     { value: 'ewma', label: 'EWMA', icon: Activity, desc: 'Dynamic volatility' }
   ];
 
-  // Dynamic Styles - DEEP NAVY / GRAY-WHITE Implementation
   const bgMain = isDark ? "bg-[#0B1120]" : "bg-slate-50"; 
   const textMain = isDark ? "text-slate-100" : "text-slate-900";
   const textSub = isDark ? "text-slate-400" : "text-slate-500";
-  
-  // Card styles: Dark uses a slightly lighter navy, Light uses white
   const bgCard = isDark ? "bg-[#151e32] border-slate-700/50" : "bg-white border-slate-200 shadow-xl shadow-slate-200/50";
   const border = isDark ? "border-slate-800" : "border-slate-200";
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${bgMain}`}>
-      {/* Header */}
       <div className={`border-b ${border} ${isDark ? 'bg-[#0B1120]/90' : 'bg-white/80'} backdrop-blur-xl sticky top-0 z-50`}>
         <div className="max-w-7xl mx-auto px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className={`${isDark ? 'bg-blue-600' : 'bg-blue-600'} p-2.5 rounded-xl shadow-lg transition-colors`}>
-                <TrendingUp className="w-6 h-6 text-white" />
+              <div className={`${isDark ? 'bg-slate-200' : 'bg-slate-900'} p-2.5 rounded-xl shadow-lg transition-colors`}>
+                <TrendingUp className={`w-6 h-6 ${isDark ? 'text-slate-900' : 'text-white'}`} />
               </div>
               <div>
                 <h1 className={`text-xl font-bold ${textMain}`}>Market Scenario Generator</h1>
@@ -340,7 +329,6 @@ export default function MarketScenarioGenerator() {
       </div>
 
       <div className="max-w-7xl mx-auto px-8 py-8">
-        {/* Tabs */}
         <div className="flex gap-2 mb-8">
           {[
             { id: 'single', label: 'Single Asset', icon: Zap },
@@ -355,7 +343,7 @@ export default function MarketScenarioGenerator() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-5 py-2.5 rounded-xl font-semibold transition-all flex items-center gap-2 text-sm ${
                   isActive
-                    ? (isDark ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20' : 'bg-slate-900 text-white shadow-lg shadow-slate-200')
+                    ? (isDark ? 'bg-slate-200 text-slate-900 shadow-lg shadow-slate-200/20' : 'bg-slate-900 text-white shadow-lg shadow-slate-200')
                     : (isDark ? 'text-slate-400 hover:bg-slate-800' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50')
                 }`}
               >
@@ -366,7 +354,6 @@ export default function MarketScenarioGenerator() {
           })}
         </div>
 
-        {/* --- SINGLE ASSET TAB --- */}
         {activeTab === 'single' && (
           <>
             <SingleAssetConfig
@@ -381,7 +368,6 @@ export default function MarketScenarioGenerator() {
           </>
         )}
 
-        {/* --- PORTFOLIO TAB --- */}
         {activeTab === 'portfolio' && (
           <>
             <PortfolioConfig
@@ -403,7 +389,6 @@ export default function MarketScenarioGenerator() {
           </>
         )}
 
-        {/* --- COMPARE TAB --- */}
         {activeTab === 'compare' && (
           <div className={`${bgCard} rounded-3xl p-16 text-center border transition-all`}>
             <div className={`inline-flex p-6 rounded-full mb-6 ${isDark ? 'bg-slate-800' : 'bg-slate-100'}`}>
@@ -424,11 +409,9 @@ export default function MarketScenarioGenerator() {
   );
 }
 
-// --- SUB-COMPONENTS ---
-
 function SingleAssetConfig({ ticker, setTicker, years, setYears, horizon, setHorizon, numPaths, setNumPaths, model, setModel, models, loading, error, runSimulation, isDark }) {
   const inputClass = `w-full rounded-xl px-4 py-3 font-mono text-sm border focus:outline-none focus:ring-2 transition-all ${
-    isDark ? 'bg-[#0f172a] border-slate-700 text-white focus:ring-blue-500' : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-slate-900'
+    isDark ? 'bg-[#0f172a] border-slate-700 text-white focus:ring-slate-200' : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-slate-900'
   }`;
   
   return (
@@ -471,12 +454,12 @@ function SingleAssetConfig({ ticker, setTicker, years, setYears, horizon, setHor
                 onClick={() => setModel(m.value)}
                 className={`p-4 rounded-xl border text-left transition-all ${
                   isActive 
-                    ? (isDark ? 'bg-slate-800 border-slate-600 text-white' : 'bg-slate-900 border-slate-900 text-white shadow-lg') 
+                    ? (isDark ? 'bg-slate-200 border-slate-200 text-slate-900 shadow-lg shadow-slate-200/20' : 'bg-slate-900 border-slate-900 text-white shadow-lg') 
                     : (isDark ? 'bg-[#0f172a] border-slate-800 text-slate-400 hover:border-slate-600' : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300')
                 }`}
               >
                 <div className="flex items-center gap-3 mb-1">
-                    <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'opacity-70'}`} />
+                    <Icon className={`w-4 h-4 ${isActive ? (isDark ? 'text-slate-900' : 'text-white') : 'opacity-70'}`} />
                     <span className="font-bold text-sm">{m.label}</span>
                 </div>
                 <div className="text-xs opacity-60 pl-7">{m.desc}</div>
@@ -490,7 +473,7 @@ function SingleAssetConfig({ ticker, setTicker, years, setYears, horizon, setHor
         onClick={runSimulation}
         disabled={loading}
         className={`w-full font-bold py-4 px-8 rounded-xl transition-all shadow-lg flex items-center justify-center gap-3 ${
-            isDark ? 'bg-white hover:bg-slate-200 text-slate-900 shadow-white/10' : 'bg-slate-900 hover:bg-slate-800 text-white shadow-slate-200'
+            isDark ? 'bg-slate-200 hover:bg-white text-slate-900 shadow-slate-200/20' : 'bg-slate-900 hover:bg-slate-800 text-white shadow-slate-200'
         } disabled:opacity-50 disabled:cursor-not-allowed`}
       >
         {loading ? <RefreshCw className="w-5 h-5 animate-spin" /> : null} 
@@ -508,7 +491,7 @@ function SingleAssetConfig({ ticker, setTicker, years, setYears, horizon, setHor
 
 function PortfolioConfig({ portfolioAssets, updateAsset, removeAsset, addAsset, totalWeight, normalizeWeights, years, setYears, horizon, setHorizon, numPaths, setNumPaths, model, setModel, models, portfolioLoading, error, runPortfolioSimulation, isDark }) {
   const inputClass = `w-full rounded-xl px-4 py-3 font-mono text-sm border focus:outline-none focus:ring-2 transition-all ${
-    isDark ? 'bg-[#0f172a] border-slate-700 text-white focus:ring-blue-500' : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-slate-900'
+    isDark ? 'bg-[#0f172a] border-slate-700 text-white focus:ring-slate-200' : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-slate-900'
   }`;
 
   return (
@@ -519,7 +502,7 @@ function PortfolioConfig({ portfolioAssets, updateAsset, removeAsset, addAsset, 
             <Briefcase className="w-5 h-5" />
           </div>
           <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Portfolio Builder</h2>
-        </div>
+          </div>
         <button onClick={addAsset} disabled={portfolioAssets.length >= 10} className={`px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 transition-all ${isDark ? 'bg-slate-800 hover:bg-slate-700 text-white' : 'bg-slate-900 text-white hover:bg-slate-800'}`}>
           <Plus className="w-4 h-4" /> Add Asset
         </button>
@@ -596,11 +579,11 @@ function PortfolioConfig({ portfolioAssets, updateAsset, removeAsset, addAsset, 
                                 key={m.value} onClick={() => setModel(m.value)}
                                 className={`p-4 rounded-xl border text-left transition-all flex flex-col items-center justify-center gap-2 ${
                                     isActive 
-                                    ? (isDark ? 'bg-slate-800 border-slate-600 text-white' : 'bg-slate-900 border-slate-900 text-white') 
+                                    ? (isDark ? 'bg-slate-200 border-slate-200 text-slate-900' : 'bg-slate-900 border-slate-900 text-white') 
                                     : (isDark ? 'bg-[#0f172a] border-slate-800 text-slate-400' : 'bg-white border-slate-200 text-slate-600')
                                 }`}
                             >
-                                <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'opacity-70'}`} />
+                                <Icon className={`w-5 h-5 ${isActive ? (isDark ? 'text-slate-900' : 'text-white') : 'opacity-70'}`} />
                                 <span className="text-sm font-bold">{m.label}</span>
                             </button>
                         );
@@ -696,7 +679,7 @@ function PortfolioResults({ portfolioResults, portfolioChartData, correlationDat
     contrib: "Risk Contribution: How much each asset adds to total portfolio volatility."
   };
 
-  // Guard against missing data to prevent crash
+  // FIX: Guard against missing data to prevent crash
   if (!portfolioResults || !portfolioResults.portfolio_stats) return null;
   
   return (
