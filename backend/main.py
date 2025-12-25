@@ -277,19 +277,44 @@ async def simulate_portfolio(request: PortfolioSimulationRequest):
         
         portfolio_stats = PortfolioRiskStats(**portfolio_stats_dict)
         
-        # 9. Calculate per-asset statistics
+        # ---------------------------------------------------------
+        # 9. Calculate per-asset statistics (Normalized for Pie Chart)
+        # ---------------------------------------------------------
+        
+        # First, calculate the individual mean returns for all assets
+        asset_means = []
+        for i in range(len(request.tickers)):
+            final_prices_asset = asset_paths[:, -1, i]
+            # Calculate raw mean return for this asset (e.g., 0.50 for 50%)
+            mean_ret = float((final_prices_asset / start_prices[i] - 1).mean())
+            asset_means.append(mean_ret)
+
+        # Calculate Total Weighted Return of the portfolio (The "Whole Pie")
+        total_weighted_return = sum(weights[i] * asset_means[i] for i in range(len(request.tickers)))
+
         asset_stats = []
         for i, ticker in enumerate(request.tickers):
-            final_prices_asset = asset_paths[:, -1, i]
-            final_mean = float((final_prices_asset / start_prices[i] - 1).mean())
-            contribution = weights[i] * final_mean
+            # Calculate Absolute Contribution (The old way)
+            abs_contribution = weights[i] * asset_means[i]
+            
+            # Calculate Relative Contribution (The new way: sums to 100%)
+            # We use absolute values for the denominator to handle negative returns gracefully in charts
+            if abs(total_weighted_return) > 1e-6:
+                relative_contribution = abs_contribution / abs(total_weighted_return)
+            else:
+                relative_contribution = 0.0
+            
+            # Use absolute relative contribution for the pie chart visual (so it doesn't break with negatives)
+            # The sign can be inferred from the final_mean if needed, but for allocation charts, we usually want magnitude.
             
             asset_stats.append(AssetStats(
                 ticker=ticker,
                 start_price=float(start_prices[i]),
-                final_mean=final_mean,
-                contribution=contribution
+                final_mean=asset_means[i],
+                contribution=relative_contribution  # Now sends e.g. 0.72 for 72%
             ))
+        
+        # ---------------------------------------------------------
         
         # 10. Prepare response
         corr_dict = {

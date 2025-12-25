@@ -73,7 +73,11 @@ const ExtremeScenarios = ({ returns, isDark }) => {
 
   const best = getPercentile(returns, 0.99);
   const bullish = getPercentile(returns, 0.75);
-  const mean = returns.reduce((a, b) => a + b, 0) / returns.length;
+  
+  // UPDATED: Calculate Median (50th percentile) instead of Mean for the table
+  const median = getPercentile(returns, 0.50);
+  const mean = returns.reduce((a, b) => a + b, 0) / returns.length; // Kept for display in header
+  
   const bearish = getPercentile(returns, 0.25);
   const worst = getPercentile(returns, 0.01);
 
@@ -81,7 +85,7 @@ const ExtremeScenarios = ({ returns, isDark }) => {
   const scenarios = [
     { label: "Best Case (99%)", prob: "1%", val: best },
     { label: "Bullish (75%)", prob: "25%", val: bullish },
-    { label: "Base Case (Mean)", prob: "50%", val: mean },
+    { label: "Base Case (Median)", prob: "50%", val: median }, // Changed label to Median
     { label: "Bearish (25%)", prob: "25%", val: bearish },
     { label: "Worst Case (1%)", prob: "1%", val: worst },
   ];
@@ -93,7 +97,13 @@ const ExtremeScenarios = ({ returns, isDark }) => {
              <AlertTriangle className="w-5 h-5 text-amber-500" />
              <h3 className={`font-bold text-lg ${isDark ? 'text-white' : 'text-slate-900'}`}>Extreme Scenarios</h3>
          </div>
-         <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Probabilistic tail outcomes</p>
+         <div className="flex justify-between items-end">
+            <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Probabilistic tail outcomes</p>
+            {/* Added Mean display here for comparison */}
+            <p className={`text-[10px] font-mono ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+               Mean: <span className={mean > median ? "text-emerald-500" : "text-rose-500"}>{(mean * 100).toFixed(1)}%</span>
+            </p>
+         </div>
       </div>
       
       <div className="p-0">
@@ -132,7 +142,7 @@ export default function MarketScenarioGenerator() {
   
   const [ticker, setTicker] = useState('SPY');
   const [years, setYears] = useState(3);
-  const [horizon, setHorizon] = useState(252);
+  const [horizon, setHorizon] = useState(365); // UPDATED: Changed default from 252 to 365
   const [numPaths, setNumPaths] = useState(1000);
   const [model, setModel] = useState('gaussian');
   const [loading, setLoading] = useState(false);
