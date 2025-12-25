@@ -33,7 +33,24 @@ This project serves as a modular framework for portfolio stress testing, Value-a
 ## 🛠️ Project Structure
 
 The codebase is split into a Python backend API and a React frontend.
-bash MARKET_SCENARIO_GENERATOR/ ├── backend/ # Python (FastAPI) Simulation Engine │ ├── src/ │ │ ├── correlation.py # Multi-asset Cholesky logic │ │ ├── data_download.py # YFinance data ingestion │ │ ├── gmm_model.py # Gaussian Mixture Logic │ │ ├── ewma_vol.py # Volatility forecasting │ │ ├── generative_model.py # Core simulation logic │ │ └── main.py # FastAPI endpoints │ └── requirements.txt ├── frontend/ # React (Vite + Tailwind) User Interface │ ├── src/ │ │ ├── components/ # Recharts visualizations & Dashboards │ │ ├── services/ # API connection logic │ │ └── App.jsx # Main application layout │ └── package.json
+
+```bash
+MARKET_SCENARIO_GENERATOR/
+├── backend/                 # Python (FastAPI) Simulation Engine
+│   ├── src/
+│   │   ├── correlation.py   # Multi-asset Cholesky logic
+│   │   ├── data_download.py # YFinance data ingestion
+│   │   ├── gmm_model.py     # Gaussian Mixture Logic
+│   │   ├── ewma_vol.py      # Volatility forecasting
+│   │   ├── generative_model.py # Core simulation logic
+│   │   └── main.py          # FastAPI endpoints
+│   └── requirements.txt
+├── frontend/                # React (Vite + Tailwind) User Interface
+│   ├── src/
+│   │   ├── components/      # Recharts visualizations & Dashboards
+│   │   ├── services/        # API connection logic
+│   │   └── App.jsx          # Main application layout
+│   └── package.json
 ---
 
 ## ⚡ Quick Start
