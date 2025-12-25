@@ -52,6 +52,7 @@ MARKET_SCENARIO_GENERATOR/
 │   │   └── App.jsx          # Main application layout
 │   └── package.json
 ---
+```
 
 ## ⚡ Quick Start
 
