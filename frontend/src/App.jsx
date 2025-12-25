@@ -692,12 +692,28 @@ function PortfolioResults({ portfolioResults, portfolioChartData, correlationDat
   // Guard clause to prevent white screen crash
   if (!portfolioResults || !portfolioResults.portfolio_stats) return null;
 
-  // New: Calculate derived returns for Extreme Scenarios table if missing from API
+  // FIX 1: Normalize Pie Chart Data on Frontend
+  // This ensures the chart always sums to 100% even if the backend sends raw returns
+  const normalizedAssets = useMemo(() => {
+    if (!portfolioResults.asset_stats) return [];
+    
+    // Sum of all absolute contributions
+    const total = portfolioResults.asset_stats.reduce((sum, item) => sum + Math.abs(item.contribution), 0);
+    
+    if (total === 0) return portfolioResults.asset_stats;
+
+    return portfolioResults.asset_stats.map(item => ({
+      ...item,
+      // Calculate relative percentage (0.0 to 1.0)
+      percentage: Math.abs(item.contribution) / total
+    }));
+  }, [portfolioResults]);
+
+  // FIX 2: Calculate derived returns for Extreme Scenarios if missing
   const derivedReturns = useMemo(() => {
     if (portfolioResults.final_returns && portfolioResults.final_returns.length > 0) {
         return portfolioResults.final_returns;
     }
-    // Fallback: calculate returns from paths
     if (portfolioResults.portfolio_paths_sample) {
         return portfolioResults.portfolio_paths_sample.map(path => {
             const start = path[0];
@@ -745,24 +761,26 @@ function PortfolioResults({ portfolioResults, portfolioChartData, correlationDat
                     <div className="h-[180px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <RePieChart>
-                                <Pie data={portfolioResults.asset_stats || []} dataKey="contribution" nameKey="ticker" cx="50%" cy="50%" innerRadius={55} outerRadius={75} paddingAngle={5}>
-                                    {(portfolioResults.asset_stats || []).map((entry, index) => (
+                                {/* Use normalizedAssets and dataKey="percentage" */}
+                                <Pie data={normalizedAssets} dataKey="percentage" nameKey="ticker" cx="50%" cy="50%" innerRadius={55} outerRadius={75} paddingAngle={5}>
+                                    {normalizedAssets.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={pieColors[index % pieColors.length]} />
                                     ))}
                                 </Pie>
-                                <Tooltip contentStyle={{backgroundColor: isDark ? '#0f172a' : '#fff', borderRadius: '8px'}} />
+                                <Tooltip contentStyle={{backgroundColor: isDark ? '#0f172a' : '#fff', borderRadius: '8px'}} formatter={(value) => `${(value * 100).toFixed(1)}%`} />
                             </RePieChart>
                         </ResponsiveContainer>
                     </div>
                     <div className="space-y-2 mt-2">
-                        {(portfolioResults.asset_stats || []).map((asset, index) => (
+                        {normalizedAssets.map((asset, index) => (
                             <div key={asset.ticker} className="flex justify-between text-sm">
                                 <span className={`font-semibold flex items-center gap-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                                     <span className="w-2 h-2 rounded-full" style={{ backgroundColor: pieColors[index % pieColors.length] }}></span>
                                     {asset.ticker}
                                 </span>
                                 <span className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                    {((asset.contribution || 0) * 100).toFixed(1)}% Contrib.
+                                    {/* Display normalized percentage */}
+                                    {(asset.percentage * 100).toFixed(1)}% Contrib.
                                 </span>
                             </div>
                         ))}
