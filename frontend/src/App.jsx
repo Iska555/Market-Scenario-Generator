@@ -28,7 +28,7 @@ const CustomTooltip = ({ active, payload, label, isDark }) => {
             <span className={`${isDark ? 'text-white' : 'text-slate-900'} font-semibold`}>${max.toFixed(2)}</span>
           </div>
           <div className="flex justify-between gap-6">
-            <span className="text-indigo-500">Avg:</span>
+            <span className="text-blue-500">Avg:</span>
             <span className={`${isDark ? 'text-white' : 'text-slate-900'} font-semibold`}>${avg.toFixed(2)}</span>
           </div>
           <div className="flex justify-between gap-6">
@@ -57,6 +57,7 @@ const InfoTooltip = ({ text, isDark }) => (
 );
 
 const ExtremeScenarios = ({ returns, isDark }) => {
+  // Guard clause: if returns is undefined or empty, do not render
   if (!returns || returns.length === 0) return null;
 
   const getPercentile = (arr, q) => {
@@ -95,7 +96,7 @@ const ExtremeScenarios = ({ returns, isDark }) => {
          <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Probabilistic tail outcomes</p>
       </div>
       
-      <div className="flex-1 p-0">
+      <div className="p-0">
           <div className="grid grid-cols-2 px-6 py-3 text-xs font-bold tracking-wider uppercase opacity-50">
              <span>Scenario</span>
              <span className="text-right">Return</span>
@@ -126,7 +127,7 @@ const ExtremeScenarios = ({ returns, isDark }) => {
 };
 
 export default function MarketScenarioGenerator() {
-  const [theme, setTheme] = useState('light'); // FIXED: Default to light as requested
+  const [theme, setTheme] = useState('light');
   const isDark = theme === 'dark';
   
   const [ticker, setTicker] = useState('SPY');
@@ -186,11 +187,9 @@ export default function MarketScenarioGenerator() {
         throw new Error(errorData.detail || 'Portfolio simulation failed');
       }
       const data = await response.json();
-      console.log('Portfolio Results:', data); // Debug log
       setPortfolioResults(data);
     } catch (err) {
       setError(err.message);
-      console.error('Portfolio Error:', err); // Debug log
     } finally {
       setPortfolioLoading(false);
     }
@@ -304,7 +303,7 @@ export default function MarketScenarioGenerator() {
         <div className="max-w-7xl mx-auto px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className={`${isDark ? 'bg-slate-200' : 'bg-slate-900'} p-2.5 rounded-xl shadow-lg transition-colors`}>
+              <div className={`${isDark ? 'bg-white' : 'bg-blue-600'} p-2.5 rounded-xl shadow-lg transition-colors`}>
                 <TrendingUp className={`w-6 h-6 ${isDark ? 'text-slate-900' : 'text-white'}`} />
               </div>
               <div>
@@ -343,7 +342,7 @@ export default function MarketScenarioGenerator() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-5 py-2.5 rounded-xl font-semibold transition-all flex items-center gap-2 text-sm ${
                   isActive
-                    ? (isDark ? 'bg-slate-200 text-slate-900 shadow-lg shadow-slate-200/20' : 'bg-slate-900 text-white shadow-lg shadow-slate-200')
+                    ? (isDark ? 'bg-white text-slate-900 shadow-lg shadow-white/10' : 'bg-slate-900 text-white shadow-lg shadow-slate-200')
                     : (isDark ? 'text-slate-400 hover:bg-slate-800' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50')
                 }`}
               >
@@ -398,7 +397,7 @@ export default function MarketScenarioGenerator() {
             <p className={`${textSub} mb-8 max-w-md mx-auto`}>
               Run Gaussian, GMM, and EWMA models side-by-side to visualize tail risk differences.
             </p>
-            <div className={`inline-flex items-center gap-2 px-6 py-3 rounded-full ${isDark ? 'bg-blue-900/30 text-blue-400 border border-blue-500/30' : 'bg-slate-900 text-white'}`}>
+            <div className={`inline-flex items-center gap-2 px-6 py-3 rounded-full ${isDark ? 'bg-slate-800 text-white border border-slate-700' : 'bg-slate-900 text-white'}`}>
               <Sparkles className="w-4 h-4 animate-pulse" />
               <span className="text-sm font-semibold">Feature Coming Soon</span>
             </div>
@@ -409,9 +408,11 @@ export default function MarketScenarioGenerator() {
   );
 }
 
+// --- SUB-COMPONENTS ---
+
 function SingleAssetConfig({ ticker, setTicker, years, setYears, horizon, setHorizon, numPaths, setNumPaths, model, setModel, models, loading, error, runSimulation, isDark }) {
   const inputClass = `w-full rounded-xl px-4 py-3 font-mono text-sm border focus:outline-none focus:ring-2 transition-all ${
-    isDark ? 'bg-[#0f172a] border-slate-700 text-white focus:ring-slate-200' : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-slate-900'
+    isDark ? 'bg-[#0f172a] border-slate-700 text-white focus:ring-slate-500' : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-slate-900'
   }`;
   
   return (
@@ -454,12 +455,12 @@ function SingleAssetConfig({ ticker, setTicker, years, setYears, horizon, setHor
                 onClick={() => setModel(m.value)}
                 className={`p-4 rounded-xl border text-left transition-all ${
                   isActive 
-                    ? (isDark ? 'bg-slate-200 border-slate-200 text-slate-900 shadow-lg shadow-slate-200/20' : 'bg-slate-900 border-slate-900 text-white shadow-lg') 
+                    ? (isDark ? 'bg-slate-800 border-slate-600 text-white' : 'bg-slate-900 border-slate-900 text-white shadow-lg') 
                     : (isDark ? 'bg-[#0f172a] border-slate-800 text-slate-400 hover:border-slate-600' : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300')
                 }`}
               >
                 <div className="flex items-center gap-3 mb-1">
-                    <Icon className={`w-4 h-4 ${isActive ? (isDark ? 'text-slate-900' : 'text-white') : 'opacity-70'}`} />
+                    <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'opacity-70'}`} />
                     <span className="font-bold text-sm">{m.label}</span>
                 </div>
                 <div className="text-xs opacity-60 pl-7">{m.desc}</div>
@@ -473,7 +474,7 @@ function SingleAssetConfig({ ticker, setTicker, years, setYears, horizon, setHor
         onClick={runSimulation}
         disabled={loading}
         className={`w-full font-bold py-4 px-8 rounded-xl transition-all shadow-lg flex items-center justify-center gap-3 ${
-            isDark ? 'bg-slate-200 hover:bg-white text-slate-900 shadow-slate-200/20' : 'bg-slate-900 hover:bg-slate-800 text-white shadow-slate-200'
+            isDark ? 'bg-white hover:bg-slate-200 text-slate-900 shadow-white/10' : 'bg-slate-900 hover:bg-slate-800 text-white shadow-slate-200'
         } disabled:opacity-50 disabled:cursor-not-allowed`}
       >
         {loading ? <RefreshCw className="w-5 h-5 animate-spin" /> : null} 
@@ -491,7 +492,7 @@ function SingleAssetConfig({ ticker, setTicker, years, setYears, horizon, setHor
 
 function PortfolioConfig({ portfolioAssets, updateAsset, removeAsset, addAsset, totalWeight, normalizeWeights, years, setYears, horizon, setHorizon, numPaths, setNumPaths, model, setModel, models, portfolioLoading, error, runPortfolioSimulation, isDark }) {
   const inputClass = `w-full rounded-xl px-4 py-3 font-mono text-sm border focus:outline-none focus:ring-2 transition-all ${
-    isDark ? 'bg-[#0f172a] border-slate-700 text-white focus:ring-slate-200' : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-slate-900'
+    isDark ? 'bg-[#0f172a] border-slate-700 text-white focus:ring-slate-500' : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-slate-900'
   }`;
 
   return (
@@ -502,7 +503,7 @@ function PortfolioConfig({ portfolioAssets, updateAsset, removeAsset, addAsset, 
             <Briefcase className="w-5 h-5" />
           </div>
           <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Portfolio Builder</h2>
-          </div>
+        </div>
         <button onClick={addAsset} disabled={portfolioAssets.length >= 10} className={`px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 transition-all ${isDark ? 'bg-slate-800 hover:bg-slate-700 text-white' : 'bg-slate-900 text-white hover:bg-slate-800'}`}>
           <Plus className="w-4 h-4" /> Add Asset
         </button>
@@ -579,11 +580,11 @@ function PortfolioConfig({ portfolioAssets, updateAsset, removeAsset, addAsset, 
                                 key={m.value} onClick={() => setModel(m.value)}
                                 className={`p-4 rounded-xl border text-left transition-all flex flex-col items-center justify-center gap-2 ${
                                     isActive 
-                                    ? (isDark ? 'bg-slate-200 border-slate-200 text-slate-900' : 'bg-slate-900 border-slate-900 text-white') 
+                                    ? (isDark ? 'bg-slate-800 border-slate-600 text-white' : 'bg-slate-900 border-slate-900 text-white') 
                                     : (isDark ? 'bg-[#0f172a] border-slate-800 text-slate-400' : 'bg-white border-slate-200 text-slate-600')
                                 }`}
                             >
-                                <Icon className={`w-5 h-5 ${isActive ? (isDark ? 'text-slate-900' : 'text-white') : 'opacity-70'}`} />
+                                <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'opacity-70'}`} />
                                 <span className="text-sm font-bold">{m.label}</span>
                             </button>
                         );
@@ -614,7 +615,6 @@ function PortfolioConfig({ portfolioAssets, updateAsset, removeAsset, addAsset, 
 }
 
 function SingleAssetResults({ results, chartData, numPaths, histogramData, isDark }) {
-  // Description dictionary for Single Asset
   const singleAssetInfo = {
     mean: "Average return of all 1000 simulated paths. Positive means uptrend.",
     vol: "Annualized Standard Deviation. Higher % means riskier swings.",
@@ -679,8 +679,24 @@ function PortfolioResults({ portfolioResults, portfolioChartData, correlationDat
     contrib: "Risk Contribution: How much each asset adds to total portfolio volatility."
   };
 
-  // FIX: Guard against missing data to prevent crash
+  // Guard clause to prevent white screen crash
   if (!portfolioResults || !portfolioResults.portfolio_stats) return null;
+
+  // New: Calculate derived returns for Extreme Scenarios table if missing from API
+  const derivedReturns = useMemo(() => {
+    if (portfolioResults.final_returns && portfolioResults.final_returns.length > 0) {
+        return portfolioResults.final_returns;
+    }
+    // Fallback: calculate returns from paths
+    if (portfolioResults.portfolio_paths_sample) {
+        return portfolioResults.portfolio_paths_sample.map(path => {
+            const start = path[0];
+            const end = path[path.length - 1];
+            return (end - start) / start;
+        });
+    }
+    return [];
+  }, [portfolioResults]);
   
   return (
     <>
@@ -766,7 +782,7 @@ function PortfolioResults({ portfolioResults, portfolioChartData, correlationDat
 
         {/* Extreme Scenarios Added Here for Portfolio */}
         <div className="lg:col-span-1">
-             <ExtremeScenarios returns={portfolioResults.final_returns} isDark={isDark} />
+             <ExtremeScenarios returns={derivedReturns} isDark={isDark} />
         </div>
       </div>
     </>
