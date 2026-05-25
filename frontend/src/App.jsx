@@ -10,7 +10,7 @@ import {
   Sun, Moon, Info, ArrowRight
 } from 'lucide-react';
 
-const API_URL = 'https://market-scenario-generator.onrender.com';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 const CustomTooltip = ({ active, payload, label, isDark }) => {
   if (active && payload && payload.length) {
