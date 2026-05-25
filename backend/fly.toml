@@ -1,6 +1,9 @@
 app = "stochastic-market-simulator"
 primary_region = "iad"
 
+[deploy]
+  strategy = "immediate"
+
 [build]
 
 [http_service]
