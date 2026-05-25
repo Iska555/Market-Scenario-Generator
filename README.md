@@ -1,6 +1,6 @@
-# 📈 Market Scenario Generator
+# 📈 Stochastic Market Simulator
 
-[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://market-scenario-generator.vercel.app/)
+[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://stochastic-market-simulator.vercel.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
 [![React](https://img.shields.io/badge/react-%5E18.0-61DAFB.svg)](https://react.dev/)
@@ -10,7 +10,7 @@
 
 ## 📖 Overview
 
-The **Market Scenario Generator** is a full-stack finance application designed to simulate future market paths using advanced statistical models. Moving beyond simple random walks, this engine incorporates **Gaussian Mixture Models (GMM)** for "fat tail" risks and **Cholesky Decomposition** to model realistic correlations between multiple assets.
+The **Stochastic Market Simulator** is a full-stack finance application designed to simulate future market paths using advanced statistical models. Moving beyond simple random walks, this engine incorporates **Gaussian Mixture Models (GMM)** for "fat tail" risks and **Cholesky Decomposition** to model realistic correlations between multiple assets.
 
 This project serves as a modular framework for portfolio stress testing, Value-at-Risk (VaR) calculation, and quantitative research.
 

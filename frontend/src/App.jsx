@@ -136,7 +136,7 @@ const ExtremeScenarios = ({ returns, isDark }) => {
   );
 };
 
-export default function MarketScenarioGenerator() {
+export default function StochasticMarketSimulator() {
   const [theme, setTheme] = useState('light');
   const isDark = theme === 'dark';
   
@@ -317,7 +317,7 @@ export default function MarketScenarioGenerator() {
                 <TrendingUp className={`w-6 h-6 ${isDark ? 'text-slate-900' : 'text-white'}`} />
               </div>
               <div>
-                <h1 className={`text-xl font-bold ${textMain}`}>Market Scenario Generator</h1>
+                <h1 className={`text-xl font-bold ${textMain}`}>Stochastic Market Simulator</h1>
                 <p className={`text-xs font-medium tracking-wide uppercase mt-0.5 ${textSub}`}>Advanced Monte Carlo Risk Simulation Platform</p>
               </div>
             </div>
