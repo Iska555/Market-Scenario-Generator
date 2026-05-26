@@ -1,8 +1,11 @@
 import os
+import time
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from typing import Literal, Optional, List, Dict
+from typing import Literal, Optional, List, Dict, Tuple
 import numpy as np
 
 from src.data_download import download_price_data
@@ -36,6 +39,27 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+_executor = ThreadPoolExecutor(max_workers=2)
+
+# In-memory price data cache: key -> (dataframe, timestamp)
+_price_cache: Dict[str, Tuple] = {}
+CACHE_TTL = 3600  # 1 hour
+
+
+def get_cached_price_data(ticker: str, years: int):
+    key = f"{ticker}:{years}y"
+    now = time.time()
+    if key in _price_cache:
+        df, ts = _price_cache[key]
+        if now - ts < CACHE_TTL:
+            print(f"[CACHE HIT] {key}")
+            return df
+    print(f"[CACHE MISS] {key} — fetching from yfinance")
+    df = download_price_data(ticker, years)
+    _price_cache[key] = (df, now)
+    return df
+
 
 # ============================================================================
 # Request/Response Models
@@ -138,45 +162,69 @@ def root():
         "features": ["single-asset", "multi-asset-portfolio", "correlation-modeling"]
     }
 
+@app.get("/ping")
+def ping():
+    return {"status": "ok"}
+
 @app.post("/api/simulate", response_model=SimulationResponse)
 async def simulate_scenarios(request: SimulationRequest):
     """Single asset simulation (existing endpoint)."""
+    t_total = time.time()
     try:
         if request.random_seed is not None:
             np.random.seed(request.random_seed)
-        
-        df = download_price_data(request.ticker, request.years)
-        if df.empty or len(df) < 50:
-            raise HTTPException(status_code=404, detail=f"Insufficient data for {request.ticker}")
-        
-        log_returns = compute_log_returns(df)
-        log_returns_clean = log_returns[log_returns.abs() < 0.20]
-        start_price = float(df["price"].iloc[-1])
-        
-        if request.model == "gaussian":
-            mu, sigma = fit_gaussian(log_returns_clean)
-            adj_mu = mu - 0.5 * (sigma ** 2)
-            returns_matrix = sample_gaussian(adj_mu, sigma, request.horizon, request.num_paths, request.random_seed)
-        elif request.model == "gmm":
-            gmm = fit_gmm(log_returns_clean, n_components=3)
-            returns_matrix = sample_gmm(gmm, request.horizon, request.num_paths)
-            returns_matrix = np.clip(returns_matrix, -0.12, 0.12)
-            returns_matrix = returns_matrix - np.mean(returns_matrix)
-        elif request.model == "ewma":
-            ewma_series = compute_ewma_vol(log_returns_clean)
-            mu = float(log_returns_clean.mean())
-            last_vol = float(ewma_series.iloc[-1])
-            vol_forecast = forecast_ewma_vol(last_vol, lam=0.94, horizon=request.horizon)
-            adj_mu = mu - 0.5 * np.mean(vol_forecast ** 2)
-            returns_matrix = sample_ewma_returns(adj_mu, vol_forecast, request.num_paths)
-        
-        daily_std = float(np.std(returns_matrix))
-        annualized_vol = daily_std * np.sqrt(252)
-        paths = build_paths_from_returns(start_price, returns_matrix)
-        final_prices = paths[:, -1]
-        final_returns = final_prices / start_price - 1
-        risk_stats = compute_risk_stats(final_returns, annualized_vol)
-        
+
+        def _run():
+            t0 = time.time()
+            df = get_cached_price_data(request.ticker, request.years)
+            print(f"[TIMING] data fetch/cache: {time.time() - t0:.2f}s")
+
+            if df.empty or len(df) < 50:
+                raise ValueError(f"Insufficient data for {request.ticker}")
+
+            t1 = time.time()
+            log_returns = compute_log_returns(df)
+            log_returns_clean = log_returns[log_returns.abs() < 0.20]
+            start_price = float(df["price"].iloc[-1])
+            print(f"[TIMING] returns preprocess: {time.time() - t1:.2f}s")
+
+            t2 = time.time()
+            if request.model == "gaussian":
+                mu, sigma = fit_gaussian(log_returns_clean)
+                adj_mu = mu - 0.5 * (sigma ** 2)
+                returns_matrix = sample_gaussian(adj_mu, sigma, request.horizon, request.num_paths, request.random_seed)
+            elif request.model == "gmm":
+                gmm = fit_gmm(log_returns_clean, n_components=3)
+                returns_matrix = sample_gmm(gmm, request.horizon, request.num_paths)
+                returns_matrix = np.clip(returns_matrix, -0.12, 0.12)
+                returns_matrix = returns_matrix - np.mean(returns_matrix)
+            elif request.model == "ewma":
+                ewma_series = compute_ewma_vol(log_returns_clean)
+                mu = float(log_returns_clean.mean())
+                last_vol = float(ewma_series.iloc[-1])
+                vol_forecast = forecast_ewma_vol(last_vol, lam=0.94, horizon=request.horizon)
+                adj_mu = mu - 0.5 * np.mean(vol_forecast ** 2)
+                returns_matrix = sample_ewma_returns(adj_mu, vol_forecast, request.num_paths)
+            print(f"[TIMING] model fit + sample: {time.time() - t2:.2f}s")
+
+            t3 = time.time()
+            daily_std = float(np.std(returns_matrix))
+            annualized_vol = daily_std * np.sqrt(252)
+            paths = build_paths_from_returns(start_price, returns_matrix)
+            final_prices = paths[:, -1]
+            final_returns = final_prices / start_price - 1
+            risk_stats = compute_risk_stats(final_returns, annualized_vol)
+            print(f"[TIMING] risk computation: {time.time() - t3:.2f}s")
+
+            return start_price, final_prices, final_returns, risk_stats, paths
+
+        loop = asyncio.get_event_loop()
+        start_price, final_prices, final_returns, risk_stats, paths = await loop.run_in_executor(
+            _executor, _run
+        )
+
+        print(f"[TIMING] /api/simulate total: {time.time() - t_total:.2f}s")
+
         return SimulationResponse(
             ticker=request.ticker,
             model=request.model,
@@ -197,16 +245,12 @@ async def simulate_scenarios(request: SimulationRequest):
 
 @app.post("/api/simulate-portfolio", response_model=PortfolioSimulationResponse)
 async def simulate_portfolio(request: PortfolioSimulationRequest):
-    """
-    NEW: Multi-asset portfolio simulation with correlation.
-    
-    This is hedge fund grade technology using Cholesky decomposition
-    to preserve historical correlation structure.
-    """
+    """Multi-asset portfolio simulation with correlation."""
+    t_total = time.time()
     try:
         if request.random_seed is not None:
             np.random.seed(request.random_seed)
-        
+
         # 1. Validate and set weights
         if request.weights is None:
             weights = np.ones(len(request.tickers)) / len(request.tickers)
@@ -216,9 +260,17 @@ async def simulate_portfolio(request: PortfolioSimulationRequest):
             weights = np.array(request.weights)
             if not np.isclose(weights.sum(), 1.0):
                 raise HTTPException(status_code=400, detail="Weights must sum to 1.0")
-        
-        # 2. Download multi-asset data
-        price_data = download_multi_asset_data(request.tickers, request.years)
+
+        # 2. Download multi-asset data (with cache)
+        t0 = time.time()
+        price_data = {
+            ticker: get_cached_price_data(ticker, request.years)
+            for ticker in request.tickers
+            if True  # keep iteration simple
+        }
+        # Filter out any failed downloads
+        price_data = {k: v for k, v in price_data.items() if v is not None and not v.empty}
+        print(f"[TIMING] portfolio data fetch/cache: {time.time() - t0:.2f}s")
         
         if len(price_data) < len(request.tickers):
             missing = set(request.tickers) - set(price_data.keys())
@@ -315,6 +367,8 @@ async def simulate_portfolio(request: PortfolioSimulationRequest):
         
         # ---------------------------------------------------------
         
+        print(f"[TIMING] /api/simulate-portfolio total: {time.time() - t_total:.2f}s")
+
         # 10. Prepare response
         corr_dict = {
             ticker: {

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, 
   ResponsiveContainer, BarChart, Bar, PieChart as RePieChart, Pie, Cell
@@ -157,6 +157,8 @@ export default function StochasticMarketSimulator() {
   ]);
   const [portfolioResults, setPortfolioResults] = useState(null);
   const [portfolioLoading, setPortfolioLoading] = useState(false);
+
+  useEffect(() => { fetch(`${API_URL}/ping`).catch(() => {}); }, []);
 
   const toggleTheme = () => setTheme(curr => curr === 'light' ? 'dark' : 'light');
 
