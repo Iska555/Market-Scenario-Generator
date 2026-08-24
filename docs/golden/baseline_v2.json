@@ -1,0 +1,150 @@
+{
+  "config": {
+    "seed": 42,
+    "tickers": [
+      "SPY",
+      "NVDA",
+      "MSFT"
+    ]
+  },
+  "portfolio_gaussian": {
+    "asset_paths_sample__keys": [
+      "MSFT",
+      "NVDA",
+      "SPY"
+    ],
+    "asset_stats": [
+      {
+        "contribution": 0.20257659916014395,
+        "final_mean": 0.3396243193203155,
+        "start_price": 765.719970703125,
+        "ticker": "SPY"
+      },
+      {
+        "contribution": 0.6676504610260996,
+        "final_mean": 1.1193313260759687,
+        "start_price": 214.72000122070312,
+        "ticker": "NVDA"
+      },
+      {
+        "contribution": 0.12977293981375645,
+        "final_mean": 0.21756731297281387,
+        "start_price": 483.239990234375,
+        "ticker": "MSFT"
+      }
+    ],
+    "correlation_matrix": {
+      "MSFT": {
+        "MSFT": 1.0,
+        "NVDA": 0.432267085096485,
+        "SPY": 0.56949545260481
+      },
+      "NVDA": {
+        "MSFT": 0.432267085096485,
+        "NVDA": 1.0,
+        "SPY": 0.667373235561145
+      },
+      "SPY": {
+        "MSFT": 0.56949545260481,
+        "NVDA": 0.667373235561145,
+        "SPY": 1.0
+      }
+    },
+    "message": "Successfully simulated 3-asset portfolio with 1000 paths",
+    "model": "gaussian",
+    "portfolio_paths_sample__shape": [
+      30,
+      365
+    ],
+    "portfolio_stats": {
+      "CVaR_95": -0.25230586494148727,
+      "VaR_95": -0.15860030215861137,
+      "max_return": 3.2959670450759537,
+      "mean": 0.46575381416882655,
+      "min_return": -0.44005095990175136,
+      "prob_loss": 0.135,
+      "sharpe_ratio": 1.8803295567423643,
+      "volatility": 0.24769797001741348
+    },
+    "tickers": [
+      "SPY",
+      "NVDA",
+      "MSFT"
+    ],
+    "weights": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ]
+  },
+  "portfolio_gmm": {
+    "asset_paths_sample__keys": [
+      "MSFT",
+      "NVDA",
+      "SPY"
+    ],
+    "asset_stats": [
+      {
+        "contribution": 0.09004341390180347,
+        "final_mean": 0.020498214211895502,
+        "start_price": 765.719970703125,
+        "ticker": "SPY"
+      },
+      {
+        "contribution": 0.7389473204593232,
+        "final_mean": 0.16821997089759408,
+        "start_price": 214.72000122070312,
+        "ticker": "NVDA"
+      },
+      {
+        "contribution": 0.17100926563887328,
+        "final_mean": 0.03892993843067023,
+        "start_price": 483.239990234375,
+        "ticker": "MSFT"
+      }
+    ],
+    "correlation_matrix": {
+      "MSFT": {
+        "MSFT": 1.0,
+        "NVDA": 0.432267085096485,
+        "SPY": 0.56949545260481
+      },
+      "NVDA": {
+        "MSFT": 0.432267085096485,
+        "NVDA": 1.0,
+        "SPY": 0.667373235561145
+      },
+      "SPY": {
+        "MSFT": 0.56949545260481,
+        "NVDA": 0.667373235561145,
+        "SPY": 1.0
+      }
+    },
+    "message": "Successfully simulated 3-asset portfolio with 1000 paths",
+    "model": "gmm",
+    "portfolio_paths_sample__shape": [
+      30,
+      365
+    ],
+    "portfolio_stats": {
+      "CVaR_95": -0.46894431063144587,
+      "VaR_95": -0.40238919148846347,
+      "max_return": 2.051244664971013,
+      "mean": 0.04106327136978043,
+      "min_return": -0.6022917533285657,
+      "prob_loss": 0.491,
+      "sharpe_ratio": 0.16577960395433852,
+      "volatility": 0.24769797001741348
+    },
+    "tickers": [
+      "SPY",
+      "NVDA",
+      "MSFT"
+    ],
+    "weights": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ]
+  }
+}

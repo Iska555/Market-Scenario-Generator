@@ -1,33 +1,32 @@
+import asyncio
 import os
 import time
-import asyncio
 from concurrent.futures import ThreadPoolExecutor
+from typing import Literal
+
+import numpy as np
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from typing import Literal, Optional, List, Dict, Tuple
-import numpy as np
-
-from src.data_download import download_price_data
-from src.returns_preprocess import compute_log_returns
-from src.generative_model import fit_gaussian, sample_gaussian
-from src.gmm_model import fit_gmm, sample_gmm
-from src.ewma_vol import compute_ewma_vol, forecast_ewma_vol, sample_ewma_returns
 
 # NEW: Multi-asset imports
 from src.correlation import (
-    download_multi_asset_data,
-    compute_correlation_matrix,
-    cholesky_decomposition,
-    simulate_correlated_returns,
     build_portfolio_paths,
-    compute_portfolio_risk_stats
+    cholesky_decomposition,
+    compute_correlation_matrix,
+    compute_portfolio_risk_stats,
+    simulate_correlated_returns,
 )
+from src.data_download import download_price_data
+from src.ewma_vol import compute_ewma_vol, forecast_ewma_vol, sample_ewma_returns
+from src.generative_model import fit_gaussian, sample_gaussian
+from src.gmm_model import fit_gmm, sample_gmm
+from src.returns_preprocess import compute_log_returns
 
 app = FastAPI(
     title="Market Scenario Generator API",
     description="Professional portfolio risk simulation with multi-asset correlation",
-    version="2.0.0"
+    version="2.0.0",
 )
 
 allowed_origins = os.environ.get("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
@@ -43,7 +42,7 @@ app.add_middleware(
 _executor = ThreadPoolExecutor(max_workers=2)
 
 # In-memory price data cache: key -> (dataframe, timestamp)
-_price_cache: Dict[str, Tuple] = {}
+_price_cache: dict[str, tuple] = {}
 CACHE_TTL = 3600  # 1 hour
 
 
@@ -65,13 +64,15 @@ def get_cached_price_data(ticker: str, years: int):
 # Request/Response Models
 # ============================================================================
 
+
 class SimulationRequest(BaseModel):
     ticker: str = Field(..., description="Stock ticker symbol")
     years: int = Field(3, ge=1, le=10)
     horizon: int = Field(252, ge=1, le=1000)
     num_paths: int = Field(1000, ge=100, le=10000)
     model: Literal["gaussian", "gmm", "ewma"] = Field("gaussian")
-    random_seed: Optional[int] = Field(42)
+    random_seed: int | None = Field(42)
+
 
 class RiskStats(BaseModel):
     mean: float
@@ -80,31 +81,35 @@ class RiskStats(BaseModel):
     CVaR_95: float
     prob_loss: float
 
+
 class SimulationResponse(BaseModel):
     ticker: str
     model: str
     start_price: float
-    final_prices: List[float]
-    final_returns: List[float]
+    final_prices: list[float]
+    final_returns: list[float]
     risk_stats: RiskStats
-    paths_sample: List[List[float]]
+    paths_sample: list[list[float]]
     message: str
+
 
 # NEW: Multi-Asset Models
 class PortfolioSimulationRequest(BaseModel):
-    tickers: List[str] = Field(..., description="List of tickers", min_items=2, max_items=10)
-    weights: Optional[List[float]] = Field(None, description="Portfolio weights (must sum to 1)")
+    tickers: list[str] = Field(..., description="List of tickers", min_items=2, max_items=10)
+    weights: list[float] | None = Field(None, description="Portfolio weights (must sum to 1)")
     years: int = Field(3, ge=1, le=10)
     horizon: int = Field(252, ge=1, le=1000)
     num_paths: int = Field(1000, ge=100, le=5000)
     model: Literal["gaussian", "gmm"] = Field("gaussian")
-    random_seed: Optional[int] = Field(42)
+    random_seed: int | None = Field(42)
+
 
 class AssetStats(BaseModel):
     ticker: str
     start_price: float
     final_mean: float
     contribution: float
+
 
 class PortfolioRiskStats(BaseModel):
     mean: float
@@ -116,24 +121,28 @@ class PortfolioRiskStats(BaseModel):
     max_return: float
     min_return: float
 
+
 class PortfolioSimulationResponse(BaseModel):
-    tickers: List[str]
-    weights: List[float]
+    tickers: list[str]
+    weights: list[float]
     model: str
-    correlation_matrix: Dict[str, Dict[str, float]]
-    portfolio_paths_sample: List[List[float]]
-    asset_paths_sample: Dict[str, List[List[float]]]
-    asset_stats: List[AssetStats]
+    correlation_matrix: dict[str, dict[str, float]]
+    portfolio_paths_sample: list[list[float]]
+    asset_paths_sample: dict[str, list[list[float]]]
+    asset_stats: list[AssetStats]
     portfolio_stats: PortfolioRiskStats
     message: str
+
 
 # ============================================================================
 # Helper Functions (Single Asset)
 # ============================================================================
 
+
 def build_paths_from_returns(start_price: float, returns_matrix: np.ndarray) -> np.ndarray:
     cum_returns = returns_matrix.cumsum(axis=1)
     return start_price * np.exp(cum_returns)
+
 
 def compute_risk_stats(final_returns: np.ndarray, annualized_vol: float) -> RiskStats:
     mean = float(final_returns.mean())
@@ -141,30 +150,30 @@ def compute_risk_stats(final_returns: np.ndarray, annualized_vol: float) -> Risk
     tail_losses = final_returns[final_returns <= var_95]
     cvar_95 = float(tail_losses.mean()) if len(tail_losses) > 0 else var_95
     prob_loss = float((final_returns < 0).mean())
-    
+
     return RiskStats(
-        mean=mean,
-        vol=annualized_vol,
-        VaR_95=var_95,
-        CVaR_95=cvar_95,
-        prob_loss=prob_loss
+        mean=mean, vol=annualized_vol, VaR_95=var_95, CVaR_95=cvar_95, prob_loss=prob_loss
     )
+
 
 # ============================================================================
 # API Endpoints
 # ============================================================================
+
 
 @app.get("/")
 def root():
     return {
         "status": "running",
         "version": "2.0.0",
-        "features": ["single-asset", "multi-asset-portfolio", "correlation-modeling"]
+        "features": ["single-asset", "multi-asset-portfolio", "correlation-modeling"],
     }
+
 
 @app.get("/ping")
 def ping():
     return {"status": "ok"}
+
 
 @app.post("/api/simulate", response_model=SimulationResponse)
 async def simulate_scenarios(request: SimulationRequest):
@@ -172,7 +181,9 @@ async def simulate_scenarios(request: SimulationRequest):
     t_total = time.time()
     try:
         if request.random_seed is not None:
-            np.random.seed(request.random_seed)
+            # Legacy global RNG state; rewired to a per-request Generator in a later
+            # Phase 1 task (this file's body is not touched by Task 1).
+            np.random.seed(request.random_seed)  # noqa: NPY002
 
         def _run():
             t0 = time.time()
@@ -191,8 +202,10 @@ async def simulate_scenarios(request: SimulationRequest):
             t2 = time.time()
             if request.model == "gaussian":
                 mu, sigma = fit_gaussian(log_returns_clean)
-                adj_mu = mu - 0.5 * (sigma ** 2)
-                returns_matrix = sample_gaussian(adj_mu, sigma, request.horizon, request.num_paths, request.random_seed)
+                adj_mu = mu - 0.5 * (sigma**2)
+                returns_matrix = sample_gaussian(
+                    adj_mu, sigma, request.horizon, request.num_paths, request.random_seed
+                )
             elif request.model == "gmm":
                 gmm = fit_gmm(log_returns_clean, n_components=3)
                 returns_matrix = sample_gmm(gmm, request.horizon, request.num_paths)
@@ -203,7 +216,7 @@ async def simulate_scenarios(request: SimulationRequest):
                 mu = float(log_returns_clean.mean())
                 last_vol = float(ewma_series.iloc[-1])
                 vol_forecast = forecast_ewma_vol(last_vol, lam=0.94, horizon=request.horizon)
-                adj_mu = mu - 0.5 * np.mean(vol_forecast ** 2)
+                adj_mu = mu - 0.5 * np.mean(vol_forecast**2)
                 returns_matrix = sample_ewma_returns(adj_mu, vol_forecast, request.num_paths)
             print(f"[TIMING] model fit + sample: {time.time() - t2:.2f}s")
 
@@ -233,14 +246,15 @@ async def simulate_scenarios(request: SimulationRequest):
             final_returns=final_returns.tolist(),
             risk_stats=risk_stats,
             paths_sample=paths[:50].tolist(),
-            message=f"Successfully simulated {request.num_paths} paths"
+            message=f"Successfully simulated {request.num_paths} paths",
         )
     except HTTPException:
         raise
     except Exception as e:
         import traceback
+
         traceback.print_exc()
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @app.post("/api/simulate-portfolio", response_model=PortfolioSimulationResponse)
@@ -249,7 +263,9 @@ async def simulate_portfolio(request: PortfolioSimulationRequest):
     t_total = time.time()
     try:
         if request.random_seed is not None:
-            np.random.seed(request.random_seed)
+            # Legacy global RNG state; rewired to a per-request Generator in a later
+            # Phase 1 task (this file's body is not touched by Task 1).
+            np.random.seed(request.random_seed)  # noqa: NPY002
 
         # 1. Validate and set weights
         if request.weights is None:
@@ -271,67 +287,67 @@ async def simulate_portfolio(request: PortfolioSimulationRequest):
         # Filter out any failed downloads
         price_data = {k: v for k, v in price_data.items() if v is not None and not v.empty}
         print(f"[TIMING] portfolio data fetch/cache: {time.time() - t0:.2f}s")
-        
+
         if len(price_data) < len(request.tickers):
             missing = set(request.tickers) - set(price_data.keys())
             raise HTTPException(status_code=404, detail=f"Failed to download: {missing}")
-        
+
         # 3. Compute correlation matrix
         returns_df, corr_matrix = compute_correlation_matrix(price_data)
-        
+
         # 4. Cholesky decomposition
         L = cholesky_decomposition(corr_matrix)
-        
+
         # 5. Fit models for each asset
         means = []
         stds = []
         start_prices = []
-        
+
         for ticker in request.tickers:
             log_rets = returns_df[ticker]
             clean_rets = log_rets[log_rets.abs() < 0.20]
-            
+
             if request.model == "gaussian":
                 mu, sigma = fit_gaussian(clean_rets)
-                adj_mu = mu - 0.5 * (sigma ** 2)
+                adj_mu = mu - 0.5 * (sigma**2)
                 means.append(adj_mu)
                 stds.append(sigma)
             elif request.model == "gmm":
                 # For GMM, use empirical stats
                 means.append(0.0)  # Risk-neutral
                 stds.append(float(clean_rets.std()))
-            
+
             start_prices.append(float(price_data[ticker]["price"].iloc[-1]))
-        
+
         means = np.array(means)
         stds = np.array(stds)
         start_prices = np.array(start_prices)
-        
+
         # 6. Generate correlated returns
         correlated_returns = simulate_correlated_returns(
             means, stds, L, request.horizon, request.num_paths, request.random_seed
         )
-        
+
         # 7. Build asset and portfolio paths
         asset_paths, portfolio_paths = build_portfolio_paths(
             start_prices, correlated_returns, weights
         )
-        
+
         # 8. Calculate portfolio statistics
         portfolio_final_returns = portfolio_paths[:, -1] / 1.0 - 1
         portfolio_daily_std = float(np.std(np.diff(np.log(portfolio_paths), axis=1)))
         portfolio_annualized_vol = portfolio_daily_std * np.sqrt(252)
-        
+
         portfolio_stats_dict = compute_portfolio_risk_stats(
             portfolio_final_returns, portfolio_annualized_vol
         )
-        
+
         portfolio_stats = PortfolioRiskStats(**portfolio_stats_dict)
-        
+
         # ---------------------------------------------------------
         # 9. Calculate per-asset statistics (Normalized for Pie Chart)
         # ---------------------------------------------------------
-        
+
         # First, calculate the individual mean returns for all assets
         asset_means = []
         for i in range(len(request.tickers)):
@@ -341,48 +357,51 @@ async def simulate_portfolio(request: PortfolioSimulationRequest):
             asset_means.append(mean_ret)
 
         # Calculate Total Weighted Return of the portfolio (The "Whole Pie")
-        total_weighted_return = sum(weights[i] * asset_means[i] for i in range(len(request.tickers)))
+        total_weighted_return = sum(
+            weights[i] * asset_means[i] for i in range(len(request.tickers))
+        )
 
         asset_stats = []
         for i, ticker in enumerate(request.tickers):
             # Calculate Absolute Contribution (The old way)
             abs_contribution = weights[i] * asset_means[i]
-            
+
             # Calculate Relative Contribution (The new way: sums to 100%)
-            # We use absolute values for the denominator to handle negative returns gracefully in charts
+            # We use absolute values for the denominator to handle negative returns
+            # gracefully in charts
             if abs(total_weighted_return) > 1e-6:
                 relative_contribution = abs_contribution / abs(total_weighted_return)
             else:
                 relative_contribution = 0.0
-            
-            # Use absolute relative contribution for the pie chart visual (so it doesn't break with negatives)
-            # The sign can be inferred from the final_mean if needed, but for allocation charts, we usually want magnitude.
-            
-            asset_stats.append(AssetStats(
-                ticker=ticker,
-                start_price=float(start_prices[i]),
-                final_mean=asset_means[i],
-                contribution=relative_contribution  # Now sends e.g. 0.72 for 72%
-            ))
-        
+
+            # Use absolute relative contribution for the pie chart visual (so it doesn't
+            # break with negatives)
+            # The sign can be inferred from the final_mean if needed, but for allocation
+            # charts, we usually want magnitude.
+
+            asset_stats.append(
+                AssetStats(
+                    ticker=ticker,
+                    start_price=float(start_prices[i]),
+                    final_mean=asset_means[i],
+                    contribution=relative_contribution,  # Now sends e.g. 0.72 for 72%
+                )
+            )
+
         # ---------------------------------------------------------
-        
+
         print(f"[TIMING] /api/simulate-portfolio total: {time.time() - t_total:.2f}s")
 
         # 10. Prepare response
         corr_dict = {
-            ticker: {
-                other: float(corr_matrix.loc[ticker, other])
-                for other in request.tickers
-            }
+            ticker: {other: float(corr_matrix.loc[ticker, other]) for other in request.tickers}
             for ticker in request.tickers
         }
-        
+
         asset_paths_sample = {
-            ticker: asset_paths[:30, :, i].tolist()
-            for i, ticker in enumerate(request.tickers)
+            ticker: asset_paths[:30, :, i].tolist() for i, ticker in enumerate(request.tickers)
         }
-        
+
         return PortfolioSimulationResponse(
             tickers=request.tickers,
             weights=weights.tolist(),
@@ -392,15 +411,19 @@ async def simulate_portfolio(request: PortfolioSimulationRequest):
             asset_paths_sample=asset_paths_sample,
             asset_stats=asset_stats,
             portfolio_stats=portfolio_stats,
-            message=f"Successfully simulated {len(request.tickers)}-asset portfolio with {request.num_paths} paths"
+            message=(
+                f"Successfully simulated {len(request.tickers)}-asset portfolio "
+                f"with {request.num_paths} paths"
+            ),
         )
-    
+
     except HTTPException:
         raise
     except Exception as e:
         import traceback
+
         traceback.print_exc()
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 @app.get("/api/health")

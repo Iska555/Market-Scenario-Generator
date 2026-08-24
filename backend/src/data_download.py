@@ -1,5 +1,5 @@
-import yfinance as yf
 import pandas as pd
+import yfinance as yf
 
 
 def download_price_data(ticker: str, years: int = 3) -> pd.DataFrame:
@@ -9,16 +9,10 @@ def download_price_data(ticker: str, years: int = 3) -> pd.DataFrame:
     """
     period = f"{years}y"
 
-    data = yf.download(
-        ticker,
-        period=period,
-        interval="1d",
-        auto_adjust=True,
-        progress=False
-    )
+    data = yf.download(ticker, period=period, interval="1d", auto_adjust=True, progress=False)
 
     if data.empty:
-        raise ValueError(f"No data returned for ticker {ticker}") 
+        raise ValueError(f"No data returned for ticker {ticker}")
     if "Adj Close" in data.columns:
         price = data["Adj Close"]
     elif "Close" in data.columns:
@@ -31,7 +25,7 @@ def download_price_data(ticker: str, years: int = 3) -> pd.DataFrame:
         price = price.iloc[:, 0]
 
     # Make it a single-column DataFrame named 'price'
-    df = price.to_frame(name="price")
+    df: pd.DataFrame = price.to_frame(name="price")
     df.index.name = "date"
 
     return df
