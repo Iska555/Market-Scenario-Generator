@@ -9,21 +9,26 @@ select = ["E", "F", "I", "UP", "B", "NPY", "RUF"]
 [tool.mypy]
 python_version = "3.12"
 mypy_path = "backend"
-files = ["backend/src", "backend/main.py", "backend/tests"]
+files = ["backend/src", "backend/main.py", "backend/tests", "backend/migrations"]
 disallow_untyped_defs = true
 warn_unused_ignores = true
 warn_return_any = true
 ignore_missing_imports = true
-exclude = "(backend/env|backend/src/correlation\\.py|backend/main\\.py)"
+exclude = "backend/env"
 
 [tool.pytest.ini_options]
 testpaths = ["backend/tests"]
 pythonpath = ["backend"]
-addopts = "-q --strict-markers"
+addopts = "-q --strict-markers --cov=src --cov=main --cov-branch --cov-report=term-missing --cov-report=xml"
 markers = [
     "benchmark: performance budget tests, slow and memory-hungry",
+    "postgres: isolated PostgreSQL integration; requires TEST_DATABASE_URL",
 ]
 
-[[tool.mypy.overrides]]
-module = ["main", "src.correlation"]
-ignore_errors = true
+[tool.coverage.run]
+relative_files = true
+
+[tool.coverage.report]
+fail_under = 95
+precision = 2
+show_missing = true

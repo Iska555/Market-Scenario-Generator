@@ -2,11 +2,36 @@
 
 from __future__ import annotations
 
+import hashlib
 from collections.abc import Callable
 
 import numpy as np
 import pandas as pd
 import pytest
+
+
+@pytest.fixture(autouse=True)
+def block_network(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Every provider interaction in this suite must use a controlled fixture."""
+    import socket
+
+    import yfinance
+
+    original_connect = socket.socket.connect
+
+    def external_connection(sock: socket.socket, address: object) -> None:
+        # Windows asyncio creates a loopback socketpair for its wake-up pipe.
+        if isinstance(address, tuple) and address[0] in ("127.0.0.1", "::1"):
+            original_connect(sock, address)
+            return
+        raise AssertionError("External network access is forbidden in the test suite")
+
+    def blocked(*args: object, **kwargs: object) -> None:
+        raise AssertionError("Network access is forbidden in the test suite")
+
+    monkeypatch.setattr(socket.socket, "connect", external_connection)
+    monkeypatch.setattr(yfinance, "download", blocked)
+
 
 PriceFactory = Callable[..., pd.DataFrame]
 
@@ -84,7 +109,7 @@ def fake_price_provider(
 
     def _provider(ticker: str, years: int) -> pd.DataFrame:
         if ticker not in cache:
-            seed = abs(hash(ticker)) % 10_000
+            seed = int.from_bytes(hashlib.sha256(ticker.encode()).digest()[:4], "little")
             cache[ticker] = make_correlated_prices([ticker], seed=seed)[ticker]
         return cache[ticker]
 

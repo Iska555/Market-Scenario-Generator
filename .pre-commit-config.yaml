@@ -3,19 +3,19 @@ repos:
     hooks:
       - id: ruff-check
         name: ruff check
-        entry: ruff check --fix
-        language: system
-        types: [python]
-        files: ^backend/
-      - id: ruff-format
-        name: ruff format
-        entry: ruff format
-        language: system
-        types: [python]
-        files: ^backend/
-      - id: mypy
-        name: mypy
-        entry: mypy
+        entry: python -m ruff check .
         language: system
         pass_filenames: false
-        files: ^backend/
+        files: ^(backend/.*\.py|scripts/.*\.py|pyproject\.toml|\.pre-commit-config\.yaml|backend/requirements.*\.txt)$
+      - id: ruff-format
+        name: ruff format
+        entry: python -m ruff format --check backend scripts
+        language: system
+        pass_filenames: false
+        files: ^(backend/.*\.py|scripts/.*\.py|pyproject\.toml|\.pre-commit-config\.yaml|backend/requirements.*\.txt)$
+      - id: mypy
+        name: mypy
+        entry: python -m mypy
+        language: system
+        pass_filenames: false
+        files: ^(backend/.*\.py|pyproject\.toml|\.pre-commit-config\.yaml|backend/requirements.*\.txt)$

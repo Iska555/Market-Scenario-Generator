@@ -112,7 +112,10 @@ Implements spec Phase 0 items 1, 2, 3, 5. Establishes the gate every later task 
 - Create: `docs/golden/baseline_v2.json` (generated, committed)
 - Modify: `backend/requirements.txt`
 - Modify: `backend/src/returns_preprocess.py` (annotations only)
+- Modify (formatting and signature annotations ONLY, to satisfy the linters this task introduces; no function body may change): `backend/src/data_download.py`, `backend/src/ewma_vol.py`, `backend/src/generative_model.py`, `backend/src/gmm_model.py`, `backend/main.py`, `backend/src/correlation.py`
 - Delete: `backend/src/visualization.py`, `backend/src/debug_day1.py`, `backend/src/simulate_paths.py`, `backend/src/test.portfolio.py`
+
+> This task introduces `ruff` and `mypy` to a codebase that has never been linted, so making the gate green necessarily touches every existing file. Those files are listed above so the scope contract is honest. The permission is narrow and does not carry to any later task: import sorting, builtin-generic syntax, whitespace, line wrapping, exception chaining, and signature annotations only. Any change that alters a numeric constant, a control-flow branch, or computation order is out of scope — stop and report instead.
 
 **Interfaces:**
 - Consumes: nothing.
@@ -183,7 +186,7 @@ disallow_untyped_defs = true
 warn_unused_ignores = true
 warn_return_any = true
 ignore_missing_imports = true
-exclude = "(backend/env|backend/src/correlation\\.py|backend/main\\.py)"
+exclude = "(^backend/env/)"
 
 [tool.pytest.ini_options]
 testpaths = ["backend/tests"]
@@ -192,9 +195,18 @@ addopts = "-q --strict-markers"
 markers = [
     "benchmark: performance budget tests, slow and memory-hungry",
 ]
+
+# main.py and src/correlation.py are exempt only until the tasks that rewrite them
+# with full annotations: Task 4 drops "src.correlation", Task 10 drops "main", and
+# this block disappears entirely.
+[[tool.mypy.overrides]]
+module = ["main", "src.correlation"]
+ignore_errors = true
 ```
 
-There is no dead-code exclusion list, because Step 3b deletes the dead code. The only two exclusions are `correlation.py` and `main.py`, un-excluded in Tasks 4 and 10 respectively when those files are rewritten with full annotations. This keeps the gate green at every commit instead of demanding a big-bang annotation pass on code that is about to be replaced.
+There is no dead-code exclusion list, because Step 3b deletes the dead code.
+
+Two files are exempt for now — `correlation.py` and `main.py` — so the gate stays green at every commit instead of demanding a big-bang annotation pass on code that is about to be replaced. The exemption is expressed through `[[tool.mypy.overrides]]` with `ignore_errors`, **not** through `exclude`. This matters: mypy's `exclude` does not apply to files named explicitly in `files =`, and it does not prevent a module from being analysed when another module imports it. An `exclude` regex listing these two files therefore has no effect at all. `ignore_errors` on the module path is the mechanism that actually works.
 
 - [ ] **Step 3b: Delete the dead scripts**
 
@@ -261,6 +273,7 @@ These fixtures are the only source of market data in the entire test suite. Noth
 
 from __future__ import annotations
 
+import hashlib
 from collections.abc import Callable
 
 import numpy as np
@@ -334,6 +347,17 @@ def make_correlated_prices() -> Callable[..., dict[str, pd.DataFrame]]:
     return _make
 
 
+def _stable_seed(text: str) -> int:
+    """A seed that is identical across processes and machines.
+
+    `hash()` is NOT usable here: CPython randomises str hashing per process unless
+    PYTHONHASHSEED is pinned, so a hash-derived seed silently produces different
+    synthetic data on every pytest invocation. Reproducibility is the property this
+    whole suite exists to defend, so the seed is derived from a stable digest.
+    """
+    return int.from_bytes(hashlib.sha256(text.encode()).digest()[:4], "big") % 10_000
+
+
 @pytest.fixture
 def fake_price_provider(
     make_correlated_prices: Callable[..., dict[str, pd.DataFrame]],
@@ -343,8 +367,7 @@ def fake_price_provider(
 
     def _provider(ticker: str, years: int) -> pd.DataFrame:
         if ticker not in cache:
-            seed = abs(hash(ticker)) % 10_000
-            cache[ticker] = make_correlated_prices([ticker], seed=seed)[ticker]
+            cache[ticker] = make_correlated_prices([ticker], seed=_stable_seed(ticker))[ticker]
         return cache[ticker]
 
     return _provider
@@ -1786,9 +1809,11 @@ L = cholesky_factor(corr_matrix)
 
 Update the import block: `cholesky_decomposition` becomes `cholesky_factor`, and `download_multi_asset_data` is removed.
 
-- [ ] **Step 6: Remove `correlation.py` from the mypy exclude**
+- [ ] **Step 6: Drop `correlation.py` from the mypy exemption**
 
-In `pyproject.toml`, delete `backend/src/correlation\\.py|` from the `[tool.mypy] exclude` pattern. The rewritten functions are fully annotated; `build_portfolio_paths` and `compute_portfolio_risk_stats` already carry annotations from the original file.
+In `pyproject.toml`, remove `"src.correlation"` from the `module` list in the `[[tool.mypy.overrides]]` block, leaving `module = ["main"]`. Do **not** touch the `exclude` key — it governs only `backend/env` and has no bearing on these two files.
+
+The rewritten functions are fully annotated; `build_portfolio_paths` and `compute_portfolio_risk_stats` already carry annotations from the original file. If mypy now reports errors in the two functions this task did not rewrite, annotate their signatures — do not re-add the exemption.
 
 - [ ] **Step 7: Run the tests and the gate**
 
@@ -5084,9 +5109,9 @@ backend/env/Scripts/python.exe -m ruff check --select F401 . && grep -rn "comput
 
 Expected: the only `src.correlation` imports are `cholesky_factor`, `compute_correlation_matrix`, `simulate_correlated_returns`, and no hit for `compute_portfolio_risk_stats` outside the file being edited.
 
-- [ ] **Step 5: Remove `main.py` from the mypy exclude**
+- [ ] **Step 5: Drop `main.py` from the mypy exemption and delete the block**
 
-In `pyproject.toml`, delete `backend/main\\.py` from the `[tool.mypy] exclude` pattern. The exclude should now list only the four dead scripts.
+In `pyproject.toml`, remove the entire `[[tool.mypy.overrides]]` block. Task 4 already removed `"src.correlation"` from its `module` list, so `main` is the last entry and the whole block goes with it. After this task no file is exempt from type checking, and `exclude` governs only `backend/env`.
 
 - [ ] **Step 6: Run the API tests**
 

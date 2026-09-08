@@ -1,866 +1,370 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { 
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, 
-  ResponsiveContainer, BarChart, Bar, PieChart as RePieChart, Pie, Cell
-} from 'recharts';
-import { 
-  TrendingUp, Activity, AlertTriangle, BarChart3, 
-  Zap, Target, PieChart, RefreshCw, Sparkles, 
-  Shield, TrendingDown, Plus, X, Briefcase, Layers,
-  Sun, Moon, Info, ArrowRight
+import { useEffect, useState } from 'react';
+import {
+  AlertTriangle,
+  Briefcase,
+  Info,
+  Layers,
+  Moon,
+  Plus,
+  RefreshCw,
+  Sun,
+  TrendingUp,
+  X,
+  Zap,
 } from 'lucide-react';
 
+import ScenarioResults from './components/ScenarioResults.jsx';
+import {
+  assertV3Response,
+  buildPortfolioRequest,
+  buildSingleRequest,
+  DEFAULT_ASSUMPTIONS,
+  describeDriftModel,
+  MODEL_OPTIONS,
+  normalizeWeightPercentages,
+} from './scenarioContract.js';
+
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const MAX_SIMULATION_CELLS = 2_000_000;
 
-const CustomTooltip = ({ active, payload, label, isDark }) => {
-  if (active && payload && payload.length) {
-    const values = payload.map(p => p.value);
-    const max = Math.max(...values);
-    const min = Math.min(...values);
-    const avg = values.reduce((a, b) => a + b, 0) / values.length;
+const panel = (isDark) => isDark
+  ? 'bg-[#151e32] border-slate-700/60'
+  : 'bg-white border-slate-200 shadow-xl shadow-slate-200/50';
 
-    return (
-      <div className={`${isDark ? 'bg-[#1e293b] border-slate-700' : 'bg-white border-slate-200'} border p-4 rounded-xl shadow-2xl backdrop-blur-md`}>
-        <p className={`${isDark ? 'text-slate-400' : 'text-slate-500'} font-bold mb-2 text-xs uppercase tracking-wider`}>Day {label}</p>
-        <div className="space-y-1 text-sm font-mono">
-          <div className="flex justify-between gap-6">
-            <span className="text-emerald-500">High:</span>
-            <span className={`${isDark ? 'text-white' : 'text-slate-900'} font-semibold`}>${max.toFixed(2)}</span>
-          </div>
-          <div className="flex justify-between gap-6">
-            <span className="text-blue-500">Avg:</span>
-            <span className={`${isDark ? 'text-white' : 'text-slate-900'} font-semibold`}>${avg.toFixed(2)}</span>
-          </div>
-          <div className="flex justify-between gap-6">
-            <span className="text-rose-500">Low:</span>
-            <span className={`${isDark ? 'text-white' : 'text-slate-900'} font-semibold`}>${min.toFixed(2)}</span>
-          </div>
-        </div>
-      </div>
-    );
+const input = (isDark) => `w-full rounded-xl border px-3 py-2.5 text-sm outline-none transition focus:ring-2 focus:ring-indigo-500/40 ${
+  isDark ? 'bg-[#0f172a] border-slate-700 text-white' : 'bg-white border-slate-300 text-slate-900'
+}`;
+
+function parseApiError(detail, fallback) {
+  if (typeof detail === 'string') return detail;
+  if (Array.isArray(detail)) return detail.map((item) => item.msg || JSON.stringify(item)).join('; ');
+  return fallback;
+}
+
+async function postScenario(path, body) {
+  const response = await fetch(`${API_URL}${path}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) {
+    const errorBody = await response.json().catch(() => ({}));
+    throw new Error(parseApiError(errorBody.detail, 'Scenario simulation failed.'));
   }
-  return null;
-};
-
-const InfoTooltip = ({ text, isDark }) => (
-  <div className="group relative inline-block ml-2">
-    <Info className={`w-3 h-3 cursor-help ${isDark ? 'text-slate-500 hover:text-slate-300' : 'text-slate-400 hover:text-slate-600'}`} />
-    <div className={`
-      invisible group-hover:visible absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 
-      text-xs rounded-lg shadow-xl z-50 text-center pointer-events-none transition-all opacity-0 group-hover:opacity-100
-      ${isDark ? 'bg-slate-800 text-slate-200 border border-slate-700' : 'bg-slate-900 text-white'}
-    `}>
-      {text}
-      <div className={`absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent ${isDark ? 'border-t-slate-800' : 'border-t-slate-900'}`}></div>
-    </div>
-  </div>
-);
-
-const ExtremeScenarios = ({ returns, isDark }) => {
-  // Guard clause: if returns is undefined or empty, do not render
-  if (!returns || returns.length === 0) return null;
-
-  const getPercentile = (arr, q) => {
-    const sorted = [...arr].sort((a, b) => a - b);
-    const pos = (sorted.length - 1) * q;
-    const base = Math.floor(pos);
-    const rest = pos - base;
-    if (sorted[base + 1] !== undefined) {
-      return sorted[base] + rest * (sorted[base + 1] - sorted[base]);
-    }
-    return sorted[base];
-  };
-
-  const best = getPercentile(returns, 0.99);
-  const bullish = getPercentile(returns, 0.75);
-  
-  // UPDATED: Calculate Median (50th percentile) instead of Mean for the table
-  const median = getPercentile(returns, 0.50);
-  const mean = returns.reduce((a, b) => a + b, 0) / returns.length; // Kept for display in header
-  
-  const bearish = getPercentile(returns, 0.25);
-  const worst = getPercentile(returns, 0.01);
-
-  const basePrice = 1000; 
-  const scenarios = [
-    { label: "Best Case (99%)", prob: "1%", val: best },
-    { label: "Bullish (75%)", prob: "25%", val: bullish },
-    { label: "Base Case (Median)", prob: "50%", val: median }, // Changed label to Median
-    { label: "Bearish (25%)", prob: "25%", val: bearish },
-    { label: "Worst Case (1%)", prob: "1%", val: worst },
-  ];
-
-  return (
-    <div className={`${isDark ? 'bg-[#151e32] border-slate-700' : 'bg-white border-slate-200 shadow-xl shadow-slate-200/50'} rounded-3xl overflow-hidden border transition-all h-fit flex flex-col`}>
-      <div className={`p-5 border-b ${isDark ? 'border-slate-700' : 'border-slate-100'}`}>
-         <div className="flex items-center gap-2 mb-1">
-             <AlertTriangle className="w-5 h-5 text-amber-500" />
-             <h3 className={`font-bold text-lg ${isDark ? 'text-white' : 'text-slate-900'}`}>Extreme Scenarios</h3>
-         </div>
-         <div className="flex justify-between items-end">
-            <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Probabilistic tail outcomes</p>
-            {/* Added Mean display here for comparison */}
-            <p className={`text-[10px] font-mono ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
-               Mean: <span className={mean > median ? "text-emerald-500" : "text-rose-500"}>{(mean * 100).toFixed(1)}%</span>
-            </p>
-         </div>
-      </div>
-      
-      <div className="p-0">
-          <div className="grid grid-cols-2 px-6 py-3 text-xs font-bold tracking-wider uppercase opacity-50">
-             <span>Scenario</span>
-             <span className="text-right">Return</span>
-          </div>
-          {scenarios.map((s, i) => (
-             <div key={i} className={`grid grid-cols-2 px-6 py-4 border-t ${isDark ? 'border-slate-800' : 'border-slate-50'} items-center`}>
-                <div>
-                   <div className={`font-bold text-sm ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>{s.label}</div>
-                   <div className="flex gap-2 mt-1">
-                       <span className={`text-[10px] px-1.5 py-0.5 rounded ${isDark ? 'bg-slate-700 text-slate-300' : 'bg-slate-200 text-slate-600'}`}>{s.prob}</span>
-                       <span className={`text-xs font-mono ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>${(basePrice * (1 + s.val)).toFixed(2)}</span>
-                   </div>
-                </div>
-                <div className={`text-right font-mono font-bold ${s.val >= 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
-                   {s.val >= 0 ? '+' : ''}{(s.val * 100).toFixed(1)}%
-                </div>
-             </div>
-          ))}
-      </div>
-      
-      <div className={`p-4 border-t ${isDark ? 'border-slate-700' : 'border-slate-100'}`}>
-          <button className={`w-full text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 py-2 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'}`}>
-             View Full Distribution <ArrowRight className="w-3 h-3" />
-          </button>
-      </div>
-    </div>
-  );
-};
+  return assertV3Response(await response.json());
+}
 
 export default function StochasticMarketSimulator() {
   const [theme, setTheme] = useState('light');
-  const isDark = theme === 'dark';
-  
-  const [ticker, setTicker] = useState('SPY');
-  const [years, setYears] = useState(3);
-  const [horizon, setHorizon] = useState(365); // UPDATED: Changed default from 252 to 365
-  const [numPaths, setNumPaths] = useState(1000);
-  const [model, setModel] = useState('gaussian');
-  const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState(null);
-  const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('single');
-
+  const [ticker, setTicker] = useState('SPY');
   const [portfolioAssets, setPortfolioAssets] = useState([
-    { ticker: 'SPY', weight: '33.33' },
-    { ticker: 'AAPL', weight: '33.33' },
-    { ticker: 'BTC-USD', weight: '33.34' }
+    { ticker: 'SPY', weight: '60' },
+    { ticker: 'TLT', weight: '40' },
   ]);
-  const [portfolioResults, setPortfolioResults] = useState(null);
-  const [portfolioLoading, setPortfolioLoading] = useState(false);
+  const [singleAssumptions, setSingleAssumptions] = useState({ ...DEFAULT_ASSUMPTIONS });
+  const [portfolioAssumptions, setPortfolioAssumptions] = useState({ ...DEFAULT_ASSUMPTIONS, model: 'gaussian' });
+  const [singleResult, setSingleResult] = useState(null);
+  const [portfolioResult, setPortfolioResult] = useState(null);
+  const [loading, setLoading] = useState({ single: false, portfolio: false });
+  const [errors, setErrors] = useState({ single: null, portfolio: null });
+  const error = errors[activeTab];
+  const isDark = theme === 'dark';
 
-  useEffect(() => { fetch(`${API_URL}/ping`).catch(() => {}); }, []);
+  useEffect(() => {
+    fetch(`${API_URL}/ping`).catch(() => {});
+  }, []);
 
-  const toggleTheme = () => setTheme(curr => curr === 'light' ? 'dark' : 'light');
-
-  const runSimulation = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(`${API_URL}/api/simulate?t=${Date.now()}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ticker, years, horizon, num_paths: numPaths, model })
-      });
-      if (!response.ok) throw new Error('Simulation failed');
-      const data = await response.json();
-      setResults(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const runPortfolioSimulation = async () => {
-    setPortfolioLoading(true);
-    setError(null);
-    try {
-      const tickers = portfolioAssets.map(a => a.ticker);
-      const weights = portfolioAssets.map(a => (parseFloat(a.weight) || 0) / 100);
-      
-      const response = await fetch(`${API_URL}/api/simulate-portfolio?t=${Date.now()}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tickers, weights, years, horizon, num_paths: numPaths, model })
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.detail || 'Portfolio simulation failed');
-      }
-      const data = await response.json();
-      setPortfolioResults(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setPortfolioLoading(false);
-    }
-  };
-
-  const addAsset = () => {
-    if (portfolioAssets.length >= 10) return;
-    setPortfolioAssets([...portfolioAssets, { ticker: '', weight: '' }]);
-  };
-
-  const removeAsset = (index) => {
-    if (portfolioAssets.length <= 2) return;
-    setPortfolioAssets(portfolioAssets.filter((_, i) => i !== index));
-  };
+  const totalWeight = portfolioAssets.reduce((sum, asset) => sum + (Number(asset.weight) || 0), 0);
 
   const updateAsset = (index, field, value) => {
-    const newAssets = [...portfolioAssets];
-    if (field === 'weight') {
-        if (value === '' || /^\d*\.?\d*$/.test(value)) {
-            newAssets[index][field] = value;
-        }
-    } else {
-        newAssets[index][field] = value;
-    }
-    setPortfolioAssets(newAssets);
+    setPortfolioAssets((current) => current.map((asset, assetIndex) => (
+      assetIndex === index ? { ...asset, [field]: value } : asset
+    )));
   };
 
   const normalizeWeights = () => {
-    const total = portfolioAssets.reduce((sum, a) => sum + (parseFloat(a.weight) || 0), 0);
-    if (total === 0) return;
-    const normalized = portfolioAssets.map(a => ({
-      ...a,
-      weight: ((parseFloat(a.weight) || 0) / total * 100).toFixed(2)
-    }));
-    setPortfolioAssets(normalized);
+    if (totalWeight === 0) return;
+    setPortfolioAssets((current) => normalizeWeightPercentages(current));
   };
 
-  const totalWeight = portfolioAssets.reduce((sum, a) => sum + (parseFloat(a.weight) || 0), 0);
+  const runSingle = async () => {
+    setLoading((current) => ({ ...current, single: true }));
+    setErrors((current) => ({ ...current, single: null }));
+    try {
+      setSingleResult(await postScenario('/api/simulate', buildSingleRequest(ticker, singleAssumptions)));
+    } catch (requestError) {
+      setErrors((current) => ({ ...current, single: requestError.message }));
+    } finally {
+      setLoading((current) => ({ ...current, single: false }));
+    }
+  };
 
-  const chartData = useMemo(() => {
-    if (!results?.paths_sample) return [];
-    return Array.from({ length: horizon }, (_, dayIndex) => {
-      const dayData = { day: dayIndex };
-      results.paths_sample.forEach((path, pathIdx) => {
-        dayData[`path_${pathIdx}`] = path[dayIndex];
-      });
-      return dayData;
-    });
-  }, [results, horizon]);
-
-  const portfolioChartData = useMemo(() => {
-    if (!portfolioResults?.portfolio_paths_sample) return [];
-    const paths = portfolioResults.portfolio_paths_sample;
-    return Array.from({ length: paths[0]?.length || 0 }, (_, dayIndex) => {
-      const dayData = { day: dayIndex };
-      paths.forEach((path, pathIdx) => {
-        dayData[`path_${pathIdx}`] = path[dayIndex];
-      });
-      return dayData;
-    });
-  }, [portfolioResults]);
-
-  const correlationData = useMemo(() => {
-    if (!portfolioResults?.correlation_matrix) return [];
-    const tickers = portfolioResults.tickers;
-    const data = [];
-    const seen = new Set();
-    
-    tickers.forEach(ticker1 => {
-      tickers.forEach(ticker2 => {
-        if (ticker1 !== ticker2) {
-          const key = [ticker1, ticker2].sort().join('-');
-          if (!seen.has(key)) {
-            seen.add(key);
-            const corr = portfolioResults.correlation_matrix[ticker1][ticker2];
-            data.push({ pair: key, correlation: corr, abs: Math.abs(corr) });
-          }
-        }
-      });
-    });
-    return data.sort((a, b) => b.abs - a.abs).slice(0, 6);
-  }, [portfolioResults]);
-
-  const histogramData = useMemo(() => {
-    if (!results?.final_returns) return [];
-    const distributionData = results.final_returns.reduce((acc, ret) => {
-      const bucket = Math.round(ret * 20) / 20;
-      acc[bucket] = (acc[bucket] || 0) + 1;
-      return acc;
-    }, {});
-    return Object.entries(distributionData)
-      .map(([ret, count]) => ({ return: parseFloat(ret), count }))
-      .sort((a, b) => a.return - b.return);
-  }, [results]);
-
-  const models = [
-    { value: 'gaussian', label: 'Gaussian', icon: Target, desc: 'Normal distribution' },
-    { value: 'gmm', label: 'GMM', icon: PieChart, desc: 'Fat-tailed regime' },
-    { value: 'ewma', label: 'EWMA', icon: Activity, desc: 'Dynamic volatility' }
-  ];
-
-  const bgMain = isDark ? "bg-[#0B1120]" : "bg-slate-50"; 
-  const textMain = isDark ? "text-slate-100" : "text-slate-900";
-  const textSub = isDark ? "text-slate-400" : "text-slate-500";
-  const bgCard = isDark ? "bg-[#151e32] border-slate-700/50" : "bg-white border-slate-200 shadow-xl shadow-slate-200/50";
-  const border = isDark ? "border-slate-800" : "border-slate-200";
+  const runPortfolio = async () => {
+    setLoading((current) => ({ ...current, portfolio: true }));
+    setErrors((current) => ({ ...current, portfolio: null }));
+    try {
+      const request = buildPortfolioRequest(portfolioAssets, portfolioAssumptions);
+      setPortfolioResult(await postScenario('/api/simulate-portfolio', request));
+    } catch (requestError) {
+      setErrors((current) => ({ ...current, portfolio: requestError.message }));
+    } finally {
+      setLoading((current) => ({ ...current, portfolio: false }));
+    }
+  };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${bgMain}`}>
-      <div className={`border-b ${border} ${isDark ? 'bg-[#0B1120]/90' : 'bg-white/80'} backdrop-blur-xl sticky top-0 z-50`}>
-        <div className="max-w-7xl mx-auto px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className={`${isDark ? 'bg-white' : 'bg-blue-600'} p-2.5 rounded-xl shadow-lg transition-colors`}>
-                <TrendingUp className={`w-6 h-6 ${isDark ? 'text-slate-900' : 'text-white'}`} />
-              </div>
-              <div>
-                <h1 className={`text-xl font-bold ${textMain}`}>Stochastic Market Simulator</h1>
-                <p className={`text-xs font-medium tracking-wide uppercase mt-0.5 ${textSub}`}>Advanced Monte Carlo Risk Simulation Platform</p>
-              </div>
+    <div className={`min-h-screen transition-colors ${isDark ? 'bg-[#0B1120]' : 'bg-slate-50'}`}>
+      <header className={`sticky top-0 z-50 border-b backdrop-blur-xl ${isDark ? 'border-slate-800 bg-[#0B1120]/90' : 'border-slate-200 bg-white/90'}`}>
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8">
+          <div className="flex items-center gap-4">
+            <div className={`rounded-xl p-2.5 shadow-lg ${isDark ? 'bg-white' : 'bg-blue-600'}`}>
+              <TrendingUp className={`h-6 w-6 ${isDark ? 'text-slate-900' : 'text-white'}`} />
             </div>
-            <div className="flex items-center gap-4">
-              <button onClick={toggleTheme} className={`p-2 rounded-full border transition-all ${isDark ? 'bg-slate-800 border-slate-700 text-yellow-400 hover:bg-slate-700' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'}`}>
-                {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-              </button>
-              <div className={`px-3 py-1.5 rounded-full ${isDark ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-emerald-100 border-emerald-200 text-emerald-700'} text-xs font-semibold flex items-center gap-2`}>
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                System Live
-              </div>
+            <div>
+              <h1 className={`text-xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>Portfolio Simulations</h1>
+              <p className={`mt-0.5 text-xs font-medium uppercase tracking-wide ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Risk &amp; Scenario Lab</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            aria-label="Toggle color theme"
+            onClick={() => setTheme((current) => current === 'light' ? 'dark' : 'light')}
+            className={`rounded-full border p-2 ${isDark ? 'border-slate-700 bg-slate-800 text-yellow-400' : 'border-slate-200 bg-white text-slate-600'}`}
+          >
+            {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          </button>
+        </div>
+      </header>
+
+      <main className="mx-auto max-w-7xl px-5 py-8 md:px-8">
+        <div className={`mb-6 rounded-2xl border p-5 ${isDark ? 'border-indigo-400/20 bg-indigo-400/10 text-indigo-100' : 'border-indigo-200 bg-indigo-50 text-indigo-950'}`}>
+          <div className="flex gap-3">
+            <Info className="mt-0.5 h-5 w-5 shrink-0" />
+            <div>
+              <p className="font-semibold">These are conditional simulations, not return forecasts.</p>
+              <p className={`mt-1 text-sm ${isDark ? 'text-indigo-200/80' : 'text-indigo-800'}`}>
+                Historical data estimates distribution and risk inputs. Each result remains tied to the assumptions returned by the API.
+              </p>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-8 py-8">
-        <div className="flex gap-2 mb-8">
-          {[
-            { id: 'single', label: 'Single Asset', icon: Zap },
-            { id: 'portfolio', label: 'Portfolio Builder', icon: Briefcase },
-            { id: 'compare', label: 'Model Lab', icon: BarChart3 }
-          ].map(tab => {
-            const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-5 py-2.5 rounded-xl font-semibold transition-all flex items-center gap-2 text-sm ${
-                  isActive
-                    ? (isDark ? 'bg-white text-slate-900 shadow-lg shadow-white/10' : 'bg-slate-900 text-white shadow-lg shadow-slate-200')
-                    : (isDark ? 'text-slate-400 hover:bg-slate-800' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50')
-                }`}
-              >
-                <Icon className="w-4 h-4" />
-                {tab.label}
-              </button>
-            );
-          })}
+        <div className="mb-8 flex gap-2">
+          <TabButton active={activeTab === 'single'} onClick={() => setActiveTab('single')} isDark={isDark} icon={Zap}>Single Asset</TabButton>
+          <TabButton active={activeTab === 'portfolio'} onClick={() => setActiveTab('portfolio')} isDark={isDark} icon={Briefcase}>Portfolio</TabButton>
         </div>
 
-        {activeTab === 'single' && (
+        {activeTab === 'single' ? (
           <>
-            <SingleAssetConfig
-              ticker={ticker} setTicker={setTicker} years={years} setYears={setYears}
-              horizon={horizon} setHorizon={setHorizon} numPaths={numPaths} setNumPaths={setNumPaths}
-              model={model} setModel={setModel} models={models} loading={loading} error={error}
-              runSimulation={runSimulation} isDark={isDark}
+            <SimulationConfig
+              mode="single"
+              ticker={ticker}
+              setTicker={setTicker}
+              assumptions={singleAssumptions}
+              setAssumptions={setSingleAssumptions}
+              onRun={runSingle}
+              loading={loading.single}
+              isDark={isDark}
             />
-            {results && (
-              <SingleAssetResults results={results} chartData={chartData} numPaths={numPaths} histogramData={histogramData} isDark={isDark} />
-            )}
+            {singleResult && <ScenarioResults result={singleResult} mode="single" isDark={isDark} />}
+          </>
+        ) : (
+          <>
+            <SimulationConfig
+              mode="portfolio"
+              assets={portfolioAssets}
+              setAssets={setPortfolioAssets}
+              updateAsset={updateAsset}
+              totalWeight={totalWeight}
+              normalizeWeights={normalizeWeights}
+              assumptions={portfolioAssumptions}
+              setAssumptions={setPortfolioAssumptions}
+              onRun={runPortfolio}
+              loading={loading.portfolio}
+              isDark={isDark}
+            />
+            {portfolioResult && <ScenarioResults result={portfolioResult} mode="portfolio" isDark={isDark} />}
           </>
         )}
 
-        {activeTab === 'portfolio' && (
-          <>
-            <PortfolioConfig
-              portfolioAssets={portfolioAssets} updateAsset={updateAsset} removeAsset={removeAsset}
-              addAsset={addAsset} totalWeight={totalWeight} normalizeWeights={normalizeWeights}
-              years={years} setYears={setYears} horizon={horizon} setHorizon={setHorizon}
-              numPaths={numPaths} setNumPaths={setNumPaths} model={model} setModel={setModel}
-              models={models} portfolioLoading={portfolioLoading} error={error}
-              runPortfolioSimulation={runPortfolioSimulation} isDark={isDark}
-            />
-            {portfolioResults && (
-              <PortfolioResults 
-                portfolioResults={portfolioResults} 
-                portfolioChartData={portfolioChartData}
-                correlationData={correlationData}
-                isDark={isDark}
-              />
-            )}
-          </>
-        )}
-
-        {activeTab === 'compare' && (
-          <div className={`${bgCard} rounded-3xl p-16 text-center border transition-all`}>
-            <div className={`inline-flex p-6 rounded-full mb-6 ${isDark ? 'bg-slate-800' : 'bg-slate-100'}`}>
-              <BarChart3 className={`w-16 h-16 ${isDark ? 'text-slate-600' : 'text-slate-400'}`} />
-            </div>
-            <h3 className={`text-3xl font-bold ${textMain} mb-3`}>Model Comparison Lab</h3>
-            <p className={`${textSub} mb-8 max-w-md mx-auto`}>
-              Run Gaussian, GMM, and EWMA models side-by-side to visualize tail risk differences.
-            </p>
-            <div className={`inline-flex items-center gap-2 px-6 py-3 rounded-full ${isDark ? 'bg-slate-800 text-white border border-slate-700' : 'bg-slate-900 text-white'}`}>
-              <Sparkles className="w-4 h-4 animate-pulse" />
-              <span className="text-sm font-semibold">Feature Coming Soon</span>
-            </div>
+        {error && (
+          <div role="alert" className="mt-6 flex items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-500">
+            <AlertTriangle className="h-4 w-4 shrink-0" /> {error}
           </div>
         )}
-      </div>
+      </main>
     </div>
   );
 }
 
-// --- SUB-COMPONENTS ---
-
-function SingleAssetConfig({ ticker, setTicker, years, setYears, horizon, setHorizon, numPaths, setNumPaths, model, setModel, models, loading, error, runSimulation, isDark }) {
-  const inputClass = `w-full rounded-xl px-4 py-3 font-mono text-sm border focus:outline-none focus:ring-2 transition-all ${
-    isDark ? 'bg-[#0f172a] border-slate-700 text-white focus:ring-slate-500' : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-slate-900'
-  }`;
-  
+function TabButton({ active, onClick, isDark, icon, children }) {
+  const IconComponent = icon;
   return (
-    <div className={`${isDark ? 'bg-[#151e32] border-slate-700/50' : 'bg-white border-slate-200 shadow-xl shadow-slate-200/50'} rounded-3xl p-8 mb-8 border transition-all`}>
-      <div className="flex items-center gap-3 mb-6">
-        <div className={`p-2 rounded-xl ${isDark ? 'bg-slate-800 text-white' : 'bg-slate-900 text-white'}`}>
-          <Activity className="w-5 h-5" />
+    <button
+      type="button"
+      onClick={onClick}
+      className={`flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition ${active
+        ? isDark ? 'bg-white text-slate-900' : 'bg-slate-900 text-white'
+        : isDark ? 'text-slate-400 hover:bg-slate-800' : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-100'
+      }`}
+    >
+      <IconComponent className="h-4 w-4" /> {children}
+    </button>
+  );
+}
+
+function SimulationConfig({
+  mode,
+  ticker,
+  setTicker,
+  assets,
+  setAssets,
+  updateAsset,
+  totalWeight,
+  normalizeWeights,
+  assumptions,
+  setAssumptions,
+  onRun,
+  loading,
+  isDark,
+}) {
+  const updateAssumption = (field, value) => setAssumptions((current) => ({ ...current, [field]: value }));
+  const weightsValid = mode === 'single' || Math.abs(totalWeight - 100) <= 1e-8;
+  const identifiersValid = mode === 'single'
+    ? Boolean(ticker.trim())
+    : assets.length >= 2 && assets.every((asset) => asset.ticker.trim());
+  const simulationCells = Number(assumptions.horizon) * Number(assumptions.numPaths) * (mode === 'single' ? 1 : assets.length);
+  const sizeValid = Number.isFinite(simulationCells) && simulationCells <= MAX_SIMULATION_CELLS;
+
+  return (
+    <section className={`mb-8 rounded-3xl border p-6 ${panel(isDark)}`}>
+      <div className="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{mode === 'single' ? 'Single-asset scenario' : 'Portfolio scenario'}</h2>
+          <p className={`mt-1 text-sm ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Set the assumptions explicitly before running the simulation.</p>
         </div>
-        <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Configuration</h2>
+        <span className={`rounded-full px-3 py-1 text-xs font-bold ${isDark ? 'bg-slate-800 text-slate-300' : 'bg-slate-100 text-slate-600'}`}>API v3</span>
       </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-        <div>
-          <label className={`block text-xs font-bold uppercase tracking-wider mb-2 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Ticker</label>
-          <input type="text" value={ticker} onChange={(e) => setTicker(e.target.value.toUpperCase())} className={inputClass} />
-        </div>
-        <div>
-          <label className={`block text-xs font-bold uppercase tracking-wider mb-2 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Horizon (Days)</label>
-          <input type="number" value={horizon} onChange={(e) => setHorizon(parseInt(e.target.value))} className={inputClass} />
-        </div>
-        <div>
-          <label className={`block text-xs font-bold uppercase tracking-wider mb-2 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Sim Paths</label>
-          <input type="number" value={numPaths} onChange={(e) => setNumPaths(parseInt(e.target.value))} className={inputClass} />
-        </div>
-        <div>
-          <label className={`block text-xs font-bold uppercase tracking-wider mb-2 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>History (Yrs)</label>
-          <input type="number" value={years} onChange={(e) => setYears(parseInt(e.target.value))} className={inputClass} />
+
+      {mode === 'single' ? (
+        <Field label="Ticker" isDark={isDark}>
+          <input value={ticker} onChange={(event) => setTicker(event.target.value.toUpperCase())} className={input(isDark)} />
+        </Field>
+      ) : (
+        <PortfolioAssets assets={assets} setAssets={setAssets} updateAsset={updateAsset} totalWeight={totalWeight} normalizeWeights={normalizeWeights} isDark={isDark} />
+      )}
+
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <NumberField label="History (years)" value={assumptions.years} onChange={(value) => updateAssumption('years', value)} min="1" max="10" isDark={isDark} />
+        <NumberField label="Horizon (modeled periods)" value={assumptions.horizon} onChange={(value) => updateAssumption('horizon', value)} min="1" max="1000" isDark={isDark} />
+        <NumberField label="Simulation paths" value={assumptions.numPaths} onChange={(value) => updateAssumption('numPaths', value)} min="100" max="5000" isDark={isDark} />
+        <NumberField label="Random seed" value={assumptions.randomSeed} onChange={(value) => updateAssumption('randomSeed', value)} min="0" max="4294967295" isDark={isDark} />
+        <NumberField label="Initial value" value={assumptions.initialValue} onChange={(value) => updateAssumption('initialValue', value)} min="0.01" max="1000000000000" step="0.01" isDark={isDark} />
+        <Field label="Currency denomination" isDark={isDark}>
+          <select value={assumptions.currency} onChange={(event) => updateAssumption('currency', event.target.value)} className={input(isDark)}><option value="USD">USD</option></select>
+        </Field>
+        <NumberField label="Periods per year" value={assumptions.periodsPerYear} onChange={(value) => updateAssumption('periodsPerYear', value)} min="1" max="366" isDark={isDark} />
+        <NumberField label="Confidence (0.95 = 95%)" value={assumptions.confidence} onChange={(value) => updateAssumption('confidence', value)} min="0.001" max="0.999" step="0.005" isDark={isDark} />
+        <NumberField label="Annual effective risk-free rate (0.04 = 4%)" value={assumptions.riskFreeRate} onChange={(value) => updateAssumption('riskFreeRate', value)} min="-0.999" max="1" step="0.001" isDark={isDark} />
+        <Field label="Drift model" isDark={isDark}>
+          <select value={assumptions.driftModel} onChange={(event) => updateAssumption('driftModel', event.target.value)} className={input(isDark)}>
+            <option value="zero_log_drift">Zero log drift</option>
+            <option value="historical_diagnostic">Historical diagnostic</option>
+          </select>
+        </Field>
+        <Field label="Covariance estimator" isDark={isDark}>
+          <select value={assumptions.covarianceEstimator} onChange={(event) => updateAssumption('covarianceEstimator', event.target.value)} className={input(isDark)}>
+            <option value="ledoit_wolf">Ledoit-Wolf</option><option value="sample">Sample covariance</option>
+          </select>
+        </Field>
+        <Field label="Rebalancing" isDark={isDark}>
+          <select value={assumptions.rebalance} onChange={(event) => updateAssumption('rebalance', event.target.value)} className={input(isDark)}>
+            <option value="daily">Daily</option><option value="buy_and_hold">Buy and hold</option>
+          </select>
+        </Field>
+      </div>
+
+      <div className="mt-6">
+        <label className={`mb-3 block text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Return model</label>
+        <div className={`grid gap-3 ${mode === 'single' ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
+          {MODEL_OPTIONS.filter((option) => mode === 'single' || option.value !== 'ewma').map((option) => (
+            <button
+              type="button"
+              key={option.value}
+              onClick={() => updateAssumption('model', option.value)}
+              className={`rounded-xl border p-4 text-left ${assumptions.model === option.value
+                ? isDark ? 'border-indigo-400 bg-indigo-400/10 text-white' : 'border-indigo-600 bg-indigo-50 text-indigo-950'
+                : isDark ? 'border-slate-700 bg-[#0f172a] text-slate-400' : 'border-slate-200 bg-white text-slate-600'
+              }`}
+            >
+              <span className="block font-bold">{option.label}</span><span className="mt-1 block text-xs opacity-75">{option.description}</span>
+            </button>
+          ))}
         </div>
       </div>
 
-      <div className="mb-8">
-        <label className={`block text-xs font-bold uppercase tracking-wider mb-3 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Statistical Model</label>
-        <div className="grid grid-cols-3 gap-4">
-          {models.map(m => {
-            const Icon = m.icon;
-            const isActive = model === m.value;
-            return (
-              <button
-                key={m.value}
-                onClick={() => setModel(m.value)}
-                className={`p-4 rounded-xl border text-left transition-all ${
-                  isActive 
-                    ? (isDark ? 'bg-slate-800 border-slate-600 text-white' : 'bg-slate-900 border-slate-900 text-white shadow-lg') 
-                    : (isDark ? 'bg-[#0f172a] border-slate-800 text-slate-400 hover:border-slate-600' : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300')
-                }`}
-              >
-                <div className="flex items-center gap-3 mb-1">
-                    <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'opacity-70'}`} />
-                    <span className="font-bold text-sm">{m.label}</span>
-                </div>
-                <div className="text-xs opacity-60 pl-7">{m.desc}</div>
-              </button>
-            );
-          })}
-        </div>
+      <div className="mt-4 grid gap-4 sm:grid-cols-3">
+        {assumptions.model === 'gmm' && (
+          <>
+            <NumberField label="GMM components" value={assumptions.gmmComponents} onChange={(value) => updateAssumption('gmmComponents', value)} min="1" max="5" isDark={isDark} />
+            <NumberField label="GMM covariance regularizer" value={assumptions.gmmRegCovar} onChange={(value) => updateAssumption('gmmRegCovar', value)} min="0.000000001" max="0.01" step="0.000001" isDark={isDark} />
+          </>
+        )}
+        {assumptions.model === 'ewma' && <NumberField label="EWMA lambda" value={assumptions.ewmaLambda} onChange={(value) => updateAssumption('ewmaLambda', value)} min="0.0001" max="0.9999" step="0.01" isDark={isDark} />}
+      </div>
+
+      <div className={`mt-5 rounded-xl p-4 text-sm ${isDark ? 'bg-slate-900 text-slate-300' : 'bg-slate-100 text-slate-700'}`}>
+        <p>{describeDriftModel(assumptions.driftModel)}</p>
+        <p className="mt-1">Currency is the portfolio valuation denomination. The simulation performs no foreign-exchange conversion.</p>
+        <p className="mt-1">Request size: {Number.isFinite(simulationCells) ? simulationCells.toLocaleString() : 'invalid'} of {MAX_SIMULATION_CELLS.toLocaleString()} maximum path × horizon × asset cells.</p>
       </div>
 
       <button
-        onClick={runSimulation}
-        disabled={loading}
-        className={`w-full font-bold py-4 px-8 rounded-xl transition-all shadow-lg flex items-center justify-center gap-3 ${
-            isDark ? 'bg-white hover:bg-slate-200 text-slate-900 shadow-white/10' : 'bg-slate-900 hover:bg-slate-800 text-white shadow-slate-200'
-        } disabled:opacity-50 disabled:cursor-not-allowed`}
+        type="button"
+        onClick={onRun}
+        disabled={loading || !weightsValid || !identifiersValid || !sizeValid}
+        className={`mt-6 flex w-full items-center justify-center gap-3 rounded-xl px-8 py-4 font-bold shadow-lg disabled:cursor-not-allowed disabled:opacity-50 ${isDark ? 'bg-white text-slate-900' : 'bg-slate-900 text-white'}`}
       >
-        {loading ? <RefreshCw className="w-5 h-5 animate-spin" /> : null} 
-        {loading ? 'Processing Simulation...' : 'Run Risk Simulation'}
+        {loading ? <RefreshCw className="h-5 w-5 animate-spin" /> : <Layers className="h-5 w-5" />}
+        {loading ? 'Running conditional scenarios…' : 'Run conditional scenarios'}
       </button>
-
-      {error && (
-        <div className="mt-6 bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-red-500 text-sm flex items-center gap-2">
-          <AlertTriangle className="w-4 h-4" /> {error}
-        </div>
-      )}
-    </div>
+      {!weightsValid && <p className="mt-2 text-sm text-red-500">Portfolio weights must total 100%.</p>}
+      {!sizeValid && <p className="mt-2 text-sm text-red-500">Reduce paths, horizon, or asset count to stay within 2,000,000 simulation cells.</p>}
+    </section>
   );
 }
 
-function PortfolioConfig({ portfolioAssets, updateAsset, removeAsset, addAsset, totalWeight, normalizeWeights, years, setYears, horizon, setHorizon, numPaths, setNumPaths, model, setModel, models, portfolioLoading, error, runPortfolioSimulation, isDark }) {
-  const inputClass = `w-full rounded-xl px-4 py-3 font-mono text-sm border focus:outline-none focus:ring-2 transition-all ${
-    isDark ? 'bg-[#0f172a] border-slate-700 text-white focus:ring-slate-500' : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-slate-900'
-  }`;
-
+function PortfolioAssets({ assets, setAssets, updateAsset, totalWeight, normalizeWeights, isDark }) {
   return (
-    <div className={`${isDark ? 'bg-[#151e32] border-slate-700/50' : 'bg-white border-slate-200 shadow-xl shadow-slate-200/50'} rounded-3xl p-8 mb-8 border transition-all`}>
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-3">
-          <div className={`p-2 rounded-xl ${isDark ? 'bg-slate-800 text-white' : 'bg-slate-900 text-white'}`}>
-            <Briefcase className="w-5 h-5" />
+    <div>
+      <div className="space-y-3">
+        {assets.map((asset, index) => (
+          <div key={index} className="grid grid-cols-[1fr_9rem_auto] gap-3">
+            <input aria-label={`Asset ${index + 1} ticker`} value={asset.ticker} onChange={(event) => updateAsset(index, 'ticker', event.target.value.toUpperCase())} className={input(isDark)} placeholder="Ticker" />
+            <div className="relative">
+              <input aria-label={`Asset ${index + 1} weight`} type="number" min="0" max="100" value={asset.weight} onChange={(event) => updateAsset(index, 'weight', event.target.value)} className={`${input(isDark)} pr-8`} />
+              <span className={`absolute right-3 top-2.5 text-sm ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>%</span>
+            </div>
+            <button type="button" aria-label={`Remove asset ${index + 1}`} disabled={assets.length <= 2} onClick={() => setAssets((current) => current.filter((_, assetIndex) => assetIndex !== index))} className={`rounded-xl p-3 disabled:opacity-30 ${isDark ? 'text-slate-400 hover:bg-slate-800' : 'text-slate-500 hover:bg-slate-100'}`}><X className="h-4 w-4" /></button>
           </div>
-          <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Portfolio Builder</h2>
-        </div>
-        <button onClick={addAsset} disabled={portfolioAssets.length >= 10} className={`px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 transition-all ${isDark ? 'bg-slate-800 hover:bg-slate-700 text-white' : 'bg-slate-900 text-white hover:bg-slate-800'}`}>
-          <Plus className="w-4 h-4" /> Add Asset
-        </button>
+        ))}
       </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Left Col: Asset List */}
-        <div className="space-y-4">
-            {portfolioAssets.map((asset, index) => (
-            <div key={index} className="flex gap-3">
-                <div className="flex-1">
-                    <input
-                        type="text"
-                        value={asset.ticker}
-                        onChange={(e) => updateAsset(index, 'ticker', e.target.value.toUpperCase())}
-                        placeholder="TICKER"
-                        className={inputClass}
-                    />
-                </div>
-                <div className={`flex items-center gap-2 rounded-xl px-4 border ${isDark ? 'bg-[#0f172a] border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
-                    <input
-                        type="text" 
-                        value={asset.weight}
-                        onChange={(e) => updateAsset(index, 'weight', e.target.value)}
-                        placeholder="0"
-                        className={`w-16 bg-transparent focus:outline-none font-mono font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}
-                    />
-                    <span className="text-slate-500 font-bold">%</span>
-                </div>
-                <button onClick={() => removeAsset(index)} disabled={portfolioAssets.length <= 2} className={`p-3 rounded-xl transition-all ${isDark ? 'bg-red-900/20 text-red-400 hover:bg-red-900/30' : 'bg-red-50 text-red-500 hover:bg-red-100'} disabled:opacity-30`}>
-                    <X className="w-5 h-5" />
-                </button>
-            </div>
-            ))}
-            
-            <div className={`flex items-center justify-between mt-4 p-4 rounded-xl border ${isDark ? 'bg-[#0f172a] border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
-                <span className={`text-sm font-semibold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Total Allocation</span>
-                <div className="flex items-center gap-4">
-                    <span className={`text-lg font-mono font-bold ${Math.abs(totalWeight - 100) < 0.01 ? 'text-emerald-500' : 'text-red-500'}`}>
-                        {totalWeight.toFixed(2)}%
-                    </span>
-                    <button onClick={normalizeWeights} className={`px-3 py-1.5 text-xs font-bold rounded-lg ${isDark ? 'bg-slate-800 text-slate-300 hover:bg-slate-700' : 'bg-white border border-slate-300 text-slate-700 hover:bg-slate-50'}`}>
-                        Normalize
-                    </button>
-                </div>
-            </div>
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+        <button type="button" disabled={assets.length >= 10} onClick={() => setAssets((current) => [...current, { ticker: '', weight: '' }])} className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold disabled:opacity-40 ${isDark ? 'bg-slate-800 text-slate-200' : 'bg-slate-100 text-slate-700'}`}><Plus className="h-4 w-4" /> Add asset</button>
+        <div className="flex items-center gap-3">
+          <span className={`font-mono font-bold ${Math.abs(totalWeight - 100) <= 1e-8 ? 'text-emerald-500' : 'text-red-500'}`}>{totalWeight.toFixed(2)}%</span>
+          <button type="button" onClick={normalizeWeights} className={`rounded-lg px-3 py-2 text-xs font-bold ${isDark ? 'bg-slate-800 text-slate-300' : 'border border-slate-300 bg-white text-slate-700'}`}>Normalize</button>
         </div>
-
-        {/* Right Col: Settings */}
-        <div className="flex flex-col gap-6">
-            <div className="grid grid-cols-3 gap-4">
-                <div>
-                    <label className={`block text-xs font-bold uppercase tracking-wider mb-2 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>History</label>
-                    <input type="number" value={years} onChange={(e) => setYears(parseInt(e.target.value))} className={inputClass} />
-                </div>
-                <div>
-                    <label className={`block text-xs font-bold uppercase tracking-wider mb-2 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Horizon</label>
-                    <input type="number" value={horizon} onChange={(e) => setHorizon(parseInt(e.target.value))} className={inputClass} />
-                </div>
-                <div>
-                    <label className={`block text-xs font-bold uppercase tracking-wider mb-2 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Paths</label>
-                    <input type="number" value={numPaths} onChange={(e) => setNumPaths(parseInt(e.target.value))} className={inputClass} />
-                </div>
-            </div>
-
-            <div>
-                <label className={`block text-xs font-bold uppercase tracking-wider mb-3 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Correlation Model</label>
-                <div className="grid grid-cols-2 gap-3">
-                    {models.filter(m => m.value !== 'ewma').map(m => {
-                        const Icon = m.icon;
-                        const isActive = model === m.value;
-                        return (
-                            <button
-                                key={m.value} onClick={() => setModel(m.value)}
-                                className={`p-4 rounded-xl border text-left transition-all flex flex-col items-center justify-center gap-2 ${
-                                    isActive 
-                                    ? (isDark ? 'bg-slate-800 border-slate-600 text-white' : 'bg-slate-900 border-slate-900 text-white') 
-                                    : (isDark ? 'bg-[#0f172a] border-slate-800 text-slate-400' : 'bg-white border-slate-200 text-slate-600')
-                                }`}
-                            >
-                                <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'opacity-70'}`} />
-                                <span className="text-sm font-bold">{m.label}</span>
-                            </button>
-                        );
-                    })}
-                </div>
-            </div>
-
-            <button
-                onClick={runPortfolioSimulation}
-                disabled={portfolioLoading || Math.abs(totalWeight - 100) > 0.01}
-                className={`mt-auto w-full font-bold py-4 px-8 rounded-xl transition-all shadow-lg flex items-center justify-center gap-3 ${
-                    isDark ? 'bg-white hover:bg-slate-200 text-slate-900 shadow-white/10' : 'bg-slate-900 hover:bg-slate-800 text-white shadow-slate-200'
-                } disabled:opacity-50 disabled:cursor-not-allowed`}
-            >
-                {portfolioLoading ? <RefreshCw className="w-5 h-5 animate-spin" /> : <Layers className="w-5 h-5" />}
-                {portfolioLoading ? 'Calculating Correlations...' : 'Run Portfolio Simulation'}
-            </button>
-        </div>
-      </div>
-
-      {error && (
-        <div className="mt-6 bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-red-500 text-sm flex items-center gap-2">
-          <AlertTriangle className="w-4 h-4" /> {error}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function SingleAssetResults({ results, chartData, numPaths, histogramData, isDark }) {
-  const singleAssetInfo = {
-    mean: "Average return of all 1000 simulated paths. Positive means uptrend.",
-    vol: "Annualized Standard Deviation. Higher % means riskier swings.",
-    var: "Value at Risk (95%): In the worst 5% of cases, you lose at least this much.",
-    cvar: "Expected Shortfall: The average loss when the crash actually happens.",
-    prob: "Probability of Loss: The % of paths that ended below the start price."
-  };
-
-  return (
-    <>
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-        <StatCard title="Mean Return" value={`${(results.risk_stats.mean * 100).toFixed(2)}%`} icon={TrendingUp} color="emerald" trend="positive" isDark={isDark} info={singleAssetInfo.mean} />
-        <StatCard title="Volatility" value={`${(results.risk_stats.vol * 100).toFixed(2)}%`} icon={Activity} color="violet" isDark={isDark} info={singleAssetInfo.vol} />
-        <StatCard title="VaR (95%)" value={`${(results.risk_stats.VaR_95 * 100).toFixed(2)}%`} icon={Shield} color="rose" trend="negative" isDark={isDark} info={singleAssetInfo.var} />
-        <StatCard title="CVaR (95%)" value={`${(results.risk_stats.CVaR_95 * 100).toFixed(2)}%`} icon={TrendingDown} color="orange" trend="negative" isDark={isDark} info={singleAssetInfo.cvar} />
-        <StatCard title="Prob. Loss" value={`${(results.risk_stats.prob_loss * 100).toFixed(1)}%`} icon={AlertTriangle} color="amber" isDark={isDark} info={singleAssetInfo.prob} />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
-            <ChartCard title="Simulated Price Paths" icon={TrendingUp} isDark={isDark}>
-            <ResponsiveContainer width="100%" height={320}>
-                <LineChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "#1e293b" : "#e2e8f0"} />
-                <XAxis dataKey="day" stroke={isDark ? "#64748b" : "#94a3b8"} hide />
-                <YAxis stroke={isDark ? "#64748b" : "#94a3b8"} domain={['auto', 'auto']} />
-                <Tooltip content={<CustomTooltip isDark={isDark} />} />
-                {results.paths_sample.map((_, idx) => (
-                    <Line key={idx} type="monotone" dataKey={`path_${idx}`} stroke={isDark ? "#818cf8" : "#4f46e5"} strokeWidth={1.5} dot={false} strokeOpacity={0.15} isAnimationActive={false} />
-                ))}
-                </LineChart>
-            </ResponsiveContainer>
-            </ChartCard>
-
-            <ChartCard title="Return Distribution" icon={BarChart3} isDark={isDark}>
-            <ResponsiveContainer width="100%" height={320}>
-                <BarChart data={histogramData}>
-                <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "#1e293b" : "#e2e8f0"} />
-                <XAxis dataKey="return" stroke={isDark ? "#64748b" : "#94a3b8"} tickFormatter={(val) => `${(val * 100).toFixed(0)}%`} />
-                <YAxis stroke={isDark ? "#64748b" : "#94a3b8"} />
-                <Tooltip cursor={{fill: 'transparent'}} contentStyle={{backgroundColor: isDark ? '#0f172a' : '#fff', borderRadius: '8px'}} />
-                <Bar dataKey="count" fill={isDark ? "#818cf8" : "#4f46e5"} radius={[4, 4, 0, 0]} />
-                </BarChart>
-            </ResponsiveContainer>
-            </ChartCard>
-        </div>
-        {/* Extreme Scenarios Added Here */}
-        <div className="lg:col-span-1">
-            <ExtremeScenarios returns={results.final_returns} isDark={isDark} />
-        </div>
-      </div>
-    </>
-  );
-}
-
-function PortfolioResults({ portfolioResults, portfolioChartData, correlationData, isDark }) {
-  const pieColors = ['#4f46e5', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
-  const info = {
-    return: "Weighted average return of the entire portfolio basket.",
-    sharpe: "Sharpe Ratio: Returns per unit of risk. >1.0 is good, >2.0 is excellent.",
-    corr: "Correlation Matrix: +1.0 means assets move together, -1.0 means opposite.",
-    contrib: "Risk Contribution: How much each asset adds to total portfolio volatility."
-  };
-
-  // Guard clause to prevent white screen crash
-  if (!portfolioResults || !portfolioResults.portfolio_stats) return null;
-
-  // FIX 1: Normalize Pie Chart Data on Frontend
-  // This ensures the chart always sums to 100% even if the backend sends raw returns
-  const normalizedAssets = useMemo(() => {
-    if (!portfolioResults.asset_stats) return [];
-    
-    // Sum of all absolute contributions
-    const total = portfolioResults.asset_stats.reduce((sum, item) => sum + Math.abs(item.contribution), 0);
-    
-    if (total === 0) return portfolioResults.asset_stats;
-
-    return portfolioResults.asset_stats.map(item => ({
-      ...item,
-      // Calculate relative percentage (0.0 to 1.0)
-      percentage: Math.abs(item.contribution) / total
-    }));
-  }, [portfolioResults]);
-
-  // FIX 2: Calculate derived returns for Extreme Scenarios if missing
-  const derivedReturns = useMemo(() => {
-    if (portfolioResults.final_returns && portfolioResults.final_returns.length > 0) {
-        return portfolioResults.final_returns;
-    }
-    if (portfolioResults.portfolio_paths_sample) {
-        return portfolioResults.portfolio_paths_sample.map(path => {
-            const start = path[0];
-            const end = path[path.length - 1];
-            return (end - start) / start;
-        });
-    }
-    return [];
-  }, [portfolioResults]);
-  
-  return (
-    <>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <StatCard title="Portfolio Return" value={`${(portfolioResults.portfolio_stats.mean * 100).toFixed(2)}%`} icon={TrendingUp} color="emerald" trend="positive" isDark={isDark} info={info.return} />
-        <StatCard title="Volatility" value={`${(portfolioResults.portfolio_stats.volatility * 100).toFixed(2)}%`} icon={Activity} color="violet" isDark={isDark} info="Total Portfolio Risk (Annualized)" />
-        <StatCard title="Sharpe Ratio" value={`${portfolioResults.portfolio_stats.sharpe_ratio.toFixed(2)}`} icon={Target} color="blue" isDark={isDark} info={info.sharpe} />
-        <StatCard title="VaR (95%)" value={`${(portfolioResults.portfolio_stats.VaR_95 * 100).toFixed(2)}%`} icon={Shield} color="rose" trend="negative" isDark={isDark} info="Max portfolio loss in 95% of cases." />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
-            <ChartCard title="Projected Portfolio Value" icon={TrendingUp} isDark={isDark}>
-            <ResponsiveContainer width="100%" height={320}>
-                <LineChart data={portfolioChartData}>
-                <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "#1e293b" : "#e2e8f0"} />
-                <XAxis dataKey="day" stroke={isDark ? "#64748b" : "#94a3b8"} hide />
-                <YAxis stroke={isDark ? "#64748b" : "#94a3b8"} domain={['auto', 'auto']} />
-                <Tooltip content={<CustomTooltip isDark={isDark} />} />
-                {portfolioResults.portfolio_paths_sample?.map((_, idx) => (
-                    <Line key={idx} type="monotone" dataKey={`path_${idx}`} stroke={isDark ? "#818cf8" : "#4f46e5"} strokeWidth={1.5} dot={false} strokeOpacity={0.15} isAnimationActive={false} />
-                ))}
-                </LineChart>
-            </ResponsiveContainer>
-            </ChartCard>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                 {/* Allocation Card - Fixed Logo */}
-                <div className={`${isDark ? 'bg-[#151e32] border-slate-700/50' : 'bg-white border-slate-200 shadow-xl shadow-slate-200/50'} rounded-3xl p-6 border transition-all`}>
-                    <div className="flex items-center gap-3 mb-4">
-                        <div className={`p-2 rounded-xl ${isDark ? 'bg-slate-800 text-white' : 'bg-slate-900 text-white'}`}>
-                            <PieChart className="w-5 h-5" /> 
-                        </div>
-                        <h3 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Allocation</h3>
-                    </div>
-                    <div className="h-[180px] w-full">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <RePieChart>
-                                {/* Use normalizedAssets and dataKey="percentage" */}
-                                <Pie data={normalizedAssets} dataKey="percentage" nameKey="ticker" cx="50%" cy="50%" innerRadius={55} outerRadius={75} paddingAngle={5}>
-                                    {normalizedAssets.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={pieColors[index % pieColors.length]} />
-                                    ))}
-                                </Pie>
-                                <Tooltip contentStyle={{backgroundColor: isDark ? '#0f172a' : '#fff', borderRadius: '8px'}} formatter={(value) => `${(value * 100).toFixed(1)}%`} />
-                            </RePieChart>
-                        </ResponsiveContainer>
-                    </div>
-                    <div className="space-y-2 mt-2">
-                        {normalizedAssets.map((asset, index) => (
-                            <div key={asset.ticker} className="flex justify-between text-sm">
-                                <span className={`font-semibold flex items-center gap-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-                                    <span className="w-2 h-2 rounded-full" style={{ backgroundColor: pieColors[index % pieColors.length] }}></span>
-                                    {asset.ticker}
-                                </span>
-                                <span className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                                    {/* Display normalized percentage */}
-                                    {(asset.percentage * 100).toFixed(1)}% Contrib.
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                <div className={`${isDark ? 'bg-[#151e32] border-slate-700/50' : 'bg-white border-slate-200 shadow-xl shadow-slate-200/50'} rounded-3xl p-6 border transition-all`}>
-                    <div className="flex items-center gap-3 mb-4">
-                        <div className={`p-2 rounded-xl ${isDark ? 'bg-slate-800 text-white' : 'bg-slate-900 text-white'}`}>
-                            <Layers className="w-5 h-5" />
-                        </div>
-                        <h3 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Top Correlations</h3>
-                    </div>
-                    <div className="space-y-3">
-                        {correlationData.slice(0, 4).map((item, idx) => (
-                            <div key={idx} className={`flex items-center justify-between p-3 rounded-xl ${isDark ? 'bg-[#0f172a]' : 'bg-slate-50'}`}>
-                                <span className={`text-xs font-bold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{item.pair}</span>
-                                <span className={`text-sm font-bold ${item.correlation > 0.7 ? 'text-emerald-500' : item.correlation < -0.5 ? 'text-rose-500' : (isDark ? 'text-white' : 'text-slate-900')}`}>
-                                    {item.correlation.toFixed(2)}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {/* Extreme Scenarios Added Here for Portfolio */}
-        <div className="lg:col-span-1">
-             <ExtremeScenarios returns={derivedReturns} isDark={isDark} />
-        </div>
-      </div>
-    </>
-  );
-}
-
-function StatCard({ title, value, icon: Icon, color, trend, isDark, info }) {
-  const colors = {
-    emerald: isDark ? 'text-emerald-400 bg-emerald-500/10' : 'text-emerald-600 bg-emerald-50',
-    violet: isDark ? 'text-violet-400 bg-violet-500/10' : 'text-violet-600 bg-violet-50',
-    rose: isDark ? 'text-rose-400 bg-rose-500/10' : 'text-rose-600 bg-rose-50',
-    orange: isDark ? 'text-orange-400 bg-orange-500/10' : 'text-orange-600 bg-orange-50',
-    amber: isDark ? 'text-amber-400 bg-amber-500/10' : 'text-amber-600 bg-amber-50',
-    blue: isDark ? 'text-blue-400 bg-blue-500/10' : 'text-blue-600 bg-blue-50',
-  };
-
-  return (
-    <div className={`${isDark ? 'bg-[#151e32] border-slate-700/50' : 'bg-white border-slate-200 shadow-lg shadow-slate-200/50'} rounded-2xl p-6 border transition-all`}>
-      <div className="flex items-center justify-between mb-4">
-        <div className={`p-3 rounded-xl ${colors[color]}`}>
-          <Icon className="w-5 h-5" />
-        </div>
-        <div className="flex items-center gap-2">
-            {trend === 'positive' && <TrendingUp className="w-4 h-4 text-emerald-500" />}
-            {trend === 'negative' && <TrendingDown className="w-4 h-4 text-rose-500" />}
-        </div>
-      </div>
-      <div>
-        <div className="flex items-center gap-1 mb-1">
-            <p className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-500' : 'text-slate-500'}`}>{title}</p>
-            {info && <InfoTooltip text={info} isDark={isDark} />}
-        </div>
-        <p className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{value}</p>
       </div>
     </div>
   );
 }
 
-function ChartCard({ title, icon: Icon, children, isDark }) {
-  return (
-    <div className={`${isDark ? 'bg-[#151e32] border-slate-700/50' : 'bg-white border-slate-200 shadow-xl shadow-slate-200/50'} rounded-3xl p-6 border transition-all`}>
-      <div className="flex items-center gap-3 mb-6">
-        <div className={`p-2 rounded-xl ${isDark ? 'bg-slate-800 text-white' : 'bg-slate-900 text-white'}`}>
-          <Icon className="w-5 h-5" />
-        </div>
-        <h3 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{title}</h3>
-      </div>
-      {children}
-    </div>
-  );
+function Field({ label, isDark, children }) {
+  return <label className="block"><span className={`mb-2 block text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{label}</span>{children}</label>;
+}
+
+function NumberField({ label, value, onChange, isDark, ...props }) {
+  return <Field label={label} isDark={isDark}><input type="number" value={value} onChange={(event) => onChange(event.target.value)} className={input(isDark)} {...props} /></Field>;
 }

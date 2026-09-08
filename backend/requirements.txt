@@ -19,3 +19,8 @@ matplotlib==3.10.8
 
 # Environment Variables
 python-dotenv==1.2.1
+
+# Phase 3 research persistence
+SQLAlchemy==2.0.52
+alembic==1.19.2
+psycopg[binary]==3.3.4

@@ -1,38 +1,30 @@
+"""Yahoo adjusted-close adapter; transformed series is explicitly identified."""
+
+from datetime import UTC, datetime
+
 import pandas as pd
 import yfinance as yf
 
 
 def download_price_data(ticker: str, years: int = 3) -> pd.DataFrame:
-    """
-    Download daily price history for a ticker for the last `years` years.
-    Returns a DataFrame with index = date, column = 'price'.
-    """
-    period = f"{years}y"
-
-    data = yf.download(ticker, period=period, interval="1d", auto_adjust=True, progress=False)
-
-    if data.empty:
-        raise ValueError(f"No data returned for ticker {ticker}")
-    if "Adj Close" in data.columns:
-        price = data["Adj Close"]
-    elif "Close" in data.columns:
-        price = data["Close"]
-    else:
-        raise ValueError("Downloaded data has no 'Adj Close' or 'Close' column")
-
-    # Safety: if for some reason this is (n, 1) DataFrame, convert to Series
+    data = yf.download(
+        ticker,
+        period=f"{years}y",
+        interval="1d",
+        auto_adjust=True,
+        progress=False,
+        threads=False,
+        timeout=20,
+    )
+    if data is None or data.empty or "Close" not in data:
+        raise ValueError(f"No adjusted-close data for {ticker}")
+    price = data["Close"]
     if isinstance(price, pd.DataFrame):
+        if price.shape[1] != 1:
+            raise ValueError("Expected a single ticker from provider")
         price = price.iloc[:, 0]
-
-    # Make it a single-column DataFrame named 'price'
-    df: pd.DataFrame = price.to_frame(name="price")
-    df.index.name = "date"
-
-    return df
-
-
-if __name__ == "__main__":
-    df = download_price_data("SPY", years=1)
-    print(df.head())
-    print(df.tail())
-    print(f"Downloaded {len(df)} rows for SPY")
+    frame: pd.DataFrame = price.to_frame(name="price")
+    frame.index.name = "date"
+    frame.attrs["source"] = "yfinance:auto_adjust=True:Close"
+    frame.attrs["retrieved_at"] = datetime.now(UTC).isoformat()
+    return frame

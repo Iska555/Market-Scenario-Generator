@@ -1,128 +1,148 @@
-# 📈 Stochastic Market Simulator
+# Portfolio Simulations
 
-[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://stochastic-market-simulator.vercel.app/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
-[![React](https://img.shields.io/badge/react-%5E18.0-61DAFB.svg)](https://react.dev/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-009688.svg)](https://fastapi.tiangolo.com/)
+A personal investment portfolio-management research project. The long-term goal
+is an inspectable investment process: research → thesis → construction → risk →
+accounting → performance → attribution → review.
 
----
+**Current scope: Phase 3, fundamental research data model.** The simulation module is
+the Risk & Scenario Lab. All simulation outputs are conditional scenarios under
+explicit assumptions. Historical sample means are available only through an
+explicit historical diagnostic selection; they are not silently used as forecasts.
 
-## 📖 Overview
+## Project authority
 
-The **Stochastic Market Simulator** is a full-stack finance application designed to simulate future market paths using advanced statistical models. Moving beyond simple random walks, this engine incorporates **Gaussian Mixture Models (GMM)** for "fat tail" risks and **Cholesky Decomposition** to model realistic correlations between multiple assets.
+- [Permanent master brief](docs/MASTER_BRIEF.md) — canonical phase order and rules
+- [Phase 1 audit](docs/PHASE_1_AUDIT.md) — original defects, verification, remaining limits
+- [Phase 2 audit](docs/PHASE_2_AUDIT.md) — analytical coverage, tooling and verification evidence
+- [Phase 3 research guide](docs/RESEARCH.md) — PostgreSQL setup, private API and as-of queries
+- [Phase 3 audit](docs/PHASE_3_AUDIT.md) — research implementation and verification evidence
+- [Methodology](docs/METHODOLOGY.md) — formulas, units, assumptions and failure conditions
+- [Architecture](docs/ARCHITECTURE.md) — domain boundaries and API v3 contract
+- [Build plan](docs/BUILD_PLAN.md)
+- [Proposed brief additions](docs/BRIEF_SUGGESTIONS.md) — for owner review
 
-This project serves as a modular framework for portfolio stress testing, Value-at-Risk (VaR) calculation, and quantitative research.
+The September 2026 master brief supersedes earlier plans in
+`docs/superpowers/`. Thesis databases, portfolio optimization, a live
+transaction ledger, realized TWR/XIRR, attribution and public publishing are not
+implemented and are not part of this phase.
 
----
+Phase 3 adds a PostgreSQL equity security master with stable UUIDs, append-only
+fundamental observations, publication/system-knowledge cutoffs, idempotent atomic
+imports and a 28-metric catalogue. Research routes are opt-in and require an owner
+API key; existing simulation endpoints work without a database. This phase exposes
+the research backend through the API/OpenAPI; there is no research dashboard or
+automatic fundamental-data download. See the research guide for setup and examples.
 
-## 🚀 Key Features
+## Implemented Risk Lab
 
-* **Multi-Asset Portfolio Simulation**: Construct portfolios with custom weights (e.g., "33% SPY, 33% BTC, 34% TSLA") and simulate their combined performance.
-* **Correlation Modeling**: Uses **Cholesky Decomposition** to preserve the historical correlation structure between assets, ensuring that if assets typically move together, they do so in the simulation.
-* **Advanced Statistical Models**:
-    * **Gaussian Mixture Models (GMM)**: Captures multi-regime market behavior (e.g., bull vs. bear markets) and extreme outlier risks.
-    * **EWMA Volatility**: Models time-varying volatility clusters (RiskMetrics style).
-    * **Gaussian Baseline**: Standard random walk for comparison.
-* **Probabilistic Forecasting**: Visualizes "Extreme Scenarios" (Best Case, Bullish, Median, Bearish, Worst Case) to highlight the asymmetry of risk.
-* **Risk Analytics**: Automatically computes **VaR (95%)**, **CVaR (Expected Shortfall)**, Sharpe Ratio, and Probability of Loss.
-* **Interactive Dashboard**: A modern React-based UI with Dark/Light mode support, interactive Recharts visualizations, and real-time portfolio configuration.
+- Gaussian, genuine joint full-covariance GMM and single-asset flat-forecast EWMA
+- Request-local RNG and reproducible seeded requests against unchanged data
+- Explicit zero-log-drift or historical-diagnostic calibration
+- Correct simple-return portfolio arithmetic: daily rebalance or buy-and-hold
+- Server-computed full-population percentiles, histograms and scenario statistics
+- Annualized excess-return Sharpe, Sortino, path growth, drawdown and Calmar
+- Signed volatility contributions that reconcile to historical ex-ante risk
+- VaR/CVaR with confidence, modeled horizon, loss sign and currency notional
+- Ledoit–Wolf/sample covariance, component diagnostics and data-quality provenance
 
----
+Statistical outputs are estimates conditional on a model. Zero log drift is not
+zero expected simple return. VaR is not a loss bound. Scenario volatility and
+historical initial-weight risk decomposition are distinct and labeled separately.
+The app does not provide investment recommendations or manage external capital.
 
-## 🛠️ Project Structure
+## Local setup
 
-The codebase is split into a Python backend API and a React frontend.
+Python 3.12 or 3.14 and Node 22 are the CI targets. Python's direct dependencies
+are pinned; the frontend uses its committed npm lockfile.
 
-```bash
-MARKET_SCENARIO_GENERATOR/
-├── backend/                 # Python (FastAPI) Simulation Engine
-│   ├── src/
-│   │   ├── correlation.py   # Multi-asset Cholesky logic
-│   │   ├── data_download.py # YFinance data ingestion
-│   │   ├── gmm_model.py     # Gaussian Mixture Logic
-│   │   ├── ewma_vol.py      # Volatility forecasting
-│   │   ├── generative_model.py # Core simulation logic
-│   │   └── main.py          # FastAPI endpoints
-│   └── requirements.txt
-├── frontend/                # React (Vite + Tailwind) User Interface
-│   ├── src/
-│   │   ├── components/      # Recharts visualizations & Dashboards
-│   │   ├── services/        # API connection logic
-│   │   └── App.jsx          # Main application layout
-│   └── package.json
----
+```powershell
+python -m venv backend/env
+backend/env/Scripts/python.exe -m pip install -r backend/requirements.txt -r backend/requirements-dev.txt
+backend/env/Scripts/python.exe -m uvicorn main:app --app-dir backend --reload --reload-exclude env
 ```
 
-## ⚡ Quick Start
+In a second terminal:
 
-### 1. Backend Setup (Python)
+```powershell
+cd frontend
+npm ci
+npm run dev
+```
 
-Navigate to the backend folder and start the API server.
-bash cd backend python -m venv env # Activate: .\env\Scripts\activate (Windows) or source env/bin/activate (Mac/Linux) pip install -r requirements.txt # Run the API Server uvicorn main:app --reload --reload-exclude "env"
-*The API will run at `http://localhost:8000*`
+The frontend defaults to `http://localhost:8000`; configure `VITE_API_URL` in
+`frontend/.env.local` if needed. Backend allowed origins are configured with
+`ALLOWED_ORIGINS` (default `http://localhost:5173`).
+Interactive API documentation is served at `/docs`.
 
-### 2. Frontend Setup (React)
+The existing backend virtual environment in this checkout may use Python 3.14.
+Use the virtual-environment interpreter for checks, not an unrelated system Python.
 
-Open a new terminal and launch the dashboard.
+## Verification
 
-**Note:** If running locally, ensure `API_URL` in `App.jsx` is set to `http://localhost:8000`.
-bash cd frontend npm install npm run dev
-*The UI will launch at `http://localhost:5173*`
+From the repository root:
 
----
+```powershell
+$env:LOKY_MAX_CPU_COUNT='2'
+backend/env/Scripts/python.exe -m pytest
+backend/env/Scripts/python.exe -m ruff check .
+backend/env/Scripts/python.exe -m ruff format --check backend scripts
+backend/env/Scripts/python.exe -m mypy
+backend/env/Scripts/python.exe -m pip check
+backend/env/Scripts/python.exe scripts/benchmark_phase1.py
+```
 
-## ☁️ Deployment Architecture
+Then run `npm test`, `npm run lint`, and `npm run build` in `frontend`.
+The build script uses Vite's native config loader. If the default development
+loader cannot read parent directories in a restricted Windows checkout, use
+`npm run dev -- --configLoader native`.
+Backend tests use synthetic data and block external provider access.
+The benchmark is offline and reports its workload, environment and timing;
+it does not impose a machine-independent latency promise.
 
-This project is deployed using a decoupled microservices architecture:
+CI is configured in `.github/workflows/ci.yml`. Its hosted execution is separate
+from the local results recorded in the audit.
 
-* **Frontend**: Deployed on **Vercel** (Static React App).
-* **Backend**: Deployed on **Render** (Python Web Service).
-* **Data**: Fetches live market data via `yfinance` dynamically on every simulation request.
+Pytest measures backend statement and branch coverage, including the API, with a
+95% aggregate minimum and writes `coverage.xml`. A focused test run can use
+`python -m pytest --no-cov backend/tests/test_methodology.py`; full verification
+must use the default coverage configuration. The methodology includes an index
+of each quantitative function and its analytical/regression tests.
 
----
+Pre-commit runs Ruff lint, formatting checks and mypy using the active Python
+environment; it reports changes needed without editing files. On Windows:
 
-## 🧩 Methodology & Models
+```powershell
+. backend/env/Scripts/Activate.ps1
+python -m pre_commit install
+python -m pre_commit run --all-files
+```
 
-### Data Pipeline
+On Linux/macOS activate `backend/env/bin/activate` instead. Install is a one-time
+local Git hook setup; CI invokes the hooks directly. Pytest and frontend
+tests/lint/build remain mandatory full verification steps outside the commit
+hooks. Direct Python dependencies are pinned in the two requirements files;
+transitive Python dependencies are not locked. CI saves `pip freeze` with its
+coverage artifact for environment identification. These records are not a
+promise of identical random draws across Python, BLAS or operating systems.
 
-1. **Ingestion**: Fetches daily adjusted close prices via `yfinance`.
-2. **Preprocessing**: Computes Log Returns `ln(Pt / Pt-1)` to ensure stationarity.
+## Compatibility and deployment
 
-### Simulation Models
+API v3 is a deliberate breaking response update on the existing simulation
+URLs. Requests require `drift_model`; v2 clients must migrate. Financial
+statistics never fall back to chart samples. See the generated OpenAPI schema.
 
-| Model | Description | Best For |
-| --- | --- | --- |
-| **Gaussian (Normal)** | Assumes returns follow a bell curve with constant volatility. | Simple, stable baselines. |
-| **GMM (Fat-Tailed)** | Fits multiple Gaussian distributions to capture extreme events (tails). | **Realistic stress testing** and crash simulation. |
-| **EWMA Volatility** | Recursively weights recent data more heavily (Lambda = 0.94). | Short-term volatility forecasting. |
-| **Cholesky (Multi-Asset)** | Decomposes the Covariance Matrix (Σ) to generate correlated random shocks. | **Portfolio Diversification Analysis**. |
+This checkout includes historical Fly.io configuration, although older
+documentation referred to Render. Existing production deployment state was not
+changed or verified. Deploy frontend and backend together only after reviewing
+this phase. No site was published as part of the correctness rebuild.
 
-### Risk Metrics
+Known limits include no FX conversion, fees/taxes, persistent market-data
+snapshots, exchange-calendar reconciliation, regime persistence or Monte Carlo
+confidence intervals. The two-million-cell request cap and two-worker executor
+bound core tensor workloads; they are not a capacity guarantee for the legacy
+512 MB container.
 
-* **VaR (Value at Risk)**: The maximum loss expected with 95% confidence.
-* **CVaR (Conditional VaR)**: The average loss *given* that the loss exceeds the VaR (tail risk).
-* **Sharpe Ratio**: Risk-adjusted return metric (`Return / Volatility`).
-
----
-
-## 🔮 Roadmap
-
-* [x] **Phase 1**: Data Pipeline & Gaussian Models
-* [x] **Phase 2**: Advanced GMM & Fat-Tail Modeling
-* [x] **Phase 3**: React UI & Interactive Visualization
-* [x] **Phase 4**: Multi-Asset Correlation (Cholesky Decomposition)
-* [x] **Phase 5**: Portfolio-Level Simulation, Median Returns & Allocation UI
-* [ ] **Phase 6**: GARCH(1,1) Volatility Models
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please fork the repository and submit a pull request for any new features or bug fixes.
-
----
-
-## 📜 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
+`docs/golden/baseline_v2.json` preserves historical incorrect output.
+It is not a reference for correct financial results. The optional
+`scripts/capture_baseline.py` now writes a separate v3 diagnostic capture and
+requires live provider access.

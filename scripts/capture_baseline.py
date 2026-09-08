@@ -1,6 +1,7 @@
-"""Capture current API output for a fixed config, as the Task 14 baseline.
+"""Capture current v3 API output for a fixed diagnostic config.
 
-Run against the ORIGINAL code, before any Phase 1 fix lands. Requires network.
+Requires network. Never overwrite baseline_v2.json: that is an archival record
+of the incorrect pre-rebuild API, not a golden correctness oracle.
 
     python scripts/capture_baseline.py
 """
@@ -17,10 +18,10 @@ import main
 from fastapi.testclient import TestClient
 
 TICKERS = ["SPY", "NVDA", "MSFT"]
-OUTPUT = pathlib.Path(__file__).resolve().parents[1] / "docs" / "golden" / "baseline_v2.json"
+OUTPUT = pathlib.Path(__file__).resolve().parents[1] / "docs" / "golden" / "diagnostic_v3.json"
 
 # Fields that are large path dumps: recorded by shape only, not by value.
-_BULKY = ("paths_sample", "portfolio_paths_sample", "asset_paths_sample", "final_prices")
+_BULKY = ("paths_chart_sample", "portfolio_paths_chart_sample")
 
 
 def _summarise(payload: dict[str, object]) -> dict[str, object]:
@@ -49,9 +50,10 @@ def main_capture() -> None:
                 "tickers": TICKERS,
                 "weights": [1 / 3, 1 / 3, 1 / 3],
                 "years": 3,
-                "horizon": 365,
+                "horizon": 252,
                 "num_paths": 1000,
                 "model": model,
+                "drift_model": "historical_diagnostic",
                 "random_seed": 42,
             },
         )
