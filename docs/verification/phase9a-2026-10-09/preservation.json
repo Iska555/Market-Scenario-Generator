@@ -1,0 +1,282 @@
+[
+  {
+    "path": "docs/MASTER_BRIEF.md",
+    "bytes": 51855,
+    "sha256": "317ca3cbe1986e0ecb9f441d97de53062fe791f5a2150d620547ccc8f08be28b",
+    "check": "full_file",
+    "actual_sha256": "317ca3cbe1986e0ecb9f441d97de53062fe791f5a2150d620547ccc8f08be28b",
+    "passed": true
+  },
+  {
+    "path": "docs/BRIEF_SUGGESTIONS.md",
+    "bytes": 33022,
+    "sha256": "620810f3a285dd0c4bde11848fcf333439cfecab47dd9f2ffcbaa38b176e9586",
+    "check": "original_byte_prefix",
+    "actual_sha256": "620810f3a285dd0c4bde11848fcf333439cfecab47dd9f2ffcbaa38b176e9586",
+    "passed": true
+  },
+  {
+    "path": "docs/PHASE_1_AUDIT.md",
+    "bytes": 15091,
+    "sha256": "0cf284645403488350b9d893566c9a6307ed6f3d514323449756b930c3041bba",
+    "check": "full_file",
+    "actual_sha256": "0cf284645403488350b9d893566c9a6307ed6f3d514323449756b930c3041bba",
+    "passed": true
+  },
+  {
+    "path": "docs/PHASE_2_AUDIT.md",
+    "bytes": 9301,
+    "sha256": "d21a7f9bb49836e1c3824814705206e51f22498575fff3d9fefcfbe166c57b41",
+    "check": "full_file",
+    "actual_sha256": "d21a7f9bb49836e1c3824814705206e51f22498575fff3d9fefcfbe166c57b41",
+    "passed": true
+  },
+  {
+    "path": "docs/PHASE_3_AUDIT.md",
+    "bytes": 9787,
+    "sha256": "d424bb57773a4d8a0d1973bbe3c35b046e3d1887a3f38a23e76d8d50145daba2",
+    "check": "full_file",
+    "actual_sha256": "d424bb57773a4d8a0d1973bbe3c35b046e3d1887a3f38a23e76d8d50145daba2",
+    "passed": true
+  },
+  {
+    "path": "docs/PHASE_4_AUDIT.md",
+    "bytes": 5736,
+    "sha256": "97d3e257c54990ad941538b0f2321dd08c218281b8614bc7626c39896d64f5ae",
+    "check": "full_file",
+    "actual_sha256": "97d3e257c54990ad941538b0f2321dd08c218281b8614bc7626c39896d64f5ae",
+    "passed": true
+  },
+  {
+    "path": "docs/PHASE_5_AUDIT.md",
+    "bytes": 13410,
+    "sha256": "73b273f582aab236b321bb36866f61ae80cae16f978674aa66db3a3b940cb855",
+    "check": "full_file",
+    "actual_sha256": "73b273f582aab236b321bb36866f61ae80cae16f978674aa66db3a3b940cb855",
+    "passed": true
+  },
+  {
+    "path": "docs/PHASE_6_AUDIT.md",
+    "bytes": 11646,
+    "sha256": "c7f2fc1bb901418e56ed2d72b178cecaed4b64b812d48684028812a757dc2cac",
+    "check": "full_file",
+    "actual_sha256": "c7f2fc1bb901418e56ed2d72b178cecaed4b64b812d48684028812a757dc2cac",
+    "passed": true
+  },
+  {
+    "path": "docs/PHASE_7_AUDIT.md",
+    "bytes": 12489,
+    "sha256": "cc3336bb3be84fdd8315327c44fba48af442bd76eb0daa1650b9a97d3f5a339a",
+    "check": "full_file",
+    "actual_sha256": "cc3336bb3be84fdd8315327c44fba48af442bd76eb0daa1650b9a97d3f5a339a",
+    "passed": true
+  },
+  {
+    "path": "docs/PHASE_7_BACKEND_REVIEW.md",
+    "bytes": 10222,
+    "sha256": "e69b2cca089455d8fc9e5bd26e5932def6ce49c365fd373ad16bb3308931a57b",
+    "check": "full_file",
+    "actual_sha256": "e69b2cca089455d8fc9e5bd26e5932def6ce49c365fd373ad16bb3308931a57b",
+    "passed": true
+  },
+  {
+    "path": "docs/PHASE_8_AUDIT.md",
+    "bytes": 11963,
+    "sha256": "145496ac86e1f4bb9c65a498881aad018addb95b53ac62e97dbb14a80299205f",
+    "check": "full_file",
+    "actual_sha256": "145496ac86e1f4bb9c65a498881aad018addb95b53ac62e97dbb14a80299205f",
+    "passed": true
+  },
+  {
+    "path": "docs/PHASE_8_FINAL_REVIEW.md",
+    "bytes": 6049,
+    "sha256": "8e69ed33d538f85d43a794f7df51f387f4f6e63cfdbdebf05b6cff7d4fbd6b14",
+    "check": "full_file",
+    "actual_sha256": "8e69ed33d538f85d43a794f7df51f387f4f6e63cfdbdebf05b6cff7d4fbd6b14",
+    "passed": true
+  },
+  {
+    "path": "docs/PHASE_8_METRICS_REVIEW.md",
+    "bytes": 8649,
+    "sha256": "c296a63a9a51b0542bac4cea620421edf1650d47768ab798185a9b7c3e6eac88",
+    "check": "full_file",
+    "actual_sha256": "c296a63a9a51b0542bac4cea620421edf1650d47768ab798185a9b7c3e6eac88",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/acceptance-summary.json",
+    "bytes": 684,
+    "sha256": "03c56ffd80302eded58333c19d58eaa724123dc6c2cc7f06d6ade9651f5c223a",
+    "check": "full_file",
+    "actual_sha256": "03c56ffd80302eded58333c19d58eaa724123dc6c2cc7f06d6ade9651f5c223a",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/backend-final.txt",
+    "bytes": 8116,
+    "sha256": "345099f08e69a7186ab67f7b8d5e25171bd56e8feec56941f92b47894d3a117e",
+    "check": "full_file",
+    "actual_sha256": "345099f08e69a7186ab67f7b8d5e25171bd56e8feec56941f92b47894d3a117e",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/backend.txt",
+    "bytes": 8116,
+    "sha256": "93a37e63265b7ef7150837df3ac489eb96aa6f597c4a1e02e2d0cc047687b6ff",
+    "check": "full_file",
+    "actual_sha256": "93a37e63265b7ef7150837df3ac489eb96aa6f597c4a1e02e2d0cc047687b6ff",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/benchmark.txt",
+    "bytes": 546,
+    "sha256": "387b47518bec18bb9055cdcfe37ae7e6f4ec3feb6c8b5c2f9800d59a7db5de97",
+    "check": "full_file",
+    "actual_sha256": "387b47518bec18bb9055cdcfe37ae7e6f4ec3feb6c8b5c2f9800d59a7db5de97",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/build-clean-install.txt",
+    "bytes": 763,
+    "sha256": "ce16271c956575b9901575d818719f980a72e2a21e7431f826cb548f86f0e0a8",
+    "check": "full_file",
+    "actual_sha256": "ce16271c956575b9901575d818719f980a72e2a21e7431f826cb548f86f0e0a8",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/checks-before-lockfile-refresh.json",
+    "bytes": 832,
+    "sha256": "4c8e0d9413067dff2a791f412d501a7b4df76cb4c52693bb2a9423efba5a3a88",
+    "check": "full_file",
+    "actual_sha256": "4c8e0d9413067dff2a791f412d501a7b4df76cb4c52693bb2a9423efba5a3a88",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/dependencies.txt",
+    "bytes": 31,
+    "sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf",
+    "check": "full_file",
+    "actual_sha256": "672aec65a45bed50e70229c70934a7eebf0462595c459b83023027645d57cccf",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/format.txt",
+    "bytes": 29,
+    "sha256": "9bfcfb42f120ad843312fddfdd5a5ad4018fc800ea4c997a5f8e907656949701",
+    "check": "full_file",
+    "actual_sha256": "9bfcfb42f120ad843312fddfdd5a5ad4018fc800ea4c997a5f8e907656949701",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/frontend-clean-install.txt",
+    "bytes": 11198,
+    "sha256": "6431bbe5c4d047ac04a840a2d8e638ee5bdd49b5d926d3f952a7bfdf24b62370",
+    "check": "full_file",
+    "actual_sha256": "6431bbe5c4d047ac04a840a2d8e638ee5bdd49b5d926d3f952a7bfdf24b62370",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/hooks-final.txt",
+    "bytes": 243,
+    "sha256": "997106a0b75e70427ce3d5eeaf9aa5eeb37716b25a6d9e477667a0704b49e252",
+    "check": "full_file",
+    "actual_sha256": "997106a0b75e70427ce3d5eeaf9aa5eeb37716b25a6d9e477667a0704b49e252",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/hooks.txt",
+    "bytes": 243,
+    "sha256": "997106a0b75e70427ce3d5eeaf9aa5eeb37716b25a6d9e477667a0704b49e252",
+    "check": "full_file",
+    "actual_sha256": "997106a0b75e70427ce3d5eeaf9aa5eeb37716b25a6d9e477667a0704b49e252",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/lint-clean-install.txt",
+    "bytes": 37,
+    "sha256": "f1089f05bc46f749344b3e942dcccfe3d1bf6c9fb0197c630033defbe65eadc0",
+    "check": "full_file",
+    "actual_sha256": "f1089f05bc46f749344b3e942dcccfe3d1bf6c9fb0197c630033defbe65eadc0",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/mypy.txt",
+    "bytes": 46,
+    "sha256": "9e09dc9dc2d68d5eb1fd216e0ca92608b31ef0c04175f4e8d7a4448db43bb24f",
+    "check": "full_file",
+    "actual_sha256": "9e09dc9dc2d68d5eb1fd216e0ca92608b31ef0c04175f4e8d7a4448db43bb24f",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/npm-audit-final.json",
+    "bytes": 364,
+    "sha256": "d383311ec3bd2e725dcaa53a6bb60121ed4f9cbab29c0a78e4bb903be3a39ca6",
+    "check": "full_file",
+    "actual_sha256": "d383311ec3bd2e725dcaa53a6bb60121ed4f9cbab29c0a78e4bb903be3a39ca6",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/performance-mobile.jpg",
+    "bytes": 32907,
+    "sha256": "14c3bbd7f378892f53e516cd1d28be8e8e9c6e2472035307b36f0a306c9051dd",
+    "check": "full_file",
+    "actual_sha256": "14c3bbd7f378892f53e516cd1d28be8e8e9c6e2472035307b36f0a306c9051dd",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/performance-results.jpg",
+    "bytes": 68108,
+    "sha256": "8df09692411aaa34369521691b5b6e622cd0e2b6d1c6359f735fe82ace41cf29",
+    "check": "full_file",
+    "actual_sha256": "8df09692411aaa34369521691b5b6e622cd0e2b6d1c6359f735fe82ace41cf29",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/preservation-checkpoint.json",
+    "bytes": 2339,
+    "sha256": "90b8f74ed76edf28453116390821b9527284c5c3ce31f6c9ab177e9a79b38162",
+    "check": "full_file",
+    "actual_sha256": "90b8f74ed76edf28453116390821b9527284c5c3ce31f6c9ab177e9a79b38162",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/README.md",
+    "bytes": 3805,
+    "sha256": "a695aebfa9cea98d49ba2d01f04f1c93de44fbcf25b37683b71c38a0fa456f9b",
+    "check": "full_file",
+    "actual_sha256": "a695aebfa9cea98d49ba2d01f04f1c93de44fbcf25b37683b71c38a0fa456f9b",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/replay-regeneration.json",
+    "bytes": 528,
+    "sha256": "ac130f622ca5ceb0d5aa5530f78dc399e959875378b6237c14dfe0b0fb7243ad",
+    "check": "full_file",
+    "actual_sha256": "ac130f622ca5ceb0d5aa5530f78dc399e959875378b6237c14dfe0b0fb7243ad",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/ruff.txt",
+    "bytes": 20,
+    "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
+    "check": "full_file",
+    "actual_sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/synthetic-downloaded-report.json",
+    "bytes": 11365,
+    "sha256": "1adbcd9361938ac7e67c56633e376fcb962e10ee1ea1e4461f8a7098940779c2",
+    "check": "full_file",
+    "actual_sha256": "1adbcd9361938ac7e67c56633e376fcb962e10ee1ea1e4461f8a7098940779c2",
+    "passed": true
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/synthetic-regenerated-report.json",
+    "bytes": 11775,
+    "sha256": "18ca9350d644a33abfd57d0d7644faccf5516216d9cc1c46e14422369c082ca6",
+    "check": "full_file",
+    "actual_sha256": "18ca9350d644a33abfd57d0d7644faccf5516216d9cc1c46e14422369c082ca6",
+    "passed": true
+  }
+]

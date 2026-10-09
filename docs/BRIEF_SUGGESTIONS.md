@@ -478,3 +478,67 @@ implemented allocation default or a new expected-return assumption.
 Detailed implementation and verification of later stages belong to their own
 prospective plans and audits. The current closeout adds no attribution,
 publication, provider integration, automated orders or fund functionality.
+
+---
+
+## Phase 9A authorized and locally accepted — 2026-10-09
+
+The owner explicitly instructed: "Proceed with Phase 9A reconciled position
+contribution." This prospective continuation supersedes the earlier review gate
+only for this bounded stage. The master brief, previous audits/reviews and Phase 8
+verification evidence remain intact. Detailed current evidence belongs to the new
+[PHASE_9A_AUDIT.md](PHASE_9A_AUDIT.md); formulas and limits are specified in
+[ATTRIBUTION.md](ATTRIBUTION.md).
+
+### Implemented and verified scope
+
+- Actual corrected ledger quantities, executed trades and period-appropriate
+  opening exposures, including closed equities and within-segment round trips.
+- Separate cash, booked net dividends, trade/account/conversion fees and FX effects.
+  End FX translates local P&L; opening FX and conversion principal are explicit.
+  Price/FX interaction is allocated to price. This is an endpoint convention,
+  not a claim of observed transaction-time FX attribution.
+- Daily and intraday external-flow boundaries with ledger sequence preserved;
+  Phase 8 units link component P&L through forward normalized-wealth increments.
+  The whole window reconciles to TWR with residual and fixed decimal-return
+  tolerance 1e-12 + 1e-12 × abs(TWR); no forced balancing security or rescaling.
+- Private, read-only transport returning performance/contribution from one locked
+  snapshot, memory-only client integration, top/bottom equity effects, opening
+  exposure details, explicit undefined results and offline replay download.
+- Fresh acceptance: 579 backend tests including actual PostgreSQL, zero skipped,
+  97.64% statement/branch coverage; 125 frontend tests, lint/build and configured
+  quality gates passed. Populated, missing and corrected browser cases accepted,
+  including desktop/mobile/dark views and private-state clearing.
+
+### Decisions carried into the next stages
+
+1. Preserve the boundary between accounting contribution, benchmark-relative
+   results and statistical factor explanation. The next approved stage needs a
+   separate benchmark/active-risk contract and acceptance record: versioned
+   identity, effective dates, total-return basis, currency and interval alignment,
+   explicit coverage and descriptive comparative statistics. Do not substitute
+   price-only or unmatched-calendar series for a suitable total-return benchmark.
+2. Historical sector attribution requires point-in-time classifications and, for
+   Brinson, appropriate benchmark weights. Current registry sectors do not supply
+   that evidence. UUID-level equity contribution is the accepted scope here.
+3. Retain the declared FX allocation. A future transaction-time FX extension needs
+   explicit additional marked boundaries/evidence and its own tests; it must not
+   silently redefine existing downloaded reports.
+4. Preserve source compatibility for replay. The backend-source identity changes
+   when Phase 9A is added; old Phase 8 reports require the compatible 890dd4a
+   source/environment or explicit regeneration from reviewed evidence. Never edit
+   historical audit/download hashes merely to pass current replay.
+5. Keep the previously approved integration priorities: coherent dated ledger-to-
+   construction handoff, deliberate fund/ETF support, actual broker fixtures and
+   operational restore evidence before claiming real-account/platform readiness.
+   This stage adds none of those extensions or publication.
+
+This append records the bounded implementation and remaining sequence. Local
+acceptance is not broker certification, hosted CI or deployment evidence. A reviewed
+local source checkpoint follows the checks; no remote push/publication was requested.
+
+Exact-byte replay evidence for Phase 9A also retains an archival source bundle.
+Git line-ending conversion can change the conservative source fingerprint; both
+synthetic exports passed replay from the separately extracted accepted source.
+The bundle preserves evidence without revising historical hashes or adding a
+second active calculation implementation.

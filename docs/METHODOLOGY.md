@@ -956,3 +956,18 @@ on a legacy report requires explicit regeneration for exact verification.
 
 The complete numerical specification remains in [PERFORMANCE.md](PERFORMANCE.md),
 and fresh acceptance evidence is in [PHASE_8_AUDIT.md](PHASE_8_AUDIT.md).
+
+## Phase 9A reconciled position contribution — 2026-10-09 authorization
+
+[ATTRIBUTION.md](ATTRIBUTION.md) specifies the implemented endpoint P&L identities,
+input/output units, forward unit-wealth linking, price/FX interaction allocation,
+flow ordering, corrections, assumptions, undefined cases and exact reconciliation
+tolerance. It maps the pure backend functions and private transport to analytical,
+actual PostgreSQL and frontend evidence. This is a separate accounting explanation
+of Phase 8 TWR, not a security return, risk contribution, benchmark attribution,
+factor explanation or investor return view.
+
+Phase 8 source hashing includes all backend source, so Phase 9A appropriately changes
+that identity. Preserve old reports and their compatible checkpoint/environment;
+do not rewrite source identities retrospectively. Current acceptance and limitations
+are recorded in the new [PHASE_9A_AUDIT.md](PHASE_9A_AUDIT.md).

@@ -199,3 +199,27 @@ benchmark/active-risk analysis, factor regression and Phase 10 publication
 acceptance. Each requires its own prospective plan and evidence. Ledger-to-
 construction integration and deliberate fund/ETF support remain priorities before
 real-account readiness; acceptance here does not implement those extensions.
+
+## Phase 9A — reconciled position contribution (authorized 2026-10-09)
+
+The owner explicitly selected this stage after Phase 8 closeout. The earlier
+stop-before-9 records retain their historical context. Detailed bounded plan:
+[Phase 9A plan](superpowers/plans/2026-10-09-phase-9a-contribution.md).
+Methodology: [ATTRIBUTION.md](ATTRIBUTION.md); dated acceptance:
+[PHASE_9A_AUDIT.md](PHASE_9A_AUDIT.md).
+
+- [x] Derive effects from actual corrected ledger holdings/trades, including closed
+  equities, cash, net dividends, fees and FX; retain dated opening exposure evidence.
+- [x] Segment at daily closes and external flows, preserve equal-time sequence,
+  and link through Phase 8 units with visible residual and fixed tolerance.
+- [x] Add private read-only coherent transport, typed undefined cases and offline
+  replay; integrate an explicit Performance contribution option and download.
+- [x] Verify analytical identities, actual PostgreSQL immutability/locking/staleness,
+  full backend/frontend gates and populated/missing/corrected responsive workflows.
+- [x] Preserve historical master/audits/evidence and append prospective suggestions.
+
+Current boundary: Phase 9A accepted locally. Proceed next through a separate
+benchmark/active-risk plan and acceptance record; then factor regression and,
+when historical benchmark/classification evidence exists, an explicit Brinson
+decision. Publication and the approved broker/fund/operational integration
+priorities retain their separate acceptance requirements.

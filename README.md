@@ -4,11 +4,15 @@ A personal investment portfolio-management research project. The long-term goal
 is an inspectable investment process: research → thesis → construction → risk →
 accounting → performance → attribution → review.
 
-**Phase 8: private ledger-derived performance measurement.**
+**Phase 9A: private reconciled position contribution.**
 The Performance workspace measures daily time-weighted returns, dated XIRR and
 realized statistics using recorded transactions and supplied unadjusted price/FX
 evidence. Missing coverage stays undefined. See the
 [performance guide](docs/PERFORMANCE.md) and [Phase 8 audit](docs/PHASE_8_AUDIT.md).
+Select **Include position contributions** to explain TWR using actual holdings,
+trades, net dividends, fees, cash and FX. Closed equities remain included;
+linked effects show an explicit reconciliation residual. See the
+[contribution methodology](docs/ATTRIBUTION.md) and [Phase 9A audit](docs/PHASE_9A_AUDIT.md).
 
 The transaction ledger supports holdings and supplied-mark valuation.
 Preview and record immutable transactions, correct mistakes with reversals,
@@ -18,7 +22,8 @@ the planned Lightyear ISA; a native Lightyear parser remains unverified.
 See the [accounting guide](docs/ACCOUNTING.md) and [Phase 7 audit](docs/PHASE_7_AUDIT.md).
 The owner approved Phase 8 acceptance/reproducibility closeout on 2026-10-09
 and the subsequent sequence recorded in [approved suggestions](docs/BRIEF_SUGGESTIONS.md).
-The current closeout acceptance is recorded in the Phase 8 audit.
+Phase 8 closeout acceptance is recorded in its preserved audit; the owner's
+subsequent Phase 9A authorization and acceptance have a separate record.
 The simulation module is
 the Risk & Scenario Lab. All simulation outputs are conditional scenarios under
 explicit assumptions. Historical sample means are available only through an
@@ -38,7 +43,9 @@ explicit historical diagnostic selection; they are not silently used as forecast
 - [Accounting guide](docs/ACCOUNTING.md) — ledger conventions, canonical CSV, corrections and valuation
 - [Phase 7 audit](docs/PHASE_7_AUDIT.md) — implementation, verification and broker limitations
 - [Performance guide](docs/PERFORMANCE.md) — TWR/XIRR, valuation evidence, realized statistics and numerical limits
-- [Phase 8 audit](docs/PHASE_8_AUDIT.md) — current implementation, verification and remaining boundaries
+- [Phase 8 audit](docs/PHASE_8_AUDIT.md) — preserved performance closeout evidence
+- [Contribution guide](docs/ATTRIBUTION.md) — endpoint accounting, wealth linking, FX allocation and replay
+- [Phase 9A audit](docs/PHASE_9A_AUDIT.md) — current contribution acceptance and remaining boundaries
 - [Methodology](docs/METHODOLOGY.md) — formulas, units, assumptions and failure conditions
 - [Architecture](docs/ARCHITECTURE.md) — domain boundaries and API v3 contract
 - [Asset-type roadmap](docs/ASSET_TYPE_ROADMAP.md) — typed future support beyond equities
@@ -50,8 +57,10 @@ The September 2026 master brief supersedes earlier plans in
 approved suggestions and rules A–D. The 2026-09-10 addendum authorizes Phase 6 and
 permanently records the owner's soft, modern portfolio-platform design direction.
 The 2026-09-12 continuation authorizes Phase 7. The owner's 2026-09-15 instruction
-authorizes Phase 8, recorded prospectively in its plan and audit. Attribution and
-public publishing remain outside scope. Completion of those later phases also
+authorizes Phase 8, recorded prospectively in its plan and audit. On 2026-10-09
+the owner explicitly authorized Phase 9A reconciled position contribution.
+Benchmark/active-risk analysis, factor regression, Brinson and public publishing
+remain subsequent stages. Completion of those later stages also
 requires suitable data, deployment and operational checks.
 
 Phase 3 adds a PostgreSQL equity security master with stable UUIDs, append-only

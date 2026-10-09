@@ -30,6 +30,14 @@ Complete this bounded closeout before subsequent attribution work; the older
 phase gates above retain their original context. Record fresh acceptance in
 docs/PHASE_8_AUDIT.md without editing any historical audit or master-brief text.
 
+The owner explicitly authorized Phase 9A reconciled position contribution on
+2026-10-09 after Phase 8 acceptance. This supersedes the earlier stop-before-9
+gate for this bounded scope. Implement ledger-derived contribution, explicit
+cash/dividend/fee/FX effects and geometric linking; require reconciliation to
+Phase 8 TWR and visible residuals. Preserve all existing audits, including Phase 8.
+Benchmark, factor regression, Brinson and publishing remain separate subsequent
+stages. Record current scope and evidence in docs/PHASE_9A_AUDIT.md.
+
 Apply the approved seven suggestions and permanent rules A–D in the master brief:
 explicit return/horizon/currency conventions; proportionate replay manifests;
 typed undefined values; distinct uncertainty and risk meanings; calendar/FX/data

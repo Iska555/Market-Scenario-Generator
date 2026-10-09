@@ -1,0 +1,5 @@
+Dropped only named disposable browser schema: phase9a_browser_5349bf1366ee41daa9d1420f30e1123c
+Remaining test_/phase9a_ schemas: 0
+waiting for server to shut down.... done
+server stopped
+API 8000, frontend 5173 and PostgreSQL 55439: no listeners

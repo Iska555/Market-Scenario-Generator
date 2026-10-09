@@ -1,5 +1,5 @@
-const blankDraft = () => ({ start: '', end: '', known_at: new Date().toISOString(), risk_free_rate: '0', confidence: '0.95', max_mark_age_days: '3' });
-const initial = () => ({ connected: false, busy: '', error: '', portfolios: [], selectedId: '', ledger: null, draft: blankDraft(), evidence: '', report: null });
+const blankDraft = () => ({ start: '', end: '', known_at: new Date().toISOString(), risk_free_rate: '0', confidence: '0.95', max_mark_age_days: '3', include_contribution: false });
+const initial = () => ({ connected: false, busy: '', error: '', portfolios: [], selectedId: '', ledger: null, draft: blankDraft(), evidence: '', report: null, contribution: null });
 const errors = {
   401: 'Private workspace key was not accepted. Lock and unlock the private workspace.',
   404: 'The selected account is no longer available. Reload accounts.',
@@ -9,10 +9,10 @@ const errors = {
 };
 const message = error => errors[error.status] || 'The private performance request failed. Check the service and retry.';
 
-export async function performanceRequest(base, key, id, body, fetcher = fetch) {
+export async function performanceRequest(base, key, id, body, fetcher = fetch, contribution = false) {
   let response;
   try {
-    response = await fetcher(`${base.replace(/\/$/, '')}/api/performance/portfolios/${encodeURIComponent(id)}/report`, {
+    response = await fetcher(`${base.replace(/\/$/, '')}/api/${contribution ? 'attribution' : 'performance'}/portfolios/${encodeURIComponent(id)}/${contribution ? 'contribution' : 'report'}`, {
       method: 'POST', cache: 'no-store', headers: { 'Content-Type': 'application/json', 'X-Research-Key': key }, body: JSON.stringify(body),
     });
   } catch { throw new Error('The private performance service could not be reached.'); }
@@ -65,7 +65,7 @@ export function buildPerformanceRequest(draft, text, version) {
   return { expected_version: version, known_at: draft.known_at, daily_marks: evidence.daily_marks, flow_marks: evidence.flow_marks, risk_free_rate: riskFree, confidence, max_mark_age_days: age, calendar: 'UTC_calendar_daily', price_convention: 'unadjusted', periods_per_year: 365 };
 }
 
-export function createPerformance(accounting, reportRequest) {
+export function createPerformance(accounting, reportRequest, contributionRequest) {
   let state = initial(), key = '', generation = 0;
   const listeners = new Set();
   const update = patch => { state = { ...state, ...patch }; listeners.forEach(listener => listener()); };
@@ -86,18 +86,18 @@ export function createPerformance(accounting, reportRequest) {
     async select(id) {
       if (!state.connected || !state.portfolios.some(row => row.id === id)) return;
       const token = ++generation;
-      update({ selectedId: id, ledger: null, evidence: '', report: null, draft: blankDraft(), error: '', busy: 'account' });
+      update({ selectedId: id, ledger: null, evidence: '', report: null, contribution: null, draft: blankDraft(), error: '', busy: 'account' });
       try {
         const ledger = await accounting(`/portfolios/${encodeURIComponent(id)}/state`, {}, key);
         if (token === generation) update({ ledger, busy: '' });
       } catch (error) { if (token === generation) update({ busy: '', error: message(error) }); }
     },
-    edit(patch) { if (!state.connected) return; ++generation; update({ draft: { ...state.draft, ...patch }, report: null, error: '', busy: '' }); },
-    editEvidence(evidence) { if (!state.connected) return; ++generation; update({ evidence, report: null, error: '', busy: '' }); },
+    edit(patch) { if (!state.connected) return; ++generation; update({ draft: { ...state.draft, ...patch }, report: null, contribution: null, error: '', busy: '' }); },
+    editEvidence(evidence) { if (!state.connected) return; ++generation; update({ evidence, report: null, contribution: null, error: '', busy: '' }); },
     async importEvidence(textPromise) {
       if (!state.connected) return;
       const token = ++generation;
-      update({ evidence: '', report: null, error: '', busy: 'import' });
+      update({ evidence: '', report: null, contribution: null, error: '', busy: 'import' });
       try {
         const text = await textPromise;
         if (token === generation) update({ evidence: text, busy: '' });
@@ -106,7 +106,7 @@ export function createPerformance(accounting, reportRequest) {
     async makeTemplate() {
       if (!state.connected || !state.ledger) return;
       const token = ++generation, id = state.selectedId, sessionKey = key, draft = { ...state.draft }, version = state.ledger.version;
-      update({ busy: 'template', report: null, evidence: '', error: '' });
+      update({ busy: 'template', report: null, contribution: null, evidence: '', error: '' });
       try {
         datesInWindow(draft); validateCutoff(draft.known_at);
         const query = new URLSearchParams({ as_of: `${draft.end}T23:59:59.999999Z`, known_at: draft.known_at });
@@ -127,13 +127,15 @@ export function createPerformance(accounting, reportRequest) {
     async run() {
       if (!state.connected || !state.ledger) return;
       const token = ++generation;
-      update({ report: null, error: '', busy: 'report' });
+      update({ report: null, contribution: null, error: '', busy: 'report' });
       let body;
       try { body = buildPerformanceRequest(state.draft, state.evidence, state.ledger.version); }
       catch (error) { update({ error: error.message, busy: '' }); return; }
       try {
-        const report = await reportRequest(state.selectedId, body, key);
-        if (token === generation) update({ report, busy: '' });
+        const withContribution = state.draft.include_contribution;
+        if (withContribution && !contributionRequest) throw new Error('Contribution service unavailable');
+        const result = await (withContribution ? contributionRequest : reportRequest)(state.selectedId, body, key);
+        if (token === generation) update({ report: withContribution ? result.performance : result, contribution: withContribution ? result : null, busy: '' });
       } catch (error) { if (token === generation) update({ error: message(error), busy: '' }); }
     },
   };

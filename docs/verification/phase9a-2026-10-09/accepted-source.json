@@ -1,0 +1,8 @@
+{
+  "purpose": "Exact accepted backend source bytes and offline replay entry points; archival verification evidence, not a second active implementation",
+  "code_sha256": "34d091589c83c9d84b020805e782c29b23c52f0f6021279523c4b62a90d433e3",
+  "archive_sha256": "9f083b0ee023135dface09bf99c77c24f9ba4e7d93daa62120f7c91cb6b74b9b",
+  "files": 74,
+  "python": "3.12.14",
+  "runtime_packages": "resolved-python.txt"
+}

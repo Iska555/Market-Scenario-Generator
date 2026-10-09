@@ -1,13 +1,46 @@
-# Architecture through Phase 8
+# Architecture through Phase 9A
 
 The canonical product brief is [MASTER_BRIEF.md](MASTER_BRIEF.md). This checkout
 contains the simulator correctness rebuild, methodology/tests, an equity research
 registry, versioned thesis and valuation workspaces, hypothetical construction,
 supplied stress scenarios and a private transaction ledger with supplied-mark
-valuation, and realized performance from the ledger and explicit valuation evidence.
+valuation, realized performance from the ledger and explicit valuation evidence,
+and reconciled ledger position contribution.
 Phase-specific sections below retain their phase boundaries; the current owner
-review gate is before Phase 9. See the respective phase audits for implementation
-and verification evidence. Attribution and public publishing remain outside scope.
+review gate is after bounded Phase 9A acceptance. See the respective phase audits
+for implementation and verification evidence. Benchmark/active-risk analysis,
+factor regression, Brinson and publishing require separate stages.
+
+## Phase 9A contribution boundary — authorized 2026-10-09
+
+`backend/src/attribution/contracts.py` defines exact nullable Decimal effects,
+segment exposures, rankings and reconciliation. `engine.endpoint_effects` derives
+base P&L from actual marked holdings, executed trade principal and booked income,
+fees/currency conversions. `build_contribution` uses the embedded performance
+report's visible ledger records and exact flow unit deltas. Daily/flow segments
+preserve ledger sequence and retain closed positions; current metadata is not
+treated as historical sector evidence.
+
+`routes.contribution` calls the accepted performance route inside the same existing
+repository transaction, retaining its row lock through contribution calculation.
+The returned Phase 8 report and contribution therefore share one snapshot/version,
+knowledge cutoff and input manifest. There is no persistence migration or provider
+adapter. Local P&L uses explicit segment-end FX; opening FX and conversion principal
+remain separate. Forward unit-wealth increments reconcile to TWR with visible
+residual/tolerance rather than an inferred balancing effect.
+
+`attribution/replay.py` verifies the embedded performance replay then compares all
+contribution fields. `scripts/replay_contribution.py` exposes this offline check.
+Adding backend source changes the conservative Phase 8 source identity; historical
+downloads require their compatible source/environment and are never rewritten.
+
+The Performance controller accepts an optional third contribution transport.
+When opted in, one request supplies both results; generation guards and all state
+clearing actions cover both. `ContributionResults.jsx` formats percentage points,
+exact residuals, equity rankings and expandable opening exposures. Undefined
+window contributions retain the independent performance results without invented
+zeros. No financial arithmetic is performed in the browser.
+See [ATTRIBUTION.md](ATTRIBUTION.md) and [PHASE_9A_AUDIT.md](PHASE_9A_AUDIT.md).
 
 ## Phase 8 performance boundary — authorized 2026-09-15
 
