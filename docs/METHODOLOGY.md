@@ -1,4 +1,4 @@
-# Quantitative methodology — Phases 1–3
+# Quantitative methodology — Phases 1–6
 
 Status: correctness rebuild and Phase 2 analytical verification under the
 [master brief](MASTER_BRIEF.md).
@@ -213,8 +213,9 @@ V(t)=sum_i w(i)G(i,t). Fixed initial units w(i)/P(i,0) cause position weights to
 drift with performance. No target-weight reset occurs.
 
 **Interpretation:** these are two different policies; neither is a forecasting
-claim. Costs are zero. Default daily rebalancing is an idealization, selectable
-explicitly as `rebalance`. Monthly, quarterly, annual, threshold rebalancing and
+claim. Costs are zero. The backend's legacy default is daily rebalancing;
+current frontend portfolio requests explicitly default to buy-and-hold.
+Daily rebalancing remains selectable as `rebalance`. Monthly, quarterly, annual, threshold rebalancing and
 transaction costs remain unimplemented. Unsupported modes are rejected.
 
 **Failure conditions:** mismatched dimensions, nonfinite returns/prices,
@@ -473,3 +474,485 @@ checks identity, temporal ranking, conflicts and atomicity; `test_research_api.p
 checks the real API/repository transaction boundary. PostgreSQL migration tests
 verify exact Decimal round trips and update/delete rejection. No live provider
 accuracy or real historical publication archive is certified by synthetic tests.
+
+## Phase 4: owner-authored thesis assumptions
+
+Thesis targets, required returns and review return assumptions are declared
+judgments. This phase adds no financial formula or expected-return estimator.
+The horizon is explicitly in months. Monetary values are positive per-share
+amounts in the declared valuation currency; a low/high pair is an owner value
+range without implied confidence or probability. Review prices are manually
+entered and have no automatic market-data freshness guarantee or FX conversion.
+
+Required and review expected returns are optional annual effective decimal
+fractions (`0.08` represents 8% per year), strictly greater than −1. They are
+stored as Decimal values without binary-float conversion, hidden compounding,
+target-price arithmetic or reuse of historical sample means. The backend permits
+10 fractional digits, 30 total digits for prices and 20 for rates. Validation
+rejects nonfinite, inconsistent, out-of-range or excessive-precision inputs.
+
+The authoring timestamp is server-recorded UTC. An as-of read filters complete
+versions by that inclusive timestamp before selecting the highest revision. It
+does not certify when underlying source information became available. Revision
+and per-thesis review times are monotonic even if the server clock moves backward,
+by advancing the prior applicable timestamp by a microsecond when needed.
+Consequently these are application-ordering times, not independent time attestations.
+
+Behavioral prompts and explicit manual decisions support a repeatable review
+process. Saving a review does not change thesis status, create a trade, or assess
+whether its return assumption is sufficient. [THESIS.md](THESIS.md) documents the
+schema and remaining limits; [PHASE_4_AUDIT.md](PHASE_4_AUDIT.md) records verification.
+
+## Phase 5 return contract and numerical conventions
+
+**Expected-return estimates are assumption-dependent estimates, not predictions.**
+`valuation/contracts.py` separates `ResearchAssumptionSet`, `ValuationModelResult`,
+`CapmEstimate`, `SecurityScenario`, `HistoricalDiagnostic` and `ExpectedReturnView`.
+Only an explicit `user_specified` request produces an investor view. Running CAPM,
+fundamental valuation or probability weighting does not adopt a construction input.
+To adopt a result, the owner must deliberately supply a user view with rationale
+and an optional reference. There is no optimizer, adoption automation or trading
+decision. Legacy Phase 4 review percentages are never imported automatically.
+
+Every result carries a security ID, valuation date, horizon H in calendar years
+(positive, at most 100), price/total basis, nominal/real basis, local/base currency,
+valuation/local currency codes, declared valuation calendar/cutoff description,
+publication `as_of`, knowledge `known_at` and optional evidence/revision IDs.
+Currency codes are three uppercase letters. A local return uses the local
+currency. The API checks that local currency matches the security master.
+User views may express any of these declared bases; fundamental models support
+nominal returns, and statistical models support local nominal returns. Unsupported
+conversions fail rather than assume inflation or an FX series.
+
+Rates are dimensionless fractions (0.08 = 8%); prices, fundamentals and dividends
+are local-currency amounts per share. Source research decimals remain exact in
+evidence snapshots. User return inputs remain Decimal values (30 digits, up to 15
+fractional places), including their supplied annual/cumulative choice and decimal
+spelling, in the resolved request. Calculation outputs use IEEE double precision;
+tests reconcile at stated tolerances and the UI rounds return presentation to one
+decimal percentage point. The UI does not compute financial results.
+
+For annualized equivalent a and cumulative simple return c:
+
+```text
+c = (1 + a)^H - 1
+a = (1 + c)^(1/H) - 1
+```
+
+`valuation/arithmetic.py` uses log1p/expm1 for conversions. −100% is explicitly
+supported for user/CAPM return wealth, and rates below −100% are rejected or
+reported undefined when CAPM implies one. Both supplied rates must reconcile
+(relative tolerance 1e-9, absolute tolerance 1e-12). Numerical overflow,
+nonfinite values, underflow of positive valuation quantities and positive wealth
+that would round to a complete loss fail explicitly; outputs are never clipped.
+
+The annualized equivalent of expected horizon wealth is not E[realized CAGR].
+CAGR is the realized compound rate of an actual wealth ratio. Arithmetic expected
+simple return is E[R]; geometric/log growth depends on E[log(1+R)]. Log drift is
+the mean log increment, not arithmetic expected return. Zero Gaussian log drift
+has E[R] = exp(variance/2) − 1, generally positive, and is not risk neutrality.
+Price returns exclude distributions; total-return scenarios include the declared
+cash treatment below. Sharpe, tail and risk calculations from earlier phases
+remain unchanged and keep their own explicit period/path conventions.
+
+## Historical expected-return diagnostic
+
+**Formula:** point estimate = A × mean(r); IID standard error = A × s / sqrt(n),
+where r is supplied arithmetic simple period returns, n is observation count,
+s is sample standard deviation (ddof=1), and A is periods/year. The standard error
+measures uncertainty of the annualized arithmetic mean, not annual return
+volatility. n=1 has a defined mean and undefined SE (`insufficient_observations`).
+Constant samples have zero estimated SE; this is not proof of zero future risk.
+
+The API always labels this **Historical estimate — not a forward forecast**.
+It returns actual start/end dates, n, frequency, A, estimator and uncertainty.
+No forward cumulative return or realized CAGR is calculated. The context horizon
+is retained only to make the surrounding research question explicit. This
+diagnostic cannot produce an investor view automatically or act as a default.
+
+Each supplied sample includes source, retrieval time, adjustment policy and an
+explicit assertion that security/benchmark intervals and valuation cutoffs match.
+Rows contain interval start/end dates and simple returns (both series in CAPM).
+Dates must be sorted, unique and nonoverlapping. A is 12 monthly, 52 weekly, 1
+annual, or an explicit 200–366 for daily observations. Supported interval lengths
+are daily 1–7, weekly 5–9, monthly 25–35, annual 350–380 calendar days. These are
+input sanity bounds, not an exchange-calendar reconciliation engine. Gaps between
+sample intervals are allowed; unusually long closures/irregular intervals require
+preparation outside this engine and cannot silently receive standard annualization.
+
+The sample may not end after valuation/publication cutoff or be retrieved before
+its final interval or after knowledge cutoff. Samples are manually supplied;
+source attribution, corporate-action policy and interval/currency alignment are
+caller assertions, not independently verified provider contracts. No live provider
+is called. The actual sample is returned in the manifest for owner-controlled
+replay. Serial dependence, heteroskedasticity, selection bias and regime shifts
+invalidate an IID interpretation; no HAC estimator or calibrated confidence
+interval is claimed. Implementation: `views/expected_return.py:historical`.
+
+## CAPM model estimate
+
+**Formula (one-year arithmetic expected simple total return):**
+
+```text
+E[R_i] = rf + beta × ERP
+rf_period = (1 + rf)^(1/A) - 1
+x_t = benchmark_simple_return_t - rf_period
+y_t = security_simple_return_t - rf_period
+beta = sum((x - mean(x)) × (y - mean(y))) / sum((x - mean(x))²)
+intercept = mean(y) - beta × mean(x)
+beta_SE = sqrt(SSE / (n - 2) / Sxx)
+R² = 1 - SSE / Syy
+```
+
+rf is explicitly **annual effective** and ERP is a user-supplied one-year
+arithmetic equity risk premium. There is no hidden ERP default or macro fetch.
+The request records benchmark, assumption source, return sample, window, frequency,
+adjustments and cutoffs. Regression is OLS with intercept on aligned arithmetic
+excess period returns; a constant period rf leaves the slope unchanged. The
+intercept is a diagnostic and is not added as forecast alpha. Both series must
+represent total returns in the same local currency and cutoff convention.
+
+At least three observations are required for regression diagnostics. Insufficient
+data and effectively zero benchmark variance return null metrics with reasons.
+Variance is treated as numerically zero when its centered sum of squares is no
+greater than machine epsilon × n × max(abs(series))². Zero security variance has
+undefined R² even when beta is defined. The API returns beta SE, R², intercept,
+n and estimator wording; no arbitrary zero substitutes for undefined values.
+An implied annual return below −100% yields no ReturnPair and an explicit reason.
+
+For a multi-year horizon the caller must explicitly choose
+`horizon_assumption="iid_annual_gross_mean"`. The engine uses
+`E[wealth_H]/wealth_0 = (1 + rf + beta × ERP)^H`, extending the annual gross-mean
+assumption to fractional H as a compound interpolation. This is not a calibrated
+multi-year stochastic model or expected realized CAGR. Static beta, a constant
+rf/ERP, the CAPM restrictions and IID OLS errors are assumptions. Beta estimation
+SE is reported; ERP/rf uncertainty and parameter propagation are not implemented.
+Known tests: rf=3%, beta=1.2, ERP=5% gives 9%; beta=0 gives rf; negative beta remains
+negative. Implementation: `views/expected_return.py:regress`, `capm`.
+
+## Fundamental terminal-wealth valuation
+
+The initial model uses a positive EPS or FCF-per-share anchor F0, growth g > −1,
+positive terminal multiple MH, current local price P0, annual cash dividend D ≥ 0,
+horizon H and explicit spot/terminal FX X0, XH (valuation currency per local
+currency). Price time must be on valuation date and available by both cutoffs.
+Same-currency FX must equal one. Cross-currency requests must explicitly supply
+both rates, even if parity is intended. No currency conversion is inferred.
+
+```text
+FH = F0 × (1 + g)^H
+PH = FH × MH
+C = D × H for total-return basis; C = 0 for price-return basis
+WH = (PH + C) × XH
+W0 = P0 × X0
+c = WH / W0 - 1
+a = (1 + c)^(1/H) - 1
+```
+
+D is a fixed annual local cash amount accrued pro rata over fractional years,
+held without reinvestment or interest, and converted together with terminal
+proceeds at XH. This is an explicit terminal-wealth scenario, not dated dividend
+cash-flow IRR. P0 and F0 must be on a consistent per-share/split basis asserted by
+the owner. Dividends are separate from growth; **buybacks are already included in
+per-share growth** and no additional buyback yield is added. Revenue, margins and
+net debt are not modelled separately. Negative/zero EPS or FCF cannot be valued
+with this positive-multiple model; select another future model rather than force
+these inputs into it. g/MH/D are owner assumptions, not historical estimates.
+
+The exact exposed decomposition is multiplicative:
+
+```text
+1 + c = growth_factor × multiple_factor × dividend_wealth_factor × fx_factor
+growth_factor = (1 + g)^H
+multiple_factor = MH / (P0/F0)
+dividend_wealth_factor = 1 + C/PH
+fx_factor = XH/X0
+```
+
+The commonly used growth + yield + multiple-change + FX decomposition is only an
+investment approximation, not this model's identity. No additive percentage-point
+contributions are fabricated. Costs, taxes, dilution beyond the per-share input,
+dividend reinvestment, inflation and DCF are unsupported. User-supplied terminal
+FX is a deterministic sensitivity; it does not implement historical FX risk,
+multi-currency portfolio reconciliation or corporate-action accounting.
+Implementation: `valuation/models.py:fundamental`, `terminal_fundamental`, `dividends`.
+
+## Bear/base/bull and probability-weighted scenario expectation
+
+Exactly one bear, base and bull label is required; the labels do not guarantee
+ordered outcomes. Each retains its own assumption set and valuation output. All
+share context, metric, current F0/P0, spot FX and price timestamp. They can exist
+without probabilities: `probability_weighted_return=null` then means no
+distribution was supplied. No probability is invented.
+
+When probabilities p_s are explicitly supplied, require every probability, each
+in [0,1], with sum one (floating tolerance approximately 1e-9), a source statement
+and `user_assumption` or `model_assumption` type. There is no silent normalization.
+Compute c_weighted = sum(p_s × (1 + c_s)) − 1 and then annualize that horizon
+wealth return. Do **not** average annualized scenario rates; the two operations
+do not generally commute. These probabilities express assumptions, not statistical
+calibration. No tail estimator, Monte Carlo paths or parameter uncertainty is
+introduced here. Implementation: `valuation/models.py:scenario_set`.
+
+## Reverse valuation
+
+Hold every forward assumption fixed except MH. Given required annualized a_req,
+solve analytically:
+
+```text
+required_local_price = P0 × X0 × (1 + a_req)^H / XH - C
+required_MH = required_local_price / (F0 × (1 + g)^H)
+```
+
+The response names the solved field, preserves the submitted assumptions and
+explicitly states that their original terminal_multiple is ignored. Nonpositive
+required terminal price has no solution in this positive-multiple model and
+returns `{value:null, reason:"nonpositive_required_terminal_price"}`. A multiple
+underflowing to zero returns `numerical_underflow`; overflow fails. A forward
+round trip recovers the original multiple. This asks what terminal multiple
+would satisfy the owner's required return at today's price; it does not establish
+fair value or recommend an investment. Implementation: `valuation/models.py:reverse`.
+
+## Evidence, reproducibility and Phase 5 boundaries
+
+`valuation/service.py` resolves explicit observation IDs and an optional thesis
+revision for the selected security. Require `reported_at <= as_of` and
+`recorded_at <= known_at` for facts, and revision creation time <= both cutoffs
+for the thesis. Monetary facts must match local currency. IDs can deliberately
+refer to an older eligible observation: this is explicit evidence selection, not
+automatic latest-restatement selection. Frontend browsing uses Phase 3's latest
+eligible fact query. Linkage does not claim that model inputs were extracted from
+the attached facts; all assumptions remain separately supplied by the owner.
+
+`POST /api/research/valuation/evaluate` dispatches six typed model inputs behind
+the existing owner-key/database dependencies. It returns `result` plus `manifest`
+and `Cache-Control: no-store`; existing API v3 simulation behavior is unchanged.
+The manifest includes resolved inputs, model/methodology version (`phase5.1`),
+valuation/evidence/sample metadata, exact research and thesis snapshots, input and
+evidence SHA-256, a hash over backend Python source content, git SHA/dirty status
+when available, optional BUILD_ID, runtime/library versions and generated time.
+No RNG is used (`random_seed=null`). Non-git deployments explicitly report missing
+git identity; dirty source hashes distinguish local changes from a clean commit.
+
+Replaying resolved inputs reproduces the result in a matching environment with
+eligible database records. Returned snapshots support later examination but are
+not accepted as database truth by the API. Mutable security-master labels/currency
+may change or prevent a future API replay; original manifest snapshots retain
+their original values. Hashes identify data and do not preserve it. There is no
+new persistence table, provider data retention process, archive, or save/export
+service. The owner controls retention of responses subject to source licensing.
+Same-run timestamp/manifests need not be byte-identical across executions.
+
+Uncertainty records distinguish parameter estimation, model specification and
+sampling. User ranges are declared annualized ranges without inferred confidence;
+fundamental/reverse sensitivity is conditional, and statistical SEs use the stated
+IID assumptions. No Monte Carlo sampling occurs in this engine, and extra Risk Lab
+paths would not remove parameter or model uncertainty. Phase 6 construction,
+ledger/accounting, attribution, publishing and Black-Litterman remain unsupported.
+# Phase 6 — supplied-data construction and stress
+
+Construction uses owner-declared fully invested, long-only security weights, in
+one local/valuation currency. These are hypothetical allocations, not holdings
+derived from transactions. All financial calculations run in backend domain
+functions. The private APIs return complete resolved inputs and registry/evidence
+snapshots with code, input and evidence hashes and library versions. Saving the
+response is necessary for replay; a hash alone does not archive data.
+
+## Joint data and expected-return conventions
+
+Every supplied row contains identical start/end economic intervals across the
+ordered security UUIDs, with explicit calendar/cutoff alignment, total-return
+adjustment policy, frequency, periods per year, source and retrieval time. The
+server rejects dimension/order mismatches, invalid frequencies, overlapping
+intervals and data unavailable under the supplied knowledge cutoff. It cannot
+independently certify the owner's declared corporate-action or calendar alignment.
+There are no provider calls or automatic history archives in these endpoints.
+
+An adopted return view must explicitly specify one-year nominal total simple
+return, local currency, matching valuation date/calendar and eligible evidence
+cutoffs. Model estimates are never silently adopted. For complete views mu,
+portfolio expected return is sum(w_i * mu_i), and the expected Sharpe comparison
+is (sum(w_i * mu_i) - annual_effective_risk_free_rate) / annualized_volatility.
+These are conditional one-year assumptions; geometric multi-year annualized rates
+are not interchangeable with arithmetic one-year means. Missing views produce
+typed undefined aggregate returns/Sharpe; known asset contributions remain visible.
+
+## Covariance and contributions
+
+Sample covariance uses n-1 degrees of freedom; Ledoit-Wolf uses the library's
+shrunk covariance estimator. Annual covariance Sigma is period covariance times
+declared periods per year, assuming IID covariance scaling. Correlation is
+Sigma_ij / sqrt(Sigma_ii * Sigma_jj), undefined when either variance is zero.
+This is current-weight historical covariance risk, separate from stress population
+risk and future realized portfolio risk. Parameter/model uncertainty is not propagated.
+
+Portfolio volatility sigma = sqrt(w' Sigma w). Marginal contribution is
+(Sigma w)_i / sigma; component contribution is w_i times marginal contribution;
+percentage contribution is component / sigma. Components sum to sigma and
+percentages sum to one when sigma is positive. Negative contributions remain
+signed. Zero sigma gives zero components and undefined marginal/percentage ratios.
+Weight concentration is sum(w_i^2), with effective positions its reciprocal.
+Risk concentration is sum((abs(component_i) / sum(abs(component)))^2), explicitly
+an absolute-contribution HHI; it is undefined when all components are zero.
+
+## Allocation alternatives and numerical limits
+
+Current and equal weights are reference allocations. Any violation of proposed
+common minimum/maximum position weights is shown rather than silently repaired.
+Optimized alternatives require unit sum and the declared position bounds.
+
+Minimum variance minimizes w' Sigma w using convex SLSQP with analytical gradients.
+A bounded-simplex first-order gap checks optimality, in addition to solver status
+and feasibility. Zero covariance or a unique feasible portfolio is handled
+analytically; uniqueness is not claimed for singular objectives.
+
+Maximum Sharpe requires all investor views, positive-definite covariance and a
+feasible positive expected excess return. It solves the convex transformation
+minimize y' Sigma y subject to excess' y = 1 and
+lower * sum(y) <= y_i <= upper * sum(y), then normalizes y to unit sum.
+Positive rescaling improves conditioning without changing the solution. Solver,
+feasibility and first-order checks must pass. Singular/ill-conditioned covariance,
+nonpositive feasible excess return or numerical failure produces an explicit
+unavailable comparison. Maximum Sharpe is highly sensitive to uncertain return
+assumptions; it is presented beside minimum variance and risk parity.
+
+Equal risk contribution solves the positive convex risk-budget objective
+0.5 * x' Sigma x - sum(log(x_i)) / number_of_assets, then normalizes x.
+It requires positive-definite covariance, successful numerical convergence and
+equal risk percentages within 1e-6 absolute tolerance. If this solution violates
+position bounds it is unavailable; a constrained approximation is not labeled
+equal risk contribution. Position feasibility tolerance is 1e-8; only numerical
+roundoff outside [0, 1] is cleaned in optimized weights.
+
+Cash, leverage, shorting, sector/beta caps, factor mapping, Black-Litterman and
+benchmark-relative optimization are unsupported. Unsupported request fields are
+rejected. No allocation is an order or an automatic investment decision.
+
+## Historical replay, bootstrap and security shocks
+
+Replay applies the complete ordered supplied joint history to declared weights.
+Moving-block bootstrap draws uniform overlapping, non-circular joint blocks;
+within-block sequence and cross-security rows are retained, and the final block
+is truncated to the explicit horizon. Seed, block length, path count, horizon,
+confidence and unchanged empirical-mean policy are required. The sample's returns
+are resampled without recentering; non-circular blocks weight interior rows more
+heavily than endpoints, and sampled means need not equal the source sample mean.
+This is not an investor expected-return view. The tensor
+is limited to two million cells. Model uncertainty and uncertainty about the
+historical data-generating process are not eliminated by more paths.
+
+Both history methods use the existing exact simple-return portfolio path engine,
+with costless per-observation rebalancing or buy-and-hold. They reject complete-loss
+history observations explicitly because the inherited logarithmic path/statistics
+domain excludes them; observations are never silently dropped. Deterministic
+shocks accept complete loss and compute a single terminal weighted security shock,
+with explicit horizon label and rationale. No arbitrary oil/rate/FX transmission
+coefficients are invented. One replay or shock has no empirical tail distribution.
+
+Stress weights are reconciled to unit sum only within the contract's accepted
+1e-10 roundoff tolerance. Deterministic terminal wealth sums nonnegative gross
+security wealth before subtracting one for the return; this avoids tiny negative
+wealth caused by cancellation at complete loss. Calmar defined/total path counts
+and bootstrap effective tail mass `(1-confidence)*path_count` are exposed.
+
+Stress statistics use all paths; the chart sample is only the first at most 30.
+Pooled periodic volatility and excess-return Sharpe/Sortino use the supplied
+periods-per-year assumption and annual-effective risk-free conversion. Calmar is
+the median of path annual growth divided by path maximum drawdown, undefined if
+any path has zero drawdown. Bootstrap terminal losses use loss-positive simple
+returns, linear empirical VaR and fractional-boundary expected shortfall. Negative
+losses are valid gains. Percentiles are not worst/best cases or loss bounds.
+All outputs identify the actual observation-period horizon rather than calling
+monthly or weekly intervals days. Fees, taxes, costs and realized accounting are
+outside these conditional scenarios.
+
+
+# Phase 7 ledger and supplied-mark valuation — 2026-09-12
+
+The ledger records economic events rather than simulated outcomes. Its formulas,
+trade-date cash convention, positive debit/credit fields, moving-average local
+cost, fee treatment, FX direction, cancellation/knowledge semantics, decimal
+rounding and missing-data rules are documented in [ACCOUNTING.md](ACCOUNTING.md).
+
+The fundamental identities are cash = inflows − outflows per currency, quantity
+= active buys − active sells per security, and complete NAV = all local position
+values and cash translated with supplied base-units/local-unit rates. Buy fees
+enter basis; sell fees reduce cash proceeds. Full closure removes all remaining
+basis. Partial sales allocate average cost; this is not tax-lot accounting.
+
+Missing required price/FX inputs make complete NAV and all weights undefined.
+Local unrealized P&L equals local market value minus local basis. Translating it
+at current supplied FX excludes historical FX gains/losses and is labeled as such.
+Supplied prices use their actual dates/sources; no stale-price, corporate-action
+or broker-settlement reconciliation is silently certified. No TWR, XIRR, realized
+performance, benchmark attribution or automatic order follows from these values.
+
+## Risk Lab input conventions — 2026-09-13 UX clarification
+
+The Risk Lab names `zero_log_drift` **No directional return assumption** and
+`historical_diagnostic` **Historical average — diagnostic only**. These are the
+two currently implemented scenario drift choices, not investor return views.
+Zero applied mean log return does not imply zero expected simple return or a
+risk-neutral model. The historical mean is diagnostic evidence, not an implicit
+forecast. A thesis-conditioned expected return requires a separate declared
+view and is not a selectable Risk Lab drift source.
+
+The estimation-window shortcuts send exactly 3 (Recent), 5 (Medium), or 10
+(Long) years; Custom sends the entered 1–10 year value. A shorter window can
+respond to recent changes while using fewer observations; a longer window can
+stabilize an estimate while mixing older conditions. The response, rather than
+the shortcut label, reports the actual estimation dates and valid intervals.
+
+New frontend portfolio requests explicitly select `buy_and_hold` by default,
+so weights drift with simulated returns. The backend's legacy default is
+unchanged. A user may select `daily`, which resets target weights each modeled
+period without transaction costs. Ledoit-Wolf remains the portfolio historical
+covariance estimator default. The single-asset form omits covariance and
+rebalancing selectors because those choices are not meaningful controls there;
+the existing v3 request fields remain explicit for compatibility. Valuation
+currency labels outputs and does not perform FX conversion. Path count, seed,
+periods per year, confidence and method-specific numeric parameters remain
+editable under Advanced settings. The two-million-cell request limit is
+unchanged and blocks oversized runs with an explanatory message.
+
+Historical replay and block-bootstrap forms also now explicitly default to
+`buy_and_hold`; `per_observation` rebalancing remains selectable. These are
+frontend default changes only. All resolved choices still enter their request
+and replay manifest. Ledoit-Wolf estimates how assets move together while
+shrinking noisy historical covariance toward a more stable structure; it does
+not remove model or parameter uncertainty. For a single asset the shared
+infrastructure estimates variance; no cross-asset selector is presented.
+
+## Phase 8 realized performance — 2026-09-15 authorization
+
+The separately implemented [performance methodology](PERFORMANCE.md) specifies
+daily flow-neutral unitization, actual-day/365 XIRR, geometric calendar links,
+realized sample ratios/moments/tails, valuation/FX evidence and typed undefined
+states. Its fixed UTC calendar / 365-observation convention applies only to this
+realized-performance domain. Existing 252-period Risk Lab conventions and
+scenario-distribution calculations are unchanged. No historical sample performance
+is promoted into an investor expected-return view.
+
+### Phase 8 closeout identity and verification — 2026-10-09
+
+No financial formula changes in this closeout. `performance.identity.digest`
+hashes canonical JSON with non-finite values forbidden. `source_sha256` hashes
+the ordered relative paths and actual bytes of every backend domain Python file
+and main.py. This identifies dirty/untracked code as well as committed source;
+configured Git/build identity remains additional metadata.
+
+`performance.replay.verify_replay` requires matching source and Python/library
+versions, validates retained input/ledger hashes, identities and declared
+methodology/conventions, recalculates
+from the visible immutable records and compares every financial output. Full
+ledger version and knowledge-visible version are checked separately. This is
+consistency evidence, not independent data attestation. Missing source identity
+on a legacy report requires explicit regeneration for exact verification.
+
+| Functions / transport | Analytical/regression evidence |
+|---|---|
+| `performance.engine.build_report`; `identity.digest`, `source_sha256`; `replay.verify_replay` | `test_performance_replay.py`: download roundtrip, modified inputs/records/results/source/runtime/identities/versions/methodology/conventions, legacy reports and later unknown reversals |
+| `performance.routes.report`; coherent ledger snapshot | `test_performance_postgres.py`: unchanged contents across every migrated table, repeatability, competing row-lock timeout, later write, stale rejection and refreshed fee/NAV/TWR identities |
+
+The complete numerical specification remains in [PERFORMANCE.md](PERFORMANCE.md),
+and fresh acceptance evidence is in [PHASE_8_AUDIT.md](PHASE_8_AUDIT.md).

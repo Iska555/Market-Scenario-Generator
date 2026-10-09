@@ -26,6 +26,8 @@ import {
   buildHistogramData,
   buildPercentileRows,
   describeDriftModel,
+  driftModelLabel,
+  MODEL_OPTIONS,
   formatCurrency,
   formatPercent,
   formatRatio,
@@ -254,11 +256,12 @@ function CorrelationTable({ matrix, tickers, isDark }) {
   );
 }
 
-function ResponseAssumptions({ result, isDark }) {
+export function ResponseAssumptions({ result, isDark }) {
   const assumptions = result.assumptions;
+  const modelOption = MODEL_OPTIONS.find((option) => option.value === result.model);
   const entries = [
-    ['Model', result.model],
-    ['Drift model', assumptions.drift_model],
+    ['Model', modelOption ? result.ticker ? modelOption.singleLabel : modelOption.label : result.model],
+    ['Forward return assumption', driftModelLabel(assumptions.drift_model)],
     ['History', `${assumptions.years} years`],
     ['Horizon', `${assumptions.horizon} modeled periods`],
     ['Paths', assumptions.num_paths],

@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-09",
+  "reason": "Added final methodology/conventions replay guard after UI capture; source identity changed",
+  "original_report": "synthetic-downloaded-report.json",
+  "original_source_sha256": "fd3fe74627bdc97d7d98ec7a58c4baeded3898a0a939fe554d7b81b48f6518e3",
+  "regenerated_report": "synthetic-regenerated-report.json",
+  "final_source_sha256": "5431b10f35b71cdcef6046a00813c7cfd71f0d4c0f992030366d474dd0875c32",
+  "financial_outputs_unchanged": true,
+  "original_download_preserved": true
+}

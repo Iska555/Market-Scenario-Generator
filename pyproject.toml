@@ -1,7 +1,7 @@
 [tool.ruff]
 line-length = 100
 target-version = "py312"
-extend-exclude = ["backend/env", "frontend"]
+extend-exclude = ["backend/env", "backend/.venv", "frontend"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "NPY", "RUF"]
@@ -14,7 +14,7 @@ disallow_untyped_defs = true
 warn_unused_ignores = true
 warn_return_any = true
 ignore_missing_imports = true
-exclude = "backend/env"
+exclude = "backend/(env|\\.venv)"
 
 [tool.pytest.ini_options]
 testpaths = ["backend/tests"]

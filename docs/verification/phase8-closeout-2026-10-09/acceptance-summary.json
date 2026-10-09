@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-09",
+  "profile": {
+    "python": "3.12.14",
+    "node": "24.18.0",
+    "npm": "11.16.0",
+    "postgresql": "17.11",
+    "vite": "7.3.7"
+  },
+  "backend": {
+    "passed": 544,
+    "skipped": 0,
+    "coverage_percent": 97.84,
+    "replay_tests": 12
+  },
+  "frontend_clean_install": {
+    "passed": 119,
+    "skipped": 0,
+    "lint_exit": 0,
+    "build_exit": 0,
+    "npm_audit_vulnerabilities": 0
+  },
+  "bootstrap_exit": 0,
+  "synthetic_download_replay_exit": 0,
+  "temporary_services_stopped": [
+    8000,
+    5173,
+    55439
+  ],
+  "disposable_schemas_remaining": 0,
+  "hosted_ci_run": false,
+  "production_deployment": false
+}

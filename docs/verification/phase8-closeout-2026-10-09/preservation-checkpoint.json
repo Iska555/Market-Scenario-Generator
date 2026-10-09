@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-09",
+  "kind": "checkpoint byte identity; not a recovered task-entry comparison",
+  "historical_documents": [
+    {
+      "path": "docs/MASTER_BRIEF.md",
+      "bytes": 51855,
+      "sha256": "317ca3cbe1986e0ecb9f441d97de53062fe791f5a2150d620547ccc8f08be28b"
+    },
+    {
+      "path": "docs/PHASE_1_AUDIT.md",
+      "bytes": 15091,
+      "sha256": "0cf284645403488350b9d893566c9a6307ed6f3d514323449756b930c3041bba"
+    },
+    {
+      "path": "docs/PHASE_2_AUDIT.md",
+      "bytes": 9301,
+      "sha256": "d21a7f9bb49836e1c3824814705206e51f22498575fff3d9fefcfbe166c57b41"
+    },
+    {
+      "path": "docs/PHASE_3_AUDIT.md",
+      "bytes": 9787,
+      "sha256": "d424bb57773a4d8a0d1973bbe3c35b046e3d1887a3f38a23e76d8d50145daba2"
+    },
+    {
+      "path": "docs/PHASE_4_AUDIT.md",
+      "bytes": 5736,
+      "sha256": "97d3e257c54990ad941538b0f2321dd08c218281b8614bc7626c39896d64f5ae"
+    },
+    {
+      "path": "docs/PHASE_5_AUDIT.md",
+      "bytes": 13410,
+      "sha256": "73b273f582aab236b321bb36866f61ae80cae16f978674aa66db3a3b940cb855"
+    },
+    {
+      "path": "docs/PHASE_6_AUDIT.md",
+      "bytes": 11646,
+      "sha256": "c7f2fc1bb901418e56ed2d72b178cecaed4b64b812d48684028812a757dc2cac"
+    },
+    {
+      "path": "docs/PHASE_7_AUDIT.md",
+      "bytes": 12489,
+      "sha256": "cc3336bb3be84fdd8315327c44fba48af442bd76eb0daa1650b9a97d3f5a339a"
+    },
+    {
+      "path": "docs/PHASE_7_BACKEND_REVIEW.md",
+      "bytes": 10222,
+      "sha256": "e69b2cca089455d8fc9e5bd26e5932def6ce49c365fd373ad16bb3308931a57b"
+    },
+    {
+      "path": "docs/PHASE_8_FINAL_REVIEW.md",
+      "bytes": 6049,
+      "sha256": "8e69ed33d538f85d43a794f7df51f387f4f6e63cfdbdebf05b6cff7d4fbd6b14"
+    },
+    {
+      "path": "docs/PHASE_8_METRICS_REVIEW.md",
+      "bytes": 8649,
+      "sha256": "c296a63a9a51b0542bac4cea620421edf1650d47768ab798185a9b7c3e6eac88"
+    }
+  ],
+  "suggestions": {
+    "sha256": "620810f3a285dd0c4bde11848fcf333439cfecab47dd9f2ffcbaa38b176e9586",
+    "bytes": 33022,
+    "before_continuation_sha256": "9ef4b93070cc4c1bdffc5dda0c1dc720993c53a46207364a1278165c3e040273",
+    "before_continuation_bytes": 28814,
+    "method": "continuation added with append; earlier bytes were not edited"
+  },
+  "task_entry_baseline_available": false
+}

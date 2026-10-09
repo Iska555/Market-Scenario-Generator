@@ -9,6 +9,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from src.accounting.routes import router as accounting_router
 from src.api.models import (
     PortfolioSimulationRequest,
     PortfolioSimulationResponse,
@@ -16,12 +17,23 @@ from src.api.models import (
     SimulationResponse,
 )
 from src.data.providers import CachedPriceProvider, PriceDataError
+from src.performance.routes import router as performance_router
+from src.portfolio.construction.routes import router as construction_router
 from src.research.routes import router as research_router
+from src.research.thesis.routes import router as thesis_router
+from src.risk.scenarios.historical_routes import router as historical_router
 from src.risk.scenarios.service import run_portfolio, run_single
+from src.valuation.routes import router as valuation_router
 
 API_VERSION = "3.0.0"
-app = FastAPI(title="Portfolio Simulations — Risk & Scenario Lab", version=API_VERSION)
+app = FastAPI(title="Investment Management Workspace — Risk & Scenario Lab", version=API_VERSION)
 app.include_router(research_router)
+app.include_router(thesis_router)
+app.include_router(valuation_router)
+app.include_router(construction_router)
+app.include_router(historical_router)
+app.include_router(accounting_router)
+app.include_router(performance_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[

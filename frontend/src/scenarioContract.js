@@ -14,14 +14,29 @@ export const DEFAULT_ASSUMPTIONS = Object.freeze({
   gmmComponents: 3,
   gmmRegCovar: 0.000001,
   ewmaLambda: 0.94,
-  rebalance: 'daily',
+  rebalance: 'buy_and_hold',
 });
 
 export const MODEL_OPTIONS = Object.freeze([
-  { value: 'gaussian', label: 'Gaussian', description: 'One multivariate normal distribution' },
-  { value: 'gmm', label: 'Joint GMM', description: 'Joint historical return regimes' },
-  { value: 'ewma', label: 'EWMA', description: 'Single-asset conditional volatility' },
+  { value: 'gaussian', label: 'Multivariate Gaussian', singleLabel: 'Gaussian single-asset model', singleDescription: 'One fitted return distribution with a fixed volatility estimate.', description: 'One fitted return distribution with a fixed volatility and correlation structure.' },
+  { value: 'gmm', label: 'Joint GMM', singleLabel: 'Univariate GMM', singleDescription: 'A mixture of return regimes with different volatility. Components are statistical regimes, not guaranteed economic states.', description: 'A mixture of return regimes with different volatility and correlation structures. Components are statistical regimes, not guaranteed economic states.' },
+  { value: 'ewma', label: 'EWMA', singleLabel: 'EWMA recent-weighted volatility', description: 'Gives recent observations more weight so conditional volatility responds more quickly to recent market moves.' },
 ]);
+
+export function estimationWindowPreset(years) {
+  if (Number(years) === 3) return 'recent';
+  if (Number(years) === 5) return 'medium';
+  if (Number(years) === 10) return 'long';
+  return 'custom';
+}
+
+export function yearsForEstimationWindow(preset, currentYears) {
+  if (preset === 'recent') return 3;
+  if (preset === 'medium') return 5;
+  if (preset === 'long') return 10;
+  if (preset === 'custom') return currentYears;
+  throw new Error('Unknown estimation window preset.');
+}
 
 const PERCENTILE_KEYS = Object.freeze(['p01', 'p05', 'p10', 'p25', 'p50', 'p75', 'p90', 'p95', 'p99']);
 
@@ -164,4 +179,10 @@ export function describeDriftModel(driftModel) {
     return 'Historical diagnostic: the fitted historical log-return location is used for diagnostic calibration. It is not a forecast.';
   }
   return 'Zero log drift: the applied mean log return is zero. This does not imply a zero expected simple return or a risk-neutral model.';
+}
+
+export function driftModelLabel(driftModel) {
+  if (driftModel === 'zero_log_drift') return 'No directional return assumption';
+  if (driftModel === 'historical_diagnostic') return 'Historical average — diagnostic only';
+  return driftModel;
 }

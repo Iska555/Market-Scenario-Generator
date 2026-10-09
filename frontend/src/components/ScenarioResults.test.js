@@ -13,6 +13,7 @@ let PercentileTable;
 let PortfolioRisk;
 let Statistics;
 let ResultNotice;
+let ResponseAssumptions;
 
 before(async () => {
   server = await createServer({
@@ -22,7 +23,7 @@ before(async () => {
     logLevel: 'silent',
     server: { middlewareMode: true },
   });
-  ({ PercentileTable, PortfolioRisk, Statistics, ResultNotice } = await server.ssrLoadModule('/src/components/ScenarioResults.jsx'));
+  ({ PercentileTable, PortfolioRisk, Statistics, ResultNotice, ResponseAssumptions } = await server.ssrLoadModule('/src/components/ScenarioResults.jsx'));
 });
 
 after(async () => {
@@ -135,4 +136,37 @@ test('completed results identify their captured instruments independently of edi
   }));
   assert.match(single, /Instrument: SPY/);
   assert.match(portfolio, /Instruments: SPY, TLT/);
+});
+
+test('result assumptions disclose the forward return choice in plain language', () => {
+  const html = renderToStaticMarkup(React.createElement(ResponseAssumptions, {
+    result: { model: 'gaussian', assumptions: {
+      years: 3, horizon: 252, num_paths: 1000, random_seed: 42,
+      drift_model: 'historical_diagnostic', risk_free_rate: 0,
+      periods_per_year: 252, confidence: 0.95, initial_value: 1000,
+      currency: 'USD', covariance_estimator: 'ledoit_wolf',
+      rebalance: 'buy_and_hold', gmm_components: 3, gmm_reg_covar: 0.000001,
+      ewma_lambda: 0.94,
+    } }, isDark: false,
+  }));
+  assert.ok(html.includes('Forward return assumption'));
+  assert.ok(html.includes('Historical average — diagnostic only'));
+  assert.ok(!html.includes('>historical_diagnostic<'));
+});
+
+test('result assumptions identify single and joint GMM without changing model codes', () => {
+  const assumptions = { years: 3, horizon: 252, num_paths: 1000,
+    random_seed: 42, drift_model: 'zero_log_drift', risk_free_rate: 0,
+    periods_per_year: 252, confidence: 0.95, initial_value: 1000,
+    currency: 'USD', covariance_estimator: 'ledoit_wolf',
+    rebalance: 'buy_and_hold', gmm_components: 3, gmm_reg_covar: 0.000001,
+    ewma_lambda: 0.94 };
+  const single = renderToStaticMarkup(React.createElement(ResponseAssumptions, {
+    result: { model: 'gmm', ticker: 'SPY', assumptions }, isDark: false,
+  }));
+  const portfolio = renderToStaticMarkup(React.createElement(ResponseAssumptions, {
+    result: { model: 'gmm', tickers: ['SPY', 'TLT'], assumptions }, isDark: false,
+  }));
+  assert.ok(single.includes('Univariate GMM'));
+  assert.ok(portfolio.includes('Joint GMM'));
 });

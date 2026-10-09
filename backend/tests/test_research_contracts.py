@@ -7,6 +7,36 @@ from pydantic import ValidationError
 from src.research.schemas import ObservationCreate, SecurityCreate
 
 
+@pytest.mark.parametrize("asset_type", ["etf", "fund", "cash", "fx", "bond", "crypto"])
+def test_future_asset_types_remain_rejected(asset_type: str) -> None:
+    with pytest.raises(ValidationError):
+        SecurityCreate.model_validate(
+            {
+                "ticker": "TEST",
+                "name": "Unsupported instrument",
+                "exchange": "XNAS",
+                "currency": "USD",
+                "country": "US",
+                "asset_type": asset_type,
+            }
+        )
+
+
+def test_equity_identity_contract_is_unchanged() -> None:
+    equity = SecurityCreate.model_validate(
+        {
+            "ticker": " test ",
+            "name": "Test equity",
+            "exchange": "xnas",
+            "currency": "USD",
+            "country": "US",
+        }
+    )
+    assert equity.asset_type == "equity"
+    assert equity.ticker == "TEST"
+    assert equity.exchange == "XNAS"
+
+
 def fact(**changes: object) -> ObservationCreate:
     return ObservationCreate.model_validate(
         {

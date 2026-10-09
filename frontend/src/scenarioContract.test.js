@@ -11,7 +11,37 @@ import {
   formatRatio,
   formatSignedPercent,
   normalizeWeightPercentages,
+  DEFAULT_ASSUMPTIONS,
+  estimationWindowPreset,
+  yearsForEstimationWindow,
+  MODEL_OPTIONS,
+  driftModelLabel,
 } from './scenarioContract.js';
+
+test('frontend defaults to buy and hold without changing the v3 request fields', () => {
+  assert.equal(DEFAULT_ASSUMPTIONS.rebalance, 'buy_and_hold');
+  assert.equal(DEFAULT_ASSUMPTIONS.covarianceEstimator, 'ledoit_wolf');
+  assert.equal(buildPortfolioRequest([{ ticker: 'SPY', weight: 50 }, { ticker: 'TLT', weight: 50 }], DEFAULT_ASSUMPTIONS).rebalance, 'buy_and_hold');
+});
+
+test('estimation presets retain their exact request years and custom input', () => {
+  assert.deepEqual([3, 5, 10, 7].map(estimationWindowPreset), ['recent', 'medium', 'long', 'custom']);
+  assert.equal(yearsForEstimationWindow('recent', 7), 3);
+  assert.equal(yearsForEstimationWindow('medium', 7), 5);
+  assert.equal(yearsForEstimationWindow('long', 7), 10);
+  assert.equal(yearsForEstimationWindow('custom', 7), 7);
+  assert.equal(buildSingleRequest('SPY', { ...DEFAULT_ASSUMPTIONS, years: yearsForEstimationWindow('custom', 7) }).years, 7);
+});
+
+test('model labels identify single and portfolio methods precisely', () => {
+  assert.equal(MODEL_OPTIONS.find((option) => option.value === 'gmm').singleLabel, 'Univariate GMM');
+  assert.equal(MODEL_OPTIONS.find((option) => option.value === 'gaussian').singleLabel, 'Gaussian single-asset model');
+});
+
+test('drift labels retain the chosen model without presenting history as a forecast', () => {
+  assert.equal(driftModelLabel('zero_log_drift'), 'No directional return assumption');
+  assert.equal(driftModelLabel('historical_diagnostic'), 'Historical average — diagnostic only');
+});
 
 const assumptions = {
   years: 3,

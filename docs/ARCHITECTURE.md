@@ -1,10 +1,44 @@
-# Architecture after Phases 1–3
+# Architecture through Phase 8
 
 The canonical product brief is [MASTER_BRIEF.md](MASTER_BRIEF.md). This checkout
-implements the simulator's correctness rebuild, methodology/test infrastructure
-and the Phase 3 equity research data model. Theses,
-expected-return estimation services, ledgers, realized performance, attribution
-and public publishing remain future phases.
+contains the simulator correctness rebuild, methodology/tests, an equity research
+registry, versioned thesis and valuation workspaces, hypothetical construction,
+supplied stress scenarios and a private transaction ledger with supplied-mark
+valuation, and realized performance from the ledger and explicit valuation evidence.
+Phase-specific sections below retain their phase boundaries; the current owner
+review gate is before Phase 9. See the respective phase audits for implementation
+and verification evidence. Attribution and public publishing remain outside scope.
+
+## Phase 8 performance boundary — authorized 2026-09-15
+
+`backend/src/performance/contracts.py` defines strict daily/flow valuation inputs
+and typed outputs. `engine.py` reuses accounting replay and valuation to derive
+unit issuance/redemption, daily returns and calendar links. `metrics.py` implements
+dated XIRR and descriptive realized statistics, separate from scenario statistics.
+`routes.py` obtains the existing locked portfolio snapshot, verifies its version
+and completed-day cutoffs, and exposes a private read-only report endpoint.
+No new tables, migrations, provider calls, ledger mutations or archive are needed.
+
+The 2026-10-09 closeout adds `performance/identity.py` for actual source and input
+fingerprints and `performance/replay.py` for offline verification of downloaded
+reports. The additive nullable source-identity field preserves legacy parsing;
+legacy reports without identity cannot pass exact replay. The command under
+`scripts/replay_performance.py` compares all financial outputs using supplied
+snapshots, independently of database availability and optional git/build settings.
+
+The Performance frontend controller shares the memory-only workspace session,
+loads recorded account state, prepares empty evidence templates using active
+transaction IDs and paginated immutable history, and submits explicit evidence.
+Client generation guards reject late reads/reports after edits, navigation or lock.
+All economic arithmetic stays in the backend; the browser formats returned values.
+
+The return calendar is explicitly UTC calendar daily / 365 observations per year,
+not the simulation engine's default 252 trading periods. Unadjusted prices avoid
+double-counting booked dividends. Missing marks, stale evidence, zero-denominator
+ratios and non-conventional XIRR schedules return honest undefined states.
+See [PERFORMANCE.md](PERFORMANCE.md) for contracts/formulas and
+[PHASE_8_AUDIT.md](PHASE_8_AUDIT.md) for actual acceptance evidence. Phase sections
+below are historical descriptions, not renewed stop-before-8 instructions.
 
 ## Boundaries
 
@@ -25,7 +59,9 @@ and public publishing remain future phases.
 | `backend/src/research/repository.py` | Stable identities, transactional immutable imports and temporal revision selection |
 | `backend/src/research/database.py`, `routes.py` | Lazy PostgreSQL sessions, private API access and HTTP orchestration |
 | `backend/migrations/`, `backend/alembic.ini` | Explicit versioned PostgreSQL schema lifecycle |
-| `frontend/src/App.jsx`, `components/ScenarioResults.jsx`, `scenarioContract.js` | Risk Lab controls, captured result presentation, request validation and display formatting |
+| `frontend/src/App.jsx`, `components/SimulationConfig.jsx`, `components/ScenarioResults.jsx`, `scenarioContract.js` | Risk Lab controls, captured result presentation, request validation and display formatting |
+| `frontend/src/features/workspace/session.js`, `sessionContext.js`, `PrivateWorkspace.jsx` | Memory-only shared private key, global unlock/lock control and controller registration |
+| `frontend/src/features/workspace/Overview.jsx`, `overview.js` | Recorded account, quantity and cash read model; no inferred NAV or portfolio weights |
 
 `src/correlation.py` preserves imports for two existing Python helper names;
 the removed v2 functions were incorrect and have no compatibility shim. There is
@@ -151,3 +187,196 @@ checks migration round trips, exact Decimal storage and immutable fact triggers.
 When `TEST_DATABASE_URL` is configured, repository cases also run against isolated
 PostgreSQL schemas. CI provisions PostgreSQL 17. Mypy includes migrations; backend
 coverage instruments `src` and `main`, with migrations verified separately.
+
+## Phase 4 thesis boundary
+
+`research/thesis/schemas.py` validates owner-authored content; `repository.py`
+appends immutable versions and reviews inside the existing request transaction;
+`routes.py` handles private transport. The new Alembic migration adds three tables
+without changing the earlier research migration. A stable thesis row is locked
+while allocating sequential revisions; `expected_revision` rejects stale edits.
+Composite foreign keys bind a revision to its security and a review to its thesis.
+PostgreSQL triggers reject updates and deletes. Server UTC timestamps and captured
+listing labels preserve what the application recorded at each version.
+
+The React feature in `frontend/src/features/thesis/` separates an in-memory
+workspace controller/API adapter from form and history presentation. Credentials
+remain in memory; disconnected or superseded requests cannot repopulate private
+state. Saved history and editable content have separate state. Both thesis and
+review drafts require deliberate save/discard handling. The existing Risk Lab
+remains a separate tab and continues using its existing scenario API.
+
+This domain records decisions; it does not feed rates into simulations, generate
+expected returns, place trades or maintain portfolio holdings. Full field/time
+semantics and operational limitations are in [THESIS.md](THESIS.md).
+
+## Phase 5 authorized design boundary — 2026-09-09
+
+The following describes the implemented Phase 5 boundary; verification is recorded
+in `PHASE_5_AUDIT.md`. The
+permanent requirements are the seven suggestions and rules A–D in the dated
+[master-brief addendum](MASTER_BRIEF.md#approved-addendum--2026-09-09-phase-5-and-permanent-design-guidance).
+
+| Code | Responsibility |
+|---|---|
+| `backend/src/valuation/contracts.py` | Typed return context, uncertainty/undefined values, assumption sets, valuation results and scenarios |
+| `backend/src/valuation/arithmetic.py` | Stable tested horizon conversions and finite-result validation |
+| `backend/src/valuation/models.py` | Tested fundamental, scenario-set and reverse-valuation domain calculations |
+| `backend/src/views/expected_return.py` | Explicit investor views, historical diagnostics and CAPM with declared estimation conventions |
+| `backend/src/valuation/service.py` | Existing research/thesis evidence validation, typed response and complete resolved-input manifests |
+| `backend/src/valuation/routes.py` | Thin private HTTP orchestration using existing owner-key access conventions |
+| `frontend/src/features/valuation/` | Focused security/thesis/assumption workspace and rendering of server results |
+
+The domain flow is research assumptions → valuation/return model → security
+scenario → investor expected-return view → future portfolio construction. Each
+step must retain a distinct meaning and type. An EPS-growth assumption is not a
+return estimate. A model result is not automatically an investor view. Legacy
+owner-entered thesis-review returns lack the independent Phase 5 horizon contract
+and must not be silently imported as Phase 5 views. No model generates an
+investment decision; human decisions remain in the thesis/review system.
+
+Use a stateless calculation API. Requests supply the chosen model, resolved
+numeric assumptions, horizon, valuation date, return/currency conventions and
+evidence references. Services may read existing research and thesis records;
+Phase 5 adds no database persistence, automatic market/macro provider requests,
+provider-document archive, or coupling that changes the Risk Lab's existing
+drift and portfolio calculations. Model implementations share explicit contracts
+while retaining model-specific assumptions instead of a universal valuation form.
+
+Any linked research observation must satisfy the requested publication `as_of`
+and system-knowledge `known_at` cutoffs. A linked thesis revision must belong to
+the security and be available under the requested cutoff. Preserve source values
+and identifiers in the returned evidence snapshot. Distinguish documentary
+evidence from supplied assumptions; linking a record does not establish that
+every input was computed from it. Record valuation price, date, currency,
+assumption set and exact revision used for later reconstruction.
+
+Run manifests should contain proportionate resolved inputs, model/version,
+code/build identity and git SHA when available, library versions, observation
+window, valuation date, provider/retrieval metadata when applicable, adjustment
+policy, data hashes and calculation settings. Record seed only where relevant.
+Missing build identity must remain explicit; do not label uncommitted local work
+as a verified clean commit. A hash identifies data and cannot preserve it.
+No automatic permanent retention of licensed provider datasets is authorized.
+
+Return values must identify the horizon and distinguish arithmetic expected
+simple return, geometric compound growth, realized CAGR and log drift; distinguish
+price/total, nominal/real, local/base currency and annualized/cumulative bases.
+Annual-effective is the preferred risk-free convention; any other convention
+must be named. Return frequency, periods per year and valuation calendar must be
+explicit. Historical diagnostics remain visibly diagnostic and cannot silently
+become forward return inputs. Sharpe continues to use arithmetic excess period
+returns with matching annualization. Zero log drift is neither a claim of zero
+expected simple return nor risk neutrality.
+
+Bear/base/bull scenario sets are valid without probabilities. If supplied,
+probabilities must be explicit assumptions, identify their user/model source,
+and be coherently normalized before mathematical weighting. A weighted scenario
+result is not a statistically calibrated forecast unless calibration exists.
+Historical parameter-estimation uncertainty, Monte Carlo sampling uncertainty
+and model-specification uncertainty are separate concepts; increasing path count
+does not eliminate parameter or model uncertainty. Undefined financial values
+use typed null/reason semantics, with effective counts where relevant, throughout
+the API and UI. Null must never become zero in presentation.
+
+The UI must retain each completed result's exact submitted assumptions and
+evidence context, protect against superseded private responses, and show horizon,
+currency, return basis and model meaning alongside every result. Financial
+calculations remain in tested backend functions. Do not show automatic
+BUY/HOLD/SELL or present a precise-looking percentage without its assumptions.
+
+## Permanent boundaries for subsequent phases
+
+Serious multi-market/currency analysis requires explicit FX series, valuation
+cutoff, base/local currency and corporate-action adjustment conventions; matching
+end dates alone does not establish aligned economic intervals. Split-like moves,
+zero-volume days and repeated prices require investigation, not automatic
+deletion. Phase 5 does not implement the ledger/corporate-action system.
+
+Keep current/ex-ante covariance risk, scenario-distribution risk and realized
+portfolio risk distinct in schemas and labels. Risk contribution must identify
+its covariance estimator, period and weight basis; negative contributions are
+valid and must not be clamped. Tail results must identify quantile/interpolation,
+finite-sample CVaR and fractional-tail-atom conventions with effective tail counts.
+A percentile is not an extremum and must not be labeled best/worst case.
+
+Future acceptance gates require analytical reconciliation identities, numerical
+failure cases, API compatibility expectations, reproducible checks, unsupported
+functionality, deployment boundaries and data/provider assumptions. Relevant
+provider contract tests and representative memory/load tests are prerequisites
+for provider-dependent production claims. Audit records must distinguish planned,
+locally verified, hosted-CI verified and deployed behavior.
+# Phase 6 construction and supplied stress boundary
+
+The owner authorized Phase 6 on 2026-09-10. `portfolio/construction/contracts.py` owns aligned history, one-year
+adopted investor views, extensible strict constraints and typed results;
+`algorithms.py` owns checked numerical allocation solvers; `analytics.py` owns
+covariance, signed contributions and comparison reports. `service.py` resolves
+eligible private evidence and replay manifests. Thin `/api/research/construction`
+routes authenticate with the existing owner key and return no-store responses.
+
+`risk/scenarios/historical_contracts.py`, `historical.py`, `historical_service.py`
+and `historical_routes.py` provide a separate stateless supplied-data boundary at
+`POST /api/research/stress/evaluate`. Replay, seeded joint block bootstrap and
+explicit security shocks share identity/currency checks and manifests. Existing
+parametric Gaussian/GMM/EWMA endpoints remain compatible and separate. Both new
+POST endpoints return `{result, manifest}` and add no tables, migrations, archives
+or provider calls. Existing migrations are required for the private research base.
+
+The frontend enters through a text-branded platform shell with Construction,
+Thesis, Valuation and distinct risk tools. Construction and stress workspaces keep
+supplied inputs and results in memory; edits/superseding requests invalidate
+results, and disconnect/unmount clears module state. The global key survives
+navigation but clears on lock or refresh. Form/controllers handle
+transport and display only, preserving backend null/reason meanings. Matrices,
+solver diagnostics and replay records use progressive disclosure. Soft surfaces,
+rounded corners and responsive navigation implement the permanent UI direction.
+
+Phase 6 added no ledger, NAV, holdings reconciliation, realized performance,
+attribution, transaction creation or publication. Single-currency registry snapshots
+do not certify historical corporate-action or identifier mappings; the owner must
+supply truthful adjustment/calendar provenance. See Phase 6 methodology and audit
+for numerical/resource domains and what has actually been verified.
+
+
+# Phase 7 accounting boundary — 2026-09-12
+
+The owner authorized Phase 7; the current review gate is before Phase 8. Earlier
+phase sections above retain their original scope. `accounting/contracts.py`
+owns exact economic inputs and typed outputs; `ledger.py` replays immutable
+transactions, `precision.py` fixes arithmetic context, and `valuation.py` applies
+explicit dated prices/FX. `repository.py` locks the portfolio for coherent reads
+and atomic version-checked writes; `imports.py` validates canonical CSV before
+passing the same batch contract to preview/save. No provider/broker call occurs.
+
+Revision `20260912_03` adds separate accounting portfolios/transactions, exact
+PostgreSQL NUMERIC input fields, unique source/reference and sequence constraints,
+and append-only UPDATE/DELETE triggers. Existing research/thesis migrations are
+preserved. SQLite exact-text storage is a test convenience, not production.
+Private `/api/accounting` uses existing owner authentication and commit-before-
+success sessions. There are no transaction mutation or order endpoints.
+
+`frontend/features/ledger` owns memory-only drafts, captured preview/save
+payloads, account/session/draft generations, exact-decimal transport, paginated
+history and server-result presentation. Holdings are separate from construction
+weights; saving a ledger event invalidates supplied-mark results. More advanced
+controls still use registered UUIDs and supplied JSON; native broker mapping and
+fund support remain deferred. See [ACCOUNTING.md](ACCOUNTING.md) for the complete
+contract and [PHASE_7_AUDIT.md](PHASE_7_AUDIT.md) for verification and limitations.
+
+One frontend session controller validates the owner key against the existing
+private research API, passes it to the active private module, and keeps it only in
+memory. Navigation unmounts each module and clears its unsaved private drafts and
+results without requiring another unlock. Locking disconnects registered modules,
+invalidates pending responses and clears the key; a page refresh also clears the
+memory-only session. Successful server writes remain saved. The backend boundary
+is unchanged: `RESEARCH_API_KEY` configures access and private requests use
+`X-Research-Key`. There is no broker login or new permission tier.
+
+Overview reads actual accounting portfolios, recorded open equity quantities and
+trade-date cash. It shows empty/unavailable states instead of fabricating NAV,
+weights or performance. Construction accepts hypothetical supplied weights only;
+importing ledger weights awaits a reviewed dated valuation contract covering
+security marks, cash, FX and as-of cutoffs. The existing security registry remains
+equity-only. [ASSET_TYPE_ROADMAP.md](ASSET_TYPE_ROADMAP.md) describes proposed typed
+extensions without changing the present tables or APIs.

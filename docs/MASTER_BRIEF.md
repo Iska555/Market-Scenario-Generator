@@ -2170,3 +2170,512 @@ The goal is not to produce the largest number of quantitative features.
 The goal is to build an investment process whose assumptions, decisions, risks, performance, and mistakes are all inspectable and reproducible.
 
 Correctness is the product.
+---
+
+# Approved addendum — 2026-09-09: Phase 5 and permanent design guidance
+
+The owner approved Phases 1–4 for continuation on 2026-09-09 and explicitly
+authorized Phase 5, the expected-return and scenario model. The next mandatory
+owner review is before Phase 6. This dated addendum supersedes the original
+brief's immediate Phase 1 instruction and earlier phase authorization boundaries;
+the original brief above is preserved unchanged. Historical audits and the
+proposal history in `BRIEF_SUGGESTIONS.md` remain historical records.
+
+The seven suggestions and additional permanent rules A–D below reproduce the
+owner's approved guidance. They are requirements, not claims of implementation
+or successful verification. Phase 5 delivery evidence belongs in
+`PHASE_5_AUDIT.md`; the execution scope is in `BUILD_PLAN.md`.
+
+# APPROVED SUGGESTION 1 — Define the return and annualization contract
+
+The platform must explicitly distinguish:
+
+- log drift,
+- arithmetic expected simple return,
+- compound/geometric growth,
+- CAGR,
+- price return,
+- total return.
+
+Risk-free rates must have an explicit convention.
+
+The current preferred convention is:
+
+```text
+annual effective rate
+```
+
+unless a model explicitly requires another convention.
+
+If continuously compounded or nominal rates are ever used, they must be named as such.
+
+Also define:
+
+- observations/trading periods per year,
+- valuation calendar,
+- return frequency.
+
+Do not silently assume that:
+
+```text
+zero log drift
+```
+
+means:
+
+```text
+zero expected simple return
+```
+
+or:
+
+```text
+risk-neutral
+```
+
+because neither implication is generally valid.
+
+Sharpe should continue to use arithmetic excess period returns with matching annualization.
+
+CAGR is a separate quantity.
+
+---
+
+# APPROVED SUGGESTION 2 — Reproducible run manifests
+
+Every important quantitative report should eventually be replayable.
+
+Design a reusable run-manifest concept containing, where applicable:
+
+```text
+resolved inputs
+model name/version
+code/build identity
+git SHA
+library versions
+provider identity
+provider retrieval time
+observation window
+valuation date
+corporate-action adjustment policy
+data hashes
+calculation settings
+random seed
+```
+
+Important:
+
+A data hash identifies a dataset.
+
+A hash does NOT preserve the underlying data.
+
+Do not automatically introduce permanent storage of licensed provider datasets without first considering provider licensing and retention constraints.
+
+For Phase 5, implement only the parts of the run manifest that are useful and proportionate to the expected-return/scenario engine.
+
+Do not turn Phase 5 into a data-archiving project.
+
+---
+
+# APPROVED SUGGESTION 3 — Explicit undefined metric semantics
+
+Never coerce an undefined financial statistic to zero merely to simplify an API or UI.
+
+Examples include:
+
+- Sharpe,
+- Sortino,
+- Calmar,
+- risk contribution percentages,
+- any denominator-dependent ratio.
+
+Use explicit semantics such as:
+
+```json
+{
+  "value": null,
+  "reason": "zero_downside_deviation"
+}
+```
+
+or an equivalent typed representation.
+
+Where relevant, expose:
+
+- reason,
+- effective observation count,
+- effective path count.
+
+Frontend code must not reinterpret `null` as zero.
+
+---
+
+# APPROVED SUGGESTION 4 — Tail-estimator and uncertainty conventions
+
+Document:
+
+- quantile convention,
+- interpolation rule,
+- Expected Shortfall / CVaR finite-sample convention,
+- fractional tail atoms if used,
+- effective tail counts.
+
+Do not label:
+
+```text
+99th percentile
+```
+
+as:
+
+```text
+best case
+```
+
+or:
+
+```text
+worst case
+```
+
+unless the value actually represents an extrema statistic.
+
+Later architecture must distinguish:
+
+```text
+Monte Carlo sampling uncertainty
+parameter estimation uncertainty
+model specification uncertainty
+```
+
+Do not pretend that increasing the number of simulation paths eliminates parameter or model uncertainty.
+
+Phase 5 should preserve this conceptual distinction even if full uncertainty propagation is deferred.
+
+---
+
+# APPROVED SUGGESTION 5 — Calendar, currency and corporate-action reconciliation
+
+Calendar matching, FX treatment and corporate-action adjustment conventions are prerequisites for serious multi-currency or multi-market analysis.
+
+Do not assume matching end dates automatically imply economically aligned return intervals.
+
+Before multi-currency portfolios are introduced, require explicit:
+
+- FX series,
+- valuation cutoff,
+- base currency,
+- local currency,
+- adjustment convention.
+
+Do not automatically delete:
+
+- split-like returns,
+- zero-volume days,
+- repeated prices
+
+solely because they look unusual.
+
+They should trigger investigation/data-quality handling.
+
+Do not expand Phase 5 into the future ledger/corporate-action system.
+
+Just preserve the boundary.
+
+---
+
+# APPROVED SUGGESTION 6 — Separate ex-ante, simulated and realized risk
+
+The platform must maintain semantic separation between:
+
+```text
+current/ex-ante covariance risk
+scenario-distribution risk
+realized portfolio risk
+```
+
+These are different quantities.
+
+Examples of preferred explicit names:
+
+```text
+current_covariance_volatility
+scenario_distribution_volatility
+realized_portfolio_volatility
+```
+
+Risk contribution should state the covariance estimator, period, and weight basis.
+
+Contributions may legitimately be negative.
+
+Do not silently clamp them to positive values.
+
+---
+
+# APPROVED SUGGESTION 7 — Phase acceptance gates
+
+Every future phase must define:
+
+- analytical reconciliation identities,
+- numerical failure cases,
+- API compatibility expectations,
+- reproducible checks,
+- unsupported functionality,
+- deployment boundaries,
+- data/provider assumptions.
+
+For data-provider-dependent phases, eventually require:
+
+- provider contract tests,
+- representative memory/load testing
+
+before making production claims.
+
+Continue the existing audit discipline.
+
+---
+
+# ADDITIONAL PERMANENT RULE A — Every expected return requires an explicit horizon
+
+Never allow an expected return to exist as an ambiguous naked percentage.
+
+An expected-return object must include enough information to determine its economic meaning.
+
+Conceptually:
+
+```python
+ExpectedReturnEstimate(
+    annualized_return=...,
+    horizon_years=...,
+    valuation_currency=...,
+    return_basis=...,
+    model=...,
+    assumptions=...,
+)
+```
+
+The exact schema is yours to design, but distinguish where relevant:
+
+```text
+price return
+total return
+
+nominal return
+real return
+
+local-currency return
+base-currency return
+
+annualized expected return
+finite-horizon cumulative return
+```
+
+Phase 5 must define this contract before implementing multiple models.
+
+---
+
+# ADDITIONAL PERMANENT RULE B — Separate research assumptions from model outputs
+
+Do not collapse all forward-looking information into one number.
+
+Architect distinct concepts:
+
+```text
+Research Assumptions
+        ↓
+Valuation / Return Model
+        ↓
+Security Scenario
+        ↓
+Investor Expected-Return View
+        ↓
+Portfolio Construction
+```
+
+For example:
+
+An investor assumption such as:
+
+```text
+EPS growth = 8%
+```
+
+is NOT itself an expected return.
+
+A valuation model may transform:
+
+```text
+growth
+margins
+dividends
+buybacks
+terminal valuation
+FX assumptions
+```
+
+into a scenario-implied return.
+
+The investor may then decide what expected-return view to use in construction.
+
+Keep those objects semantically separate.
+
+This is important to avoid circular logic later.
+
+---
+
+# ADDITIONAL PERMANENT RULE C — Bear/base/bull probabilities are optional
+
+A scenario does not automatically need a probability.
+
+The following is perfectly valid:
+
+```text
+Bear
+Base
+Bull
+```
+
+without:
+
+```text
+20%
+60%
+20%
+```
+
+Do not force probabilities merely so the application can calculate a weighted expected return.
+
+If probabilities are supplied, they must be:
+
+- explicit,
+- user- or model-specified,
+- documented as assumptions.
+
+Do not imply statistical calibration unless one actually exists.
+
+Conditional scenarios and probability distributions are different concepts.
+
+Preserve that distinction in the API.
+
+---
+
+# ADDITIONAL PERMANENT RULE D — Models do not automatically produce BUY / HOLD / SELL
+
+The platform may calculate:
+
+```text
+valuation range
+scenario-implied return
+expected-return view
+risk contribution
+opportunity-cost comparison
+thesis evidence
+```
+
+But it must NOT automatically decide:
+
+```text
+BUY
+HOLD
+SELL
+```
+
+for the owner.
+
+That remains a human investment decision recorded through the thesis/review system.
+
+The software supports disciplined decision-making.
+
+It does not replace the investment decision.
+
+Preserve the Phase 4 boundary that a thesis review is not automatically a transaction or status mutation unless explicitly performed by the owner.
+
+---
+
+---
+
+# Approved addendum — 2026-09-10: Phase 6 and frontend product design
+
+The owner approved continuation from Phase 5 and explicitly authorized Phase 6,
+portfolio construction and risk contribution, on 2026-09-10. Stop for owner review
+before Phase 7 (transaction ledger). Preserve the original brief and historical
+phase audits; earlier review boundaries describe their original phase context.
+
+## Permanent frontend UI/UX direction
+
+The frontend should look and work like a professional personal portfolio-management
+platform, with a modern, useful, cohesive design. Use soft corners, restrained
+shadows, calm surfaces, readable typography and generous but purposeful spacing.
+Prefer a clear text identity and functional navigation over decorative logos.
+Do not use AI logos, sparkle/robot motifs, generic AI branding, conspicuous gradient
+hero treatments, or decorative elements that make the product resemble an
+AI-generated demo. Ordinary functional icons may be used when they improve clarity.
+
+Design around real portfolio-management tasks: research, thesis, valuation,
+construction, risk and later realized performance. Make primary actions obvious;
+use progressive disclosure for advanced assumptions and provenance. Improve empty,
+loading, error and completion states, accessibility, responsive tables, keyboard
+navigation and visual hierarchy. Keep assumptions, dates, currencies, horizons and
+undefined metrics visible and understandable. Do not sacrifice analytical honesty
+for visual polish. Do not invent holdings, NAV, performance, transactions or other
+unimplemented data to fill a dashboard. This direction applies to current frontend
+improvements and subsequent phases, not only the Phase 6 screen.
+
+---
+
+# Continuation record — 2026-09-11: Investment Management course notes
+
+The owner considers Phases 1–6 approved for continuation based on their audits
+and verification, and requested incorporation of University of Geneva Investment
+Management course notes, including the UBS lecture material and two screenshots.
+This records the owner's current continuation context; it does not revise earlier
+audit findings or claim a new verification of those phases.
+
+The complete thematic synthesis, corrections, proposed requirements and phase
+mapping are recorded in [BRIEF_SUGGESTIONS.md](BRIEF_SUGGESTIONS.md#course-notes-review-2026-09-11).
+Read that dated review when planning subsequent work. It preserves the distinction
+between the owner's request, lecture opinions/examples, research evidence and
+proposed product behavior. The original brief and earlier addenda remain intact.
+
+The requested direction includes disciplined quality/valuation research, top-down
+and bottom-up evidence, strategic allocation and tactical deviations, cost-aware
+core/satellite construction, fund due diligence and explicit downside/FX policy.
+The owner's illustrative 80–90% passive / 10–20% active preference is context for
+future policy design, not a default allocation or a claim of optimality. Research
+signals must remain evidence for a human decision under permanent rules A–D.
+
+This is a documentation update. The detailed additions remain proposals for
+owner review, as required by the repository's preservation rule. It does not
+authorize Phase 7, client-money management, automated orders, new providers or
+the unsupported instruments and calculations described in the review. Obtain
+explicit implementation scope before extending the approved phase boundaries.
+
+
+---
+
+# Approved continuation — 2026-09-12: Phase 7 transaction ledger
+
+The owner explicitly requested continuation into Phase 7 after considering
+Phases 1–6 approved for continuation. This supersedes the earlier stop-before-7
+boundary prospectively; original brief text and historical audits remain intact.
+Stop for owner review before Phase 8 (performance measurement).
+
+The owner intends to open a Lightyear Stocks & Shares ISA and confirmed that
+no account or statement sample exists yet. Phase 7 implements a private manual
+and reviewed canonical-CSV ledger, without claiming native Lightyear statement
+compatibility. Broker/account labels do not imply a connected account, an ISA
+tax engine, verified eligibility or order execution. Native statement mapping
+requires a real redacted fixture and reconciliation tests when available.
+
+The bounded initial ledger supports fully funded long-only registered equities,
+explicit multi-currency cash/FX, immutable transactions and correcting reversals,
+knowledge-aware historical replay, moving-average local cost and supplied dated
+price/FX valuation with typed missing coverage. Funds, bonds, derivatives,
+corporate actions, interest/tax accounting, settled cash and transfers of holdings
+require later explicit extensions. Do not relabel funds as equities.
+
+Read ACCOUNTING.md and PHASE_7_AUDIT.md for the implemented contract, verification
+and acceptance limitations. This authorization does not start TWR/XIRR,
+attribution, publishing, automatic investment decisions or broker orders.
+The course-note proposals in BRIEF_SUGGESTIONS.md remain preserved and distinct
+from implemented Phase 7 behavior.
