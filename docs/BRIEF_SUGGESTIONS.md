@@ -590,3 +590,49 @@ Recommended next procedure within the approved sequence:
 This prospective entry does not rewrite earlier findings or make historical
 acceptance appear cleaner. Investor benchmark suitability and investment decisions
 remain the owner's judgment.
+
+
+## 2026-10-11 — approved continuation: Phase 9C historical factor regression
+
+The owner instructed continuation after Phase 9B, authorizing the next bounded
+stage. Implemented supplied one-to-six-factor historical regression against
+actual ledger-derived daily portfolio excess returns. Centered/scaled SVD OLS
+returns signed coefficients, HC3 SE/t-statistics, R²/adjusted R² and daily residuals
+with explicit period/count/df and complete funded coverage. Daily alpha remains
+a model-dependent historical estimate with uncertainty, not an expected-return
+view or evidence of persistent skill. See [FACTORS.md](FACTORS.md),
+[Phase 9C plan](superpowers/plans/2026-10-11-phase-9c-factors.md) and the new
+[PHASE_9C_AUDIT.md](PHASE_9C_AUDIT.md).
+
+Local acceptance: 679 backend tests including actual PostgreSQL, zero skipped,
+97.87% combined coverage; 141 frontend tests, quality/hooks/lint/build gates;
+synthetic populated/missing/corrected responsive privacy checks and three actual
+API exports replayed from working and separately extracted 86-file exact source.
+The browser export control was exercised, but its saved file was not independently
+obtained. Actual browser file delivery remains unverified; no hosted/production,
+broker or provider-data claim. All historical records are preserved, and this entry
+is appended to the existing suggestions rather than replacing prior findings.
+
+Recommended next procedure:
+
+1. Prioritize a dedicated versioned portfolio benchmark setting and reviewed
+   factor-data readiness. The current report selections are explicit but temporary;
+   the master brief's eventual portfolio-level benchmark configuration is still open.
+2. Specify currency/calendar reconciliation before using actual public research
+   factors. USD trading-day data and its risk-free convention do not silently become
+   GBP daily calendar intervals. Require documented transformations and supplied
+   evidence, then analytical/replay acceptance; never invent weekend observations.
+3. Address serial dependence with a separately specified HAC or bootstrap policy
+   before adding significance decisions or confidence intervals. HC3 handles
+   heteroskedasticity only. Rolling beta/capture need declared windows, estimator,
+   coverage and overlap/sample uncertainty; large t-statistics are not proof of skill.
+4. Keep Brinson conditional on real historical classifications and benchmark weights.
+   Existing current registry metadata does not meet that requirement. Prefer the
+   accepted position contribution and factor diagnostics until those data exist.
+5. Retain approved ledger-to-construction handoff, typed fund/ETF support, actual
+   broker fixtures and operational restore checks as separate integration work.
+   Publication remains after its own privacy, source and operational acceptance.
+
+This bounded stage does not declare all broader Phase 9 goals complete. Numerical
+replay is exact in the tested local runtime; retain compatible archived source and
+environment rather than changing historical report hashes to force compatibility.

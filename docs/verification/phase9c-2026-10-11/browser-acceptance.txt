@@ -1,0 +1,36 @@
+Phase 9C synthetic local browser acceptance, 2026-10-11
+
+Private local API and Vite, disposable PostgreSQL schema. GBP synthetic account,
+32 funded UTC intervals, one manually supplied excess-market factor, period-effective
+risk-free returns and reviewed benchmark total-return levels. No provider calls.
+
+Version 3: simultaneous performance/contribution/comparison/factor report; 32/32
+paired intervals, residual df 30, TWR 4.98830678387%. Displayed daily alpha 0.17pp,
+HC3 SE 0.03pp, t 5.01, factor coefficient 1.48. Fee 10 is legitimately included.
+Expanded factor identity/provenance/hash and fitted/residual interval sections.
+
+Append-only reversal of that fee changes ledger version to 4. Old browser request
+receives stale-version rejection; old report state clears. Reload clears dates,
+optional selections and all three evidence inputs. Reentered reviewed inputs:
+TWR 5.98830678387%, daily alpha 0.20pp, factor coefficient 1.50, alpha t 10.60,
+factor t 124.22. R-squared/adjusted R-squared displayed 0.9982 with final formatter.
+Constructed analytical fixture; these observations do not establish skill.
+
+Remove one factor row: browser version 4 shows 31/32 paired, fit withheld with
+explicit reasons; performance, contribution and benchmark remain available.
+Retained missing-report API export is version 3 and separately replayed.
+
+Desktop and 390x844 mobile light/dark inspected. DOM page width 375 <= viewport390;
+wide evidence/results tables use bounded scrolling. Captured console errors: none.
+Lock clears private reports; refresh returns locked Overview. Theme restored light,
+viewport reset and test browser tab closed. Acceptance services/schema cleaned.
+
+Browser download control activated; actual resulting saved file was not independently
+obtained. No assertion of verified browser file delivery. Complete, missing and
+corrected retained reports were obtained from the actual private API, then verified
+against working and separately extracted exact accepted replay source.
+
+The auxiliary benchmark's quantized nearly constant daily return creates a very
+large benchmark beta under the existing no-denominator-floor method. It is an
+artificial fixture sensitivity, separate from the designed market factor beta 1.5.
+Existing benchmark calculations and historical audit records were not changed.

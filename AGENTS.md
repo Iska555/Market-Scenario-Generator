@@ -46,6 +46,14 @@ benchmark or automatic provider call. Record fresh evidence in PHASE_9B_AUDIT.md
 preserve every existing audit and evidence file. Factor regression, alpha, rolling
 analytics, Brinson, publication and durable benchmark-default settings remain later.
 
+The owner's next 2026-10-11 continuation authorizes bounded Phase 9C historical
+factor regression. Use reviewed dated factor/risk-free evidence and matching
+funded portfolio excess-return intervals; report coefficients with HC3 standard
+errors/t-statistics, fit diagnostics and sample context. Preserve all historical
+records and write PHASE_9C_AUDIT.md. No implied expected return, persistent skill,
+automatic data/FX, rolling models, Brinson or publication. Plan: the separate
+2026-10-11-phase-9c-factors.md execution record.
+
 Apply the approved seven suggestions and permanent rules A–D in the master brief:
 explicit return/horizon/currency conventions; proportionate replay manifests;
 typed undefined values; distinct uncertainty and risk meanings; calendar/FX/data

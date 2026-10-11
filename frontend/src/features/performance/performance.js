@@ -1,5 +1,5 @@
-const blankDraft = () => ({ start: '', end: '', known_at: new Date().toISOString(), risk_free_rate: '0', confidence: '0.95', max_mark_age_days: '3', include_contribution: false, include_benchmark: false });
-const initial = () => ({ connected: false, busy: '', error: '', portfolios: [], selectedId: '', ledger: null, draft: blankDraft(), evidence: '', benchmarkEvidence: '', report: null, contribution: null, comparison: null });
+const blankDraft = () => ({ start: '', end: '', known_at: new Date().toISOString(), risk_free_rate: '0', confidence: '0.95', max_mark_age_days: '3', include_contribution: false, include_benchmark: false, include_factors: false });
+const initial = () => ({ connected: false, busy: '', error: '', portfolios: [], selectedId: '', ledger: null, draft: blankDraft(), evidence: '', benchmarkEvidence: '', factorEvidence: '', report: null, contribution: null, comparison: null, regression: null });
 const errors = {
   401: 'Private workspace key was not accepted. Lock and unlock the private workspace.',
   404: 'The selected account is no longer available. Reload accounts.',
@@ -29,6 +29,44 @@ export async function comparisonRequest(base, key, id, body, fetcher = fetch) {
   } catch { throw new Error('The private comparison service could not be reached.'); }
   if (!response.ok) throw Object.assign(new Error(errors[response.status] || 'The private comparison request failed.'), { status: response.status });
   return response.json();
+}
+
+export async function factorRequest(base, key, id, body, fetcher = fetch) {
+  let response;
+  try {
+    response = await fetcher(`${base.replace(/\/$/, '')}/api/factors/portfolios/${encodeURIComponent(id)}/report`, {
+      method: 'POST', cache: 'no-store', headers: { 'Content-Type': 'application/json', 'X-Research-Key': key }, body: JSON.stringify(body),
+    });
+  } catch { throw new Error('The private factor service could not be reached.'); }
+  if (!response.ok) throw Object.assign(new Error(errors[response.status] || 'The private factor request failed.'), { status: response.status });
+  return response.json();
+}
+
+export function buildFactorEvidence(draft, text) {
+  let result;
+  try { result = JSON.parse(text); } catch { throw new Error('Import or paste reviewed factor evidence JSON.'); }
+  const identity = result?.identity;
+  if (!identity || !Array.isArray(identity.factors) || !Array.isArray(result.rows)) throw new Error('Factor evidence needs identity, declared factors and rows.');
+  for (const field of ['model_id', 'revision', 'name', 'provider', 'methodology_reference', 'currency', 'effective_from', 'effective_to', 'published_at', 'retrieved_at']) {
+    if (typeof identity[field] !== 'string' || !identity[field].trim()) throw new Error('Review all factor model identity, currency and provenance fields.');
+  }
+  if (identity.units !== 'decimal_simple_return' || identity.risk_free_convention !== 'period_effective_return' || identity.calendar !== 'UTC_calendar_daily' || identity.periods_per_year !== 365 || identity.currency_policy !== 'already_in_portfolio_currency') throw new Error('Use reviewed daily decimal factor and period-effective risk-free returns in account currency.');
+  const ids = identity.factors.map(row => row.factor_id), dates = datesInWindow(draft).slice(1), supplied = new Set();
+  if (!ids.length || ids.length > 6 || new Set(ids).size !== ids.length || ids.includes('alpha') || ids.some(id => typeof id !== 'string' || !id.trim())) throw new Error('Declare one to six unique factors; alpha is reserved for the intercept.');
+  for (const row of result.rows) {
+    if (!row || !dates.includes(row.date) || supplied.has(row.date) || !row.factor_returns || typeof row.factor_returns !== 'object' || Array.isArray(row.factor_returns)) throw new Error('Factor rows need unique interval closing dates and factor_returns. Missing dates remain gaps.');
+    supplied.add(row.date);
+    for (const [id, value] of Object.entries(row.factor_returns)) if (!ids.includes(id) || (value !== null && (typeof value !== 'string' || !value.trim()))) throw new Error('Declared factor returns must be decimal strings or null.');
+    if (row.risk_free_return !== null && (typeof row.risk_free_return !== 'string' || !row.risk_free_return.trim())) throw new Error('Period-effective risk-free returns must be decimal strings or null.');
+  }
+  return result;
+}
+
+export function factorTemplate(draft, currency) {
+  return {
+    identity: { model_id: '', revision: '', name: '', provider: '', methodology_reference: '', currency, currency_policy: 'already_in_portfolio_currency', calendar: 'UTC_calendar_daily', periods_per_year: 365, units: 'decimal_simple_return', risk_free_convention: 'period_effective_return', effective_from: draft.start, effective_to: draft.end, published_at: '', retrieved_at: '', factors: [] },
+    rows: datesInWindow(draft).slice(1).map(date => ({ date, risk_free_return: null, factor_returns: {}, observed_at: '', published_at: '', retrieved_at: '', source: '' })),
+  };
 }
 
 export function buildBenchmarkEvidence(draft, text) {
@@ -102,7 +140,7 @@ export function buildPerformanceRequest(draft, text, version) {
   return { expected_version: version, known_at: draft.known_at, daily_marks: evidence.daily_marks, flow_marks: evidence.flow_marks, risk_free_rate: riskFree, confidence, max_mark_age_days: age, calendar: 'UTC_calendar_daily', price_convention: 'unadjusted', periods_per_year: 365 };
 }
 
-export function createPerformance(accounting, reportRequest, contributionRequest, comparisonRequest) {
+export function createPerformance(accounting, reportRequest, contributionRequest, comparisonRequest, factorRequest) {
   let state = initial(), key = '', generation = 0;
   const listeners = new Set();
   const update = patch => { state = { ...state, ...patch }; listeners.forEach(listener => listener()); };
@@ -123,19 +161,36 @@ export function createPerformance(accounting, reportRequest, contributionRequest
     async select(id) {
       if (!state.connected || !state.portfolios.some(row => row.id === id)) return;
       const token = ++generation;
-      update({ selectedId: id, ledger: null, evidence: '', benchmarkEvidence: '', report: null, contribution: null, comparison: null, draft: blankDraft(), error: '', busy: 'account' });
+      update({ selectedId: id, ledger: null, evidence: '', benchmarkEvidence: '', factorEvidence: '', report: null, contribution: null, comparison: null, regression: null, draft: blankDraft(), error: '', busy: 'account' });
       try {
         const ledger = await accounting(`/portfolios/${encodeURIComponent(id)}/state`, {}, key);
         if (token === generation) update({ ledger, busy: '' });
       } catch (error) { if (token === generation) update({ busy: '', error: message(error) }); }
     },
-    edit(patch) { if (!state.connected) return; ++generation; update({ draft: { ...state.draft, ...patch }, report: null, contribution: null, comparison: null, error: '', busy: '' }); },
-    editEvidence(evidence) { if (!state.connected) return; ++generation; update({ evidence, report: null, contribution: null, comparison: null, error: '', busy: '' }); },
-    editBenchmark(benchmarkEvidence) { if (!state.connected) return; ++generation; update({ benchmarkEvidence, report: null, contribution: null, comparison: null, error: '', busy: '' }); },
+    edit(patch) { if (!state.connected) return; ++generation; update({ draft: { ...state.draft, ...patch }, report: null, contribution: null, comparison: null, regression: null, error: '', busy: '' }); },
+    editEvidence(evidence) { if (!state.connected) return; ++generation; update({ evidence, report: null, contribution: null, comparison: null, regression: null, error: '', busy: '' }); },
+    editBenchmark(benchmarkEvidence) { if (!state.connected) return; ++generation; update({ benchmarkEvidence, report: null, contribution: null, comparison: null, regression: null, error: '', busy: '' }); },
+    editFactors(factorEvidence) { if (!state.connected) return; ++generation; update({ factorEvidence, report: null, contribution: null, comparison: null, regression: null, error: '', busy: '' }); },
+    async importFactors(textPromise) {
+      if (!state.connected) return;
+      const token = ++generation;
+      update({ factorEvidence: '', report: null, contribution: null, comparison: null, regression: null, error: '', busy: 'import' });
+      try {
+        const text = await textPromise;
+        if (token === generation) update({ factorEvidence: text, busy: '' });
+      } catch { if (token === generation) update({ busy: '', error: 'The factor evidence file could not be read.' }); }
+    },
+    makeFactorTemplate() {
+      if (!state.connected || !state.ledger) return;
+      try {
+        const currency = state.portfolios.find(row => row.id === state.selectedId)?.base_currency;
+        store.editFactors(JSON.stringify(factorTemplate(state.draft, currency), null, 2));
+      } catch { update({ error: 'Choose valid reporting dates before preparing factor evidence.' }); }
+    },
     async importBenchmark(textPromise) {
       if (!state.connected) return;
       const token = ++generation;
-      update({ benchmarkEvidence: '', report: null, contribution: null, comparison: null, error: '', busy: 'import' });
+      update({ benchmarkEvidence: '', factorEvidence: '', report: null, contribution: null, comparison: null, regression: null, error: '', busy: 'import' });
       try {
         const text = await textPromise;
         if (token === generation) update({ benchmarkEvidence: text, busy: '' });
@@ -151,7 +206,7 @@ export function createPerformance(accounting, reportRequest, contributionRequest
     async importEvidence(textPromise) {
       if (!state.connected) return;
       const token = ++generation;
-      update({ evidence: '', benchmarkEvidence: '', report: null, contribution: null, comparison: null, error: '', busy: 'import' });
+      update({ evidence: '', benchmarkEvidence: '', factorEvidence: '', report: null, contribution: null, comparison: null, regression: null, error: '', busy: 'import' });
       try {
         const text = await textPromise;
         if (token === generation) update({ evidence: text, busy: '' });
@@ -160,7 +215,7 @@ export function createPerformance(accounting, reportRequest, contributionRequest
     async makeTemplate() {
       if (!state.connected || !state.ledger) return;
       const token = ++generation, id = state.selectedId, sessionKey = key, draft = { ...state.draft }, version = state.ledger.version;
-      update({ busy: 'template', report: null, contribution: null, comparison: null, evidence: '', error: '' });
+      update({ busy: 'template', report: null, contribution: null, comparison: null, regression: null, evidence: '', error: '' });
       try {
         datesInWindow(draft); validateCutoff(draft.known_at);
         const query = new URLSearchParams({ as_of: `${draft.end}T23:59:59.999999Z`, known_at: draft.known_at });
@@ -181,13 +236,22 @@ export function createPerformance(accounting, reportRequest, contributionRequest
     async run() {
       if (!state.connected || !state.ledger) return;
       const token = ++generation;
-      update({ report: null, contribution: null, comparison: null, error: '', busy: 'report' });
+      update({ report: null, contribution: null, comparison: null, regression: null, error: '', busy: 'report' });
       let body;
       try { body = buildPerformanceRequest(state.draft, state.evidence, state.ledger.version); }
       catch (error) { update({ error: error.message, busy: '' }); return; }
       try {
         const withContribution = state.draft.include_contribution, withBenchmark = state.draft.include_benchmark;
-        if (withBenchmark) {
+        if (state.draft.include_factors) {
+          let factors, benchmark = null;
+          try {
+            factors = buildFactorEvidence(state.draft, state.factorEvidence);
+            if (withBenchmark) benchmark = buildBenchmarkEvidence(state.draft, state.benchmarkEvidence);
+          } catch (error) { if (token === generation) update({ error: error.message, busy: '' }); return; }
+          if (!factorRequest) throw new Error('Factor service unavailable');
+          const result = await factorRequest(state.selectedId, { performance: body, factors, include_contribution: withContribution, benchmark }, key);
+          if (token === generation) update({ report: result.performance, contribution: result.contribution, comparison: result.comparison, regression: result, busy: '' });
+        } else if (withBenchmark) {
           let benchmark;
           try { benchmark = buildBenchmarkEvidence(state.draft, state.benchmarkEvidence); }
           catch (error) { if (token === generation) update({ error: error.message, busy: '' }); return; }

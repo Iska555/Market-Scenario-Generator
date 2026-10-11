@@ -4,7 +4,7 @@ A personal investment portfolio-management research project. The long-term goal
 is an inspectable investment process: research → thesis → construction → risk →
 accounting → performance → attribution → review.
 
-**Phase 9B: explicit benchmark comparison and realized active risk.**
+**Phase 9C: historical factor regression with statistical context.**
 The Performance workspace measures daily time-weighted returns, dated XIRR and
 realized statistics using recorded transactions and supplied unadjusted price/FX
 evidence. Missing coverage stays undefined. See the
@@ -19,6 +19,12 @@ cumulative differences, relative wealth, realized tracking error, information
 ratio and beta/correlation with explicit missing coverage and sample limitations.
 Benchmark selection is for this account/report; it is not a saved portfolio default.
 See the [benchmark methodology](docs/BENCHMARK.md) and [Phase 9B audit](docs/PHASE_9B_AUDIT.md).
+Select **Analyze reviewed historical factors** to supply one to six research
+factors and matched period-effective risk-free returns. The report fits historical
+portfolio excess returns with OLS, HC3 errors/t-statistics, R² and daily residuals.
+It requires at least 30 fully paired funded intervals. Daily alpha is shown with
+its uncertainty and sample context; it is not a forecast or skill decision.
+See [factor methodology](docs/FACTORS.md) and [Phase 9C audit](docs/PHASE_9C_AUDIT.md).
 
 The transaction ledger supports holdings and supplied-mark valuation.
 Preview and record immutable transactions, correct mistakes with reversals,
@@ -53,7 +59,9 @@ explicit historical diagnostic selection; they are not silently used as forecast
 - [Contribution guide](docs/ATTRIBUTION.md) — endpoint accounting, wealth linking, FX allocation and replay
 - [Phase 9A audit](docs/PHASE_9A_AUDIT.md) — preserved contribution acceptance and remaining boundaries
 - [Benchmark guide](docs/BENCHMARK.md) — selection, aligned comparisons, active-risk estimators and replay
-- [Phase 9B audit](docs/PHASE_9B_AUDIT.md) — current local acceptance, fresh evidence and remaining boundaries
+- [Phase 9B audit](docs/PHASE_9B_AUDIT.md) — preserved benchmark acceptance and qualifications
+- [Factor guide](docs/FACTORS.md) — reviewed interval evidence, OLS/HC3, sample limits and replay
+- [Phase 9C audit](docs/PHASE_9C_AUDIT.md) — current local acceptance, fresh evidence and remaining boundaries
 - [Methodology](docs/METHODOLOGY.md) — formulas, units, assumptions and failure conditions
 - [Architecture](docs/ARCHITECTURE.md) — domain boundaries and API v3 contract
 - [Asset-type roadmap](docs/ASSET_TYPE_ROADMAP.md) — typed future support beyond equities
@@ -68,8 +76,10 @@ The 2026-09-12 continuation authorizes Phase 7. The owner's 2026-09-15 instructi
 authorizes Phase 8, recorded prospectively in its plan and audit. On 2026-10-09
 the owner explicitly authorized Phase 9A reconciled position contribution.
 The 2026-10-11 continuation authorizes bounded Phase 9B benchmark/active-risk
-analysis, recorded in its separate plan and audit. Factor regression, Brinson,
-durable portfolio benchmark defaults and public publishing remain subsequent stages. Completion of those later stages also
+analysis, recorded in its separate plan and audit. The next continuation authorizes
+bounded Phase 9C historical factor regression. Real factor calendar/currency
+reconciliation, HAC/rolling analytics, Brinson, durable portfolio benchmark defaults
+and public publishing retain separate stages. Completion of those later stages also
 requires suitable data, deployment and operational checks.
 
 Phase 3 adds a PostgreSQL equity security master with stable UUIDs, append-only

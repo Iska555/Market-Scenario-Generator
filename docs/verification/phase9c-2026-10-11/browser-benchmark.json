@@ -1,0 +1,286 @@
+{
+  "identity": {
+    "benchmark_id": "analytical-total-return",
+    "revision": "reviewed-1",
+    "name": "Synthetic analytical benchmark",
+    "provider": "Hand-derived test evidence",
+    "methodology_reference": "Explicit total-return fixture, not a market index",
+    "currency": "GBP",
+    "return_basis": "net_total_return",
+    "hedging": "not_applicable",
+    "calendar": "UTC_calendar_daily",
+    "periods_per_year": 365,
+    "currency_policy": "already_in_portfolio_currency",
+    "effective_from": "2025-01-01",
+    "effective_to": "2025-12-31",
+    "published_at": "2025-01-01T20:00:00Z",
+    "retrieved_at": "2025-03-01T00:00:00Z"
+  },
+  "max_level_age_days": 0,
+  "levels": [
+    {
+      "date": "2025-01-01",
+      "level": "100.0000000000",
+      "observed_at": "2025-01-01T20:00:00Z",
+      "published_at": "2025-01-01T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-02",
+      "level": "100.1000000000",
+      "observed_at": "2025-01-02T20:00:00Z",
+      "published_at": "2025-01-02T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-03",
+      "level": "100.2001000000",
+      "observed_at": "2025-01-03T20:00:00Z",
+      "published_at": "2025-01-03T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-04",
+      "level": "100.3003001000",
+      "observed_at": "2025-01-04T20:00:00Z",
+      "published_at": "2025-01-04T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-05",
+      "level": "100.4006004001",
+      "observed_at": "2025-01-05T20:00:00Z",
+      "published_at": "2025-01-05T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-06",
+      "level": "100.5010010005",
+      "observed_at": "2025-01-06T20:00:00Z",
+      "published_at": "2025-01-06T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-07",
+      "level": "100.6015020015",
+      "observed_at": "2025-01-07T20:00:00Z",
+      "published_at": "2025-01-07T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-08",
+      "level": "100.7021035035",
+      "observed_at": "2025-01-08T20:00:00Z",
+      "published_at": "2025-01-08T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-09",
+      "level": "100.8028056070",
+      "observed_at": "2025-01-09T20:00:00Z",
+      "published_at": "2025-01-09T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-10",
+      "level": "100.9036084126",
+      "observed_at": "2025-01-10T20:00:00Z",
+      "published_at": "2025-01-10T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-11",
+      "level": "101.0045120210",
+      "observed_at": "2025-01-11T20:00:00Z",
+      "published_at": "2025-01-11T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-12",
+      "level": "101.1055165330",
+      "observed_at": "2025-01-12T20:00:00Z",
+      "published_at": "2025-01-12T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-13",
+      "level": "101.2066220496",
+      "observed_at": "2025-01-13T20:00:00Z",
+      "published_at": "2025-01-13T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-14",
+      "level": "101.3078286716",
+      "observed_at": "2025-01-14T20:00:00Z",
+      "published_at": "2025-01-14T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-15",
+      "level": "101.4091365003",
+      "observed_at": "2025-01-15T20:00:00Z",
+      "published_at": "2025-01-15T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-16",
+      "level": "101.5105456368",
+      "observed_at": "2025-01-16T20:00:00Z",
+      "published_at": "2025-01-16T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-17",
+      "level": "101.6120561824",
+      "observed_at": "2025-01-17T20:00:00Z",
+      "published_at": "2025-01-17T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-18",
+      "level": "101.7136682386",
+      "observed_at": "2025-01-18T20:00:00Z",
+      "published_at": "2025-01-18T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-19",
+      "level": "101.8153819069",
+      "observed_at": "2025-01-19T20:00:00Z",
+      "published_at": "2025-01-19T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-20",
+      "level": "101.9171972888",
+      "observed_at": "2025-01-20T20:00:00Z",
+      "published_at": "2025-01-20T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-21",
+      "level": "102.0191144861",
+      "observed_at": "2025-01-21T20:00:00Z",
+      "published_at": "2025-01-21T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-22",
+      "level": "102.1211336005",
+      "observed_at": "2025-01-22T20:00:00Z",
+      "published_at": "2025-01-22T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-23",
+      "level": "102.2232547341",
+      "observed_at": "2025-01-23T20:00:00Z",
+      "published_at": "2025-01-23T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-24",
+      "level": "102.3254779889",
+      "observed_at": "2025-01-24T20:00:00Z",
+      "published_at": "2025-01-24T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-25",
+      "level": "102.4278034669",
+      "observed_at": "2025-01-25T20:00:00Z",
+      "published_at": "2025-01-25T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-26",
+      "level": "102.5302312703",
+      "observed_at": "2025-01-26T20:00:00Z",
+      "published_at": "2025-01-26T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-27",
+      "level": "102.6327615016",
+      "observed_at": "2025-01-27T20:00:00Z",
+      "published_at": "2025-01-27T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-28",
+      "level": "102.7353942631",
+      "observed_at": "2025-01-28T20:00:00Z",
+      "published_at": "2025-01-28T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-29",
+      "level": "102.8381296574",
+      "observed_at": "2025-01-29T20:00:00Z",
+      "published_at": "2025-01-29T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-30",
+      "level": "102.9409677870",
+      "observed_at": "2025-01-30T20:00:00Z",
+      "published_at": "2025-01-30T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-01-31",
+      "level": "103.0439087548",
+      "observed_at": "2025-01-31T20:00:00Z",
+      "published_at": "2025-01-31T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-02-01",
+      "level": "103.1469526636",
+      "observed_at": "2025-02-01T20:00:00Z",
+      "published_at": "2025-02-01T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    },
+    {
+      "date": "2025-02-02",
+      "level": "103.2500996162",
+      "observed_at": "2025-02-02T20:00:00Z",
+      "published_at": "2025-02-02T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic benchmark total-return level"
+    }
+  ]
+}

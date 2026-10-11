@@ -1,0 +1,381 @@
+{
+  "identity": {
+    "model_id": "synthetic-market",
+    "revision": "reviewed-v1",
+    "name": "Synthetic research factor",
+    "provider": "Hand-derived acceptance",
+    "methodology_reference": "Synthetic, not public market data",
+    "currency": "GBP",
+    "currency_policy": "already_in_portfolio_currency",
+    "calendar": "UTC_calendar_daily",
+    "periods_per_year": 365,
+    "units": "decimal_simple_return",
+    "risk_free_convention": "period_effective_return",
+    "effective_from": "2025-01-01",
+    "effective_to": "2025-12-31",
+    "published_at": "2025-01-01T20:00:00Z",
+    "retrieved_at": "2025-03-01T00:00:00Z",
+    "factors": [
+      {
+        "factor_id": "market",
+        "name": "Market",
+        "convention": "excess_market_return",
+        "description": "Explicit reviewed excess-market return"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "date": "2025-01-02",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "-0.02"
+      },
+      "observed_at": "2025-01-02T20:00:00Z",
+      "published_at": "2025-01-02T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-03",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "-0.01"
+      },
+      "observed_at": "2025-01-03T20:00:00Z",
+      "published_at": "2025-01-03T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-04",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "0.01"
+      },
+      "observed_at": "2025-01-04T20:00:00Z",
+      "published_at": "2025-01-04T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-05",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "0.02"
+      },
+      "observed_at": "2025-01-05T20:00:00Z",
+      "published_at": "2025-01-05T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-06",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "-0.02"
+      },
+      "observed_at": "2025-01-06T20:00:00Z",
+      "published_at": "2025-01-06T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-07",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "-0.01"
+      },
+      "observed_at": "2025-01-07T20:00:00Z",
+      "published_at": "2025-01-07T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-08",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "0.01"
+      },
+      "observed_at": "2025-01-08T20:00:00Z",
+      "published_at": "2025-01-08T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-09",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "0.02"
+      },
+      "observed_at": "2025-01-09T20:00:00Z",
+      "published_at": "2025-01-09T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-10",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "-0.02"
+      },
+      "observed_at": "2025-01-10T20:00:00Z",
+      "published_at": "2025-01-10T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-11",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "-0.01"
+      },
+      "observed_at": "2025-01-11T20:00:00Z",
+      "published_at": "2025-01-11T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-12",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "0.01"
+      },
+      "observed_at": "2025-01-12T20:00:00Z",
+      "published_at": "2025-01-12T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-13",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "0.02"
+      },
+      "observed_at": "2025-01-13T20:00:00Z",
+      "published_at": "2025-01-13T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-14",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "-0.02"
+      },
+      "observed_at": "2025-01-14T20:00:00Z",
+      "published_at": "2025-01-14T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-15",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "-0.01"
+      },
+      "observed_at": "2025-01-15T20:00:00Z",
+      "published_at": "2025-01-15T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-16",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "0.01"
+      },
+      "observed_at": "2025-01-16T20:00:00Z",
+      "published_at": "2025-01-16T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-17",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "0.02"
+      },
+      "observed_at": "2025-01-17T20:00:00Z",
+      "published_at": "2025-01-17T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-18",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "-0.02"
+      },
+      "observed_at": "2025-01-18T20:00:00Z",
+      "published_at": "2025-01-18T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-19",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "-0.01"
+      },
+      "observed_at": "2025-01-19T20:00:00Z",
+      "published_at": "2025-01-19T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-20",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "0.01"
+      },
+      "observed_at": "2025-01-20T20:00:00Z",
+      "published_at": "2025-01-20T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-21",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "0.02"
+      },
+      "observed_at": "2025-01-21T20:00:00Z",
+      "published_at": "2025-01-21T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-22",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "-0.02"
+      },
+      "observed_at": "2025-01-22T20:00:00Z",
+      "published_at": "2025-01-22T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-23",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "-0.01"
+      },
+      "observed_at": "2025-01-23T20:00:00Z",
+      "published_at": "2025-01-23T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-24",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "0.01"
+      },
+      "observed_at": "2025-01-24T20:00:00Z",
+      "published_at": "2025-01-24T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-25",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "0.02"
+      },
+      "observed_at": "2025-01-25T20:00:00Z",
+      "published_at": "2025-01-25T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-26",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "-0.02"
+      },
+      "observed_at": "2025-01-26T20:00:00Z",
+      "published_at": "2025-01-26T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-27",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "-0.01"
+      },
+      "observed_at": "2025-01-27T20:00:00Z",
+      "published_at": "2025-01-27T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-28",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "0.01"
+      },
+      "observed_at": "2025-01-28T20:00:00Z",
+      "published_at": "2025-01-28T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-29",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "0.02"
+      },
+      "observed_at": "2025-01-29T20:00:00Z",
+      "published_at": "2025-01-29T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-30",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "-0.02"
+      },
+      "observed_at": "2025-01-30T20:00:00Z",
+      "published_at": "2025-01-30T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-01-31",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "-0.01"
+      },
+      "observed_at": "2025-01-31T20:00:00Z",
+      "published_at": "2025-01-31T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-02-01",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "0.01"
+      },
+      "observed_at": "2025-02-01T20:00:00Z",
+      "published_at": "2025-02-01T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    },
+    {
+      "date": "2025-02-02",
+      "risk_free_return": "0.0001",
+      "factor_returns": {
+        "market": "0.02"
+      },
+      "observed_at": "2025-02-02T20:00:00Z",
+      "published_at": "2025-02-02T21:00:00Z",
+      "retrieved_at": "2025-03-01T00:00:00Z",
+      "source": "Synthetic daily research factors"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-# Architecture through Phase 9B
+# Architecture through Phase 9C
 
 The canonical product brief is [MASTER_BRIEF.md](MASTER_BRIEF.md). This checkout
 contains the simulator correctness rebuild, methodology/tests, an equity research
@@ -6,10 +6,36 @@ registry, versioned thesis and valuation workspaces, hypothetical construction,
 supplied stress scenarios and a private transaction ledger with supplied-mark
 valuation, realized performance from the ledger and explicit valuation evidence,
 reconciled ledger position contribution, and explicit benchmark/realized active-risk
-comparison. Phase-specific sections below retain their phase boundaries; current
-local acceptance is bounded Phase 9B. See the respective phase audits for evidence
-and limitations. Factor regression, Brinson, durable benchmark defaults and
-publishing require separate stages.
+comparison, plus supplied historical factor regression. Phase-specific sections
+below retain their boundaries; current local acceptance is bounded Phase 9C.
+See each audit for evidence and qualifications. Calendar reconciliation, HAC/
+rolling analytics, Brinson, durable benchmark defaults and publication remain later.
+
+## Phase 9C factor boundary — authorized 2026-10-11
+
+`factors/contracts.py` defines versioned same-currency model/factor identities and
+strict reviewed interval/risk-free evidence. `engine.regress` fits centered/scaled
+SVD OLS, returns original-unit coefficients and HC3 errors/t-statistics, R² and
+residual evidence. Rank/conditioning/coverage/minimum-sample guards withhold
+unusable fits. Exact-fit/high-leverage diagnostics withhold inference without
+clipping point estimates. `build_factor_report` requires all selected intervals
+and funded opening units; it preserves independent embedded reports across gaps.
+
+`routes.factor_report` obtains the same existing locked Phase 8 snapshot, optionally
+adds contribution and benchmark comparison, then computes factors. No writes,
+migrations or provider calls. `main.factor_private_cache` adds no-store to factor
+success/expected errors, including errors emitted after dependency cleanup.
+Validation errors retain the existing sanitized fields without submitted values.
+`replay.verify_factor_report` checks source/runtime/evidence/settings and all
+rebuilt underlying/factor reports; `scripts/replay_factors.py` exposes it offline.
+
+Performance accepts an optional fifth factor transport. One request supplies
+the selected reports. `FactorInputs.jsx` provides reviewed JSON and an honest
+empty template; `FactorResults.jsx` displays alpha with uncertainty/context,
+signed factor coefficients, sample/df, four-decimal R², daily residuals and
+provenance. All clearing/generation rules include factor state. Browser file
+delivery remains unverified; retained acceptance exports are actual API responses.
+See [FACTORS.md](FACTORS.md) and [PHASE_9C_AUDIT.md](PHASE_9C_AUDIT.md).
 
 ## Phase 9B benchmark boundary — authorized 2026-10-11
 

@@ -1,7 +1,7 @@
 const human = value => String(value || 'unavailable').replaceAll('_', ' ');
-export function BenchmarkMetric({ metric, percent = true, points = false }) {
+export function BenchmarkMetric({ metric, percent = true, points = false, decimals = 2 }) {
   if (typeof metric?.value !== 'number' || !Number.isFinite(metric.value)) return <span>Not defined<span className="mt-1 block text-xs opacity-70">{human(metric?.reason)}</span></span>;
-  return <span>{(metric.value * (percent ? 100 : 1)).toFixed(2)}{points ? ' pp' : percent ? '%' : ''}</span>;
+  return <span>{(metric.value * (percent ? 100 : 1)).toFixed(decimals)}{points ? ' pp' : percent ? '%' : ''}</span>;
 }
 const statistics = {
   mean_daily_active_return: ['Mean daily active return', true, true],

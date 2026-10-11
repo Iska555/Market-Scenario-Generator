@@ -234,3 +234,17 @@ benchmark gaps. Benchmark choice, levels, currency and provenance are supplied;
 no automatic index/FX/provider or permanent account default is implied.
 See [BENCHMARK.md](BENCHMARK.md) for the strict contract/formulas and
 [PHASE_9B_AUDIT.md](PHASE_9B_AUDIT.md) for fresh verification and export qualification.
+
+
+## Optional Phase 9C factor regression — 2026-10-11
+
+**Analyze reviewed historical factors** accepts explicitly reviewed model/factor
+and daily period-effective risk-free evidence. This is separate from the annual
+risk-free assumption in Performance statistics. At least 30 fully paired funded
+intervals are required. One private request can return factor regression,
+contribution, comparison and performance from the same locked snapshot.
+The daily historical intercept is shown with HC3 SE/t-statistics, sample/df and
+fit context. Missing factor evidence withholds the fit while preserving independent
+reports. No public research-factor feed, automatic calendar/FX transformation,
+annual alpha or investment decision is implied. See [FACTORS.md](FACTORS.md) and
+the new [PHASE_9C_AUDIT.md](PHASE_9C_AUDIT.md) for accepted behavior and limitations.

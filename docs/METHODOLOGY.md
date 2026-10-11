@@ -985,3 +985,16 @@ These are descriptive historical sample estimates, not forecasts, factor alpha
 or ex-ante tracking-risk contributions. Price-only, wrong-currency and incompatible
 calendar series are rejected rather than silently transformed. See the new
 [Phase 9B audit](PHASE_9B_AUDIT.md) for verification and remaining limitations.
+
+
+## Phase 9C historical factor regression — 2026-10-11 continuation
+
+[FACTORS.md](FACTORS.md) defines portfolio simple excess-return response, reviewed
+already-excess market/long-short factors and period-effective risk-free series.
+It specifies complete funded daily pairing, a 30-observation minimum, centered/
+scaled SVD OLS, HC3 SE/t-statistics, R²/adjusted R², residual identities and
+rank/conditioning/exact-fit/leverage/overflow semantics. Daily alpha is a historical
+intercept with uncertainty context, not annual CAGR, expected return or skill.
+HC3 does not correct serial dependence; no p-value/significance decision is made.
+Evidence/source/runtime and every embedded/regression output are replayed offline.
+New verification and limits are in [PHASE_9C_AUDIT.md](PHASE_9C_AUDIT.md).

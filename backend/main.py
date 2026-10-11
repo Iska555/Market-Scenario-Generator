@@ -5,7 +5,7 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 
 import pandas as pd
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -19,6 +19,7 @@ from src.api.models import (
 from src.attribution.routes import router as attribution_router
 from src.benchmark.routes import router as benchmark_router
 from src.data.providers import CachedPriceProvider, PriceDataError
+from src.factors.routes import router as factors_router
 from src.performance.routes import router as performance_router
 from src.portfolio.construction.routes import router as construction_router
 from src.research.routes import router as research_router
@@ -26,6 +27,7 @@ from src.research.thesis.routes import router as thesis_router
 from src.risk.scenarios.historical_routes import router as historical_router
 from src.risk.scenarios.service import run_portfolio, run_single
 from src.valuation.routes import router as valuation_router
+from starlette.middleware.base import RequestResponseEndpoint
 
 API_VERSION = "3.0.0"
 app = FastAPI(title="Investment Management Workspace — Risk & Scenario Lab", version=API_VERSION)
@@ -38,6 +40,7 @@ app.include_router(accounting_router)
 app.include_router(performance_router)
 app.include_router(attribution_router)
 app.include_router(benchmark_router)
+app.include_router(factors_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -48,6 +51,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 get_cached_price_data = CachedPriceProvider()
+
+
+@app.middleware("http")
+async def factor_private_cache(request: Request, call_next: RequestResponseEndpoint) -> Response:
+    response = await call_next(request)
+    if request.url.path.startswith("/api/factors/"):
+        response.headers["Cache-Control"] = "no-store"
+    return response
+
+
 # The two-cell limit bounds simultaneous tensor memory in this process. Waiting
 # requests allocate no simulation tensors and never block the ASGI event loop.
 _executor = ThreadPoolExecutor(max_workers=2, thread_name_prefix="scenario")

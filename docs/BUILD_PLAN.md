@@ -248,3 +248,28 @@ Next stage: specify factor/risk-free input provenance, excess-return conventions
 regression uncertainty and replay before implementing factor regression. Persistent
 portfolio benchmark defaults, rolling analytics, Brinson and publication retain
 their own data/operational acceptance boundaries.
+
+
+## Phase 9C — historical factor regression (2026-10-11 continuation)
+
+Plan: [Phase 9C](superpowers/plans/2026-10-11-phase-9c-factors.md).
+Contract: [FACTORS.md](FACTORS.md); new acceptance/qualifications:
+[PHASE_9C_AUDIT.md](PHASE_9C_AUDIT.md). Earlier stage records retain their context.
+
+- [x] Reviewed model/factor/risk-free identities, decimal interval evidence,
+  currency/calendar/provenance and complete funded-window policy.
+- [x] SVD OLS, signed coefficients, HC3 SE/t-statistics, R²/residual evidence,
+  sample minimum/count/df and explicit rank/conditioning/inference failure cases.
+- [x] Private coherent snapshot, optional contribution/comparison and offline replay.
+- [x] Factor input/template/results, state clearing and populated/missing/corrected
+  responsive browser workflows with explicit daily alpha/statistical limitations.
+- [x] Full PostgreSQL-enabled 679-case suite, 97.87% coverage, 141 client cases,
+  quality/build gates and three actual API exports replayed from exact source.
+- [x] Preserve historical records, append suggestions, stop disposable services
+  and create a local checkpoint.
+
+Actual browser saved-file delivery remains unverified; API export/replay is verified.
+Next readiness work: versioned portfolio benchmark settings and explicit real-factor
+currency/calendar reconciliation, followed by a deliberate HAC/rolling analytics
+scope. Brinson remains conditional on historical classifications/benchmark weights.
+Broker/fund/ledger-to-construction/restore/publication work retains separate gates.
