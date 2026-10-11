@@ -220,3 +220,17 @@ must use a shorter window. These bounds are not a production load certification.
 Deployment, backups, live-provider reconciliation and real-account acceptance are
 separate operational work. See the [Phase 8 audit](PHASE_8_AUDIT.md) for checks
 actually performed and the remaining boundary before Phase 9.
+
+
+## Optional Phase 9B benchmark comparison — 2026-10-11
+
+The Performance workspace now offers **Compare with a reviewed benchmark** and
+an explicit report-scoped identity/revision plus total-return evidence input.
+It can request benchmark comparison and Phase 9A contribution from one locked
+performance snapshot. The existing performance conventions remain unchanged.
+Opening portfolio funding and full paired coverage are required before comparing
+whole-window returns/statistics. Independent portfolio performance survives
+benchmark gaps. Benchmark choice, levels, currency and provenance are supplied;
+no automatic index/FX/provider or permanent account default is implied.
+See [BENCHMARK.md](BENCHMARK.md) for the strict contract/formulas and
+[PHASE_9B_AUDIT.md](PHASE_9B_AUDIT.md) for fresh verification and export qualification.

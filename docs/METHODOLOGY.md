@@ -971,3 +971,17 @@ Phase 8 source hashing includes all backend source, so Phase 9A appropriately ch
 that identity. Preserve old reports and their compatible checkpoint/environment;
 do not rewrite source identities retrospectively. Current acceptance and limitations
 are recorded in the new [PHASE_9A_AUDIT.md](PHASE_9A_AUDIT.md).
+
+
+## Phase 9B benchmark and realized active risk — 2026-10-11 continuation
+
+[BENCHMARK.md](BENCHMARK.md) specifies same-currency versioned total-return
+evidence, aligned funded intervals, arithmetic active versus relative wealth
+returns, cumulative comparison, centered sample covariance/variance, realized
+tracking error, information ratio, beta/correlation and 365 annualization.
+It declares units, estimator assumptions, sample/coverage counts, zero-variance/
+zero-wealth/overflow outcomes, short-sample uncertainty and replay identity.
+These are descriptive historical sample estimates, not forecasts, factor alpha
+or ex-ante tracking-risk contributions. Price-only, wrong-currency and incompatible
+calendar series are rejected rather than silently transformed. See the new
+[Phase 9B audit](PHASE_9B_AUDIT.md) for verification and remaining limitations.

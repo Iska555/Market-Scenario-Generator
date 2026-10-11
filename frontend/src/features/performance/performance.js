@@ -1,5 +1,5 @@
-const blankDraft = () => ({ start: '', end: '', known_at: new Date().toISOString(), risk_free_rate: '0', confidence: '0.95', max_mark_age_days: '3', include_contribution: false });
-const initial = () => ({ connected: false, busy: '', error: '', portfolios: [], selectedId: '', ledger: null, draft: blankDraft(), evidence: '', report: null, contribution: null });
+const blankDraft = () => ({ start: '', end: '', known_at: new Date().toISOString(), risk_free_rate: '0', confidence: '0.95', max_mark_age_days: '3', include_contribution: false, include_benchmark: false });
+const initial = () => ({ connected: false, busy: '', error: '', portfolios: [], selectedId: '', ledger: null, draft: blankDraft(), evidence: '', benchmarkEvidence: '', report: null, contribution: null, comparison: null });
 const errors = {
   401: 'Private workspace key was not accepted. Lock and unlock the private workspace.',
   404: 'The selected account is no longer available. Reload accounts.',
@@ -18,6 +18,43 @@ export async function performanceRequest(base, key, id, body, fetcher = fetch, c
   } catch { throw new Error('The private performance service could not be reached.'); }
   if (!response.ok) throw Object.assign(new Error(errors[response.status] || 'The private performance request failed.'), { status: response.status });
   return response.json();
+}
+
+export async function comparisonRequest(base, key, id, body, fetcher = fetch) {
+  let response;
+  try {
+    response = await fetcher(`${base.replace(/\/$/, '')}/api/benchmark/portfolios/${encodeURIComponent(id)}/comparison`, {
+      method: 'POST', cache: 'no-store', headers: { 'Content-Type': 'application/json', 'X-Research-Key': key }, body: JSON.stringify(body),
+    });
+  } catch { throw new Error('The private comparison service could not be reached.'); }
+  if (!response.ok) throw Object.assign(new Error(errors[response.status] || 'The private comparison request failed.'), { status: response.status });
+  return response.json();
+}
+
+export function buildBenchmarkEvidence(draft, text) {
+  let result;
+  try { result = JSON.parse(text); } catch { throw new Error('Import or paste reviewed benchmark evidence JSON.'); }
+  if (!result?.identity || !Array.isArray(result.levels)) throw new Error('Benchmark evidence needs identity and levels fields.');
+  const identity = result.identity;
+  for (const field of ['benchmark_id', 'revision', 'name', 'provider', 'methodology_reference', 'currency', 'return_basis', 'hedging', 'effective_from', 'effective_to', 'published_at', 'retrieved_at']) {
+    if (typeof identity[field] !== 'string' || !identity[field].trim()) throw new Error('Review all benchmark identity, version, currency and provenance fields.');
+  }
+  if (!['gross_total_return', 'net_total_return'].includes(identity.return_basis) || identity.calendar !== 'UTC_calendar_daily' || identity.periods_per_year !== 365 || identity.currency_policy !== 'already_in_portfolio_currency') throw new Error('Use total-return levels in account currency on the declared UTC daily calendar, with 365 periods per year.');
+  const dates = datesInWindow(draft), supplied = new Set();
+  for (const row of result.levels) {
+    if (!row || !dates.includes(row.date) || supplied.has(row.date)) throw new Error('Benchmark dates must be unique and belong to the selected window. Missing dates remain explicit gaps.');
+    supplied.add(row.date);
+    if (row.level !== null && (typeof row.level !== 'string' || !row.level.trim())) throw new Error('Benchmark levels must be exact decimal strings or null, never JSON numbers.');
+  }
+  return result;
+}
+
+export function benchmarkTemplate(draft, currency) {
+  return {
+    identity: { benchmark_id: '', revision: '', name: '', provider: '', methodology_reference: '', currency, return_basis: '', hedging: '', calendar: 'UTC_calendar_daily', periods_per_year: 365, currency_policy: 'already_in_portfolio_currency', effective_from: draft.start, effective_to: draft.end, published_at: '', retrieved_at: '' },
+    max_level_age_days: 0,
+    levels: datesInWindow(draft).map(date => ({ date, level: null, observed_at: '', published_at: '', retrieved_at: '', source: '' })),
+  };
 }
 
 function datesInWindow(draft) {
@@ -65,7 +102,7 @@ export function buildPerformanceRequest(draft, text, version) {
   return { expected_version: version, known_at: draft.known_at, daily_marks: evidence.daily_marks, flow_marks: evidence.flow_marks, risk_free_rate: riskFree, confidence, max_mark_age_days: age, calendar: 'UTC_calendar_daily', price_convention: 'unadjusted', periods_per_year: 365 };
 }
 
-export function createPerformance(accounting, reportRequest, contributionRequest) {
+export function createPerformance(accounting, reportRequest, contributionRequest, comparisonRequest) {
   let state = initial(), key = '', generation = 0;
   const listeners = new Set();
   const update = patch => { state = { ...state, ...patch }; listeners.forEach(listener => listener()); };
@@ -86,18 +123,35 @@ export function createPerformance(accounting, reportRequest, contributionRequest
     async select(id) {
       if (!state.connected || !state.portfolios.some(row => row.id === id)) return;
       const token = ++generation;
-      update({ selectedId: id, ledger: null, evidence: '', report: null, contribution: null, draft: blankDraft(), error: '', busy: 'account' });
+      update({ selectedId: id, ledger: null, evidence: '', benchmarkEvidence: '', report: null, contribution: null, comparison: null, draft: blankDraft(), error: '', busy: 'account' });
       try {
         const ledger = await accounting(`/portfolios/${encodeURIComponent(id)}/state`, {}, key);
         if (token === generation) update({ ledger, busy: '' });
       } catch (error) { if (token === generation) update({ busy: '', error: message(error) }); }
     },
-    edit(patch) { if (!state.connected) return; ++generation; update({ draft: { ...state.draft, ...patch }, report: null, contribution: null, error: '', busy: '' }); },
-    editEvidence(evidence) { if (!state.connected) return; ++generation; update({ evidence, report: null, contribution: null, error: '', busy: '' }); },
+    edit(patch) { if (!state.connected) return; ++generation; update({ draft: { ...state.draft, ...patch }, report: null, contribution: null, comparison: null, error: '', busy: '' }); },
+    editEvidence(evidence) { if (!state.connected) return; ++generation; update({ evidence, report: null, contribution: null, comparison: null, error: '', busy: '' }); },
+    editBenchmark(benchmarkEvidence) { if (!state.connected) return; ++generation; update({ benchmarkEvidence, report: null, contribution: null, comparison: null, error: '', busy: '' }); },
+    async importBenchmark(textPromise) {
+      if (!state.connected) return;
+      const token = ++generation;
+      update({ benchmarkEvidence: '', report: null, contribution: null, comparison: null, error: '', busy: 'import' });
+      try {
+        const text = await textPromise;
+        if (token === generation) update({ benchmarkEvidence: text, busy: '' });
+      } catch { if (token === generation) update({ busy: '', error: 'The benchmark evidence file could not be read.' }); }
+    },
+    makeBenchmarkTemplate() {
+      if (!state.connected || !state.ledger) return;
+      try {
+        const currency = state.portfolios.find(row => row.id === state.selectedId)?.base_currency;
+        store.editBenchmark(JSON.stringify(benchmarkTemplate(state.draft, currency), null, 2));
+      } catch { update({ error: 'Choose valid reporting dates before preparing benchmark evidence.' }); }
+    },
     async importEvidence(textPromise) {
       if (!state.connected) return;
       const token = ++generation;
-      update({ evidence: '', report: null, contribution: null, error: '', busy: 'import' });
+      update({ evidence: '', benchmarkEvidence: '', report: null, contribution: null, comparison: null, error: '', busy: 'import' });
       try {
         const text = await textPromise;
         if (token === generation) update({ evidence: text, busy: '' });
@@ -106,7 +160,7 @@ export function createPerformance(accounting, reportRequest, contributionRequest
     async makeTemplate() {
       if (!state.connected || !state.ledger) return;
       const token = ++generation, id = state.selectedId, sessionKey = key, draft = { ...state.draft }, version = state.ledger.version;
-      update({ busy: 'template', report: null, contribution: null, evidence: '', error: '' });
+      update({ busy: 'template', report: null, contribution: null, comparison: null, evidence: '', error: '' });
       try {
         datesInWindow(draft); validateCutoff(draft.known_at);
         const query = new URLSearchParams({ as_of: `${draft.end}T23:59:59.999999Z`, known_at: draft.known_at });
@@ -127,15 +181,24 @@ export function createPerformance(accounting, reportRequest, contributionRequest
     async run() {
       if (!state.connected || !state.ledger) return;
       const token = ++generation;
-      update({ report: null, contribution: null, error: '', busy: 'report' });
+      update({ report: null, contribution: null, comparison: null, error: '', busy: 'report' });
       let body;
       try { body = buildPerformanceRequest(state.draft, state.evidence, state.ledger.version); }
       catch (error) { update({ error: error.message, busy: '' }); return; }
       try {
-        const withContribution = state.draft.include_contribution;
-        if (withContribution && !contributionRequest) throw new Error('Contribution service unavailable');
-        const result = await (withContribution ? contributionRequest : reportRequest)(state.selectedId, body, key);
-        if (token === generation) update({ report: withContribution ? result.performance : result, contribution: withContribution ? result : null, busy: '' });
+        const withContribution = state.draft.include_contribution, withBenchmark = state.draft.include_benchmark;
+        if (withBenchmark) {
+          let benchmark;
+          try { benchmark = buildBenchmarkEvidence(state.draft, state.benchmarkEvidence); }
+          catch (error) { if (token === generation) update({ error: error.message, busy: '' }); return; }
+          if (!comparisonRequest) throw new Error('Comparison service unavailable');
+          const result = await comparisonRequest(state.selectedId, { performance: body, benchmark, include_contribution: withContribution }, key);
+          if (token === generation) update({ report: result.performance, contribution: result.contribution, comparison: result, busy: '' });
+        } else {
+          if (withContribution && !contributionRequest) throw new Error('Contribution service unavailable');
+          const result = await (withContribution ? contributionRequest : reportRequest)(state.selectedId, body, key);
+          if (token === generation) update({ report: withContribution ? result.performance : result, contribution: withContribution ? result : null, busy: '' });
+        }
       } catch (error) { if (token === generation) update({ error: message(error), busy: '' }); }
     },
   };

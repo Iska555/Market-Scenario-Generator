@@ -1,0 +1,1365 @@
+{
+  "methodology": "aligned_total_return_comparison_v1",
+  "performance": {
+    "portfolio_id": "9fa7268a-c4a4-4942-8cf4-95e506cf5984",
+    "base_currency": "GBP",
+    "scope": "selected_period",
+    "start": "2025-01-01",
+    "end": "2025-01-03",
+    "twr": {
+      "value": 0.15,
+      "reason": null,
+      "observations": 2
+    },
+    "xirr": {
+      "value": 5229091686.27652,
+      "reason": null,
+      "observations": 3
+    },
+    "daily": [
+      {
+        "date": "2025-01-01",
+        "nav": "100.0000000000",
+        "units": "100.0000000000",
+        "unit_value": "1",
+        "daily_return": {
+          "value": null,
+          "reason": "opening_valuation",
+          "observations": 0
+        },
+        "cumulative_return": {
+          "value": 0.0,
+          "reason": null,
+          "observations": 0
+        },
+        "reason": null
+      },
+      {
+        "date": "2025-01-02",
+        "nav": "230.00000000000000000000",
+        "units": "200.0000000000",
+        "unit_value": "1.1500000000",
+        "daily_return": {
+          "value": 0.15,
+          "reason": null,
+          "observations": 1
+        },
+        "cumulative_return": {
+          "value": 0.15,
+          "reason": null,
+          "observations": 1
+        },
+        "reason": null
+      },
+      {
+        "date": "2025-01-03",
+        "nav": "230.00000000000000000000",
+        "units": "200.0000000000",
+        "unit_value": "1.1500000000",
+        "daily_return": {
+          "value": 0.0,
+          "reason": null,
+          "observations": 1
+        },
+        "cumulative_return": {
+          "value": 0.15,
+          "reason": null,
+          "observations": 2
+        },
+        "reason": null
+      }
+    ],
+    "external_flows": [
+      {
+        "transaction_id": "0d2e67fa-de7e-40d2-ba1f-7bf3d2a9e157",
+        "effective_at": "2025-01-02T12:00:00Z",
+        "currency": "GBP",
+        "amount": "110.0000000000",
+        "amount_base": "110.0000000000",
+        "nav_before": "110.0000000000",
+        "units_delta": "100.000000000",
+        "reason": null
+      }
+    ],
+    "linked": {
+      "monthly": [
+        {
+          "label": "2025-01",
+          "start": "2025-01-02",
+          "end": "2025-01-03",
+          "partial": true,
+          "return_value": {
+            "value": 0.15,
+            "reason": null,
+            "observations": 2
+          }
+        }
+      ],
+      "quarterly": [
+        {
+          "label": "2025-Q1",
+          "start": "2025-01-02",
+          "end": "2025-01-03",
+          "partial": true,
+          "return_value": {
+            "value": 0.15,
+            "reason": null,
+            "observations": 2
+          }
+        }
+      ],
+      "annual": [
+        {
+          "label": "2025",
+          "start": "2025-01-02",
+          "end": "2025-01-03",
+          "partial": true,
+          "return_value": {
+            "value": 0.15,
+            "reason": null,
+            "observations": 2
+          }
+        }
+      ]
+    },
+    "statistics": {
+      "annualized_return": {
+        "value": null,
+        "reason": "window_shorter_than_one_year",
+        "observations": 2
+      },
+      "annualized_volatility": {
+        "value": 2.0263884129159444,
+        "reason": null,
+        "observations": 2
+      },
+      "sharpe": {
+        "value": 13.509256086106294,
+        "reason": null,
+        "observations": 2
+      },
+      "sortino": {
+        "value": null,
+        "reason": "zero_downside_deviation",
+        "observations": 2
+      },
+      "calmar": {
+        "value": null,
+        "reason": "window_shorter_than_one_year",
+        "observations": 2
+      },
+      "max_drawdown": {
+        "value": 0.0,
+        "reason": null,
+        "observations": 2
+      },
+      "longest_drawdown_days": {
+        "value": 0.0,
+        "reason": null,
+        "observations": 2
+      },
+      "recovery_days": {
+        "value": 0.0,
+        "reason": null,
+        "observations": 2
+      },
+      "hit_rate": {
+        "value": 0.5,
+        "reason": null,
+        "observations": 2
+      },
+      "best_month": {
+        "value": null,
+        "reason": "no_complete_calendar_months",
+        "observations": 0
+      },
+      "worst_month": {
+        "value": null,
+        "reason": "no_complete_calendar_months",
+        "observations": 0
+      },
+      "skewness": {
+        "value": null,
+        "reason": "insufficient_observations",
+        "observations": 2
+      },
+      "excess_kurtosis": {
+        "value": null,
+        "reason": "insufficient_observations",
+        "observations": 2
+      },
+      "realized_var": {
+        "value": -0.007500000000000007,
+        "reason": null,
+        "observations": 2
+      },
+      "realized_cvar": {
+        "value": 0.0,
+        "reason": null,
+        "observations": 2
+      },
+      "effective_tail_observations": {
+        "value": 0.10000000000000009,
+        "reason": null,
+        "observations": 2
+      }
+    },
+    "warnings": [
+      "Realized returns use supplied unadjusted prices, explicit FX and booked net dividends/fees. Unrecorded costs or events are absent.",
+      "UTC calendar-day closes and 365 observations/year; no market-calendar alignment or automatic price carry-forward.",
+      "XIRR includes the closing marked value; it is not a cash-only realized-profit figure.",
+      "Supplied data quality is not independently verified. This report makes no GIPS compliance claim.",
+      "Short track record: annualized time-weighted return is withheld; ratios and tails are descriptive and statistically uncertain.",
+      "Selected-period report: opening market value is treated as invested capital for XIRR, not an original deposit."
+    ],
+    "manifest": {
+      "methodology": "ledger_unitization_v1",
+      "portfolio_id": "9fa7268a-c4a4-4942-8cf4-95e506cf5984",
+      "base_currency": "GBP",
+      "ledger_version": 4,
+      "known_version": 4,
+      "inputs": {
+        "expected_version": 4,
+        "known_at": "2026-10-11T20:05:04.916155Z",
+        "daily_marks": [
+          {
+            "prices": [
+              {
+                "security_id": "3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+                "currency": "GBP",
+                "price": "100",
+                "observed_at": "2025-01-01T20:00:00Z",
+                "source": "synthetic hand-derived acceptance quote"
+              }
+            ],
+            "fx": [],
+            "date": "2025-01-01"
+          },
+          {
+            "prices": [
+              {
+                "security_id": "3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+                "currency": "GBP",
+                "price": "120",
+                "observed_at": "2025-01-02T20:00:00Z",
+                "source": "synthetic hand-derived acceptance quote"
+              }
+            ],
+            "fx": [],
+            "date": "2025-01-02"
+          },
+          {
+            "prices": [
+              {
+                "security_id": "3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+                "currency": "GBP",
+                "price": "130",
+                "observed_at": "2025-01-03T20:00:00Z",
+                "source": "synthetic hand-derived acceptance quote"
+              }
+            ],
+            "fx": [],
+            "date": "2025-01-03"
+          }
+        ],
+        "flow_marks": [
+          {
+            "prices": [
+              {
+                "security_id": "3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+                "currency": "GBP",
+                "price": "110",
+                "observed_at": "2025-01-02T12:00:00Z",
+                "source": "synthetic hand-derived acceptance quote"
+              }
+            ],
+            "fx": [],
+            "transaction_id": "0d2e67fa-de7e-40d2-ba1f-7bf3d2a9e157"
+          }
+        ],
+        "risk_free_rate": 0.0,
+        "confidence": 0.95,
+        "max_mark_age_days": 3,
+        "calendar": "UTC_calendar_daily",
+        "price_convention": "unadjusted",
+        "periods_per_year": 365
+      },
+      "ledger_records": [
+        {
+          "type": "DEPOSIT",
+          "effective_at": "2025-01-01T09:00:00Z",
+          "currency": "GBP",
+          "security_id": null,
+          "quantity": null,
+          "price": null,
+          "amount": "100.0000000000",
+          "fees": "0E-10",
+          "to_currency": null,
+          "to_amount": null,
+          "fx_rate": null,
+          "reverses_id": null,
+          "source": "synthetic offline acceptance",
+          "external_reference": "fund",
+          "note": "",
+          "id": "7bf8266f-7cd4-4c11-adaa-f409b7e52589",
+          "portfolio_id": "9fa7268a-c4a4-4942-8cf4-95e506cf5984",
+          "sequence": 1,
+          "recorded_at": "2026-10-11T19:52:15.330052Z",
+          "content_sha256": "17da83a0629b43d0b7e6b649cbe4633d036bae82d974d1c133d95554b669ffae"
+        },
+        {
+          "type": "BUY",
+          "effective_at": "2025-01-01T10:00:00Z",
+          "currency": "GBP",
+          "security_id": "3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+          "quantity": "1.0000000000",
+          "price": "100.0000000000",
+          "amount": null,
+          "fees": "0E-10",
+          "to_currency": null,
+          "to_amount": null,
+          "fx_rate": null,
+          "reverses_id": null,
+          "source": "synthetic offline acceptance",
+          "external_reference": "buy",
+          "note": "",
+          "id": "d55dfbf7-f360-4786-9684-136249644aec",
+          "portfolio_id": "9fa7268a-c4a4-4942-8cf4-95e506cf5984",
+          "sequence": 2,
+          "recorded_at": "2026-10-11T19:52:15.330052Z",
+          "content_sha256": "4fe3f72de94a02df699eb949829e9f7aef330edd0881b2037acea6d6e3e2b5e4"
+        },
+        {
+          "type": "DEPOSIT",
+          "effective_at": "2025-01-02T12:00:00Z",
+          "currency": "GBP",
+          "security_id": null,
+          "quantity": null,
+          "price": null,
+          "amount": "110.0000000000",
+          "fees": "0E-10",
+          "to_currency": null,
+          "to_amount": null,
+          "fx_rate": null,
+          "reverses_id": null,
+          "source": "synthetic offline acceptance",
+          "external_reference": "fund-2",
+          "note": "",
+          "id": "0d2e67fa-de7e-40d2-ba1f-7bf3d2a9e157",
+          "portfolio_id": "9fa7268a-c4a4-4942-8cf4-95e506cf5984",
+          "sequence": 3,
+          "recorded_at": "2026-10-11T19:52:15.330052Z",
+          "content_sha256": "d43725905cff40b2906457f9fe43a8d8dec1950d68cdb0d7751c58bdb4e2e142"
+        },
+        {
+          "type": "FEE",
+          "effective_at": "2025-01-03T12:00:00Z",
+          "currency": "GBP",
+          "security_id": null,
+          "quantity": null,
+          "price": null,
+          "amount": "10.0000000000",
+          "fees": "0E-10",
+          "to_currency": null,
+          "to_amount": null,
+          "fx_rate": null,
+          "reverses_id": null,
+          "source": "synthetic offline acceptance",
+          "external_reference": "fee",
+          "note": "",
+          "id": "9eec1e5a-6267-4e83-98a1-6111982e3bd2",
+          "portfolio_id": "9fa7268a-c4a4-4942-8cf4-95e506cf5984",
+          "sequence": 4,
+          "recorded_at": "2026-10-11T19:52:15.330052Z",
+          "content_sha256": "97dfc7f76da04ec01b54bd109a44c8ecb83e777c95a5499a1a0c17e4aacd3665"
+        }
+      ],
+      "inputs_sha256": "93c42e23092bcb779ccdcb5a2998d2a1777a222fd8696e45da295d166612c219",
+      "ledger_sha256": "aeb9f093103b9a03e23caccb7de2dd2c30a99dc8694e7b5353f052c5c2d1e90c",
+      "git_commit_sha": null,
+      "build_timestamp": null,
+      "libraries": {
+        "python": "3.12.14",
+        "numpy": "2.3.5",
+        "scipy": "1.16.3",
+        "pydantic": "2.12.5"
+      },
+      "conventions": [
+        "daily_unit_value; external_flows_at_ledger_timestamp_and_sequence",
+        "corrected_history_at_known_at; trade_date_cash",
+        "unadjusted_prices; booked_net_dividends_and_fees; no_tax_inference",
+        "UTC_calendar_daily; actual_days_365_XIRR; loss_positive_drawdowns_and_tails",
+        "missing_coverage_is_undefined; no_automatic_mark_fill",
+        "hashes_identify_inputs; returned_inputs_and_compatible_code_are_needed_for_replay"
+      ],
+      "code_sha256": "e3362ebd6eb316a28cecfee3049a06bfca47c080f5db5cb231bfe99a57be9c24"
+    }
+  },
+  "contribution": {
+    "methodology": "ledger_endpoint_contribution_v1",
+    "linking": "forward_unit_wealth_increments",
+    "fx_convention": "end_fx_for_local_pnl; opening_exposure_fx; conversion_principal_separate",
+    "units": "decimal_portfolio_return; display_percentage_points",
+    "performance": {
+      "portfolio_id": "9fa7268a-c4a4-4942-8cf4-95e506cf5984",
+      "base_currency": "GBP",
+      "scope": "selected_period",
+      "start": "2025-01-01",
+      "end": "2025-01-03",
+      "twr": {
+        "value": 0.15,
+        "reason": null,
+        "observations": 2
+      },
+      "xirr": {
+        "value": 5229091686.27652,
+        "reason": null,
+        "observations": 3
+      },
+      "daily": [
+        {
+          "date": "2025-01-01",
+          "nav": "100.0000000000",
+          "units": "100.0000000000",
+          "unit_value": "1",
+          "daily_return": {
+            "value": null,
+            "reason": "opening_valuation",
+            "observations": 0
+          },
+          "cumulative_return": {
+            "value": 0.0,
+            "reason": null,
+            "observations": 0
+          },
+          "reason": null
+        },
+        {
+          "date": "2025-01-02",
+          "nav": "230.00000000000000000000",
+          "units": "200.0000000000",
+          "unit_value": "1.1500000000",
+          "daily_return": {
+            "value": 0.15,
+            "reason": null,
+            "observations": 1
+          },
+          "cumulative_return": {
+            "value": 0.15,
+            "reason": null,
+            "observations": 1
+          },
+          "reason": null
+        },
+        {
+          "date": "2025-01-03",
+          "nav": "230.00000000000000000000",
+          "units": "200.0000000000",
+          "unit_value": "1.1500000000",
+          "daily_return": {
+            "value": 0.0,
+            "reason": null,
+            "observations": 1
+          },
+          "cumulative_return": {
+            "value": 0.15,
+            "reason": null,
+            "observations": 2
+          },
+          "reason": null
+        }
+      ],
+      "external_flows": [
+        {
+          "transaction_id": "0d2e67fa-de7e-40d2-ba1f-7bf3d2a9e157",
+          "effective_at": "2025-01-02T12:00:00Z",
+          "currency": "GBP",
+          "amount": "110.0000000000",
+          "amount_base": "110.0000000000",
+          "nav_before": "110.0000000000",
+          "units_delta": "100.000000000",
+          "reason": null
+        }
+      ],
+      "linked": {
+        "monthly": [
+          {
+            "label": "2025-01",
+            "start": "2025-01-02",
+            "end": "2025-01-03",
+            "partial": true,
+            "return_value": {
+              "value": 0.15,
+              "reason": null,
+              "observations": 2
+            }
+          }
+        ],
+        "quarterly": [
+          {
+            "label": "2025-Q1",
+            "start": "2025-01-02",
+            "end": "2025-01-03",
+            "partial": true,
+            "return_value": {
+              "value": 0.15,
+              "reason": null,
+              "observations": 2
+            }
+          }
+        ],
+        "annual": [
+          {
+            "label": "2025",
+            "start": "2025-01-02",
+            "end": "2025-01-03",
+            "partial": true,
+            "return_value": {
+              "value": 0.15,
+              "reason": null,
+              "observations": 2
+            }
+          }
+        ]
+      },
+      "statistics": {
+        "annualized_return": {
+          "value": null,
+          "reason": "window_shorter_than_one_year",
+          "observations": 2
+        },
+        "annualized_volatility": {
+          "value": 2.0263884129159444,
+          "reason": null,
+          "observations": 2
+        },
+        "sharpe": {
+          "value": 13.509256086106294,
+          "reason": null,
+          "observations": 2
+        },
+        "sortino": {
+          "value": null,
+          "reason": "zero_downside_deviation",
+          "observations": 2
+        },
+        "calmar": {
+          "value": null,
+          "reason": "window_shorter_than_one_year",
+          "observations": 2
+        },
+        "max_drawdown": {
+          "value": 0.0,
+          "reason": null,
+          "observations": 2
+        },
+        "longest_drawdown_days": {
+          "value": 0.0,
+          "reason": null,
+          "observations": 2
+        },
+        "recovery_days": {
+          "value": 0.0,
+          "reason": null,
+          "observations": 2
+        },
+        "hit_rate": {
+          "value": 0.5,
+          "reason": null,
+          "observations": 2
+        },
+        "best_month": {
+          "value": null,
+          "reason": "no_complete_calendar_months",
+          "observations": 0
+        },
+        "worst_month": {
+          "value": null,
+          "reason": "no_complete_calendar_months",
+          "observations": 0
+        },
+        "skewness": {
+          "value": null,
+          "reason": "insufficient_observations",
+          "observations": 2
+        },
+        "excess_kurtosis": {
+          "value": null,
+          "reason": "insufficient_observations",
+          "observations": 2
+        },
+        "realized_var": {
+          "value": -0.007500000000000007,
+          "reason": null,
+          "observations": 2
+        },
+        "realized_cvar": {
+          "value": 0.0,
+          "reason": null,
+          "observations": 2
+        },
+        "effective_tail_observations": {
+          "value": 0.10000000000000009,
+          "reason": null,
+          "observations": 2
+        }
+      },
+      "warnings": [
+        "Realized returns use supplied unadjusted prices, explicit FX and booked net dividends/fees. Unrecorded costs or events are absent.",
+        "UTC calendar-day closes and 365 observations/year; no market-calendar alignment or automatic price carry-forward.",
+        "XIRR includes the closing marked value; it is not a cash-only realized-profit figure.",
+        "Supplied data quality is not independently verified. This report makes no GIPS compliance claim.",
+        "Short track record: annualized time-weighted return is withheld; ratios and tails are descriptive and statistically uncertain.",
+        "Selected-period report: opening market value is treated as invested capital for XIRR, not an original deposit."
+      ],
+      "manifest": {
+        "methodology": "ledger_unitization_v1",
+        "portfolio_id": "9fa7268a-c4a4-4942-8cf4-95e506cf5984",
+        "base_currency": "GBP",
+        "ledger_version": 4,
+        "known_version": 4,
+        "inputs": {
+          "expected_version": 4,
+          "known_at": "2026-10-11T20:05:04.916155Z",
+          "daily_marks": [
+            {
+              "prices": [
+                {
+                  "security_id": "3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+                  "currency": "GBP",
+                  "price": "100",
+                  "observed_at": "2025-01-01T20:00:00Z",
+                  "source": "synthetic hand-derived acceptance quote"
+                }
+              ],
+              "fx": [],
+              "date": "2025-01-01"
+            },
+            {
+              "prices": [
+                {
+                  "security_id": "3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+                  "currency": "GBP",
+                  "price": "120",
+                  "observed_at": "2025-01-02T20:00:00Z",
+                  "source": "synthetic hand-derived acceptance quote"
+                }
+              ],
+              "fx": [],
+              "date": "2025-01-02"
+            },
+            {
+              "prices": [
+                {
+                  "security_id": "3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+                  "currency": "GBP",
+                  "price": "130",
+                  "observed_at": "2025-01-03T20:00:00Z",
+                  "source": "synthetic hand-derived acceptance quote"
+                }
+              ],
+              "fx": [],
+              "date": "2025-01-03"
+            }
+          ],
+          "flow_marks": [
+            {
+              "prices": [
+                {
+                  "security_id": "3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+                  "currency": "GBP",
+                  "price": "110",
+                  "observed_at": "2025-01-02T12:00:00Z",
+                  "source": "synthetic hand-derived acceptance quote"
+                }
+              ],
+              "fx": [],
+              "transaction_id": "0d2e67fa-de7e-40d2-ba1f-7bf3d2a9e157"
+            }
+          ],
+          "risk_free_rate": 0.0,
+          "confidence": 0.95,
+          "max_mark_age_days": 3,
+          "calendar": "UTC_calendar_daily",
+          "price_convention": "unadjusted",
+          "periods_per_year": 365
+        },
+        "ledger_records": [
+          {
+            "type": "DEPOSIT",
+            "effective_at": "2025-01-01T09:00:00Z",
+            "currency": "GBP",
+            "security_id": null,
+            "quantity": null,
+            "price": null,
+            "amount": "100.0000000000",
+            "fees": "0E-10",
+            "to_currency": null,
+            "to_amount": null,
+            "fx_rate": null,
+            "reverses_id": null,
+            "source": "synthetic offline acceptance",
+            "external_reference": "fund",
+            "note": "",
+            "id": "7bf8266f-7cd4-4c11-adaa-f409b7e52589",
+            "portfolio_id": "9fa7268a-c4a4-4942-8cf4-95e506cf5984",
+            "sequence": 1,
+            "recorded_at": "2026-10-11T19:52:15.330052Z",
+            "content_sha256": "17da83a0629b43d0b7e6b649cbe4633d036bae82d974d1c133d95554b669ffae"
+          },
+          {
+            "type": "BUY",
+            "effective_at": "2025-01-01T10:00:00Z",
+            "currency": "GBP",
+            "security_id": "3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+            "quantity": "1.0000000000",
+            "price": "100.0000000000",
+            "amount": null,
+            "fees": "0E-10",
+            "to_currency": null,
+            "to_amount": null,
+            "fx_rate": null,
+            "reverses_id": null,
+            "source": "synthetic offline acceptance",
+            "external_reference": "buy",
+            "note": "",
+            "id": "d55dfbf7-f360-4786-9684-136249644aec",
+            "portfolio_id": "9fa7268a-c4a4-4942-8cf4-95e506cf5984",
+            "sequence": 2,
+            "recorded_at": "2026-10-11T19:52:15.330052Z",
+            "content_sha256": "4fe3f72de94a02df699eb949829e9f7aef330edd0881b2037acea6d6e3e2b5e4"
+          },
+          {
+            "type": "DEPOSIT",
+            "effective_at": "2025-01-02T12:00:00Z",
+            "currency": "GBP",
+            "security_id": null,
+            "quantity": null,
+            "price": null,
+            "amount": "110.0000000000",
+            "fees": "0E-10",
+            "to_currency": null,
+            "to_amount": null,
+            "fx_rate": null,
+            "reverses_id": null,
+            "source": "synthetic offline acceptance",
+            "external_reference": "fund-2",
+            "note": "",
+            "id": "0d2e67fa-de7e-40d2-ba1f-7bf3d2a9e157",
+            "portfolio_id": "9fa7268a-c4a4-4942-8cf4-95e506cf5984",
+            "sequence": 3,
+            "recorded_at": "2026-10-11T19:52:15.330052Z",
+            "content_sha256": "d43725905cff40b2906457f9fe43a8d8dec1950d68cdb0d7751c58bdb4e2e142"
+          },
+          {
+            "type": "FEE",
+            "effective_at": "2025-01-03T12:00:00Z",
+            "currency": "GBP",
+            "security_id": null,
+            "quantity": null,
+            "price": null,
+            "amount": "10.0000000000",
+            "fees": "0E-10",
+            "to_currency": null,
+            "to_amount": null,
+            "fx_rate": null,
+            "reverses_id": null,
+            "source": "synthetic offline acceptance",
+            "external_reference": "fee",
+            "note": "",
+            "id": "9eec1e5a-6267-4e83-98a1-6111982e3bd2",
+            "portfolio_id": "9fa7268a-c4a4-4942-8cf4-95e506cf5984",
+            "sequence": 4,
+            "recorded_at": "2026-10-11T19:52:15.330052Z",
+            "content_sha256": "97dfc7f76da04ec01b54bd109a44c8ecb83e777c95a5499a1a0c17e4aacd3665"
+          }
+        ],
+        "inputs_sha256": "93c42e23092bcb779ccdcb5a2998d2a1777a222fd8696e45da295d166612c219",
+        "ledger_sha256": "aeb9f093103b9a03e23caccb7de2dd2c30a99dc8694e7b5353f052c5c2d1e90c",
+        "git_commit_sha": null,
+        "build_timestamp": null,
+        "libraries": {
+          "python": "3.12.14",
+          "numpy": "2.3.5",
+          "scipy": "1.16.3",
+          "pydantic": "2.12.5"
+        },
+        "conventions": [
+          "daily_unit_value; external_flows_at_ledger_timestamp_and_sequence",
+          "corrected_history_at_known_at; trade_date_cash",
+          "unadjusted_prices; booked_net_dividends_and_fees; no_tax_inference",
+          "UTC_calendar_daily; actual_days_365_XIRR; loss_positive_drawdowns_and_tails",
+          "missing_coverage_is_undefined; no_automatic_mark_fill",
+          "hashes_identify_inputs; returned_inputs_and_compatible_code_are_needed_for_replay"
+        ],
+        "code_sha256": "e3362ebd6eb316a28cecfee3049a06bfca47c080f5db5cb231bfe99a57be9c24"
+      }
+    },
+    "components": [
+      {
+        "key": "account_fees",
+        "kind": "account_fees",
+        "security_id": null,
+        "currency": null,
+        "price": {
+          "value": "0",
+          "reason": null
+        },
+        "dividends": {
+          "value": "0",
+          "reason": null
+        },
+        "fees": {
+          "value": "-0.05",
+          "reason": null
+        },
+        "fx": {
+          "value": "0",
+          "reason": null
+        },
+        "total": {
+          "value": "-0.05",
+          "reason": null
+        },
+        "pnl_base": "-10.0000000000"
+      },
+      {
+        "key": "cash:GBP",
+        "kind": "cash",
+        "security_id": null,
+        "currency": "GBP",
+        "price": {
+          "value": "0",
+          "reason": null
+        },
+        "dividends": {
+          "value": "0",
+          "reason": null
+        },
+        "fees": {
+          "value": "0",
+          "reason": null
+        },
+        "fx": {
+          "value": "0E-10",
+          "reason": null
+        },
+        "total": {
+          "value": "0E-10",
+          "reason": null
+        },
+        "pnl_base": "0E-20"
+      },
+      {
+        "key": "security:3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+        "kind": "security",
+        "security_id": "3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+        "currency": null,
+        "price": {
+          "value": "0.20",
+          "reason": null
+        },
+        "dividends": {
+          "value": "0",
+          "reason": null
+        },
+        "fees": {
+          "value": "0",
+          "reason": null
+        },
+        "fx": {
+          "value": "0",
+          "reason": null
+        },
+        "total": {
+          "value": "0.20",
+          "reason": null
+        },
+        "pnl_base": "30.0000000000"
+      }
+    ],
+    "segments": [
+      {
+        "start": "2025-01-01T23:59:59.999999Z",
+        "end": "2025-01-02T12:00:00Z",
+        "before_flow_id": "0d2e67fa-de7e-40d2-ba1f-7bf3d2a9e157",
+        "transaction_ids": [],
+        "units": "100.0000000000",
+        "opening_nav": "100.0000000000",
+        "closing_nav": "110.0000000000",
+        "opening_positions": [
+          {
+            "security_id": "3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+            "currency": "GBP",
+            "quantity": "1.0000000000",
+            "cost_basis": "100.00000000000000000000",
+            "average_cost": "100.0000000000",
+            "market_value_local": "100.0000000000",
+            "unrealized_pnl_local": "0E-20",
+            "market_value_base": "100.0000000000",
+            "translated_unrealized_pnl_base": "0E-20",
+            "weight": "1",
+            "reason": null
+          }
+        ],
+        "opening_cash": [
+          {
+            "currency": "GBP",
+            "amount": "0E-20",
+            "value_base": "0",
+            "weight": "0E+10",
+            "reason": null
+          }
+        ],
+        "components": [
+          {
+            "key": "cash:GBP",
+            "kind": "cash",
+            "security_id": null,
+            "currency": "GBP",
+            "price": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "dividends": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "fees": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "fx": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "total": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "pnl_base": "0"
+          },
+          {
+            "key": "security:3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+            "kind": "security",
+            "security_id": "3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+            "currency": null,
+            "price": {
+              "value": "0.1",
+              "reason": null
+            },
+            "dividends": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "fees": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "fx": {
+              "value": "0",
+              "reason": null
+            },
+            "total": {
+              "value": "0.1",
+              "reason": null
+            },
+            "pnl_base": "10.0000000000"
+          }
+        ],
+        "linked_total": {
+          "value": "0.1",
+          "reason": null
+        }
+      },
+      {
+        "start": "2025-01-02T12:00:00Z",
+        "end": "2025-01-02T23:59:59.999999Z",
+        "before_flow_id": null,
+        "transaction_ids": [],
+        "units": "200.0000000000",
+        "opening_nav": "220.00000000000000000000",
+        "closing_nav": "230.00000000000000000000",
+        "opening_positions": [
+          {
+            "security_id": "3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+            "currency": "GBP",
+            "quantity": "1.0000000000",
+            "cost_basis": "100.00000000000000000000",
+            "average_cost": "100.0000000000",
+            "market_value_local": "110.0000000000",
+            "unrealized_pnl_local": "10.00000000000000000000",
+            "market_value_base": "110.0000000000",
+            "translated_unrealized_pnl_base": "10.00000000000000000000",
+            "weight": "0.5",
+            "reason": null
+          }
+        ],
+        "opening_cash": [
+          {
+            "currency": "GBP",
+            "amount": "110.00000000000000000000",
+            "value_base": "110.00000000000000000000",
+            "weight": "0.5",
+            "reason": null
+          }
+        ],
+        "components": [
+          {
+            "key": "cash:GBP",
+            "kind": "cash",
+            "security_id": null,
+            "currency": "GBP",
+            "price": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "dividends": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "fees": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "fx": {
+              "value": "0E-10",
+              "reason": null
+            },
+            "total": {
+              "value": "0E-10",
+              "reason": null
+            },
+            "pnl_base": "0E-20"
+          },
+          {
+            "key": "security:3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+            "kind": "security",
+            "security_id": "3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+            "currency": null,
+            "price": {
+              "value": "0.05",
+              "reason": null
+            },
+            "dividends": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "fees": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "fx": {
+              "value": "0",
+              "reason": null
+            },
+            "total": {
+              "value": "0.05",
+              "reason": null
+            },
+            "pnl_base": "10.0000000000"
+          }
+        ],
+        "linked_total": {
+          "value": "0.0500000000",
+          "reason": null
+        }
+      },
+      {
+        "start": "2025-01-02T23:59:59.999999Z",
+        "end": "2025-01-03T23:59:59.999999Z",
+        "before_flow_id": null,
+        "transaction_ids": [
+          "9eec1e5a-6267-4e83-98a1-6111982e3bd2"
+        ],
+        "units": "200.0000000000",
+        "opening_nav": "230.00000000000000000000",
+        "closing_nav": "230.00000000000000000000",
+        "opening_positions": [
+          {
+            "security_id": "3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+            "currency": "GBP",
+            "quantity": "1.0000000000",
+            "cost_basis": "100.00000000000000000000",
+            "average_cost": "100.0000000000",
+            "market_value_local": "120.0000000000",
+            "unrealized_pnl_local": "20.00000000000000000000",
+            "market_value_base": "120.0000000000",
+            "translated_unrealized_pnl_base": "20.00000000000000000000",
+            "weight": "0.521739130434782608695652173913043478260869565217391304347826086956521739130434782608695652173913043478260869565217391304",
+            "reason": null
+          }
+        ],
+        "opening_cash": [
+          {
+            "currency": "GBP",
+            "amount": "110.00000000000000000000",
+            "value_base": "110.00000000000000000000",
+            "weight": "0.478260869565217391304347826086956521739130434782608695652173913043478260869565217391304347826086956521739130434782608696",
+            "reason": null
+          }
+        ],
+        "components": [
+          {
+            "key": "account_fees",
+            "kind": "account_fees",
+            "security_id": null,
+            "currency": null,
+            "price": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "dividends": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "fees": {
+              "value": "-0.05",
+              "reason": null
+            },
+            "fx": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "total": {
+              "value": "-0.05",
+              "reason": null
+            },
+            "pnl_base": "-10.0000000000"
+          },
+          {
+            "key": "cash:GBP",
+            "kind": "cash",
+            "security_id": null,
+            "currency": "GBP",
+            "price": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "dividends": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "fees": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "fx": {
+              "value": "0E-10",
+              "reason": null
+            },
+            "total": {
+              "value": "0E-10",
+              "reason": null
+            },
+            "pnl_base": "0E-20"
+          },
+          {
+            "key": "security:3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+            "kind": "security",
+            "security_id": "3fb2e6ab-55c2-4dd8-932c-39f567ad8da6",
+            "currency": null,
+            "price": {
+              "value": "0.05",
+              "reason": null
+            },
+            "dividends": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "fees": {
+              "value": "0E+10",
+              "reason": null
+            },
+            "fx": {
+              "value": "0",
+              "reason": null
+            },
+            "total": {
+              "value": "0.05",
+              "reason": null
+            },
+            "pnl_base": "10.0000000000"
+          }
+        ],
+        "linked_total": {
+          "value": "0E-10",
+          "reason": null
+        }
+      }
+    ],
+    "top_contributors": [
+      "security:3fb2e6ab-55c2-4dd8-932c-39f567ad8da6"
+    ],
+    "bottom_contributors": [],
+    "reconciliation": {
+      "component_total": {
+        "value": "0.1500000000",
+        "reason": null
+      },
+      "residual": {
+        "value": "0E-10",
+        "reason": null
+      },
+      "tolerance": "1.15E-12",
+      "within_tolerance": true
+    },
+    "warnings": [
+      "Contributions explain recorded TWR in percentage points, not security returns or risk contributions.",
+      "Local capital P&L, net dividends and fees use segment-end FX. Opening equity/cash receive FX changes; conversion principal is separate. Price/FX interaction is assigned to price.",
+      "This endpoint allocation is not transaction-time FX attribution. Supplied quotes and booked events are not independently certified.",
+      "Cash has no modeled interest; only booked events and marked FX can contribute. Standalone fees and conversion effects remain separate from equity rankings.",
+      "Closed equities remain included. Security UUIDs identify holdings; historical sector classifications are unavailable, so no sector aggregation is inferred.",
+      "Forward wealth linking allocates compounding to later increments; alternative linking conventions can assign different component results while reconciling to the same TWR."
+    ]
+  },
+  "benchmark": {
+    "identity": {
+      "benchmark_id": "analytical-total-return",
+      "revision": "reviewed-1",
+      "name": "Synthetic analytical benchmark",
+      "provider": "Hand-derived test evidence",
+      "methodology_reference": "Explicit total-return fixture, not a market index",
+      "currency": "GBP",
+      "return_basis": "net_total_return",
+      "hedging": "not_applicable",
+      "calendar": "UTC_calendar_daily",
+      "periods_per_year": 365,
+      "currency_policy": "already_in_portfolio_currency",
+      "effective_from": "2025-01-01",
+      "effective_to": "2025-12-31",
+      "published_at": "2025-01-01T20:00:00Z",
+      "retrieved_at": "2025-01-31T20:00:00Z"
+    },
+    "max_level_age_days": 0,
+    "levels": [
+      {
+        "date": "2025-01-01",
+        "level": "100",
+        "observed_at": "2025-01-01T20:00:00Z",
+        "published_at": "2025-01-01T21:00:00Z",
+        "retrieved_at": "2025-01-31T20:00:00Z",
+        "source": "Synthetic total-return level"
+      },
+      {
+        "date": "2025-01-03",
+        "level": "110",
+        "observed_at": "2025-01-03T20:00:00Z",
+        "published_at": "2025-01-03T21:00:00Z",
+        "retrieved_at": "2025-01-31T20:00:00Z",
+        "source": "Synthetic total-return level"
+      }
+    ]
+  },
+  "benchmark_sha256": "fc2d630b54834ebb555663b57bdd4771b9c9c318fd3dda087b3cec656878dde2",
+  "include_contribution": true,
+  "expected_intervals": 2,
+  "paired_intervals": 0,
+  "benchmark_return": {
+    "value": null,
+    "reason": "incomplete_benchmark_coverage",
+    "observations": 0
+  },
+  "cumulative_active_return": {
+    "value": null,
+    "reason": "incomplete_benchmark_coverage",
+    "observations": 0
+  },
+  "cumulative_relative_return": {
+    "value": null,
+    "reason": "incomplete_benchmark_coverage",
+    "observations": 0
+  },
+  "statistics": {
+    "mean_daily_active_return": {
+      "value": null,
+      "reason": "incomplete_paired_coverage",
+      "observations": 0
+    },
+    "annualized_arithmetic_active_return": {
+      "value": null,
+      "reason": "incomplete_paired_coverage",
+      "observations": 0
+    },
+    "annualized_tracking_error": {
+      "value": null,
+      "reason": "incomplete_paired_coverage",
+      "observations": 0
+    },
+    "information_ratio": {
+      "value": null,
+      "reason": "incomplete_paired_coverage",
+      "observations": 0
+    },
+    "beta": {
+      "value": null,
+      "reason": "incomplete_paired_coverage",
+      "observations": 0
+    },
+    "correlation": {
+      "value": null,
+      "reason": "incomplete_paired_coverage",
+      "observations": 0
+    }
+  },
+  "daily": [
+    {
+      "start": "2025-01-01",
+      "end": "2025-01-02",
+      "portfolio_return": {
+        "value": 0.15,
+        "reason": null,
+        "observations": 1
+      },
+      "benchmark_return": {
+        "value": null,
+        "reason": "missing_or_stale_benchmark_level",
+        "observations": 0
+      },
+      "active_return": {
+        "value": null,
+        "reason": "missing_or_stale_benchmark_level",
+        "observations": 0
+      },
+      "relative_return": {
+        "value": null,
+        "reason": "missing_or_stale_benchmark_level",
+        "observations": 0
+      }
+    },
+    {
+      "start": "2025-01-02",
+      "end": "2025-01-03",
+      "portfolio_return": {
+        "value": 0.0,
+        "reason": null,
+        "observations": 1
+      },
+      "benchmark_return": {
+        "value": null,
+        "reason": "missing_or_stale_benchmark_level",
+        "observations": 0
+      },
+      "active_return": {
+        "value": null,
+        "reason": "missing_or_stale_benchmark_level",
+        "observations": 0
+      },
+      "relative_return": {
+        "value": null,
+        "reason": "missing_or_stale_benchmark_level",
+        "observations": 0
+      }
+    }
+  ],
+  "warnings": [
+    "Historical benchmark comparison is descriptive evidence, not an expected return or decision.",
+    "Portfolio returns include booked net dividends and fees; benchmark gross/net and hedging conventions can differ. A net index does not necessarily include investor management costs.",
+    "UTC calendar-day intervals and 365 observations/year. Supplied weekend levels and quote-age settings are explicit evidence, not automatic carry-forward or trading-calendar alignment.",
+    "Tracking error is realized sample dispersion of arithmetic active returns, not ex-ante tracking risk or position risk contribution. Square-root annualization assumes stable variance and no serial correlation; stale/repeated levels can distort it.",
+    "Information ratio uses annualized arithmetic mean active return, not a CAGR difference. Beta/correlation are centered paired sample moments; no alpha or factor inference is claimed.",
+    "Benchmark identity, total-return basis, marks and suitability are supplied, not certified. Selection is for this account/report; no durable portfolio default or provider archive.",
+    "Short sample: estimates are unstable and not evidence of persistent skill.",
+    "Incomplete paired coverage: whole-window active statistics are withheld."
+  ]
+}

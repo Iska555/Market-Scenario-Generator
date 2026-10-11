@@ -17,6 +17,7 @@ from src.api.models import (
     SimulationResponse,
 )
 from src.attribution.routes import router as attribution_router
+from src.benchmark.routes import router as benchmark_router
 from src.data.providers import CachedPriceProvider, PriceDataError
 from src.performance.routes import router as performance_router
 from src.portfolio.construction.routes import router as construction_router
@@ -36,6 +37,7 @@ app.include_router(historical_router)
 app.include_router(accounting_router)
 app.include_router(performance_router)
 app.include_router(attribution_router)
+app.include_router(benchmark_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[

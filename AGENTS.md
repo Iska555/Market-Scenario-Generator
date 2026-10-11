@@ -38,6 +38,14 @@ Phase 8 TWR and visible residuals. Preserve all existing audits, including Phase
 Benchmark, factor regression, Brinson and publishing remain separate subsequent
 stages. Record current scope and evidence in docs/PHASE_9A_AUDIT.md.
 
+On 2026-10-11 the owner instructed continuation of the approved plan after Phase
+9A acceptance, authorizing Phase 9B benchmark/active-risk analysis. Use an explicit
+versioned, report-scoped benchmark selection for the chosen account, reviewed
+same-currency total-return levels and aligned UTC daily intervals. No hardcoded
+benchmark or automatic provider call. Record fresh evidence in PHASE_9B_AUDIT.md;
+preserve every existing audit and evidence file. Factor regression, alpha, rolling
+analytics, Brinson, publication and durable benchmark-default settings remain later.
+
 Apply the approved seven suggestions and permanent rules A–D in the master brief:
 explicit return/horizon/currency conventions; proportionate replay manifests;
 typed undefined values; distinct uncertainty and risk meanings; calendar/FX/data

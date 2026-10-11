@@ -1,15 +1,42 @@
-# Architecture through Phase 9A
+# Architecture through Phase 9B
 
 The canonical product brief is [MASTER_BRIEF.md](MASTER_BRIEF.md). This checkout
 contains the simulator correctness rebuild, methodology/tests, an equity research
 registry, versioned thesis and valuation workspaces, hypothetical construction,
 supplied stress scenarios and a private transaction ledger with supplied-mark
 valuation, realized performance from the ledger and explicit valuation evidence,
-and reconciled ledger position contribution.
-Phase-specific sections below retain their phase boundaries; the current owner
-review gate is after bounded Phase 9A acceptance. See the respective phase audits
-for implementation and verification evidence. Benchmark/active-risk analysis,
-factor regression, Brinson and publishing require separate stages.
+reconciled ledger position contribution, and explicit benchmark/realized active-risk
+comparison. Phase-specific sections below retain their phase boundaries; current
+local acceptance is bounded Phase 9B. See the respective phase audits for evidence
+and limitations. Factor regression, Brinson, durable benchmark defaults and
+publishing require separate stages.
+
+## Phase 9B benchmark boundary — authorized 2026-10-11
+
+`benchmark/contracts.py` defines report-scoped benchmark identity/revision and
+strict dated total-return levels with currency/calendar/hedging/provenance.
+`engine.build_comparison` matches the exact performance intervals, retaining daily
+arithmetic differences and geometric relative returns. Full-window active metrics
+require complete paired funded intervals; partial gaps retain independent results.
+`active_statistics` calculates centered sample moments, realized TE, IR, beta and
+correlation with explicit zero-denominator/non-finite outcomes and sample counts.
+
+`routes.comparison` obtains the existing locked Phase 8 snapshot, optionally builds
+Phase 9A contribution, and computes comparison while holding that same row lock.
+No database writes, migrations, provider calls or automatic currency conversion.
+`replay.verify_comparison` verifies the embedded performance identity/results,
+optional contribution and benchmark hash, then compares the complete rebuilt
+report. `scripts/replay_comparison.py` provides offline verification.
+
+The Performance controller accepts a fourth optional comparison transport. One
+request supplies all selected reports; generation/clearing rules cover comparison
+inputs and outputs. `BenchmarkInputs.jsx` supplies explicit opt-in evidence and
+empty templates. `BenchmarkResults.jsx` formats percentages, percentage points,
+dimensionless ratios, null reasons, paired counts and expandable daily/provenance
+evidence. Financial arithmetic remains in the backend. Browser export uses the
+existing private JSON download mechanism; actual file delivery was not independently
+verified in this phase. See [BENCHMARK.md](BENCHMARK.md) and
+[PHASE_9B_AUDIT.md](PHASE_9B_AUDIT.md).
 
 ## Phase 9A contribution boundary — authorized 2026-10-09
 

@@ -223,3 +223,28 @@ benchmark/active-risk plan and acceptance record; then factor regression and,
 when historical benchmark/classification evidence exists, an explicit Brinson
 decision. Publication and the approved broker/fund/operational integration
 priorities retain their separate acceptance requirements.
+
+
+## Phase 9B — benchmark and realized active risk (2026-10-11 continuation)
+
+Bounded plan: [Phase 9B](superpowers/plans/2026-10-11-phase-9b-benchmark.md).
+Methodology: [BENCHMARK.md](BENCHMARK.md); fresh acceptance and qualifications:
+[PHASE_9B_AUDIT.md](PHASE_9B_AUDIT.md). Earlier stage records retain their context.
+
+- [x] Explicit versioned selection for the chosen account/report, reviewed
+  same-currency total-return levels and calendar/age/knowledge provenance.
+- [x] Aligned cumulative/daily comparison, realized TE/IR/beta/correlation,
+  fully paired funded-window requirements and typed undefined values.
+- [x] One locked private snapshot with optional contribution and offline replay.
+- [x] Performance evidence/results controls, privacy/staleness clearing and
+  complete/missing/corrected responsive browser workflows.
+- [x] Full quantitative/API/PostgreSQL/client gates, exact accepted source archive,
+  three API exports and independent extracted-source replay.
+- [x] Historical preservation proof, prospective suggestions and local checkpoint.
+
+Browser download activation was exercised, but actual downloaded-file delivery
+was not independently verified; retained/replayed artifacts are actual API exports.
+Next stage: specify factor/risk-free input provenance, excess-return conventions,
+regression uncertainty and replay before implementing factor regression. Persistent
+portfolio benchmark defaults, rolling analytics, Brinson and publication retain
+their own data/operational acceptance boundaries.

@@ -1,0 +1,46 @@
+{
+  "identity": {
+    "benchmark_id": "analytical-total-return",
+    "revision": "reviewed-1",
+    "name": "Synthetic analytical benchmark",
+    "provider": "Hand-derived test evidence",
+    "methodology_reference": "Explicit total-return fixture, not a market index",
+    "currency": "GBP",
+    "return_basis": "net_total_return",
+    "hedging": "not_applicable",
+    "calendar": "UTC_calendar_daily",
+    "periods_per_year": 365,
+    "currency_policy": "already_in_portfolio_currency",
+    "effective_from": "2025-01-01",
+    "effective_to": "2025-12-31",
+    "published_at": "2025-01-01T20:00:00Z",
+    "retrieved_at": "2025-01-31T20:00:00Z"
+  },
+  "max_level_age_days": 0,
+  "levels": [
+    {
+      "date": "2025-01-01",
+      "level": "100",
+      "observed_at": "2025-01-01T20:00:00Z",
+      "published_at": "2025-01-01T21:00:00Z",
+      "retrieved_at": "2025-01-31T20:00:00Z",
+      "source": "Synthetic total-return level"
+    },
+    {
+      "date": "2025-01-02",
+      "level": "105",
+      "observed_at": "2025-01-02T20:00:00Z",
+      "published_at": "2025-01-02T21:00:00Z",
+      "retrieved_at": "2025-01-31T20:00:00Z",
+      "source": "Synthetic total-return level"
+    },
+    {
+      "date": "2025-01-03",
+      "level": "110",
+      "observed_at": "2025-01-03T20:00:00Z",
+      "published_at": "2025-01-03T21:00:00Z",
+      "retrieved_at": "2025-01-31T20:00:00Z",
+      "source": "Synthetic total-return level"
+    }
+  ]
+}

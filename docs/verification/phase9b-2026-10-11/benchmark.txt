@@ -1,0 +1,20 @@
+{
+  "python": "3.12.14",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "numpy": "2.3.5",
+  "workload": "1000 paths x 252 periods x 5 assets",
+  "includes": "preparation, fitting, simulation, statistics, response assembly",
+  "excludes": "network, HTTP serialization, frontend rendering",
+  "timings": {
+    "gaussian": {
+      "seconds": 0.1618,
+      "histogram_count": 1000,
+      "chart_sample_paths": 30
+    },
+    "gmm": {
+      "seconds": 0.505,
+      "histogram_count": 1000,
+      "chart_sample_paths": 30
+    }
+  }
+}

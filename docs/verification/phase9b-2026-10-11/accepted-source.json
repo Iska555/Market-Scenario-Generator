@@ -1,0 +1,8 @@
+{
+  "code_sha256": "e3362ebd6eb316a28cecfee3049a06bfca47c080f5db5cb231bfe99a57be9c24",
+  "archive_sha256": "c855f80fa10878a55c6b55618c7a7c52db305f4f0ac04edc5df2a926a46405b0",
+  "files": 80,
+  "python": "3.12.14",
+  "source_base": "cb7f84d",
+  "scope": "Exact backend Python bytes and offline entry points; excludes application dependencies and frontend."
+}

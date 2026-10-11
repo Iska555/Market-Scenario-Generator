@@ -542,3 +542,51 @@ Git line-ending conversion can change the conservative source fingerprint; both
 synthetic exports passed replay from the separately extracted accepted source.
 The bundle preserves evidence without revising historical hashes or adding a
 second active calculation implementation.
+
+
+## 2026-10-11 — approved continuation: Phase 9B benchmark/active-risk closeout
+
+The owner instructed continuation of the approved sequence after Phase 9A.
+Implemented bounded Phase 9B: explicit versioned selection for the chosen
+account/report, reviewed gross/net total-return levels in account currency,
+aligned daily and cumulative comparisons, realized TE/IR/beta/correlation,
+coherent optional position contribution and offline replay. See
+[BENCHMARK.md](BENCHMARK.md), [Phase 9B plan](superpowers/plans/2026-10-11-phase-9b-benchmark.md)
+and the new [PHASE_9B_AUDIT.md](PHASE_9B_AUDIT.md). This entry is appended;
+the permanent master, historical audits and previous suggestions are preserved.
+
+Acceptance evidence: 625 backend cases including actual PostgreSQL, 97.76%
+statement/branch coverage, 133 frontend cases, quality/build gates, synthetic
+complete/missing/corrected responsive privacy workflows and three actual private
+API exports replayed from independently extracted exact source. The browser
+download button was exercised, but its saved file was not independently obtained;
+actual browser file delivery remains unverified. No hosted/production/broker claim.
+
+The bounded selection is retained with each report. The master brief's eventual
+durable portfolio benchmark default remains later settings work. Do not infer
+complete Phase 9 delivery from this substage. No automatic provider ingestion,
+currency conversion, factor alpha, rolling analytics or Brinson was added.
+
+Recommended next procedure within the approved sequence:
+
+1. Specify a separate factor-regression stage before implementation: reviewed
+   dated factor and risk-free series, actual portfolio excess returns, matching
+   currency/calendar/units, factor version/provenance and complete coverage.
+2. Document the regression estimators, intercept/betas/residuals, sample minimum,
+   collinearity/rank/zero-variance behavior and uncertainty diagnostics. Treat
+   historical alpha as a model-dependent estimate rather than persistent skill
+   or an investor expected-return view. Require analytical identities and replay.
+3. Retain this stage's complete paired funded-window policy. The first-funding
+   regression showed why a post-funding portfolio day must not be compared with
+   a full benchmark day. A future alternate/calendar policy needs an explicit
+   method change and its own acceptance, not silent reduced samples.
+4. Add durable versioned benchmark defaults and reviewed currency conversion
+   only with dedicated settings/data contracts. Provider licenses and timestamp
+   evidence must precede any automatic licensed-data archive.
+5. Keep Brinson conditional on historical benchmark weights/classifications and
+   reconcile its effects. Continue broker/fund typing, real-account reconciliation,
+   operational backup/restore and publication through their separate gates.
+
+This prospective entry does not rewrite earlier findings or make historical
+acceptance appear cleaner. Investor benchmark suitability and investment decisions
+remain the owner's judgment.

@@ -1,0 +1,5 @@
+Removed only the explicitly created Phase 9B synthetic browser schema.
+Confirmed no test_% or phase9b_% schemas remain in the disposable acceptance database.
+waiting for server to shut down.... done
+server stopped
+Verified no listeners on 8000, 5173 or 55439. Browser test tab closed and viewport reset.

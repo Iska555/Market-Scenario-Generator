@@ -1,0 +1,25 @@
+Synthetic local browser acceptance — 2026-10-11
+Target: local frontend 127.0.0.1:5173 and disposable private API 127.0.0.1:8000.
+All entered portfolio, ledger, quote and benchmark data are synthetic fixtures.
+
+Observed populated version4: portfolio TWR15%, reconciled contribution15%,
+benchmark10%, cumulative difference5pp, relative wealth4.55%, paired2/2.
+Observed omitted-middle-level case: independently known portfolio/contribution
+retained, comparison/statistics undefined with coverage reasons, paired0/2.
+After append-only fee reversal: stale request displayed reload/review instruction;
+old results removed. Reload exposed version5 and cleared both evidence inputs,
+selected dates and comparison options before reviewed re-entry.
+Observed corrected version5: NAV240, TWR/contribution20%, benchmark10%,
+cumulative difference10pp, relative wealth9.09%, paired2/2.
+Expanded daily comparison: portfolio15%/4.35%, benchmark5%/4.76%, active10pp/-0.41pp.
+Expanded benchmark provenance includes exact identity/revision/levels and SHA-256.
+Explicit short-sample disclaimer present beside descriptive annualized metrics.
+Inspected desktop and 390x844 light/dark viewport; DOM viewport390, page width375.
+Expanded tables/provenance use bounded scroll containers. No captured console errors.
+Lock removed private report/input workspace. Refresh showed locked Overview.
+Theme restored to light; temporary viewport reset; agent-created test tab closed.
+
+Download comparison replay JSON button activated. No saved browser file obtained
+for independent verification. Actual browser file delivery remains unverified.
+Retained complete/missing/corrected JSON artifacts are actual private API exports;
+each successfully verified offline from working and separately extracted source.
