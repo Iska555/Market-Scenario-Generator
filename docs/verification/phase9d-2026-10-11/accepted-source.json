@@ -1,0 +1,8 @@
+{
+  "code_sha256": "cb29f6efcc48876f6a5891281d521d7e639409fe42fb040c23d6b73fb781d3be",
+  "archive_sha256": "f8a162006c7741c5b120154bb423a663f8b222d74ec7b3c3d22a4ae2e43aebc9",
+  "files": 87,
+  "python": "3.12.14",
+  "base_commit": "30db8bc",
+  "scope": "Exact backend Python/entry points, excluding migrations/dependencies/frontend/deployment"
+}

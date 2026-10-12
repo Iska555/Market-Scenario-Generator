@@ -636,3 +636,44 @@ Recommended next procedure:
 This bounded stage does not declare all broader Phase 9 goals complete. Numerical
 replay is exact in the tested local runtime; retain compatible archived source and
 environment rather than changing historical report hashes to force compatibility.
+
+
+## 2026-10-12 — approved continuation: Phase 9D benchmark settings closeout
+
+The owner continued after Phase 9C and reiterated the master plan. Implemented
+bounded Phase 9D: immutable portfolio benchmark identity/reason revisions, private
+history/save/clear, idempotent retries, independent ledger/settings versions and
+explicit report selection receipts. This fulfills the master brief's portfolio
+benchmark configuration requirement without hardcoding an index or supplying data.
+See BENCHMARK_SETTINGS.md, prospective FACTOR_DATA_READINESS.md, the separate
+2026-10-11-phase-9d-settings.md plan and new PHASE_9D_AUDIT.md.
+
+Acceptance: 696 backend cases including real PostgreSQL, 97.89% coverage,
+147 frontend cases, quality/hooks/lint/build, synthetic responsive save/report/
+clear/persistence/privacy checks, three actual API exports replayed from working
+and independently extracted 87-file source, and 148 historical preservation checks.
+The new audit records early port/runner/test-wrapper findings rather than rewriting
+old records. Browser saved-file delivery remains unverified; old qualifications
+and exact archives remain unchanged. No hosted/deployment/real-provider claim.
+
+Recommended next procedure under the master:
+
+1. Specify a separately versioned common-valuation-interval method and reviewed
+   real-factor adapter. Preserve daily ledger accounting, exact evidence provenance,
+   complete funded windows and explicit aggregation. Require genuine reviewed
+   source/fixture, currency, funding/hedging and risk-free interval definitions.
+2. Keep current manual UTC daily factor inputs until that acceptance exists. Do
+   not invent weekend factors, multiply excess/spread returns by FX spot levels,
+   silently reduce samples or certify latest retrieval as historical publication.
+3. Then scope HAC/bootstrap and rolling beta/up/down capture with window, estimator,
+   dependence, coverage and sample context. Large historical t-statistics remain
+   descriptive model estimates, not persistent skill or expected-return views.
+4. Keep Brinson conditional on historical classifications and benchmark weights.
+   Current registry metadata does not supply these inputs. Retain reconciled
+   security contribution and accepted factor diagnostics while data are missing.
+5. Continue fund typing, real broker reconciliation, ledger-to-construction handoff,
+   operational restore and publication through their own integration/privacy gates.
+
+This is a bounded Phase 9 substage; it does not declare Phase 9 or the complete
+master plan finished. Saved identities establish explicit policy history, not
+benchmark suitability or real-factor calendar/currency comparability.

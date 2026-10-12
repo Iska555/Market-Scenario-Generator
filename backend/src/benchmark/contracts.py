@@ -1,7 +1,8 @@
 """Versioned report-scoped total-return benchmark with exact dated evidence."""
 
 from datetime import date
-from typing import Literal, Self
+from typing import Annotated, Literal, Self
+from uuid import UUID
 
 from pydantic import AwareDatetime, Field, model_validator
 
@@ -33,6 +34,30 @@ class BenchmarkIdentity(Contract):
         if self.effective_to < self.effective_from or self.retrieved_at < self.published_at:
             raise ValueError("Benchmark version dates are inconsistent")
         return self
+
+
+class SettingCreate(Contract):
+    id: UUID
+    expected_revision: int = Field(ge=0, strict=True)
+    identity: BenchmarkIdentity | None
+    reason: Annotated[str, Field(min_length=1, max_length=2000)]
+
+
+class Selection(Contract):
+    id: UUID
+    portfolio_id: UUID
+    revision: int = Field(ge=1, strict=True)
+    recorded_at: AwareDatetime
+    identity: BenchmarkIdentity | None
+    reason: Annotated[str, Field(min_length=1, max_length=2000)]
+    content_sha256: Annotated[str, Field(pattern=r"^[a-f0-9]{64}$")]
+
+
+class SettingsHistory(Contract):
+    revision: int
+    total: int
+    latest: Selection | None
+    records: list[Selection]
 
 
 class BenchmarkLevel(Contract):
@@ -67,6 +92,7 @@ class ComparisonRequest(Contract):
     performance: PerformanceRequest
     benchmark: BenchmarkEvidence
     include_contribution: bool = False
+    saved_benchmark_revision: int | None = Field(default=None, ge=1, strict=True)
 
 
 class DailyComparison(Contract):
@@ -82,6 +108,7 @@ class ComparisonReport(Contract):
     methodology: str = "aligned_total_return_comparison_v1"
     performance: PerformanceReport
     contribution: ContributionReport | None = None
+    selection: Selection | None = None
     benchmark: BenchmarkEvidence
     benchmark_sha256: str
     include_contribution: bool

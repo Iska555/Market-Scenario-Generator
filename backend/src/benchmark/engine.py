@@ -7,7 +7,8 @@ from math import fsum, isfinite, sqrt
 
 from src.accounting.precision import accounting_context
 from src.attribution.contracts import ContributionReport
-from src.benchmark.contracts import BenchmarkEvidence, ComparisonReport, DailyComparison
+from src.benchmark.contracts import BenchmarkEvidence, ComparisonReport, DailyComparison, Selection
+from src.benchmark.settings import selection_hash
 from src.performance.contracts import PerformanceReport
 from src.performance.engine import close
 from src.performance.identity import digest
@@ -33,7 +34,8 @@ WARNINGS = [
     "Information ratio uses annualized arithmetic mean active return, not a CAGR difference. "
     "Beta/correlation are centered paired sample moments; no alpha or factor inference is claimed.",
     "Benchmark identity, total-return basis, marks and suitability are supplied, not certified. "
-    "Selection is for this account/report; no durable portfolio default or provider archive.",
+    "Selection is explicit for this account/report; "
+    "saved identity settings supply no provider levels.",
 ]
 
 
@@ -84,9 +86,18 @@ def build_comparison(
     performance: PerformanceReport,
     benchmark: BenchmarkEvidence,
     contribution: ContributionReport | None = None,
+    selection: Selection | None = None,
 ) -> ComparisonReport:
     """Use exactly the portfolio's intervals; independent outputs survive paired gaps."""
     request, identity = performance.manifest.inputs, benchmark.identity
+    if selection is not None and (
+        selection.portfolio_id != performance.portfolio_id
+        or selection.identity != identity
+        or selection.recorded_at > request.known_at
+        or selection.identity.retrieved_at > selection.recorded_at
+        or selection_hash(selection) != selection.content_sha256
+    ):
+        raise ValueError("Saved benchmark selection receipt is inconsistent")
     if identity.currency != performance.base_currency:
         raise ValueError("Benchmark currency must match the account; conversion is not implemented")
     if identity.effective_from > performance.start or identity.effective_to < performance.end:
@@ -200,6 +211,7 @@ def build_comparison(
     return ComparisonReport(
         performance=performance,
         contribution=contribution,
+        selection=selection,
         benchmark=benchmark,
         benchmark_sha256=digest(benchmark.model_dump(mode="json")),
         include_contribution=contribution is not None,

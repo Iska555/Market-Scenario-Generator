@@ -1,0 +1,17 @@
+{
+  "benchmark_id": "analytical-total-return",
+  "revision": "reviewed-1",
+  "name": "Synthetic analytical benchmark",
+  "provider": "Hand-derived test evidence",
+  "methodology_reference": "Explicit total-return fixture, not a market index",
+  "currency": "GBP",
+  "return_basis": "net_total_return",
+  "hedging": "not_applicable",
+  "calendar": "UTC_calendar_daily",
+  "periods_per_year": 365,
+  "currency_policy": "already_in_portfolio_currency",
+  "effective_from": "2025-01-01",
+  "effective_to": "2025-12-31",
+  "published_at": "2025-01-01T20:00:00Z",
+  "retrieved_at": "2025-01-31T20:00:00Z"
+}

@@ -1,0 +1,49 @@
+{
+  "revision": 2,
+  "total": 2,
+  "latest": {
+    "id": "1108d553-67da-4a4d-9d54-611523039377",
+    "portfolio_id": "ba86023b-dbf5-4823-a86a-466cc5357a1a",
+    "revision": 2,
+    "recorded_at": "2026-10-11T22:19:56.005029Z",
+    "identity": null,
+    "reason": "Synthetic acceptance: clear choice while preserving history",
+    "content_sha256": "03c7b005cf294d94778d1409a3250cfea3e6d9922077c70088efee3cb8d0eeb3"
+  },
+  "records": [
+    {
+      "id": "1108d553-67da-4a4d-9d54-611523039377",
+      "portfolio_id": "ba86023b-dbf5-4823-a86a-466cc5357a1a",
+      "revision": 2,
+      "recorded_at": "2026-10-11T22:19:56.005029Z",
+      "identity": null,
+      "reason": "Synthetic acceptance: clear choice while preserving history",
+      "content_sha256": "03c7b005cf294d94778d1409a3250cfea3e6d9922077c70088efee3cb8d0eeb3"
+    },
+    {
+      "id": "7c84b230-e4bb-4742-a360-96b16dd35872",
+      "portfolio_id": "ba86023b-dbf5-4823-a86a-466cc5357a1a",
+      "revision": 1,
+      "recorded_at": "2026-10-11T22:16:40.901805Z",
+      "identity": {
+        "benchmark_id": "analytical-total-return",
+        "revision": "reviewed-1",
+        "name": "Synthetic analytical benchmark",
+        "provider": "Hand-derived test evidence",
+        "methodology_reference": "Explicit total-return fixture, not a market index",
+        "currency": "GBP",
+        "return_basis": "net_total_return",
+        "hedging": "not_applicable",
+        "calendar": "UTC_calendar_daily",
+        "periods_per_year": 365,
+        "currency_policy": "already_in_portfolio_currency",
+        "effective_from": "2025-01-01",
+        "effective_to": "2025-12-31",
+        "published_at": "2025-01-01T20:00:00Z",
+        "retrieved_at": "2025-01-31T20:00:00Z"
+      },
+      "reason": "Synthetic acceptance: reviewed initial benchmark choice",
+      "content_sha256": "022b194bb09b63cebfc7c3930ab39c94f1665b5e744e281c437f38be4741199a"
+    }
+  ]
+}

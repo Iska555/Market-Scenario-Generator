@@ -54,6 +54,13 @@ records and write PHASE_9C_AUDIT.md. No implied expected return, persistent skil
 automatic data/FX, rolling models, Brinson or publication. Plan: the separate
 2026-10-11-phase-9c-factors.md execution record.
 
+The owner's further continuation after Phase 9C authorizes bounded Phase 9D:
+append-only portfolio benchmark settings with explicit report selection receipts,
+private settings workflows and real-factor currency/calendar readiness documentation.
+Preserve every previous audit/evidence file and append fresh suggestions. Record
+PHASE_9D_AUDIT.md. No automatic provider/FX/calendar transformations, HAC/rolling,
+Brinson or publishing. Use the separate 2026-10-11-phase-9d-settings.md plan.
+
 Apply the approved seven suggestions and permanent rules A–D in the master brief:
 explicit return/horizon/currency conventions; proportionate replay manifests;
 typed undefined values; distinct uncertainty and risk meanings; calendar/FX/data

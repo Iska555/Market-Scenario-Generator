@@ -1,4 +1,4 @@
-# Architecture through Phase 9C
+# Architecture through Phase 9D
 
 The canonical product brief is [MASTER_BRIEF.md](MASTER_BRIEF.md). This checkout
 contains the simulator correctness rebuild, methodology/tests, an equity research
@@ -6,10 +6,32 @@ registry, versioned thesis and valuation workspaces, hypothetical construction,
 supplied stress scenarios and a private transaction ledger with supplied-mark
 valuation, realized performance from the ledger and explicit valuation evidence,
 reconciled ledger position contribution, and explicit benchmark/realized active-risk
-comparison, plus supplied historical factor regression. Phase-specific sections
-below retain their boundaries; current local acceptance is bounded Phase 9C.
+comparison, supplied historical factor regression and append-only portfolio
+benchmark settings with selection receipts. Phase-specific sections
+below retain their boundaries; current local acceptance is bounded Phase 9D.
 See each audit for evidence and qualifications. Calendar reconciliation, HAC/
-rolling analytics, Brinson, durable benchmark defaults and publication remain later.
+rolling analytics, Brinson and publication remain later.
+
+## Phase 9D settings boundary — continuation after Phase 9C
+
+`benchmark.settings` stores append-only identities/reasons with an independent
+revision, idempotency UUID, monotonic server time and content hash. New migration
+20261011_04 adds immutable PostgreSQL storage; existing migrations remain intact.
+Settings/history and report selection reuse the portfolio row lock. Ledger version
+does not advance when benchmark settings change. No provider levels are persisted.
+
+Optional request `saved_benchmark_revision` validates latest/non-cleared identity
+and knowledge cutoff. `ComparisonReport.selection` retains a complete hashed
+receipt; nested factor comparison shares it. Offline replay checks the receipt
+without a settings database. Report-only explicit choices remain available.
+Private benchmark success/errors receive no-store headers.
+
+Performance loads settings through a sixth optional private transport. Save/clear
+requires a reason; empty saved-identity templates and reviewed-evidence linking
+are explicit. Retry UUIDs and generation guards handle uncertain writes and late
+responses. Recent UI history shows up to20 revisions; API history is paginated.
+No key enters settings/controller snapshots/exports. See BENCHMARK_SETTINGS.md,
+FACTOR_DATA_READINESS.md and PHASE_9D_AUDIT.md for current evidence/limits.
 
 ## Phase 9C factor boundary — authorized 2026-10-11
 

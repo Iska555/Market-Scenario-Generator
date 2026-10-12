@@ -56,7 +56,7 @@ get_cached_price_data = CachedPriceProvider()
 @app.middleware("http")
 async def factor_private_cache(request: Request, call_next: RequestResponseEndpoint) -> Response:
     response = await call_next(request)
-    if request.url.path.startswith("/api/factors/"):
+    if request.url.path.startswith(("/api/factors/", "/api/benchmark/")):
         response.headers["Cache-Control"] = "no-store"
     return response
 

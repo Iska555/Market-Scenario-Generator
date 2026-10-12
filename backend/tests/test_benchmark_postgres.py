@@ -13,7 +13,7 @@ from sqlalchemy.orm import Session
 from src.accounting.repository import LedgerRepository
 from src.attribution.contracts import ContributionReport
 from src.benchmark import routes
-from src.benchmark.contracts import BenchmarkEvidence, ComparisonReport
+from src.benchmark.contracts import BenchmarkEvidence, ComparisonReport, Selection
 from src.benchmark.replay import verify_comparison
 from src.performance.contracts import PerformanceReport
 
@@ -65,6 +65,7 @@ def test_pg_comparison_lock_stale_rejection_then_changed_fee_report(
         performance: PerformanceReport,
         benchmark: BenchmarkEvidence,
         contribution: ContributionReport | None = None,
+        selection: Selection | None = None,
     ) -> ComparisonReport:
         with Session(postgres_engine) as other, other.begin():
             other.execute(text("SET LOCAL lock_timeout = '250ms'"))
@@ -72,7 +73,7 @@ def test_pg_comparison_lock_stale_rejection_then_changed_fee_report(
                 LedgerRepository(other).portfolio(performance.portfolio_id)
             assert getattr(failure.value.orig, "sqlstate", None) == "55P03"
             blocked.append(True)
-        return original(performance, benchmark, contribution)
+        return original(performance, benchmark, contribution, selection)
 
     monkeypatch.setattr(routes, "build_comparison", checked)
     response = pg_client.post(path, json=data)

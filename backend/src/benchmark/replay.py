@@ -15,6 +15,8 @@ def verify_comparison(saved: ComparisonReport) -> None:
         raise ValueError("Comparison contribution setting differs from its retained result")
     if saved.contribution is not None:
         verify_contribution(saved.contribution)
-    rebuilt = build_comparison(saved.performance, saved.benchmark, saved.contribution)
+    rebuilt = build_comparison(
+        saved.performance, saved.benchmark, saved.contribution, saved.selection
+    )
     if saved.model_dump(mode="json") != rebuilt.model_dump(mode="json"):
         raise ValueError("Comparison results or methodology differ from the offline replay")

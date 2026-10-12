@@ -183,3 +183,14 @@ line-ending conversion must not be bypassed by rewriting report hashes.
 HAC/calendar reconciliation, rolling beta/capture, durable portfolio benchmark
 defaults, live provider contracts, factor covariance risk, fund typing, actual broker
 reconciliation, Brinson and publication retain separate acceptance requirements.
+
+
+## Phase 9D integration update — 2026-10-12
+
+Optional benchmark evidence can bind to an explicit saved portfolio setting
+revision. Its complete receipt is retained in the nested comparison and verified
+offline, including after a later settings clear. This changes source/export identity;
+older accepted reports retain their matching archived source. No regression formula
+changed. See BENCHMARK_SETTINGS.md and FACTOR_DATA_READINESS.md for the saved
+identity contract and prospective real-factor currency/calendar review. Saved
+benchmark settings do not establish usable research-factor data.

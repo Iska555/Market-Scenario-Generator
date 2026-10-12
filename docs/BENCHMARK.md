@@ -13,9 +13,10 @@ In Performance, choose a funded opening close and reporting window, supply the
 existing portfolio daily/pre-flow valuation evidence, and select **Compare with
 a reviewed benchmark**. Prepare an empty benchmark template or import/paste
 reviewed JSON. The template invents no index choice, level or provenance timestamp.
-Selection is report-scoped for the chosen account, retained in a private download;
-there is no durable database benchmark default or automatic provider connection.
-A future portfolio-policy/default setting needs separate versioned persistence.
+Selection is explicit for the chosen account and retained in its report. Phase 9D
+adds optional append-only portfolio identity settings and offline selection receipts;
+see [BENCHMARK_SETTINGS.md](BENCHMARK_SETTINGS.md). Provider levels remain supplied.
+Earlier Phase 9B audit/evidence retain their original report-only acceptance.
 
 `POST /api/benchmark/portfolios/{portfolio_id}/comparison` accepts:
 
@@ -218,7 +219,8 @@ from Git line-ending conversion. Runtime versions must also match.
 | `benchmark.routes.comparison` | Private API, actual migrated PostgreSQL all-table immutability, coherent lock/staleness/corrected result |
 | Performance controller / benchmark inputs/results | Single request, explicit empty template, decimal/private transport, account/edit/lock/late-file/response clearing, safe errors, ratio/percentage-point/null presentation and browser acceptance |
 
-Persistent benchmark defaults, automatic provider ingestion/FX conversion, ex-ante
-tracking-risk contribution, rolling beta/capture, factor regression/alpha, Brinson,
-fund support and publication remain subsequent work. Benchmark choice/relevance
+Phase 9C factor regression and Phase 9D saved benchmark identities have separate
+accepted contracts/audits. Automatic provider ingestion/FX conversion, ex-ante
+tracking-risk contribution, rolling beta/capture, Brinson, fund support and
+publication remain subsequent work. Benchmark choice/relevance
 is still the owner's explicit investment-policy judgment.

@@ -248,3 +248,17 @@ fit context. Missing factor evidence withholds the fit while preserving independ
 reports. No public research-factor feed, automatic calendar/FX transformation,
 annual alpha or investment decision is implied. See [FACTORS.md](FACTORS.md) and
 the new [PHASE_9C_AUDIT.md](PHASE_9C_AUDIT.md) for accepted behavior and limitations.
+
+
+## Phase 9D portfolio benchmark setting — closeout 2026-10-12
+
+Performance now loads private saved identity settings for the selected account.
+Save or clear with an explicit reason; every change appends a permanent revision.
+Use a saved identity to prepare an empty evidence template, fill reviewed levels,
+then explicitly link matching evidence after editing/importing. Selected reports
+retain the setting receipt and reject later changed/cleared defaults. Report-only
+explicit choices remain available. Ledger versions and settings revisions are
+independent. Lock/account/refresh clears unsaved state; settings persist privately.
+See BENCHMARK_SETTINGS.md and PHASE_9D_AUDIT.md. Earlier stage sections/audits
+retain their report-only context. Real-factor integration requires the separately
+specified currency/calendar/source readiness in FACTOR_DATA_READINESS.md.

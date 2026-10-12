@@ -998,3 +998,16 @@ intercept with uncertainty context, not annual CAGR, expected return or skill.
 HC3 does not correct serial dependence; no p-value/significance decision is made.
 Evidence/source/runtime and every embedded/regression output are replayed offline.
 New verification and limits are in [PHASE_9C_AUDIT.md](PHASE_9C_AUDIT.md).
+
+
+## Phase 9D selection provenance — 2026-10-12
+
+Portfolio benchmark settings append independently of ledger transaction sequence.
+An optional explicit saved revision must equal the current non-cleared identity
+and be recorded by the report knowledge cutoff. The report retains a canonical
+SHA-256 receipt (UTC recording time, sorted JSON, excluding its hash), then replay
+checks identity/account/provenance and all existing financial outputs without a
+later default lookup. This is internal consistency, not authenticated provenance.
+Existing quantitative formulas and full-window coverage are unchanged. See
+BENCHMARK_SETTINGS.md and prospective FACTOR_DATA_READINESS.md. Real currency/
+calendar transforms and HAC/rolling inference need their own accepted methods.

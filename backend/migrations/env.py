@@ -5,6 +5,7 @@ import os
 from alembic import context
 from sqlalchemy import create_engine, pool
 from src.accounting import tables as accounting_tables  # noqa: F401
+from src.benchmark import settings as benchmark_settings  # noqa: F401
 from src.research.tables import Base
 from src.research.thesis import tables as thesis_tables  # noqa: F401
 

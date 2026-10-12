@@ -4,7 +4,7 @@ A personal investment portfolio-management research project. The long-term goal
 is an inspectable investment process: research → thesis → construction → risk →
 accounting → performance → attribution → review.
 
-**Phase 9C: historical factor regression with statistical context.**
+**Phase 9D: versioned portfolio benchmark settings and factor-data readiness.**
 The Performance workspace measures daily time-weighted returns, dated XIRR and
 realized statistics using recorded transactions and supplied unadjusted price/FX
 evidence. Missing coverage stays undefined. See the
@@ -17,7 +17,9 @@ Select **Compare with a reviewed benchmark** to supply versioned gross/net
 total-return levels in account currency. The report shows aligned daily returns,
 cumulative differences, relative wealth, realized tracking error, information
 ratio and beta/correlation with explicit missing coverage and sample limitations.
-Benchmark selection is for this account/report; it is not a saved portfolio default.
+Portfolio benchmark identities can now be saved with reasons and immutable revisions.
+Reports explicitly opt into a saved revision and retain its selection receipt.
+See [benchmark settings](docs/BENCHMARK_SETTINGS.md) and [Phase 9D audit](docs/PHASE_9D_AUDIT.md).
 See the [benchmark methodology](docs/BENCHMARK.md) and [Phase 9B audit](docs/PHASE_9B_AUDIT.md).
 Select **Analyze reviewed historical factors** to supply one to six research
 factors and matched period-effective risk-free returns. The report fits historical
@@ -61,7 +63,10 @@ explicit historical diagnostic selection; they are not silently used as forecast
 - [Benchmark guide](docs/BENCHMARK.md) — selection, aligned comparisons, active-risk estimators and replay
 - [Phase 9B audit](docs/PHASE_9B_AUDIT.md) — preserved benchmark acceptance and qualifications
 - [Factor guide](docs/FACTORS.md) — reviewed interval evidence, OLS/HC3, sample limits and replay
-- [Phase 9C audit](docs/PHASE_9C_AUDIT.md) — current local acceptance, fresh evidence and remaining boundaries
+- [Phase 9C audit](docs/PHASE_9C_AUDIT.md) — preserved factor acceptance, fresh evidence and remaining boundaries
+- [Benchmark settings](docs/BENCHMARK_SETTINGS.md) — append-only choices, private workflows and receipts
+- [Factor data readiness](docs/FACTOR_DATA_READINESS.md) — prospective currency/calendar/source acceptance
+- [Phase 9D audit](docs/PHASE_9D_AUDIT.md) — current local acceptance and remaining boundaries
 - [Methodology](docs/METHODOLOGY.md) — formulas, units, assumptions and failure conditions
 - [Architecture](docs/ARCHITECTURE.md) — domain boundaries and API v3 contract
 - [Asset-type roadmap](docs/ASSET_TYPE_ROADMAP.md) — typed future support beyond equities
@@ -77,8 +82,9 @@ authorizes Phase 8, recorded prospectively in its plan and audit. On 2026-10-09
 the owner explicitly authorized Phase 9A reconciled position contribution.
 The 2026-10-11 continuation authorizes bounded Phase 9B benchmark/active-risk
 analysis, recorded in its separate plan and audit. The next continuation authorizes
-bounded Phase 9C historical factor regression. Real factor calendar/currency
-reconciliation, HAC/rolling analytics, Brinson, durable portfolio benchmark defaults
+bounded Phase 9C historical factor regression. The subsequent continuation
+authorizes Phase 9D saved portfolio benchmark identities and factor-data readiness.
+Real factor calendar/currency reconciliation, HAC/rolling analytics, Brinson
 and public publishing retain separate stages. Completion of those later stages also
 requires suitable data, deployment and operational checks.
 

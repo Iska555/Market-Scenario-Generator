@@ -1,5 +1,5 @@
 const blankDraft = () => ({ start: '', end: '', known_at: new Date().toISOString(), risk_free_rate: '0', confidence: '0.95', max_mark_age_days: '3', include_contribution: false, include_benchmark: false, include_factors: false });
-const initial = () => ({ connected: false, busy: '', error: '', portfolios: [], selectedId: '', ledger: null, draft: blankDraft(), evidence: '', benchmarkEvidence: '', factorEvidence: '', report: null, contribution: null, comparison: null, regression: null });
+const initial = () => ({ connected: false, busy: '', error: '', portfolios: [], selectedId: '', ledger: null, draft: blankDraft(), evidence: '', benchmarkEvidence: '', factorEvidence: '', report: null, contribution: null, comparison: null, regression: null, settings: null, settingIdentity: '', settingReason: '', settingPending: null, savedBenchmarkRevision: null });
 const errors = {
   401: 'Private workspace key was not accepted. Lock and unlock the private workspace.',
   404: 'The selected account is no longer available. Reload accounts.',
@@ -17,6 +17,17 @@ export async function performanceRequest(base, key, id, body, fetcher = fetch, c
     });
   } catch { throw new Error('The private performance service could not be reached.'); }
   if (!response.ok) throw Object.assign(new Error(errors[response.status] || 'The private performance request failed.'), { status: response.status });
+  return response.json();
+}
+
+export async function benchmarkSettingsRequest(base, key, id, body = null, fetcher = fetch) {
+  let response;
+  try {
+    response = await fetcher(`${base.replace(/\/$/, '')}/api/benchmark/portfolios/${encodeURIComponent(id)}/settings`, {
+      method: body ? 'POST' : 'GET', cache: 'no-store', headers: { 'Content-Type': 'application/json', 'X-Research-Key': key }, ...(body ? { body: JSON.stringify(body) } : {}),
+    });
+  } catch { throw new Error('The private benchmark settings service could not be reached.'); }
+  if (!response.ok) throw Object.assign(new Error(errors[response.status] || 'The private benchmark settings request failed.'), { status: response.status });
   return response.json();
 }
 
@@ -140,7 +151,7 @@ export function buildPerformanceRequest(draft, text, version) {
   return { expected_version: version, known_at: draft.known_at, daily_marks: evidence.daily_marks, flow_marks: evidence.flow_marks, risk_free_rate: riskFree, confidence, max_mark_age_days: age, calendar: 'UTC_calendar_daily', price_convention: 'unadjusted', periods_per_year: 365 };
 }
 
-export function createPerformance(accounting, reportRequest, contributionRequest, comparisonRequest, factorRequest) {
+export function createPerformance(accounting, reportRequest, contributionRequest, comparisonRequest, factorRequest, settingsRequest) {
   let state = initial(), key = '', generation = 0;
   const listeners = new Set();
   const update = patch => { state = { ...state, ...patch }; listeners.forEach(listener => listener()); };
@@ -161,15 +172,78 @@ export function createPerformance(accounting, reportRequest, contributionRequest
     async select(id) {
       if (!state.connected || !state.portfolios.some(row => row.id === id)) return;
       const token = ++generation;
-      update({ selectedId: id, ledger: null, evidence: '', benchmarkEvidence: '', factorEvidence: '', report: null, contribution: null, comparison: null, regression: null, draft: blankDraft(), error: '', busy: 'account' });
+      update({ selectedId: id, ledger: null, evidence: '', benchmarkEvidence: '', factorEvidence: '', report: null, contribution: null, comparison: null, regression: null, draft: blankDraft(), settings: null, settingIdentity: '', settingReason: '', settingPending: null, savedBenchmarkRevision: null, error: '', busy: 'account' });
       try {
         const ledger = await accounting(`/portfolios/${encodeURIComponent(id)}/state`, {}, key);
-        if (token === generation) update({ ledger, busy: '' });
+        if (token !== generation) return;
+        update({ ledger });
+        const settings = settingsRequest ? await settingsRequest(id, null, key) : null;
+        if (token === generation) update({ settings, busy: '' });
       } catch (error) { if (token === generation) update({ busy: '', error: message(error) }); }
+    },
+    editSetting(patch) {
+      if (!state.connected) return;
+      ++generation; update({ ...patch, settingPending: null, report: null, contribution: null, comparison: null, regression: null, error: '', busy: '' });
+    },
+    copyReportIdentity() {
+      if (!state.connected) return;
+      try { store.editSetting({ settingIdentity: JSON.stringify(buildBenchmarkEvidence(state.draft, state.benchmarkEvidence).identity, null, 2) }); }
+      catch (error) { update({ error: error.message }); }
+    },
+    async reloadSettings() {
+      if (!state.connected || !settingsRequest) return;
+      const token = ++generation;
+      update({ busy: 'settings', settings: null, settingPending: null, savedBenchmarkRevision: null, report: null, contribution: null, comparison: null, regression: null, error: '' });
+      try {
+        const settings = await settingsRequest(state.selectedId, null, key);
+        if (token === generation) update({ settings, busy: '' });
+      } catch (error) { if (token === generation) update({ busy: '', error: message(error) }); }
+    },
+    async saveSetting(clear = false) {
+      if (!state.connected || !state.settings || !settingsRequest) return;
+      const token = ++generation;
+      update({ busy: 'settings', report: null, contribution: null, comparison: null, regression: null, error: '' });
+      try {
+        if (!state.settingReason.trim()) throw new Error('Explain why you are saving or clearing this benchmark.');
+        let identity = null;
+        if (!clear) {
+          try { identity = JSON.parse(state.settingIdentity); } catch { throw new Error('Supply a reviewed benchmark identity JSON.'); }
+          if (!identity || typeof identity !== 'object' || Array.isArray(identity)) throw new Error('Supply a reviewed benchmark identity JSON.');
+        }
+        const pending = state.settingPending;
+        const body = pending && (pending.identity === null) === clear ? pending : { id: crypto.randomUUID(), expected_revision: state.settings.revision, identity, reason: state.settingReason.trim() };
+        update({ settingPending: body });
+        await settingsRequest(state.selectedId, body, key);
+        if (token !== generation) return;
+        const settings = await settingsRequest(state.selectedId, null, key);
+        if (token === generation) update({ settings, settingPending: null, settingReason: '', benchmarkEvidence: '', savedBenchmarkRevision: null, busy: '' });
+      } catch (error) { if (token === generation) update({ busy: '', error: error.status ? message(error) : error.message }); }
+    },
+    linkSavedBenchmark() {
+      if (!state.connected || !state.settings?.latest?.identity) return;
+      try {
+        const evidence = buildBenchmarkEvidence(state.draft, state.benchmarkEvidence);
+        const identity = state.settings.latest.identity;
+        const keys = Object.keys(identity);
+        if (Object.keys(evidence.identity).length !== keys.length || keys.some(key => evidence.identity[key] !== identity[key])) throw new Error('Reviewed evidence identity differs from the saved benchmark.');
+        ++generation; update({ savedBenchmarkRevision: state.settings.latest.revision, report: null, contribution: null, comparison: null, regression: null, error: '', busy: '' });
+      } catch (error) { update({ error: error.message }); }
+    },
+    useSavedBenchmark() {
+      if (!state.connected || !state.settings?.latest?.identity) return;
+      try {
+        const template = benchmarkTemplate(state.draft, state.portfolios.find(row => row.id === state.selectedId)?.base_currency);
+        const selection = state.settings.latest;
+        if (selection.identity.effective_from > state.draft.start || selection.identity.effective_to < state.draft.end) throw new Error('Saved benchmark identity does not cover the selected period.');
+        if (new Date(selection.recorded_at) > new Date(state.draft.known_at)) throw new Error('Saved benchmark setting was recorded after this knowledge cutoff.');
+        template.identity = selection.identity;
+        store.editBenchmark(JSON.stringify(template, null, 2));
+        update({ savedBenchmarkRevision: selection.revision, draft: { ...state.draft, include_benchmark: true } });
+      } catch (error) { update({ error: error.message }); }
     },
     edit(patch) { if (!state.connected) return; ++generation; update({ draft: { ...state.draft, ...patch }, report: null, contribution: null, comparison: null, regression: null, error: '', busy: '' }); },
     editEvidence(evidence) { if (!state.connected) return; ++generation; update({ evidence, report: null, contribution: null, comparison: null, regression: null, error: '', busy: '' }); },
-    editBenchmark(benchmarkEvidence) { if (!state.connected) return; ++generation; update({ benchmarkEvidence, report: null, contribution: null, comparison: null, regression: null, error: '', busy: '' }); },
+    editBenchmark(benchmarkEvidence) { if (!state.connected) return; ++generation; update({ benchmarkEvidence, savedBenchmarkRevision: null, report: null, contribution: null, comparison: null, regression: null, error: '', busy: '' }); },
     editFactors(factorEvidence) { if (!state.connected) return; ++generation; update({ factorEvidence, report: null, contribution: null, comparison: null, regression: null, error: '', busy: '' }); },
     async importFactors(textPromise) {
       if (!state.connected) return;
@@ -190,7 +264,7 @@ export function createPerformance(accounting, reportRequest, contributionRequest
     async importBenchmark(textPromise) {
       if (!state.connected) return;
       const token = ++generation;
-      update({ benchmarkEvidence: '', factorEvidence: '', report: null, contribution: null, comparison: null, regression: null, error: '', busy: 'import' });
+      update({ savedBenchmarkRevision: null, benchmarkEvidence: '', factorEvidence: '', report: null, contribution: null, comparison: null, regression: null, error: '', busy: 'import' });
       try {
         const text = await textPromise;
         if (token === generation) update({ benchmarkEvidence: text, busy: '' });
@@ -206,7 +280,7 @@ export function createPerformance(accounting, reportRequest, contributionRequest
     async importEvidence(textPromise) {
       if (!state.connected) return;
       const token = ++generation;
-      update({ evidence: '', benchmarkEvidence: '', factorEvidence: '', report: null, contribution: null, comparison: null, regression: null, error: '', busy: 'import' });
+      update({ savedBenchmarkRevision: null, evidence: '', benchmarkEvidence: '', factorEvidence: '', report: null, contribution: null, comparison: null, regression: null, error: '', busy: 'import' });
       try {
         const text = await textPromise;
         if (token === generation) update({ evidence: text, busy: '' });
@@ -249,14 +323,14 @@ export function createPerformance(accounting, reportRequest, contributionRequest
             if (withBenchmark) benchmark = buildBenchmarkEvidence(state.draft, state.benchmarkEvidence);
           } catch (error) { if (token === generation) update({ error: error.message, busy: '' }); return; }
           if (!factorRequest) throw new Error('Factor service unavailable');
-          const result = await factorRequest(state.selectedId, { performance: body, factors, include_contribution: withContribution, benchmark }, key);
+          const result = await factorRequest(state.selectedId, { performance: body, factors, include_contribution: withContribution, benchmark, ...(withBenchmark && state.savedBenchmarkRevision ? { saved_benchmark_revision: state.savedBenchmarkRevision } : {}) }, key);
           if (token === generation) update({ report: result.performance, contribution: result.contribution, comparison: result.comparison, regression: result, busy: '' });
         } else if (withBenchmark) {
           let benchmark;
           try { benchmark = buildBenchmarkEvidence(state.draft, state.benchmarkEvidence); }
           catch (error) { if (token === generation) update({ error: error.message, busy: '' }); return; }
           if (!comparisonRequest) throw new Error('Comparison service unavailable');
-          const result = await comparisonRequest(state.selectedId, { performance: body, benchmark, include_contribution: withContribution }, key);
+          const result = await comparisonRequest(state.selectedId, { performance: body, benchmark, include_contribution: withContribution, ...(state.savedBenchmarkRevision ? { saved_benchmark_revision: state.savedBenchmarkRevision } : {}) }, key);
           if (token === generation) update({ report: result.performance, contribution: result.contribution, comparison: result, busy: '' });
         } else {
           if (withContribution && !contributionRequest) throw new Error('Contribution service unavailable');

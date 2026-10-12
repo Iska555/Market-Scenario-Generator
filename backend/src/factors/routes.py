@@ -7,6 +7,7 @@ from fastapi import APIRouter, Depends
 from src.accounting.routes import Repository, private_response
 from src.attribution.engine import build_contribution
 from src.benchmark.engine import build_comparison
+from src.benchmark.settings import selected
 from src.factors.contracts import FactorReport, FactorRequest
 from src.factors.engine import build_factor_report
 from src.performance.routes import report
@@ -23,7 +24,20 @@ router = APIRouter(
 def factor_report(portfolio_id: UUID, data: FactorRequest, repository: Repository) -> FactorReport:
     performance = report(portfolio_id, data.performance, repository)
     contribution = build_contribution(performance) if data.include_contribution else None
+    selection = (
+        selected(
+            repository,
+            portfolio_id,
+            data.saved_benchmark_revision,
+            data.benchmark.identity,
+            data.performance.known_at,
+        )
+        if data.benchmark
+        else None
+    )
     comparison = (
-        build_comparison(performance, data.benchmark, contribution) if data.benchmark else None
+        build_comparison(performance, data.benchmark, contribution, selection)
+        if data.benchmark
+        else None
     )
     return build_factor_report(performance, data.factors, contribution, comparison)

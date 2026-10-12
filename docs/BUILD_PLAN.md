@@ -273,3 +273,22 @@ Next readiness work: versioned portfolio benchmark settings and explicit real-fa
 currency/calendar reconciliation, followed by a deliberate HAC/rolling analytics
 scope. Brinson remains conditional on historical classifications/benchmark weights.
 Broker/fund/ledger-to-construction/restore/publication work retains separate gates.
+
+
+## Phase 9D — portfolio benchmark settings / data readiness (closeout 2026-10-12)
+
+- [x] Append-only same-currency identity/reason settings; independent revisions,
+  idempotent requests, current-revision conflicts and immutable PostgreSQL migration.
+- [x] Private paginated history/save/clear; no-store errors; shared portfolio lock.
+- [x] Explicit report receipt selection, knowledge cutoff and offline verification.
+- [x] Private save/clear/retry/history/template/link workflows; late-response clearing.
+- [x] Prospective real-factor source/currency/calendar acceptance specification.
+- [x] Full 696 backend /147 frontend cases, 97.89% coverage, quality/lint/build,
+  actual API exports and independently extracted 87-file source replay.
+- [x] Historical preservation, cleanup, new audit/suggestions and local checkpoint.
+
+Plan: superpowers/plans/2026-10-11-phase-9d-settings.md. Acceptance and limits:
+PHASE_9D_AUDIT.md. Next specify common valuation intervals and a reviewed factor
+adapter with real source/fixture acceptance before treating public trading-day USD
+factors as GBP evidence. HAC/bootstrap/rolling beta/capture follow a separate
+statistical scope. Brinson remains conditional; Phase 10 is not started.

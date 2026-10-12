@@ -88,6 +88,13 @@ class FactorRequest(Contract):
     factors: FactorEvidence
     include_contribution: bool = False
     benchmark: BenchmarkEvidence | None = None
+    saved_benchmark_revision: int | None = Field(default=None, ge=1, strict=True)
+
+    @model_validator(mode="after")
+    def selection_requires_benchmark(self) -> Self:
+        if self.saved_benchmark_revision is not None and self.benchmark is None:
+            raise ValueError("A saved benchmark revision requires benchmark evidence")
+        return self
 
 
 class Coefficient(Contract):
