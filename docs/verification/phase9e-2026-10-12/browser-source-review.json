@@ -1,0 +1,122 @@
+{
+  "methodology": "french_developed_daily_source_review_v1",
+  "portfolio_id": "3c5e1c27-d77e-4ec3-91f9-fbd4e62c3ed9",
+  "account_currency": "GBP",
+  "native_currency": "USD",
+  "native_calendar": "provider_daily_date_labels",
+  "input_units": "percent",
+  "output_units": "decimal_simple_return",
+  "regression_ready": false,
+  "origin_status": "user_declared_not_authenticated",
+  "imported_at": "2026-10-12T15:52:09.909156Z",
+  "inputs": {
+    "csv_text": "This file was created using the 202608 Bloomberg database.\n\nMissing data are indicated by -99.99.\n\n\n\n,Mkt-RF,SMB,HML,RMW,CMA,RF\n19900702    ,0.69   ,-0.08   ,-0.33    ,0.21    ,0.00    ,0.03\n19900703    ,0.18    ,0.07   ,-0.15    ,0.05    ,0.04    ,0.03\n19900704    ,0.62   ,-0.18   ,-0.17   ,-0.04    ,0.01    ,0.03\n19900705   ,-0.74    ,0.31    ,0.14   ,-0.13    ,0.04    ,0.03\n19900706    ,0.20   ,-0.15    ,0.02    ,0.18   ,-0.03    ,0.03\n19900709    ,0.24    ,0.17    ,0.02    ,0.05   ,-0.25    ,0.03\n",
+    "metadata": {
+      "source_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/Developed_5_Factors_Daily_CSV.zip",
+      "retrieved_at": "2026-10-12T14:48:51.017259Z",
+      "published_at": null,
+      "publication_note": "",
+      "review_note": "Actual provider excerpt; disposable GBP workflow acceptance"
+    },
+    "start": "1990-07-02",
+    "end": "1990-07-09"
+  },
+  "submitted_text_sha256": "23e059a374715cad8b09f4e1981a6202b0fdabedde1b9573b66e2894003ec8bc",
+  "code_sha256": "3f53d93a6c55f6654b8863fe3bb995f5e056f8314166fead02ab412a44970793",
+  "database_vintage": "202608",
+  "total_source_rows": 6,
+  "source_first": "1990-07-02",
+  "source_last": "1990-07-09",
+  "rows": [
+    {
+      "date": "1990-07-02",
+      "returns": {
+        "Mkt-RF": "0.0069",
+        "SMB": "-0.0008",
+        "HML": "-0.0033",
+        "RMW": "0.0021",
+        "CMA": "0.00",
+        "RF": "0.0003"
+      }
+    },
+    {
+      "date": "1990-07-03",
+      "returns": {
+        "Mkt-RF": "0.0018",
+        "SMB": "0.0007",
+        "HML": "-0.0015",
+        "RMW": "0.0005",
+        "CMA": "0.0004",
+        "RF": "0.0003"
+      }
+    },
+    {
+      "date": "1990-07-04",
+      "returns": {
+        "Mkt-RF": "0.0062",
+        "SMB": "-0.0018",
+        "HML": "-0.0017",
+        "RMW": "-0.0004",
+        "CMA": "0.0001",
+        "RF": "0.0003"
+      }
+    },
+    {
+      "date": "1990-07-05",
+      "returns": {
+        "Mkt-RF": "-0.0074",
+        "SMB": "0.0031",
+        "HML": "0.0014",
+        "RMW": "-0.0013",
+        "CMA": "0.0004",
+        "RF": "0.0003"
+      }
+    },
+    {
+      "date": "1990-07-06",
+      "returns": {
+        "Mkt-RF": "0.002",
+        "SMB": "-0.0015",
+        "HML": "0.0002",
+        "RMW": "0.0018",
+        "CMA": "-0.0003",
+        "RF": "0.0003"
+      }
+    },
+    {
+      "date": "1990-07-09",
+      "returns": {
+        "Mkt-RF": "0.0024",
+        "SMB": "0.0017",
+        "HML": "0.0002",
+        "RMW": "0.0005",
+        "CMA": "-0.0025",
+        "RF": "0.0003"
+      }
+    }
+  ],
+  "selected_rows": 6,
+  "missing_cells": 0,
+  "calendar_gaps": [
+    {
+      "previous": "1990-07-06",
+      "next": "1990-07-09",
+      "absent_calendar_dates": 2
+    }
+  ],
+  "blockers": [
+    "source_dates_have_no_verified_utc_valuation_boundaries",
+    "source_currency_differs_from_account_currency",
+    "historical_publication_availability_unknown",
+    "risk_free_and_spread_funding_alignment_not_accepted"
+  ],
+  "warnings": [
+    "Native source review only. No portfolio returns, regression or currency conversion.",
+    "Dates are provider labels, not observed/published UTC timestamps. Retrieval does not prove historical availability; database vintage is not a publication timestamp.",
+    "Percentages divided by 100; only the declared -99.99 sentinel becomes null. No clipping, filling, resampling or dropping malformed rows.",
+    "Mkt-RF is an excess market factor; SMB/HML/RMW/CMA are spreads. RF retains the provider's USD trading-day construction; no second RF subtraction or compounding.",
+    "Gaps count absent calendar labels, not confirmed missing trading observations. A truncated file can pass structural checks; source completeness is not certified.",
+    "URL/origin and publication metadata are user declarations, not authentication. Retain source rights/provenance before wider redistribution or real-account use."
+  ],
+  "receipt_sha256": "c8dc3092897c543e119cddc396031d65743c0c45cfb72a49678742323983c182"
+}

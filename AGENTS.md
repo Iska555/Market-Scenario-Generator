@@ -61,6 +61,14 @@ Preserve every previous audit/evidence file and append fresh suggestions. Record
 PHASE_9D_AUDIT.md. No automatic provider/FX/calendar transformations, HAC/rolling,
 Brinson or publishing. Use the separate 2026-10-11-phase-9d-settings.md plan.
 
+The owner's continuation after Phase 9D authorizes bounded Phase 9E: strict offline
+French developed five-factor daily CSV import, native-source review/receipt and
+private UI/API, verified against a minimal actual provider fixture. Specify the
+separate common-interval method before regression integration. Preserve all prior
+records; write PHASE_9E_AUDIT.md and append suggestions. An import review must not
+silently certify provider authenticity, historical availability, GBP conversion or
+UTC valuation alignment. No automatic fetching, HAC/rolling, Brinson or publishing.
+
 Apply the approved seven suggestions and permanent rules A–D in the master brief:
 explicit return/horizon/currency conventions; proportionate replay manifests;
 typed undefined values; distinct uncertainty and risk meanings; calendar/FX/data

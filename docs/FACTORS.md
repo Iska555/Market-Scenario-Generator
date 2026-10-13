@@ -194,3 +194,14 @@ older accepted reports retain their matching archived source. No regression form
 changed. See BENCHMARK_SETTINGS.md and FACTOR_DATA_READINESS.md for the saved
 identity contract and prospective real-factor currency/calendar review. Saved
 benchmark settings do not establish usable research-factor data.
+
+
+## Phase 9E source review — 2026-10-13
+
+The new native CSV review is a separate workflow, described in
+[FACTOR_SOURCE_IMPORT.md](FACTOR_SOURCE_IMPORT.md). It retains native USD date-label
+evidence and explicit readiness blockers; it cannot satisfy this method's daily
+FactorEvidence contract. No regression formula or accepted daily convention changes.
+Source-review download delivery was verified independently; historical report
+download qualifications remain as recorded in their audits. Prospective common
+valuation alignment is specified in FACTOR_ALIGNMENT.md, not implemented here.

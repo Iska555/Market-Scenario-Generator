@@ -1,0 +1,10 @@
+{
+  "csv_sha256": "a606eafd8cd4aab6e8a237982ac5079631c9f490a679775fdf2555cc9cf54d9a",
+  "bytes": 604039,
+  "rows": 9436,
+  "source_first": "1990-07-02",
+  "source_last": "2026-08-31",
+  "selected_rows": 6,
+  "fixture_values_match": true,
+  "scope": "Full file parsed locally; only minimal actual-source fixture is retained. This observation is not full-source offline replay."
+}

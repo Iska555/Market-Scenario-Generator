@@ -1011,3 +1011,17 @@ later default lookup. This is internal consistency, not authenticated provenance
 Existing quantitative formulas and full-window coverage are unchanged. See
 BENCHMARK_SETTINGS.md and prospective FACTOR_DATA_READINESS.md. Real currency/
 calendar transforms and HAC/rolling inference need their own accepted methods.
+
+
+## Phase 9E native-source numerical boundary — 2026-10-13
+
+`french_developed_daily_source_review_v1` converts reviewed percentage observations
+to decimal returns by exact decimal division by 100. Exactly the declared -99.99
+sentinel becomes null; other signed factor tails remain. This is unit conversion,
+not currency conversion or interval alignment. RF remains the supplied native
+series; market excess and spread factors are not reduced by RF again or compounded
+as gross wealth. Missing labels/values are reported, never filled. Native date
+labels/vintage do not establish UTC boundaries or historical publication.
+See FACTOR_SOURCE_IMPORT.md for input/failure/replay rules and primary-source
+fixture attribution. FACTOR_ALIGNMENT.md is a proposed later method, not a current
+calculation. Existing financial formulas and uncertainty estimators are unchanged.

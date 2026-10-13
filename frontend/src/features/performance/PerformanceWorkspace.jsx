@@ -1,3 +1,5 @@
+import FactorSourceReview from './FactorSourceReview.jsx';
+import { sourceReviewRequest } from './sourceReview.js';
 import { useState, useSyncExternalStore } from 'react';
 import { accountingRequest } from '../ledger/ledger.js';
 import { useWorkspaceConnection } from '../workspace/sessionContext.js';
@@ -46,7 +48,7 @@ export function PerformanceResults({ report, contribution, comparison, regressio
 }
 
 export default function PerformanceWorkspace({ apiUrl, isDark }) {
-  const [workspace] = useState(() => createPerformance((path, options, key) => accountingRequest(apiUrl, key, path, options), (id, body, key) => performanceRequest(apiUrl, key, id, body), (id, body, key) => performanceRequest(apiUrl, key, id, body, fetch, true), (id, body, key) => comparisonRequest(apiUrl, key, id, body), (id, body, key) => factorRequest(apiUrl, key, id, body), (id, body, key) => benchmarkSettingsRequest(apiUrl, key, id, body)));
+  const [workspace] = useState(() => createPerformance((path, options, key) => accountingRequest(apiUrl, key, path, options), (id, body, key) => performanceRequest(apiUrl, key, id, body), (id, body, key) => performanceRequest(apiUrl, key, id, body, fetch, true), (id, body, key) => comparisonRequest(apiUrl, key, id, body), (id, body, key) => factorRequest(apiUrl, key, id, body), (id, body, key) => benchmarkSettingsRequest(apiUrl, key, id, body), (id, body, key) => sourceReviewRequest(apiUrl, key, id, body)));
   useWorkspaceConnection(workspace);
   const state = useSyncExternalStore(workspace.subscribe, workspace.getSnapshot, workspace.getSnapshot);
   const panel = `rounded-2xl border p-5 md:p-6 ${isDark ? 'border-slate-700 bg-[#151e32]' : 'border-slate-200 bg-white'}`;
@@ -65,6 +67,7 @@ export default function PerformanceWorkspace({ apiUrl, isDark }) {
         <label className="mt-5 flex items-center gap-3 text-sm font-semibold"><input type="checkbox" checked={state.draft.include_contribution} disabled={busy} onChange={event => workspace.edit({ include_contribution: event.target.checked })} />Include position contributions</label><p className="mt-2 text-xs opacity-65">Explain TWR using actual holdings, trades, net dividends, fees and FX. End-of-segment FX may also be needed for fully spent currencies.</p>
         <BenchmarkSettings state={state} workspace={workspace} button={button} input={input} />
         <BenchmarkInputs state={state} workspace={workspace} button={button} input={input} />
+        <FactorSourceReview state={state} workspace={workspace} button={button} input={input} />
         <FactorInputs state={state} workspace={workspace} button={button} input={input} />
         <button className={`${button} mt-5 border-indigo-600 bg-indigo-600 text-white`} disabled={busy || !state.evidence} onClick={workspace.run}>Measure recorded performance</button><p className="mt-3 text-xs opacity-65">Ledger version {state.ledger.version}. Incomplete valuation coverage produces explicit missing results, never a partial NAV presented as complete.</p>
       </div>

@@ -1,0 +1,8 @@
+{
+  "code_sha256": "3f53d93a6c55f6654b8863fe3bb995f5e056f8314166fead02ab412a44970793",
+  "archive_sha256": "acf2740607fbafda76d33c87718160c1c07a0e747b23f2bb0b841dfe14b70ec8",
+  "files": 89,
+  "python": "3.12.14",
+  "base_commit": "913ccb1",
+  "scope": "Exact backend Python and replay entry points; excludes migrations/dependencies/frontend/deployment"
+}

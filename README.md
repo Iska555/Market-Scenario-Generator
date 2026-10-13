@@ -4,7 +4,7 @@ A personal investment portfolio-management research project. The long-term goal
 is an inspectable investment process: research → thesis → construction → risk →
 accounting → performance → attribution → review.
 
-**Phase 9D: versioned portfolio benchmark settings and factor-data readiness.**
+**Phase 9E: native factor-source review and common-interval specification.**
 The Performance workspace measures daily time-weighted returns, dated XIRR and
 realized statistics using recorded transactions and supplied unadjusted price/FX
 evidence. Missing coverage stays undefined. See the
@@ -27,6 +27,12 @@ portfolio excess returns with OLS, HC3 errors/t-statistics, R² and daily residu
 It requires at least 30 fully paired funded intervals. Daily alpha is shown with
 its uncertainty and sample context; it is not a forecast or skill decision.
 See [factor methodology](docs/FACTORS.md) and [Phase 9C audit](docs/PHASE_9C_AUDIT.md).
+Select **Review a public factor source** to inspect a local French developed
+five-factor daily CSV. It preserves native USD/date-label conventions, converts
+percentages to decimals, shows missing values and alignment blockers, and exports
+a replayable source receipt. It does not enable regression. See
+[source import](docs/FACTOR_SOURCE_IMPORT.md), [proposed alignment](docs/FACTOR_ALIGNMENT.md)
+and [Phase 9E acceptance](docs/PHASE_9E_AUDIT.md).
 
 The transaction ledger supports holdings and supplied-mark valuation.
 Preview and record immutable transactions, correct mistakes with reversals,
@@ -66,7 +72,10 @@ explicit historical diagnostic selection; they are not silently used as forecast
 - [Phase 9C audit](docs/PHASE_9C_AUDIT.md) — preserved factor acceptance, fresh evidence and remaining boundaries
 - [Benchmark settings](docs/BENCHMARK_SETTINGS.md) — append-only choices, private workflows and receipts
 - [Factor data readiness](docs/FACTOR_DATA_READINESS.md) — prospective currency/calendar/source acceptance
-- [Phase 9D audit](docs/PHASE_9D_AUDIT.md) — current local acceptance and remaining boundaries
+- [Phase 9D audit](docs/PHASE_9D_AUDIT.md) — preserved settings acceptance and boundaries
+- [Factor source import](docs/FACTOR_SOURCE_IMPORT.md) — strict native CSV review and replay
+- [Factor alignment](docs/FACTOR_ALIGNMENT.md) — prospective common-boundary measurement specification
+- [Phase 9E audit](docs/PHASE_9E_AUDIT.md) — current local acceptance and remaining boundaries
 - [Methodology](docs/METHODOLOGY.md) — formulas, units, assumptions and failure conditions
 - [Architecture](docs/ARCHITECTURE.md) — domain boundaries and API v3 contract
 - [Asset-type roadmap](docs/ASSET_TYPE_ROADMAP.md) — typed future support beyond equities
@@ -84,6 +93,9 @@ The 2026-10-11 continuation authorizes bounded Phase 9B benchmark/active-risk
 analysis, recorded in its separate plan and audit. The next continuation authorizes
 bounded Phase 9C historical factor regression. The subsequent continuation
 authorizes Phase 9D saved portfolio benchmark identities and factor-data readiness.
+The next continuation authorizes Phase 9E native source import/review and alignment
+specification, accepted locally on 2026-10-13. Real factor-to-portfolio alignment
+and regression integration remain subject to separate data acceptance.
 Real factor calendar/currency reconciliation, HAC/rolling analytics, Brinson
 and public publishing retain separate stages. Completion of those later stages also
 requires suitable data, deployment and operational checks.

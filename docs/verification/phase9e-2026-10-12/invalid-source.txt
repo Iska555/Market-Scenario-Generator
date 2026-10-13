@@ -1,0 +1,2 @@
+HTTP 422, Cache-Control: no-store
+{"detail":"CSV needs the supported preamble/header and 1 to 25000 rows"}

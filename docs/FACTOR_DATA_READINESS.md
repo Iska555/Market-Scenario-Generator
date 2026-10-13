@@ -53,3 +53,12 @@ reviewed source/fixture and transformation policy exist, retain the manual contr
 and show gaps. Further HAC/bootstrap, rolling beta/capture and Brinson remain
 separate scoped stages; Brinson additionally requires historical classifications
 and benchmark weights.
+
+
+## 2026-10-13 implementation update
+
+Phase 9E now implements native-source parsing and private review against a minimal
+actual developed-daily fixture. See FACTOR_SOURCE_IMPORT.md and PHASE_9E_AUDIT.md.
+This accepts the parser/receipt only; the currency/calendar/funding/publication
+requirements above remain unresolved for real-account regression. A proposed
+common-boundary method is specified in FACTOR_ALIGNMENT.md for subsequent work.

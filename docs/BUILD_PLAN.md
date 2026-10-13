@@ -292,3 +292,23 @@ PHASE_9D_AUDIT.md. Next specify common valuation intervals and a reviewed factor
 adapter with real source/fixture acceptance before treating public trading-day USD
 factors as GBP evidence. HAC/bootstrap/rolling beta/capture follow a separate
 statistical scope. Brinson remains conditional; Phase 10 is not started.
+
+
+## Phase 9E — native factor-source review (closeout 2026-10-13)
+
+- [x] Strict bounded offline developed-daily CSV import, exact units/sentinel,
+  complete source validation and explicit native currency/date-label blockers.
+- [x] Actual six-row source fixture with retrieval/full-source/excerpt identities;
+  full 9436-row file inspected locally without whole-dataset redistribution.
+- [x] Private read-only account-context API and memory-only review/download UI.
+- [x] Actual browser-delivered receipt plus two API exports independently replayed
+  from an exact 89-file backend archive; desktop/mobile and privacy acceptance.
+- [x] Full 733 backend /153 frontend cases, 97.93% coverage, quality/lint/build.
+- [x] Proposed common-boundary specification, new audit, preserved historical
+  records, appended suggestions and local checkpoint.
+
+See PHASE_9E_AUDIT.md and the separate 2026-10-12-phase-9e-source-review.md plan.
+Next implement a separately versioned common-boundary measurement under
+FACTOR_ALIGNMENT.md, with analytical wealth/TWR reconciliation. Real integration
+still needs actual reviewed boundary valuations, currency/funding and publication
+evidence. HAC/rolling, Brinson and publication remain subsequent gated scopes.

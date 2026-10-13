@@ -1,4 +1,4 @@
-# Architecture through Phase 9D
+# Architecture through Phase 9E
 
 The canonical product brief is [MASTER_BRIEF.md](MASTER_BRIEF.md). This checkout
 contains the simulator correctness rebuild, methodology/tests, an equity research
@@ -7,10 +7,28 @@ supplied stress scenarios and a private transaction ledger with supplied-mark
 valuation, realized performance from the ledger and explicit valuation evidence,
 reconciled ledger position contribution, and explicit benchmark/realized active-risk
 comparison, supplied historical factor regression and append-only portfolio
-benchmark settings with selection receipts. Phase-specific sections
-below retain their boundaries; current local acceptance is bounded Phase 9D.
+benchmark settings with selection receipts and native factor-source import review.
+Phase-specific sections below retain their boundaries; current local acceptance
+is bounded Phase 9E.
 See each audit for evidence and qualifications. Calendar reconciliation, HAC/
 rolling analytics, Brinson and publication remain later.
+
+## Phase 9E source-review boundary — 2026-10-13 closeout
+
+`factors/source.py` owns the strict native developed-daily CSV contract/parser,
+metadata and replay receipt. It is deliberately separate from `FactorEvidence`:
+source dates/returns never become UTC observations or GBP regression inputs by
+import. `factors/routes.py` obtains account context under the existing private row
+lock; it makes no provider call and stores no data. No migration is needed.
+
+`FactorSourceReview.jsx`, `sourceReview.js` and the Performance controller provide
+in-memory input/review/download with account/lock/edit generation guards. Source
+review never enables analysis or overwrites financial inputs. The offline
+`scripts/replay_factor_source.py` verifies the complete retained receipt against
+compatible code. Actual delivered-file replay and PostgreSQL immutability are
+accepted; source authentication, common-boundary valuation and currency/funding
+conversion are not. See FACTOR_SOURCE_IMPORT.md, prospective FACTOR_ALIGNMENT.md
+and PHASE_9E_AUDIT.md.
 
 ## Phase 9D settings boundary — continuation after Phase 9C
 

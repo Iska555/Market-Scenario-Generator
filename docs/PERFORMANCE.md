@@ -262,3 +262,14 @@ independent. Lock/account/refresh clears unsaved state; settings persist private
 See BENCHMARK_SETTINGS.md and PHASE_9D_AUDIT.md. Earlier stage sections/audits
 retain their report-only context. Real-factor integration requires the separately
 specified currency/calendar/source readiness in FACTOR_DATA_READINESS.md.
+
+
+## Phase 9E native factor-source review — 2026-10-13
+
+Performance now has a separate source-review panel for the local French developed
+five-factor daily CSV. Reporting dates select inclusive source labels; review does
+not calculate portfolio returns, change factor evidence or select analysis. Actual
+retrieval, optional supported publication and review notes remain explicit.
+Results show native USD rows, percentage-to-decimal conversion, declared missing
+values and unresolved alignment. Downloaded source receipts replay with
+`scripts/replay_factor_source.py`; keep them private. See FACTOR_SOURCE_IMPORT.md.

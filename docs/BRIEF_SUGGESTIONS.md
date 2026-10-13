@@ -677,3 +677,42 @@ Recommended next procedure under the master:
 This is a bounded Phase 9 substage; it does not declare Phase 9 or the complete
 master plan finished. Saved identities establish explicit policy history, not
 benchmark suitability or real-factor calendar/currency comparability.
+
+
+## 2026-10-13 — approved continuation: Phase 9E native factor-source review
+
+The owner continued after Phase 9D and again during closeout. Implemented a strict
+offline French developed five-factor daily CSV parser and private source-review
+workflow. It preserves native USD/date labels, converts percentages exactly,
+retains missing-value semantics and rejects malformed rows rather than filling or
+silently dropping them. Source review is separate from daily factor regression;
+readiness remains false until common-boundary/currency/funding/provenance acceptance.
+
+Verified against a six-row actual provider excerpt; the full downloaded member
+parsed to 9436 rows. Retained only the minimal attributed numerical fixture plus
+source hashes/retrieval evidence, with no general redistribution-rights claim.
+Actual browser download delivery and independent replay succeeded for this source
+receipt. Two API receipts also replayed from working and extracted 89-file source.
+All 733 backend and 153 frontend tests passed, coverage 97.93%, alongside required
+quality/lint/build gates. Preserved all 186 historical records/suggestions prefix.
+Earlier audit/download qualifications remain unchanged.
+
+Recommended next procedure:
+
+1. Implement the separately versioned common-boundary measurement described in
+   FACTOR_ALIGNMENT.md, with independent unit-wealth/TWR reconciliation tests and
+   explicit missing/unfunded/irregular-window outcomes. Keep daily accounting intact.
+2. Require an actual reviewed boundary-valuation/FX/funding fixture and publication
+   evidence before connecting native research factors to a real portfolio. A clearly
+   labelled USD research view of a GBP account is a candidate; it is not an adopted
+   conversion policy and needs actual synchronized valuations/flow conversions.
+3. Preserve native spread definitions and period-effective RF. Never multiply a
+   spread by an FX spot level, invent weekend factors or certify retrieval/vintage
+   as proof of historical publication. A source hash is consistency evidence only.
+4. Scope HAC/bootstrap and rolling beta/up/down capture after alignment, including
+   lag/window/dependence/sample policies. Keep Brinson conditional on historical
+   classifications and benchmark weights. Broker/fund/restore/publication work
+   retains its own integration and privacy acceptance.
+
+Current scope/evidence: FACTOR_SOURCE_IMPORT.md, prospective FACTOR_ALIGNMENT.md,
+new PHASE_9E_AUDIT.md and the separate execution plan. Phase 9 remains incomplete.

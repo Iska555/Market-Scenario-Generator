@@ -1,5 +1,6 @@
 """Private factor report using one locked performance/contribution/comparison snapshot."""
 
+from datetime import UTC, datetime
 from uuid import UUID
 
 from fastapi import APIRouter, Depends
@@ -10,6 +11,7 @@ from src.benchmark.engine import build_comparison
 from src.benchmark.settings import selected
 from src.factors.contracts import FactorReport, FactorRequest
 from src.factors.engine import build_factor_report
+from src.factors.source import SourceRequest, SourceReview, review_source
 from src.performance.routes import report
 from src.research.database import require_research_access
 
@@ -18,6 +20,12 @@ router = APIRouter(
     tags=["factors"],
     dependencies=[Depends(require_research_access), Depends(private_response)],
 )
+
+
+@router.post("/portfolios/{portfolio_id}/source-review", response_model=SourceReview)
+def source_review(portfolio_id: UUID, data: SourceRequest, repository: Repository) -> SourceReview:
+    portfolio = repository.portfolio(portfolio_id)
+    return review_source(data, portfolio_id, portfolio.base_currency, datetime.now(UTC))
 
 
 @router.post("/portfolios/{portfolio_id}/report", response_model=FactorReport)

@@ -1,5 +1,6 @@
+import { emptySource, sourceBody } from './sourceReview.js';
 const blankDraft = () => ({ start: '', end: '', known_at: new Date().toISOString(), risk_free_rate: '0', confidence: '0.95', max_mark_age_days: '3', include_contribution: false, include_benchmark: false, include_factors: false });
-const initial = () => ({ connected: false, busy: '', error: '', portfolios: [], selectedId: '', ledger: null, draft: blankDraft(), evidence: '', benchmarkEvidence: '', factorEvidence: '', report: null, contribution: null, comparison: null, regression: null, settings: null, settingIdentity: '', settingReason: '', settingPending: null, savedBenchmarkRevision: null });
+const initial = () => ({ connected: false, busy: '', error: '', portfolios: [], selectedId: '', ledger: null, draft: blankDraft(), evidence: '', benchmarkEvidence: '', factorEvidence: '', report: null, contribution: null, comparison: null, regression: null, settings: null, settingIdentity: '', settingReason: '', settingPending: null, savedBenchmarkRevision: null, sourceDraft: emptySource(), sourceReview: null });
 const errors = {
   401: 'Private workspace key was not accepted. Lock and unlock the private workspace.',
   404: 'The selected account is no longer available. Reload accounts.',
@@ -151,7 +152,7 @@ export function buildPerformanceRequest(draft, text, version) {
   return { expected_version: version, known_at: draft.known_at, daily_marks: evidence.daily_marks, flow_marks: evidence.flow_marks, risk_free_rate: riskFree, confidence, max_mark_age_days: age, calendar: 'UTC_calendar_daily', price_convention: 'unadjusted', periods_per_year: 365 };
 }
 
-export function createPerformance(accounting, reportRequest, contributionRequest, comparisonRequest, factorRequest, settingsRequest) {
+export function createPerformance(accounting, reportRequest, contributionRequest, comparisonRequest, factorRequest, settingsRequest, sourceRequest) {
   let state = initial(), key = '', generation = 0;
   const listeners = new Set();
   const update = patch => { state = { ...state, ...patch }; listeners.forEach(listener => listener()); };
@@ -172,7 +173,7 @@ export function createPerformance(accounting, reportRequest, contributionRequest
     async select(id) {
       if (!state.connected || !state.portfolios.some(row => row.id === id)) return;
       const token = ++generation;
-      update({ selectedId: id, ledger: null, evidence: '', benchmarkEvidence: '', factorEvidence: '', report: null, contribution: null, comparison: null, regression: null, draft: blankDraft(), settings: null, settingIdentity: '', settingReason: '', settingPending: null, savedBenchmarkRevision: null, error: '', busy: 'account' });
+      update({ selectedId: id, ledger: null, evidence: '', benchmarkEvidence: '', factorEvidence: '', report: null, contribution: null, comparison: null, regression: null, draft: blankDraft(), settings: null, settingIdentity: '', settingReason: '', settingPending: null, savedBenchmarkRevision: null, sourceDraft: emptySource(), sourceReview: null, error: '', busy: 'account' });
       try {
         const ledger = await accounting(`/portfolios/${encodeURIComponent(id)}/state`, {}, key);
         if (token !== generation) return;
@@ -241,9 +242,32 @@ export function createPerformance(accounting, reportRequest, contributionRequest
         update({ savedBenchmarkRevision: selection.revision, draft: { ...state.draft, include_benchmark: true } });
       } catch (error) { update({ error: error.message }); }
     },
-    edit(patch) { if (!state.connected) return; ++generation; update({ draft: { ...state.draft, ...patch }, report: null, contribution: null, comparison: null, regression: null, error: '', busy: '' }); },
+    edit(patch) { if (!state.connected) return; ++generation; update({ draft: { ...state.draft, ...patch }, sourceReview: null, report: null, contribution: null, comparison: null, regression: null, error: '', busy: '' }); },
     editEvidence(evidence) { if (!state.connected) return; ++generation; update({ evidence, report: null, contribution: null, comparison: null, regression: null, error: '', busy: '' }); },
     editBenchmark(benchmarkEvidence) { if (!state.connected) return; ++generation; update({ benchmarkEvidence, savedBenchmarkRevision: null, report: null, contribution: null, comparison: null, regression: null, error: '', busy: '' }); },
+    editSource(patch) {
+      if (!state.connected) return;
+      ++generation; update({ sourceDraft: { ...state.sourceDraft, ...patch }, sourceReview: null, error: '', busy: '' });
+    },
+    async importSource(textPromise) {
+      if (!state.connected) return;
+      const token = ++generation;
+      update({ sourceDraft: emptySource(), sourceReview: null, error: '', busy: 'source' });
+      try { const csv = await textPromise; if (token === generation) update({ sourceDraft: { ...emptySource(), csv }, busy: '' }); }
+      catch { if (token === generation) update({ busy: '', error: 'The source CSV could not be read. Use an unzipped file of at most 2 MB.' }); }
+    },
+    async reviewSource() {
+      if (!state.connected || !state.ledger || !sourceRequest) return;
+      const token = ++generation;
+      update({ sourceReview: null, error: '', busy: 'source' });
+      let body;
+      try { body = sourceBody(state.sourceDraft, state.draft); }
+      catch (error) { update({ busy: '', error: error.message }); return; }
+      try {
+        const result = await sourceRequest(state.selectedId, body, key);
+        if (token === generation) update({ sourceReview: result, busy: '' });
+      } catch (error) { if (token === generation) update({ busy: '', error: error.status === 422 ? 'Check source format, ordered dates, numeric values and provenance timestamps. Only the French developed five-factor daily CSV is supported.' : message(error) }); }
+    },
     editFactors(factorEvidence) { if (!state.connected) return; ++generation; update({ factorEvidence, report: null, contribution: null, comparison: null, regression: null, error: '', busy: '' }); },
     async importFactors(textPromise) {
       if (!state.connected) return;

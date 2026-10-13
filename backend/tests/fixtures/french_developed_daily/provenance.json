@@ -1,0 +1,11 @@
+{
+  "source_url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/Developed_5_Factors_Daily_CSV.zip",
+  "retrieved_at": "2026-10-12T14:48:51.017259+00:00",
+  "zip_sha256": "d380a0e73a680f31cbbad1760ed64cfa762a2efd27869756ed6c4688cccb87f9",
+  "csv_sha256": "a606eafd8cd4aab6e8a237982ac5079631c9f490a679775fdf2555cc9cf54d9a",
+  "member": "Developed_5_Factors_Daily.csv",
+  "excerpt_sha256": "22d82d3bdd544d7e543bef0ae1c1a61ad6ef33ef0cc53f7ee9fcf4c7103896d1",
+  "excerpt_selection": "Exact file prefix through 1990-07-09: six numerical daily rows plus provider preamble/header.",
+  "publication_time": null,
+  "scope": "Minimal real-source numerical parser fixture; not a real-account or historical-availability certification."
+}
