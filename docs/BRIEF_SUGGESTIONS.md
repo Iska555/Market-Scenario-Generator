@@ -805,3 +805,8 @@ Promoted the L5-accepted pinned image to the confirmed Fly app, migrated its sep
 ## 2026-10-16 - owner-authorized public GitHub source publication
 
 Owner requested making the project public and pushing the current work. GitHub already reports the repository public. Remote main is an ancestor of the complete development history, so use a normal fast-forward push without rewriting historical commits. Reviewed publishable source/evidence archives and reachable Git blobs with targeted patterns/exact protected-key checks; no findings. Private databases, credentials, hosted raw reports and working verification helpers remain ignored. See GITHUB_PUBLICATION_2026-10-16.md. Preserve the existing working documentation and all historical acceptance records. This request does not close the outstanding production browser-saved-download check or resume deferred analytics/real-account work.
+
+
+## 2026-10-16 - public GitHub source push verified
+
+Owner-authorized source publication completed through a normal fast-forward push to main at a28fb314dff7b8c3d84389ec0c2958c23bc100a9. Unauthenticated GitHub API confirmed public visibility and the exact remote commit. Existing Ruff/format/mypy hooks passed; hosted CI was queued at verification. See GITHUB_PUBLICATION_ACCEPTANCE_2026-10-16.md. Private dumps/keys remain ignored and historical records preserved. L6.2 actual production browser-saved JSON inspection remains unfinished.
