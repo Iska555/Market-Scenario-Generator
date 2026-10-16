@@ -1,0 +1,15 @@
+{
+  "mode": "demo",
+  "sequence": 1,
+  "events": [
+    {
+      "version": "51b34ac3-3c73-43b6-b4f8-253eb70ba7a5",
+      "action": "publish",
+      "sequence": 1,
+      "recorded_at": "2026-10-16T15:53:15.775651Z",
+      "correction_of": null,
+      "public_reason": null,
+      "withdrawn": false
+    }
+  ]
+}

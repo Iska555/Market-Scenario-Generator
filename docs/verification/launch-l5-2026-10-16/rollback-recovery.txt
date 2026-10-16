@@ -1,0 +1,26 @@
+==> Verifying app config
+--> Verified app config
+Validating deploy/fly.staging.toml
+[32m✓[0m Configuration is valid
+WARN ENABLE_PRIVATE_SIMULATIONS may be a potentially sensitive environment variable. Consider setting it as a secret, and removing it from the [env] section: https://fly.io/docs/apps/secrets/
+
+==> Building image
+Searching for image 'registry.fly.io/stochastic-market-simulator@sha256:e551fec3da3af812a9cc5fbdc92a365b87e506364d9b39a800f1af3ff310efd4' remotely...
+image found: img_lj9x4d59xw9gpwo1
+
+Watch your deployment at https://fly.io/apps/market-scenario-demo-staging/monitoring
+
+Updating existing machines in 'market-scenario-demo-staging' with immediate strategy
+> Acquiring lease for 85551dc413d018
+> Acquired lease for 85551dc413d018
+> Updating machine config for 85551dc413d018
+> Updating 85551dc413d018 [app]
+> Updated machine config for 85551dc413d018
+✔ Machine 85551dc413d018 is now in a good state
+> Clearing lease for 85551dc413d018
+✔ Cleared lease for 85551dc413d018
+Checking DNS configuration for market-scenario-demo-staging.fly.dev
+✓ DNS configuration verified
+
+Visit your newly deployed app at https://market-scenario-demo-staging.fly.dev/
+

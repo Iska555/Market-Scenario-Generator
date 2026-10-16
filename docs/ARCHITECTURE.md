@@ -506,3 +506,33 @@ importing ledger weights awaits a reviewed dated valuation contract covering
 security marks, cash, FX and as-of cutoffs. The existing security registry remains
 equity-only. [ASSET_TYPE_ROADMAP.md](ASSET_TYPE_ROADMAP.md) describes proposed typed
 extensions without changing the present tables or APIs.
+
+
+## Launch L1 identity boundary (2026-10-14)
+
+The additive public_track_record package currently provides only owner-authenticated portfolio identity adapters and atomic, immutable synthetic-demo creation. A separate registry leaves all legacy accounts private/unclassified; historical accounting and replay models are unchanged. No anonymous publishing path exists in L1. See [PORTFOLIO_IDENTITY.md](PORTFOLIO_IDENTITY.md) for birth/savepoint storage, compatibility and deferred publication boundaries.
+
+
+## Launch L2 original demonstration (2026-10-14)
+
+Owner-only explicit demo setup atomically creates isolated fictional research and ledger histories, then persists an immutable load receipt. Receipt checks reject changed ledger/research/security identity. Synthetic input generation is separate from accepted performance/contribution/comparison engines; all three retain their historical schemas and exact replay rules. Actual recording/availability and fictional effective dates are distinct. See [DEMONSTRATION.md](DEMONSTRATION.md); raw private bundles are not public exports.
+
+
+### L3 safe demonstration projection — 2026-10-14
+
+`public_track_record/snapshot.py` is a strict public allowlist over unchanged original synthetic evidence. Financial engines stay authoritative; backend projection supplies growth/drawdown and period rows. Optional preview routes read only the fixed validated artifact, never anonymous account IDs. Public frontend renders supplied results and original fictional research. Sanitized public JSON and private replay archives are distinct. See LAUNCH_L3_AUDIT.md.
+
+
+### L4 immutable synthetic publication — 2026-10-14
+
+Separate preview and lifecycle tables freeze the public allowlist. One immutable channel row serializes owner commands; portfolio then source SHARE locks fence complete reads. Preview source/hash and event sequence are rechecked at publish. Public versions are independent of mutable source. Append-only correction/withdrawal events hide earlier content while preserving private audit data and public metadata. Public readers never accept account IDs/drafts. Release mode authenticates legacy simulation routes; frontend owner transports use closure-only keys and captured idempotent requests. See PUBLICATION.md and LAUNCH_L4_AUDIT.md.
+
+
+## 2026-10-16 launch operations progress
+
+The root multi-stage Dockerfile serves compiled React/FastAPI on one HTTPS origin with one non-root worker. ReleaseLimits bounds body/read time, active requests and the fixed public request budget; release startup checks explicit server-side configuration, readiness verifies schema head, and generated public metadata covers UUID deep links. Server keys/DB URLs stay out of frontend assets. Hosted provider simulations are disabled for the bounded 512 MiB profile. Separate Fly staging/production apps and Neon branches preserve histories. Current deployment is staging only; see LAUNCH_L5_PROGRESS_2026-10-16.md and RELEASE_OPERATIONS.md for exact image/source, actual restore/rollback evidence and outstanding saved-download/L6 gates.
+
+
+## 2026-10-16 actual production deployment
+
+The accepted image now runs on the existing stochastic-market-simulator Fly app with the separate migrated Neon production branch. Its first synthetic snapshot has independent production identities and actual timestamps. The temporary Fly staging app/builder are removed; Neon staging history and private backups remain separate. Fresh local gate and actual production restore/restart/privacy/responsive checks passed. Final saved-browser-file inspection is outstanding. See LAUNCH_L6_PROGRESS_2026-10-16.md for exact artifact/version identities and evidence.

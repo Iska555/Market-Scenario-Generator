@@ -1,0 +1,2 @@
+Restarting machine d89261db090328
+Machine d89261db090328 restarted successfully!

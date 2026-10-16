@@ -1,5 +1,6 @@
 import SimulationConfig from './components/SimulationConfig.jsx';
 import Overview from './features/workspace/Overview.jsx';
+import PublicDemoPage from './features/public/PublicDemoPage.jsx';
 import { PrivateWorkspaceProvider } from './features/workspace/PrivateWorkspace.jsx';
 import { usePrivateSession } from './features/workspace/sessionContext.js';
 import { useEffect, useState } from 'react';
@@ -21,17 +22,17 @@ import {
   normalizeWeightPercentages,
 } from './scenarioContract.js';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, '') ?? 'http://localhost:8000';
 function parseApiError(detail, fallback) {
   if (typeof detail === 'string') return detail;
   if (Array.isArray(detail)) return detail.map((item) => item.msg || JSON.stringify(item)).join('; ');
   return fallback;
 }
 
-async function postScenario(path, body) {
+async function postScenario(path, body, key = '') {
   const response = await fetch(`${API_URL}${path}`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...(key ? { 'X-Research-Key': key } : {}) },
     body: JSON.stringify(body),
   });
   if (!response.ok) {
@@ -42,6 +43,13 @@ async function postScenario(path, body) {
 }
 
 export default function PortfolioPlatform() {
+  const path = typeof window !== 'undefined' ? window.location.pathname.replace(/\/$/, '') : '';
+  if (path === '/demo-preview') return <PublicDemoPage apiUrl={API_URL} />;
+  if (path === '/demo' || path.startsWith('/demo/')) return <PublicDemoPage apiUrl={API_URL} published version={path.slice(6) || null} />;
+  return <PrivatePortfolioPlatform />;
+}
+
+function PrivatePortfolioPlatform() {
   return <PrivateWorkspaceProvider apiUrl={API_URL}><SessionContents /></PrivateWorkspaceProvider>;
 }
 
@@ -53,6 +61,7 @@ function SessionContents() {
 }
 
 function PortfolioPlatformContent({ activeTab, setActiveTab, theme, setTheme }) {
+  const { session } = usePrivateSession();
   const [ticker, setTicker] = useState('');
   const [portfolioAssets, setPortfolioAssets] = useState([
     { ticker: '', weight: '' },
@@ -88,7 +97,7 @@ function PortfolioPlatformContent({ activeTab, setActiveTab, theme, setTheme }) 
     setLoading((current) => ({ ...current, single: true }));
     setErrors((current) => ({ ...current, single: null }));
     try {
-      setSingleResult(await postScenario('/api/simulate', buildSingleRequest(ticker, singleAssumptions)));
+      setSingleResult(await session.authorize(key => postScenario('/api/simulate', buildSingleRequest(ticker, singleAssumptions), key)));
     } catch (requestError) {
       setErrors((current) => ({ ...current, single: requestError.message }));
     } finally {
@@ -101,7 +110,7 @@ function PortfolioPlatformContent({ activeTab, setActiveTab, theme, setTheme }) 
     setErrors((current) => ({ ...current, portfolio: null }));
     try {
       const request = buildPortfolioRequest(portfolioAssets, portfolioAssumptions);
-      setPortfolioResult(await postScenario('/api/simulate-portfolio', request));
+      setPortfolioResult(await session.authorize(key => postScenario('/api/simulate-portfolio', request, key)));
     } catch (requestError) {
       setErrors((current) => ({ ...current, portfolio: requestError.message }));
     } finally {

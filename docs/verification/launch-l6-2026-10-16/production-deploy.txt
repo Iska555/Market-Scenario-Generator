@@ -1,0 +1,17 @@
+Validating deploy/fly.demo.toml
+[32m✓[0m Configuration is valid
+
+Watch your deployment at https://fly.io/apps/stochastic-market-simulator/monitoring
+
+Updating existing machines in 'stochastic-market-simulator' with immediate strategy
+> Acquiring lease for d89261db090328
+> Acquired lease for d89261db090328
+> Updating machine config for d89261db090328
+> Updating d89261db090328 [app]
+> Updated machine config for d89261db090328
+✔ Machine d89261db090328 is now in a good state
+> Clearing lease for d89261db090328
+✔ Cleared lease for d89261db090328
+
+Visit your newly deployed app at https://stochastic-market-simulator.fly.dev/
+

@@ -86,3 +86,31 @@ Use offline analytical/regression tests for quantitative changes. Run pytest,
 ruff, mypy, frontend tests, lint, and build. Document defects by original file and
 function, repair status, assumptions, and remaining limitations. Do not describe
 unverified or merely planned behavior as implemented.
+
+## Approved public research launch continuation — 2026-10-13
+
+Read root `PLAN.md` before choosing or implementing the next task. It is the
+owner-approved execution plan for the first public research/demo release and the
+current stage/status handoff. Continue to read the permanent master brief and
+applicable audits; preserve them unchanged.
+
+The owner confirmed there is no Lightyear account and approved proceeding with
+an isolated, explicitly labelled synthetic demonstration portfolio. The current
+next step is the first unfinished step in PLAN.md (initially L1.1: mode contract
+and compatibility), followed by its six verified launch stages. This prospective
+release-scope decision supersedes earlier stop-before-publication/next-factor-
+alignment instructions for this bounded release. It does not mark broader Phase 9
+or the complete master plan finished. Real-broker reconciliation, paper-portfolio
+operation and the advanced analytics listed in PLAN.md remain deferred.
+
+Synthetic demo data are permitted only in the explicit isolated demo workflow;
+never fill an empty personal dashboard with invented holdings or relabel a demo
+as a real account. Existing unclassified records stay private. Preserve old
+report contracts and their compatible replay archives. Public output must use
+reviewed allowlisted snapshots, not raw private account exports.
+
+The staged implementation and acceptance work is approved; do not ask again for
+routine stage permission. Resolve genuinely missing hosting/access/budget details
+when required for a concrete external action. After each accepted stage, write
+new dated evidence/audit records, update PLAN.md's status/next step and append to
+`docs/BRIEF_SUGGESTIONS.md`. Never rewrite historical records to fit this new scope.

@@ -1,0 +1,57 @@
+[
+  {
+    "path": "/api/health",
+    "status": 200,
+    "cache": "no-store"
+  },
+  {
+    "path": "/api/ready",
+    "status": 200,
+    "cache": "no-store"
+  },
+  {
+    "path": "/api/accounting/portfolios",
+    "status": 401,
+    "cache": "no-store"
+  },
+  {
+    "path": "/api/research/securities",
+    "status": 401,
+    "cache": "no-store"
+  },
+  {
+    "path": "/api/publication/history",
+    "status": 401,
+    "cache": "no-store"
+  },
+  {
+    "path": "/api/simulate",
+    "status": 401,
+    "cache": "no-store"
+  },
+  {
+    "path": "/api/simulate",
+    "status": 503,
+    "cache": "no-store"
+  },
+  {
+    "path": "/api/public/demo",
+    "status": 200,
+    "cache": "no-store"
+  },
+  {
+    "path": "/api/public/demo/versions/{id}/download",
+    "status": 200,
+    "cache": "no-store"
+  },
+  {
+    "path": "/api/public/demo/history",
+    "status": 200,
+    "cache": "no-store"
+  },
+  {
+    "path": "/api/portfolio-identity/portfolios",
+    "status": 200,
+    "cache": "no-store"
+  }
+]

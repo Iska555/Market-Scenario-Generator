@@ -1,0 +1,10 @@
+{
+  "exact_saved_payload": true,
+  "content_sha256": "4b727d0140c21a28a6e87e08b79006e916618cf958653204ea8d719cf727d401",
+  "calculation_source_sha256": "e82b827dc156a058a9c42bedf09eb89cfb3d5d7940fdaf475deb96b478dfcbf3",
+  "private_fields_absent": true,
+  "nav": "10516.00000000000000000000000000",
+  "twr": -0.002394074812561706,
+  "closed_loss": "-400.00000000000000000000",
+  "series_count": 48
+}

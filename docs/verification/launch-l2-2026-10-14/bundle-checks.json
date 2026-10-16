@@ -1,0 +1,33 @@
+{
+  "exact_retry": {
+    "receipt.json": true,
+    "evidence.json": true,
+    "performance.json": true,
+    "contribution.json": true,
+    "comparison.json": true,
+    "fixture.json": true
+  },
+  "nav": "10516.00000000000000000000000000",
+  "twr": {
+    "value": -0.002394074812561706,
+    "reason": null,
+    "observations": 47
+  },
+  "reconciliation": {
+    "component_total": {
+      "value": "-0.00239407481256170572671882703624308217147289632815970112883122347669762377002405067272070548856885711017716449439308256885",
+      "reason": null
+    },
+    "residual": {
+      "value": "-2.7328117296375691782852710367184029887116877652330237622997594932727929451143114288982283550560691743115E-19",
+      "reason": null
+    },
+    "tolerance": "1.002394074812561706E-12",
+    "within_tolerance": true
+  },
+  "original_period": [
+    "2025-12-20",
+    "2026-02-05"
+  ],
+  "source_identity": "7c1879cdbd4bd6916ee6378ff6edeb3d3e5f39cabe83c5250910e5bf1eb921e9"
+}

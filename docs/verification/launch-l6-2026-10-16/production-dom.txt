@@ -1,0 +1,225 @@
+- link "Skip to demonstration":
+  - /url: "#public-content"
+- banner:
+  - paragraph: Portfolio research
+  - link "Private workspace":
+    - /url: /
+- main:
+  - paragraph: Published synthetic demonstration · 51b34ac3-3c73-43b6-b4f8-253eb70ba7a5
+  - heading "Original synthetic portfolio research" [level=1]
+  - paragraph: Demonstration portfolio — synthetic data; no real money invested
+  - paragraph: Original fictional data and research illustrate the portfolio-management workflow. This is not a verified personal track record.
+  - term: Fixture period
+  - definition: 2025-12-20 → 2026-02-05
+  - term: Base currency / valuation
+  - definition: GBP · UTC daily closing values
+  - term: Snapshot created
+  - definition: 2026-10-16T15:52:40.656272Z
+  - term: Public publication
+  - definition: 2026-10-16T15:53:15.775651Z
+  - navigation "Demonstration sections":
+    - link "Performance":
+      - /url: "#performance"
+    - link "Holdings":
+      - /url: "#holdings"
+    - link "Closed positions":
+      - /url: "#closed"
+    - link "Research":
+      - /url: "#research"
+    - link "Example journal":
+      - /url: "#journal"
+    - link "Methodology":
+      - /url: "#methodology"
+  - heading "Synthetic performance" [level=2]
+  - paragraph: Portfolio TWR
+  - paragraph: "-0.24%"
+  - paragraph: 47 measured return intervals
+  - paragraph: Synthetic comparison
+  - paragraph: 2.00%
+  - paragraph: 47 measured return intervals
+  - paragraph: Maximum drawdown · loss positive
+  - paragraph: 5.12%
+  - paragraph: 47 measured return intervals
+  - paragraph: Measured from the funded opening UTC close. Growth starts at 100; the first point is a valuation baseline with no invented daily return. Short synthetic history is not evidence of skill or future returns.
+  - heading "Growth from the demo opening baseline" [level=3]
+  - img "Backend-derived growth indexes, opening close equals 100":
+    - list:
+      - img "Synthetic comparison legend icon"
+      - text: Synthetic comparison
+      - img "Synthetic portfolio legend icon"
+      - text: Synthetic portfolio
+    - application:
+      - generic: 2025-12-20
+      - generic: 2026-01-10
+      - generic: 2026-02-05
+      - generic: "94"
+      - generic: "96"
+      - generic: "98"
+      - generic: "100"
+      - generic: "102"
+  - heading "Drawdown from the previous running peak" [level=3]
+  - img "Backend-derived drawdown, with negative values below the running peak":
+    - list:
+      - img "Synthetic portfolio drawdown legend icon"
+      - text: Synthetic portfolio drawdown
+    - application:
+      - generic: 2025-12-20
+      - generic: 2026-01-10
+      - generic: 2026-02-05
+      - generic: "-6.0%"
+      - generic: "-4.5%"
+      - generic: "-3.0%"
+      - generic: "-1.5%"
+      - generic: 0.0%
+  - region "Monthly TWR table":
+    - table "Monthly TWR":
+      - caption: Monthly TWR
+      - rowgroup:
+        - row "Period Measured dates TWR":
+          - columnheader "Period"
+          - columnheader "Measured dates"
+          - columnheader "TWR"
+      - rowgroup:
+        - row "2025-12 Partial period 2025-12-21 → 2025-12-31 -3.44%":
+          - rowheader "2025-12 Partial period":
+            - text: 2025-12
+            - generic: Partial period
+          - cell "2025-12-21 → 2025-12-31"
+          - cell "-3.44%"
+        - row "2026-01 2026-01-01 → 2026-01-31 2.90%":
+          - rowheader "2026-01"
+          - cell "2026-01-01 → 2026-01-31"
+          - cell "2.90%"
+        - row "2026-02 Partial period 2026-02-01 → 2026-02-05 0.41%":
+          - rowheader "2026-02 Partial period":
+            - text: 2026-02
+            - generic: Partial period
+          - cell "2026-02-01 → 2026-02-05"
+          - cell "0.41%"
+  - region "Annual TWR table":
+    - table "Annual TWR":
+      - caption: Annual TWR
+      - rowgroup:
+        - row "Period Measured dates TWR":
+          - columnheader "Period"
+          - columnheader "Measured dates"
+          - columnheader "TWR"
+      - rowgroup:
+        - row "2025 Partial period 2025-12-21 → 2025-12-31 -3.44%":
+          - rowheader "2025 Partial period":
+            - text: "2025"
+            - generic: Partial period
+          - cell "2025-12-21 → 2025-12-31"
+          - cell "-3.44%"
+        - row "2026 Partial period 2026-01-01 → 2026-02-05 3.32%":
+          - rowheader "2026 Partial period":
+            - text: "2026"
+            - generic: Partial period
+          - cell "2026-01-01 → 2026-02-05"
+          - cell "3.32%"
+  - paragraph: Partial periods stay partial. An unfinished year is not extrapolated into an annual result; missing history is never filled with zero.
+  - generic "Accessible daily values"
+  - heading "Holdings at fixture end · 2026-02-05" [level=2]
+  - paragraph: Synthetic NAV £10,516.00 · cash value in base currency £7,876.00. These are dated demonstration values.
+  - region "Holdings table":
+    - table:
+      - rowgroup:
+        - row "Fictional equity Entry date Quantity Base value Weight Risk contribution Research":
+          - columnheader "Fictional equity"
+          - columnheader "Entry date"
+          - columnheader "Quantity"
+          - columnheader "Base value"
+          - columnheader "Weight"
+          - columnheader "Risk contribution"
+          - columnheader "Research"
+      - rowgroup:
+        - row "Harbor Workshop — fictional equity 2025-12-21 40 £2,640.00 25.10% Unavailable · matching ex ante covariance inputs not supplied Example thesis":
+          - rowheader "Harbor Workshop — fictional equity"
+          - cell "2025-12-21"
+          - cell "40"
+          - cell "£2,640.00"
+          - cell "25.10%"
+          - cell "Unavailable · matching ex ante covariance inputs not supplied"
+          - cell "Example thesis":
+            - link "Example thesis":
+              - /url: "#research-harbor"
+  - paragraph: Earliest active synthetic BUY date within this fixture; not broker execution or tax-lot inception. Volatility risk contribution needs matching validated inputs; performance contribution is not substituted.
+  - heading "Complete closed-position history" [level=2]
+  - paragraph: Every fully closed example is included, including losses. Local net P&L and linked contribution to portfolio TWR are different measures.
+  - region "Closed positions table":
+    - table:
+      - rowgroup:
+        - row "Fictional equity Entry / exit Local net P&L Linked portfolio contribution Research":
+          - columnheader "Fictional equity"
+          - columnheader "Entry / exit"
+          - columnheader "Local net P&L"
+          - columnheader "Linked portfolio contribution"
+          - columnheader "Research"
+      - rowgroup:
+        - row "Orchard Systems — fictional equity 2025-12-21 → 2026-01-10 -US$400.00 -3.285 pp Review the example":
+          - rowheader "Orchard Systems — fictional equity"
+          - cell "2025-12-21 → 2026-01-10"
+          - cell "-US$400.00"
+          - cell "-3.285 pp"
+          - cell "Review the example":
+            - link "Review the example":
+              - /url: "#research-orchard"
+  - heading "Selected fictional research" [level=2]
+  - paragraph: Selection affects research display only. Full performance and closed losses remain included. These narratives are illustrative assumptions, not investment recommendations or historical personal beliefs.
+  - article:
+    - heading "Fictional workshop renewal case" [level=3]
+    - paragraph: Example date 2025-12-21 · actual creation 2026-10-16T15:52:39.749353Z
+    - link "Version 1":
+      - /url: "#research-harbor-v1"
+    - link "Version 2":
+      - /url: "#research-harbor-v2"
+    - generic "Version 1 · active · recorded 2026-10-16T15:52:39.749353Z"
+    - generic "Version 2 · active · recorded 2026-10-16T15:52:39.816921Z"
+    - paragraph: Fictional review · example 2026-01-25 · actually recorded 2026-10-16T15:52:39.792831Z
+    - paragraph: Example partial sale after a fictional margin review; this is not the owner's historical decision.
+  - article:
+    - heading "Fictional systems renewal case — closed loss" [level=3]
+    - paragraph: Example date 2025-12-21 · actual creation 2026-10-16T15:52:39.831088Z
+    - link "Version 1":
+      - /url: "#research-orchard-v1"
+    - link "Version 2":
+      - /url: "#research-orchard-v2"
+    - generic "Version 1 · active · recorded 2026-10-16T15:52:39.831088Z"
+    - generic "Version 2 · closed · recorded 2026-10-16T15:52:39.874909Z"
+    - paragraph: Fictional review · example 2026-01-10 · actually recorded 2026-10-16T15:52:39.856745Z
+    - paragraph: "Closed losing example: initial churn assumption was wrong. Keep the loss in full performance and closed history."
+  - heading "Example decision and correction journal" [level=2]
+  - paragraph: Fictional effective dates are separate from actual recording times. There is no claim of contemporaneous personal investment decisions.
+  - article:
+    - paragraph: Example date 2026-01-12 · actually recorded 2026-10-16T15:52:39.671241Z
+    - paragraph: Fictional original GBP 9 fee retained in the immutable history.
+  - article:
+    - paragraph: Example date 2026-01-12 · actually recorded 2026-10-16T15:52:39.722783Z
+    - paragraph: Fictional GBP 9 fee reversed and replaced with GBP 2. Correction is retained; it does not silently rewrite history.
+  - heading "Methodology and provenance" [level=2]
+  - paragraph: UTC calendar-day closes; unadjusted synthetic prices; booked net dividends/fees; explicit FX and pre-flow marks
+  - list:
+    - listitem: TWR uses the accepted unitized ledger method; deposits and withdrawals are neutralized at explicit flow boundaries.
+    - listitem: Growth index starts at the funded opening UTC close (100). The opening point is a baseline, not a zero-filled daily return.
+    - listitem: Drawdown is unit-value / previous running peak minus one. Public charts display backend-derived values, not statistics recomputed from sampled points.
+    - listitem: Calendar period returns are geometrically linked by the backend; partial months/years stay labelled and are never extrapolated.
+    - listitem: Synthetic anchors and flat within-day quotes are original fixture inputs, not real-market gap filling. Comparison levels are wholly synthetic.
+    - listitem: Local closed-position P&L includes trades, booked dividends and fees; linked return contribution includes portfolio weighting/FX and is a different measure.
+    - listitem: Actual recording, example dates, snapshot time and later publication time are distinct. Content hashes prove consistency, not external attestation.
+  - generic "Calculation and snapshot identities"
+  - link "Download sanitized synthetic snapshot JSON":
+    - /url: /api/public/demo/versions/51b34ac3-3c73-43b6-b4f8-253eb70ba7a5/download
+  - paragraph: Contains only this allowlisted demonstration, mode and disclosures. Private replay bundles are separate.
+  - paragraph: Demonstration portfolio — synthetic data; no real money invested
+  - paragraph: Personal portfolio-management research; not investment advice; no solicitation or management of external capital.
+  - paragraph: Past performance does not indicate future results. This synthetic illustration is not a verified personal track record.
+  - paragraph: Short 47-interval example; no expected-return, factor-alpha, persistent-skill or real-broker claim. Unsupported risk contributions remain unavailable.
+  - paragraph: Fictional research and journal examples were created at the displayed actual timestamps; they are not the owner's contemporaneous historical beliefs.
+- region "Public publication history":
+  - heading "Publication and correction history" [level=2]
+  - paragraph: Immutable synthetic versions. Withdrawal hides earlier content; previously saved copies cannot be recalled. Reasons and lifecycle dates remain public.
+  - list:
+    - paragraph: Published · 2026-10-16T15:53:15.775651Z
+    - link "Version 51b34ac3-3c73-43b6-b4f8-253eb70ba7a5":
+      - /url: /demo/51b34ac3-3c73-43b6-b4f8-253eb70ba7a5
+- generic: 2026-01-10

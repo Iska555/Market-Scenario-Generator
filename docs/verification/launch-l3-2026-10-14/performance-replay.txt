@@ -1,0 +1,1 @@
+Replay verified: all financial outputs match; no database or provider was accessed

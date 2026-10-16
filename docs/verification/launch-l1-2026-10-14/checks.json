@@ -1,0 +1,52 @@
+[
+  {
+    "check": "dependencies",
+    "exit_code": 0,
+    "seconds": 0.4840203
+  },
+  {
+    "check": "backend",
+    "exit_code": 0,
+    "seconds": 72.6955318
+  },
+  {
+    "check": "ruff",
+    "exit_code": 0,
+    "seconds": 0.1199074
+  },
+  {
+    "check": "format",
+    "exit_code": 0,
+    "seconds": 0.0940765
+  },
+  {
+    "check": "mypy",
+    "exit_code": 0,
+    "seconds": 0.7307703
+  },
+  {
+    "check": "hooks",
+    "exit_code": 0,
+    "seconds": 1.1910305
+  },
+  {
+    "check": "benchmark",
+    "exit_code": 0,
+    "seconds": 1.7888289
+  },
+  {
+    "check": "frontend",
+    "exit_code": 0,
+    "seconds": 4.5475883
+  },
+  {
+    "check": "lint",
+    "exit_code": 0,
+    "seconds": 3.9056396
+  },
+  {
+    "check": "build",
+    "exit_code": 0,
+    "seconds": 7.9588815
+  }
+]

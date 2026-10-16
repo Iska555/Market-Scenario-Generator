@@ -1,0 +1,1267 @@
+[
+  {
+    "path": "docs/ACCOUNTING.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/ASSET_TYPE_ROADMAP.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/ATTRIBUTION.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/BENCHMARK.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/BENCHMARK_SETTINGS.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/BRIEF_SUGGESTIONS.md",
+    "unchanged": true,
+    "prefix": true
+  },
+  {
+    "path": "docs/BUILD_PLAN.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/FACTORS.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/FACTOR_ALIGNMENT.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/FACTOR_DATA_READINESS.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/FACTOR_SOURCE_IMPORT.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/MASTER_BRIEF.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/METHODOLOGY.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/PERFORMANCE.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/PHASE_1_AUDIT.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/PHASE_2_AUDIT.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/PHASE_3_AUDIT.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/PHASE_4_AUDIT.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/PHASE_5_AUDIT.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/PHASE_6_AUDIT.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/PHASE_7_AUDIT.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/PHASE_7_BACKEND_REVIEW.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/PHASE_8_AUDIT.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/PHASE_8_FINAL_REVIEW.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/PHASE_8_METRICS_REVIEW.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/PHASE_9A_AUDIT.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/PHASE_9B_AUDIT.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/PHASE_9C_AUDIT.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/PHASE_9D_AUDIT.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/PHASE_9E_AUDIT.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/RESEARCH.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/RESEARCH_METRICS.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/THESIS.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/WORKSPACE_UX_REFINEMENT.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/golden/baseline_v2.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/superpowers/plans/2026-08-20-phase-0-1-correctness.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/superpowers/plans/2026-09-08-phase-2-methodology-tests.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/superpowers/plans/2026-09-08-phase-3-research.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/superpowers/plans/2026-09-09-phase-4-thesis.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/superpowers/plans/2026-09-09-phase-5-valuation.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/superpowers/plans/2026-09-10-phase-6-construction.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/superpowers/plans/2026-09-12-phase-7-ledger.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/superpowers/plans/2026-09-13-workspace-ux.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/superpowers/plans/2026-09-15-phase-8-performance.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/superpowers/plans/2026-10-09-phase-9a-contribution.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/superpowers/plans/2026-10-11-phase-9b-benchmark.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/superpowers/plans/2026-10-11-phase-9c-factors.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/superpowers/plans/2026-10-11-phase-9d-settings.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/superpowers/plans/2026-10-12-phase-9e-source-review.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/superpowers/specs/2026-08-20-institutional-portfolio-platform.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/README.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/acceptance-summary.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/backend-final.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/backend.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/benchmark.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/build-clean-install.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/checks-before-lockfile-refresh.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/dependencies.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/format.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/frontend-clean-install.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/hooks-final.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/hooks.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/lint-clean-install.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/mypy.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/npm-audit-final.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/performance-mobile.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/performance-results.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/preservation-checkpoint.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/replay-regeneration.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/ruff.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/synthetic-downloaded-report.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase8-closeout-2026-10-09/synthetic-regenerated-report.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/README.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/accepted-replay-source.zip",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/accepted-source.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/api-postgres.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/archived-corrected-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/archived-downloaded-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/backend.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/benchmark.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/browser-downloaded-report.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/browser-evidence.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/build.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/checks.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/cleanup.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/contribution-corrected-desktop.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/contribution-desktop.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/contribution-missing.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/contribution-mobile-dark.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/contribution-mobile.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/corrected-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/corrected-report.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/dependencies.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/downloaded-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/final-build.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/final-frontend.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/final-lint.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/format.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/frontend.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/hooks.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/lint.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/mypy.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/preservation.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/resolved-python.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/ruff.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9a-2026-10-09/staged-hooks.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/README.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/accepted-replay-source.zip",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/accepted-source.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/analytical.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/api-postgres.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/archived-complete-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/archived-corrected-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/archived-missing-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/backend.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/benchmark.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/browser-acceptance.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/browser-benchmark.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/browser-evidence.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/build.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/checks.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/cleanup.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/comparison-corrected-desktop.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/comparison-desktop.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/comparison-missing.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/comparison-mobile-dark.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/comparison-mobile.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/complete-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/complete-report.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/corrected-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/corrected-report.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/dependencies.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/format.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/frontend.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/hooks.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/lint.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/missing-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/missing-report.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/mypy.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/preservation.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/resolved-python.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/ruff.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9b-2026-10-11/staged-hooks.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/README.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/accepted-replay-source.zip",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/accepted-source.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/archived-complete-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/archived-corrected-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/archived-missing-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/backend.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/benchmark.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/browser-acceptance.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/browser-benchmark.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/browser-evidence.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/browser-factors.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/build.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/checks.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/cleanup.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/complete-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/complete-report.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/corrected-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/corrected-report.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/dependencies.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/factors-corrected-desktop.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/factors-desktop.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/factors-missing.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/factors-mobile-dark.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/factors-mobile.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/final-build.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/final-frontend.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/final-lint.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/format.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/frontend.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/hooks.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/lint.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/missing-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/missing-report.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/mypy.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/preservation.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/resolved-python.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/ruff.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9c-2026-10-11/staged-hooks.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/README.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/accepted-replay-source.zip",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/accepted-source.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/archived-report-only-after-clear-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/archived-selected-comparison-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/archived-selected-factors-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/backend.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/benchmark.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/browser-benchmark.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/browser-evidence.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/browser-identity.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/cleanup.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/cleared-desktop.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/cleared-mobile.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/dependencies.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/final-build.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/final-lint.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/format.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/frontend.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/hooks.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/linked-report.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/lint.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/mypy.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/preservation.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/report-only-after-clear.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/resolved-python.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/ruff.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/selected-comparison.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/selected-factors.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/settings-after-clear.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/settings-before-clear.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/settings-mobile.jpg",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/staged-hooks.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/stale-selection.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/working-report-only-after-clear-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/working-selected-comparison-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9d-2026-10-11/working-selected-factors-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/README.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/accepted-replay-source.zip",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/accepted-source.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/api-empty-window.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/api-source-review.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/archived-api-empty-window-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/archived-api-source-review-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/archived-browser-source-review-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/backend.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/benchmark.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/browser-source-review.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/build.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/checks.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/cleanup.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/dependencies.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/format.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/frontend.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/full-source-observation.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/hooks.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/invalid-source.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/lint.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/mypy.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/preservation.json",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/resolved-python.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/ruff.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/source-review-desktop.png",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/source-review-mobile.png",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/staged-hooks.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/working-api-empty-window-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/working-api-source-review-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "docs/verification/phase9e-2026-10-12/working-browser-source-review-replay.txt",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "AGENTS.md",
+    "unchanged": true,
+    "prefix": false
+  },
+  {
+    "path": "README.md",
+    "unchanged": true,
+    "prefix": true
+  },
+  {
+    "path": "PLAN.md",
+    "unchanged": true,
+    "prefix": false
+  }
+]

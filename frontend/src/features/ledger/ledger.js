@@ -19,6 +19,7 @@ export const emptyManualDraft = () => ({
 });
 
 export const emptyPortfolioDraft = () => ({
+  mode: 'unclassified',
   id: '',
   name: 'Lightyear ISA',
   base_currency: 'GBP',
@@ -118,7 +119,7 @@ const initial = () => ({
 
 const cloned = value => typeof structuredClone === 'function' ? structuredClone(value) : JSON.parse(JSON.stringify(value));
 
-export function createLedgerWorkspace(request) {
+export function createLedgerWorkspace(request, demoLoader) {
   let state = initial();
   let key = '';
   let sessionGeneration = 0;
@@ -140,9 +141,10 @@ export function createLedgerWorkspace(request) {
     const account = ++accountGeneration;
     historyGeneration += 1;
     const changed = id !== state.selectedPortfolioId;
+    const synthetic = state.portfolios.find(item => item.id === id)?.identity?.mode === 'demo';
     draftGeneration += 1;
     update({ selectedPortfolioId: id, busy: 'account', error: '', history: { transactions: [], version: 0, total: 0 }, ledgerState: null, preview: null, capturedRequest: null, canSavePreview: false, saveStatus: '', valuationResult: null,
-      ...(changed ? { manual: emptyManualDraft(), importDraft: emptyImportDraft(), valuationDraft: emptyValuationDraft() } : {}) });
+      ...(changed ? { manual: { ...emptyManualDraft(), ...(synthetic ? { source: 'synthetic_demo' } : {}) }, importDraft: { ...emptyImportDraft(), ...(synthetic ? { source: 'synthetic_demo' } : {}) }, valuationDraft: emptyValuationDraft() } : {}) });
     try {
       const [history, ledgerState] = await Promise.all([
         request(`/portfolios/${id}/transactions?limit=100&offset=0`, {}, key),
@@ -192,6 +194,20 @@ export function createLedgerWorkspace(request) {
       if (!state.connected || !state.portfolios.some(item => item.id === id)) return Promise.resolve();
       return loadPortfolio(id);
     },
+    async loadDemoFixture() {
+      const portfolio = currentPortfolio();
+      if (!state.connected || state.busy || !demoLoader || portfolio?.identity?.mode !== 'demo') return;
+      const session = sessionGeneration, account = accountGeneration;
+      update({ busy: 'demo', error: '', preview: null, capturedRequest: null, canSavePreview: false, valuationResult: null });
+      try {
+        const receipt = await demoLoader(portfolio.id, key);
+        if (session !== sessionGeneration || account !== accountGeneration) return;
+        update({ portfolios: state.portfolios.map(row => row.id === portfolio.id ? { ...row, version: receipt.ledger_version } : row), busy: '' });
+        await loadPortfolio(portfolio.id);
+      } catch {
+        if (session === sessionGeneration && account === accountGeneration) update({ busy: '', error: 'Original example was not confirmed. Reload or retry this same demo; existing histories are never reset.' });
+      }
+    },
     refresh() {
       return state.selectedPortfolioId ? loadPortfolio(state.selectedPortfolioId) : Promise.resolve();
     },
@@ -220,6 +236,11 @@ export function createLedgerWorkspace(request) {
       } finally {
         if (session === sessionGeneration && account === accountGeneration && history === historyGeneration && state.busy === 'history') update({ busy: '' });
       }
+    },
+    choosePortfolioMode(mode) {
+      if (!state.connected || state.busy || !['demo', 'unclassified'].includes(mode)) return;
+      const draft = emptyPortfolioDraft();
+      clearPreview({ portfolioDraft: mode === 'demo' ? { ...draft, mode, name: 'Synthetic demonstration', broker: 'Synthetic demonstration', account_label: 'No real money invested' } : draft });
     },
     editPortfolio(patch) {
       if (state.busy === 'save') return;

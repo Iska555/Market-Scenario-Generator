@@ -1,0 +1,1840 @@
+{
+  "mode": "demo",
+  "label": "Demonstration portfolio \u2014 synthetic data; no real money invested",
+  "receipt": {
+    "fixture_id": "original-synthetic-launch-v1",
+    "fixture_sha256": "6da6b7727980e908d68a66a25b0b2ba2e02b8467c96338f0d7a3b3c80376b86e",
+    "mode": "demo",
+    "portfolio_id": "5cc42474-ee06-4139-8e22-17e9b96544ad",
+    "loaded_at": "2026-10-14T16:25:50.931997Z",
+    "start": "2025-12-20",
+    "end": "2026-02-05",
+    "ledger_version": 13,
+    "securities": {
+      "harbor": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+      "orchard": "f22b1b7b-6097-4f67-b217-7b803a4c9a55"
+    },
+    "theses": {
+      "harbor": "8ef94365-bc57-466f-aeb7-46062f86faca",
+      "orchard": "782a3c27-ceb7-4aff-a95b-c1807adb6137"
+    },
+    "transactions": {
+      "opening-funding": "03665f4c-3845-4068-8c69-9af2b984f7b3",
+      "harbor-entry": "066628af-8e00-4c0c-aada-e0c2513a4d4a",
+      "synthetic-fx": "73ca462e-4d71-41ea-be7c-d9067cfcd7d5",
+      "orchard-entry": "18f17ebf-e9e0-4429-9ebc-df6393583a03",
+      "harbor-net-dividend": "de96e7b5-d1c1-4b5d-98fa-97fa0993e704",
+      "orchard-net-dividend": "92894f35-6310-4de8-8f9e-fe6922caa5d9",
+      "additional-funding": "81ad2953-6e1e-40f8-abb4-d3854317f0f1",
+      "orchard-closed-loss": "69ebffa3-a5fc-48b2-84f1-37d2cb5f4248",
+      "mistaken-fee": "16bf4a87-b5b4-461b-840e-a717ce3e2bf0",
+      "withdrawal": "2238388d-3e47-4fe5-ad04-a3256265e54a",
+      "harbor-partial-exit": "40166218-494a-4b3a-a5b8-1c128c490df1",
+      "fee-reversal": "af913084-c436-4f25-b653-42b7bab07197",
+      "corrected-fee": "b1cf11a5-0967-4b5a-9084-80daafd6dc02"
+    },
+    "ledger_sha256": "10610c599ee25c41af18c80dcb6685f83141a6836b26ce71cda970f7fa7435dd",
+    "research_sha256": "df249ee555ca679d82f772b8154fb1b2f3b499c62526ce9590b78e7081707562"
+  },
+  "fixture": {
+    "fixture_id": "original-synthetic-launch-v1",
+    "mode": "demo",
+    "base_currency": "GBP",
+    "start": "2025-12-20",
+    "end": "2026-02-05",
+    "purpose": "Coverage example, not selected for attractive performance. Entirely fictional equities, transactions, prices, FX, comparison and research. No real money, broker execution or contemporaneous personal decision.",
+    "valuation_policy": "UTC calendar-day closes; unadjusted synthetic prices; booked net dividends and fees; within each synthetic day prices/FX are flat at the declared point. Six decimal places with half-even interpolation. No market calendar or provider data.",
+    "securities": [
+      {
+        "key": "harbor",
+        "ticker": "DEMO-HARBOR",
+        "name": "Harbor Workshop \u2014 fictional equity",
+        "currency": "GBP",
+        "country": "GB",
+        "sector": "Fictional industrials"
+      },
+      {
+        "key": "orchard",
+        "ticker": "DEMO-ORCHARD",
+        "name": "Orchard Systems \u2014 fictional equity",
+        "currency": "USD",
+        "country": "US",
+        "sector": "Fictional technology"
+      }
+    ],
+    "price_points": {
+      "harbor": [
+        [
+          "2025-12-20",
+          "60"
+        ],
+        [
+          "2025-12-21",
+          "60"
+        ],
+        [
+          "2026-01-05",
+          "55"
+        ],
+        [
+          "2026-01-25",
+          "64"
+        ],
+        [
+          "2026-02-05",
+          "66"
+        ]
+      ],
+      "orchard": [
+        [
+          "2025-12-20",
+          "100"
+        ],
+        [
+          "2025-12-21",
+          "100"
+        ],
+        [
+          "2026-01-10",
+          "80"
+        ],
+        [
+          "2026-02-05",
+          "80"
+        ]
+      ]
+    },
+    "fx_points": [
+      [
+        "2025-12-20",
+        "0.8"
+      ],
+      [
+        "2026-01-05",
+        "0.78"
+      ],
+      [
+        "2026-01-20",
+        "0.81"
+      ],
+      [
+        "2026-02-05",
+        "0.82"
+      ]
+    ],
+    "comparison_points": [
+      [
+        "2025-12-20",
+        "100"
+      ],
+      [
+        "2026-01-05",
+        "97"
+      ],
+      [
+        "2026-01-25",
+        "101"
+      ],
+      [
+        "2026-02-05",
+        "102"
+      ]
+    ],
+    "transactions": [
+      {
+        "type": "DEPOSIT",
+        "effective_at": "2025-12-20T09:00:00Z",
+        "currency": "GBP",
+        "amount": "10000",
+        "external_reference": "opening-funding"
+      },
+      {
+        "type": "BUY",
+        "effective_at": "2025-12-21T10:00:00Z",
+        "currency": "GBP",
+        "security_key": "harbor",
+        "quantity": "50",
+        "price": "60",
+        "fees": "5",
+        "external_reference": "harbor-entry"
+      },
+      {
+        "type": "FX_CONVERSION",
+        "effective_at": "2025-12-21T11:00:00Z",
+        "currency": "GBP",
+        "amount": "2000",
+        "to_currency": "USD",
+        "to_amount": "2500",
+        "fx_rate": "1.25",
+        "fees": "2",
+        "external_reference": "synthetic-fx"
+      },
+      {
+        "type": "BUY",
+        "effective_at": "2025-12-21T12:00:00Z",
+        "currency": "USD",
+        "security_key": "orchard",
+        "quantity": "20",
+        "price": "100",
+        "fees": "5",
+        "external_reference": "orchard-entry"
+      },
+      {
+        "type": "DIVIDEND",
+        "effective_at": "2025-12-28T10:00:00Z",
+        "currency": "GBP",
+        "security_key": "harbor",
+        "amount": "25",
+        "external_reference": "harbor-net-dividend"
+      },
+      {
+        "type": "DIVIDEND",
+        "effective_at": "2026-01-03T10:00:00Z",
+        "currency": "USD",
+        "security_key": "orchard",
+        "amount": "10",
+        "external_reference": "orchard-net-dividend"
+      },
+      {
+        "type": "DEPOSIT",
+        "effective_at": "2026-01-06T12:00:00Z",
+        "currency": "GBP",
+        "amount": "1000",
+        "external_reference": "additional-funding"
+      },
+      {
+        "type": "SELL",
+        "effective_at": "2026-01-10T10:00:00Z",
+        "currency": "USD",
+        "security_key": "orchard",
+        "quantity": "20",
+        "price": "80",
+        "fees": "5",
+        "external_reference": "orchard-closed-loss"
+      },
+      {
+        "type": "FEE",
+        "effective_at": "2026-01-12T10:00:00Z",
+        "currency": "GBP",
+        "amount": "9",
+        "external_reference": "mistaken-fee"
+      },
+      {
+        "type": "WITHDRAWAL",
+        "effective_at": "2026-01-20T12:00:00Z",
+        "currency": "GBP",
+        "amount": "500",
+        "external_reference": "withdrawal"
+      },
+      {
+        "type": "SELL",
+        "effective_at": "2026-01-25T10:00:00Z",
+        "currency": "GBP",
+        "security_key": "harbor",
+        "quantity": "10",
+        "price": "64",
+        "fees": "2",
+        "external_reference": "harbor-partial-exit"
+      },
+      {
+        "type": "REVERSAL",
+        "effective_at": "2026-01-12T10:00:00Z",
+        "currency": "GBP",
+        "reverses_reference": "mistaken-fee",
+        "external_reference": "fee-reversal"
+      },
+      {
+        "type": "FEE",
+        "effective_at": "2026-01-12T10:00:00Z",
+        "currency": "GBP",
+        "amount": "2",
+        "external_reference": "corrected-fee"
+      }
+    ],
+    "research": [
+      {
+        "security_key": "harbor",
+        "example_date": "2025-12-21",
+        "title": "Fictional workshop renewal case",
+        "base_case": "Illustrative stable renewals; no expected-return adoption.",
+        "bear_case": "Fictional renewals fall and margins compress.",
+        "bull_case": "Illustrative renewals and margins improve.",
+        "risk": "Fictional customer concentration and input cost risk.",
+        "review_example_date": "2026-01-25",
+        "review": "Example partial sale after a fictional margin review; this is not the owner's historical decision."
+      },
+      {
+        "security_key": "orchard",
+        "example_date": "2025-12-21",
+        "title": "Fictional systems renewal case \u2014 closed loss",
+        "base_case": "Illustrative product renewals hold; no expected-return adoption.",
+        "bear_case": "Fictional churn undermines the example thesis.",
+        "bull_case": "Illustrative churn improves.",
+        "risk": "Fictional competition and execution risk.",
+        "review_example_date": "2026-01-10",
+        "review": "Closed losing example: initial churn assumption was wrong. Keep the loss in full performance and closed history."
+      }
+    ],
+    "hand_checks": {
+      "final_gbp_cash": "6154",
+      "final_usd_cash": "2100",
+      "final_harbor_quantity": "40",
+      "final_harbor_local_cost": "2404",
+      "final_nav_gbp": "10516",
+      "closed_orchard_net_local_pnl_usd": "-400",
+      "note": "Not a TWR assumption: deposits/withdrawals are external flows, and the engines calculate geometric performance independently."
+    }
+  },
+  "performance": {
+    "expected_version": 13,
+    "known_at": "2026-10-14T16:25:50.931997Z",
+    "daily_marks": [
+      {
+        "prices": [],
+        "fx": [],
+        "date": "2025-12-20"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "60.000000",
+            "observed_at": "2025-12-21T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "100.000000",
+            "observed_at": "2025-12-21T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.798750",
+            "observed_at": "2025-12-21T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2025-12-21"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "59.666667",
+            "observed_at": "2025-12-22T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "99.000000",
+            "observed_at": "2025-12-22T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.797500",
+            "observed_at": "2025-12-22T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2025-12-22"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "59.333333",
+            "observed_at": "2025-12-23T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "98.000000",
+            "observed_at": "2025-12-23T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.796250",
+            "observed_at": "2025-12-23T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2025-12-23"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "59.000000",
+            "observed_at": "2025-12-24T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "97.000000",
+            "observed_at": "2025-12-24T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.795000",
+            "observed_at": "2025-12-24T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2025-12-24"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "58.666667",
+            "observed_at": "2025-12-25T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "96.000000",
+            "observed_at": "2025-12-25T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.793750",
+            "observed_at": "2025-12-25T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2025-12-25"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "58.333333",
+            "observed_at": "2025-12-26T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "95.000000",
+            "observed_at": "2025-12-26T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.792500",
+            "observed_at": "2025-12-26T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2025-12-26"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "58.000000",
+            "observed_at": "2025-12-27T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "94.000000",
+            "observed_at": "2025-12-27T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.791250",
+            "observed_at": "2025-12-27T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2025-12-27"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "57.666667",
+            "observed_at": "2025-12-28T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "93.000000",
+            "observed_at": "2025-12-28T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.790000",
+            "observed_at": "2025-12-28T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2025-12-28"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "57.333333",
+            "observed_at": "2025-12-29T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "92.000000",
+            "observed_at": "2025-12-29T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.788750",
+            "observed_at": "2025-12-29T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2025-12-29"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "57.000000",
+            "observed_at": "2025-12-30T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "91.000000",
+            "observed_at": "2025-12-30T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.787500",
+            "observed_at": "2025-12-30T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2025-12-30"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "56.666667",
+            "observed_at": "2025-12-31T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "90.000000",
+            "observed_at": "2025-12-31T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.786250",
+            "observed_at": "2025-12-31T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2025-12-31"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "56.333333",
+            "observed_at": "2026-01-01T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "89.000000",
+            "observed_at": "2026-01-01T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.785000",
+            "observed_at": "2026-01-01T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-01"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "56.000000",
+            "observed_at": "2026-01-02T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "88.000000",
+            "observed_at": "2026-01-02T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.783750",
+            "observed_at": "2026-01-02T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-02"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "55.666667",
+            "observed_at": "2026-01-03T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "87.000000",
+            "observed_at": "2026-01-03T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.782500",
+            "observed_at": "2026-01-03T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-03"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "55.333333",
+            "observed_at": "2026-01-04T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "86.000000",
+            "observed_at": "2026-01-04T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.781250",
+            "observed_at": "2026-01-04T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-04"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "55.000000",
+            "observed_at": "2026-01-05T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "85.000000",
+            "observed_at": "2026-01-05T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.780000",
+            "observed_at": "2026-01-05T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-05"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "55.450000",
+            "observed_at": "2026-01-06T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "84.000000",
+            "observed_at": "2026-01-06T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.782000",
+            "observed_at": "2026-01-06T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-06"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "55.900000",
+            "observed_at": "2026-01-07T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "83.000000",
+            "observed_at": "2026-01-07T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.784000",
+            "observed_at": "2026-01-07T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-07"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "56.350000",
+            "observed_at": "2026-01-08T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "82.000000",
+            "observed_at": "2026-01-08T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.786000",
+            "observed_at": "2026-01-08T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-08"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "56.800000",
+            "observed_at": "2026-01-09T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "81.000000",
+            "observed_at": "2026-01-09T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.788000",
+            "observed_at": "2026-01-09T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-09"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "57.250000",
+            "observed_at": "2026-01-10T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.790000",
+            "observed_at": "2026-01-10T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-10"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "57.700000",
+            "observed_at": "2026-01-11T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.792000",
+            "observed_at": "2026-01-11T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-11"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "58.150000",
+            "observed_at": "2026-01-12T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.794000",
+            "observed_at": "2026-01-12T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-12"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "58.600000",
+            "observed_at": "2026-01-13T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.796000",
+            "observed_at": "2026-01-13T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-13"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "59.050000",
+            "observed_at": "2026-01-14T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.798000",
+            "observed_at": "2026-01-14T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-14"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "59.500000",
+            "observed_at": "2026-01-15T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.800000",
+            "observed_at": "2026-01-15T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-15"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "59.950000",
+            "observed_at": "2026-01-16T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.802000",
+            "observed_at": "2026-01-16T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-16"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "60.400000",
+            "observed_at": "2026-01-17T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.804000",
+            "observed_at": "2026-01-17T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-17"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "60.850000",
+            "observed_at": "2026-01-18T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.806000",
+            "observed_at": "2026-01-18T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-18"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "61.300000",
+            "observed_at": "2026-01-19T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.808000",
+            "observed_at": "2026-01-19T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-19"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "61.750000",
+            "observed_at": "2026-01-20T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.810000",
+            "observed_at": "2026-01-20T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-20"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "62.200000",
+            "observed_at": "2026-01-21T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.810625",
+            "observed_at": "2026-01-21T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-21"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "62.650000",
+            "observed_at": "2026-01-22T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.811250",
+            "observed_at": "2026-01-22T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-22"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "63.100000",
+            "observed_at": "2026-01-23T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.811875",
+            "observed_at": "2026-01-23T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-23"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "63.550000",
+            "observed_at": "2026-01-24T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.812500",
+            "observed_at": "2026-01-24T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-24"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "64.000000",
+            "observed_at": "2026-01-25T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.813125",
+            "observed_at": "2026-01-25T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-25"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "64.181818",
+            "observed_at": "2026-01-26T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.813750",
+            "observed_at": "2026-01-26T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-26"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "64.363636",
+            "observed_at": "2026-01-27T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.814375",
+            "observed_at": "2026-01-27T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-27"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "64.545455",
+            "observed_at": "2026-01-28T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.815000",
+            "observed_at": "2026-01-28T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-28"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "64.727273",
+            "observed_at": "2026-01-29T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.815625",
+            "observed_at": "2026-01-29T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-29"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "64.909091",
+            "observed_at": "2026-01-30T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.816250",
+            "observed_at": "2026-01-30T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-30"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "65.090909",
+            "observed_at": "2026-01-31T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.816875",
+            "observed_at": "2026-01-31T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-01-31"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "65.272727",
+            "observed_at": "2026-02-01T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.817500",
+            "observed_at": "2026-02-01T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-02-01"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "65.454545",
+            "observed_at": "2026-02-02T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.818125",
+            "observed_at": "2026-02-02T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-02-02"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "65.636364",
+            "observed_at": "2026-02-03T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.818750",
+            "observed_at": "2026-02-03T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-02-03"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "65.818182",
+            "observed_at": "2026-02-04T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.819375",
+            "observed_at": "2026-02-04T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-02-04"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "66.000000",
+            "observed_at": "2026-02-05T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.820000",
+            "observed_at": "2026-02-05T23:59:59.999999Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "date": "2026-02-05"
+      }
+    ],
+    "flow_marks": [
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "55.450000",
+            "observed_at": "2026-01-06T12:00:00Z",
+            "source": "original-synthetic-launch-v1"
+          },
+          {
+            "security_id": "f22b1b7b-6097-4f67-b217-7b803a4c9a55",
+            "currency": "USD",
+            "price": "84.000000",
+            "observed_at": "2026-01-06T12:00:00Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.782000",
+            "observed_at": "2026-01-06T12:00:00Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "transaction_id": "81ad2953-6e1e-40f8-abb4-d3854317f0f1"
+      },
+      {
+        "prices": [
+          {
+            "security_id": "a08ce29b-9c0c-4913-9a5c-a8a025f98f97",
+            "currency": "GBP",
+            "price": "61.750000",
+            "observed_at": "2026-01-20T12:00:00Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "fx": [
+          {
+            "currency": "USD",
+            "rate": "0.810000",
+            "observed_at": "2026-01-20T12:00:00Z",
+            "source": "original-synthetic-launch-v1"
+          }
+        ],
+        "transaction_id": "2238388d-3e47-4fe5-ad04-a3256265e54a"
+      }
+    ],
+    "risk_free_rate": 0.0,
+    "confidence": 0.95,
+    "max_mark_age_days": 0,
+    "calendar": "UTC_calendar_daily",
+    "price_convention": "unadjusted",
+    "periods_per_year": 365
+  },
+  "benchmark": {
+    "identity": {
+      "benchmark_id": "synthetic-example-comparison",
+      "revision": "v1",
+      "name": "Synthetic comparison \u2014 original illustration",
+      "provider": "Original synthetic fixture",
+      "methodology_reference": "Synthetic anchors v1; see DEMONSTRATION.md; UTC daily GBP.",
+      "currency": "GBP",
+      "return_basis": "net_total_return",
+      "hedging": "not_applicable",
+      "calendar": "UTC_calendar_daily",
+      "periods_per_year": 365,
+      "currency_policy": "already_in_portfolio_currency",
+      "effective_from": "2025-12-20",
+      "effective_to": "2026-02-05",
+      "published_at": "2026-10-14T16:25:50.931997+00:00",
+      "retrieved_at": "2026-10-14T16:25:50.931997+00:00"
+    },
+    "max_level_age_days": 0,
+    "levels": [
+      {
+        "date": "2025-12-20",
+        "level": "100.000000",
+        "observed_at": "2025-12-20T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2025-12-21",
+        "level": "99.812500",
+        "observed_at": "2025-12-21T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2025-12-22",
+        "level": "99.625000",
+        "observed_at": "2025-12-22T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2025-12-23",
+        "level": "99.437500",
+        "observed_at": "2025-12-23T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2025-12-24",
+        "level": "99.250000",
+        "observed_at": "2025-12-24T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2025-12-25",
+        "level": "99.062500",
+        "observed_at": "2025-12-25T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2025-12-26",
+        "level": "98.875000",
+        "observed_at": "2025-12-26T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2025-12-27",
+        "level": "98.687500",
+        "observed_at": "2025-12-27T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2025-12-28",
+        "level": "98.500000",
+        "observed_at": "2025-12-28T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2025-12-29",
+        "level": "98.312500",
+        "observed_at": "2025-12-29T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2025-12-30",
+        "level": "98.125000",
+        "observed_at": "2025-12-30T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2025-12-31",
+        "level": "97.937500",
+        "observed_at": "2025-12-31T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-01",
+        "level": "97.750000",
+        "observed_at": "2026-01-01T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-02",
+        "level": "97.562500",
+        "observed_at": "2026-01-02T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-03",
+        "level": "97.375000",
+        "observed_at": "2026-01-03T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-04",
+        "level": "97.187500",
+        "observed_at": "2026-01-04T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-05",
+        "level": "97.000000",
+        "observed_at": "2026-01-05T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-06",
+        "level": "97.200000",
+        "observed_at": "2026-01-06T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-07",
+        "level": "97.400000",
+        "observed_at": "2026-01-07T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-08",
+        "level": "97.600000",
+        "observed_at": "2026-01-08T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-09",
+        "level": "97.800000",
+        "observed_at": "2026-01-09T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-10",
+        "level": "98.000000",
+        "observed_at": "2026-01-10T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-11",
+        "level": "98.200000",
+        "observed_at": "2026-01-11T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-12",
+        "level": "98.400000",
+        "observed_at": "2026-01-12T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-13",
+        "level": "98.600000",
+        "observed_at": "2026-01-13T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-14",
+        "level": "98.800000",
+        "observed_at": "2026-01-14T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-15",
+        "level": "99.000000",
+        "observed_at": "2026-01-15T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-16",
+        "level": "99.200000",
+        "observed_at": "2026-01-16T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-17",
+        "level": "99.400000",
+        "observed_at": "2026-01-17T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-18",
+        "level": "99.600000",
+        "observed_at": "2026-01-18T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-19",
+        "level": "99.800000",
+        "observed_at": "2026-01-19T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-20",
+        "level": "100.000000",
+        "observed_at": "2026-01-20T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-21",
+        "level": "100.200000",
+        "observed_at": "2026-01-21T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-22",
+        "level": "100.400000",
+        "observed_at": "2026-01-22T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-23",
+        "level": "100.600000",
+        "observed_at": "2026-01-23T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-24",
+        "level": "100.800000",
+        "observed_at": "2026-01-24T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-25",
+        "level": "101.000000",
+        "observed_at": "2026-01-25T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-26",
+        "level": "101.090909",
+        "observed_at": "2026-01-26T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-27",
+        "level": "101.181818",
+        "observed_at": "2026-01-27T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-28",
+        "level": "101.272727",
+        "observed_at": "2026-01-28T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-29",
+        "level": "101.363636",
+        "observed_at": "2026-01-29T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-30",
+        "level": "101.454545",
+        "observed_at": "2026-01-30T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-01-31",
+        "level": "101.545455",
+        "observed_at": "2026-01-31T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-02-01",
+        "level": "101.636364",
+        "observed_at": "2026-02-01T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-02-02",
+        "level": "101.727273",
+        "observed_at": "2026-02-02T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-02-03",
+        "level": "101.818182",
+        "observed_at": "2026-02-03T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-02-04",
+        "level": "101.909091",
+        "observed_at": "2026-02-04T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      },
+      {
+        "date": "2026-02-05",
+        "level": "102.000000",
+        "observed_at": "2026-02-05T23:59:59.999999+00:00",
+        "published_at": "2026-10-14T16:25:50.931997+00:00",
+        "retrieved_at": "2026-10-14T16:25:50.931997+00:00",
+        "source": "original-synthetic-launch-v1"
+      }
+    ]
+  }
+}

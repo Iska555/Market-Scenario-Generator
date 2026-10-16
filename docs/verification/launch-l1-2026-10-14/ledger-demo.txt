@@ -1,0 +1,155 @@
+- link "Skip to workspace":
+  - /url: "#workspace-content"
+- complementary:
+  - paragraph: Investment Management Workspace
+  - paragraph: Research, portfolios & decisions
+  - navigation "Workspace navigation":
+    - paragraph: Portfolio
+    - button "Overview"
+    - button "Ledger" [active]
+    - button "Construction"
+    - paragraph: Research
+    - button "Thesis"
+    - button "Valuation"
+    - paragraph: Risk & scenarios
+    - button "Single-asset Risk Lab"
+    - button "Portfolio Risk Lab"
+    - button "Historical & shocks"
+    - paragraph: Performance
+    - button "Performance"
+  - button "Switch to dark theme":
+- main:
+  - region "Private workspace access":
+    - text: Private workspace
+    - strong: ● Connected
+    - button "Lock workspace"
+    - paragraph: All private modules share this connection. Locking clears unsaved private work; saved records remain on the server.
+  - paragraph: Portfolio
+  - heading "Transaction ledger" [level=1]
+  - paragraph: Record immutable transactions, review derived holdings and trade-date cash, and value the account from supplied dated marks.
+  - region "Private transaction ledger workspace":
+    - paragraph: Private accounting record
+    - heading "Record auditable transactions" [level=2]
+    - paragraph: Holdings and trade-date economic cash are replayed by the server from immutable entries. Use Performance to measure returns from this record and dated valuations. Tax, attribution and broker settled cash remain unsupported.
+    - paragraph: Persisted transactions remain on the server across workspace navigation. Unsaved drafts, previews and supplied valuation results stay in memory only and clear on workspace lock, page navigation or refresh.
+    - heading "1. Choose or create a portfolio ledger" [level=3]
+    - text: Portfolio
+    - combobox "Portfolio":
+      - option "Legacy acceptance record · Unverified synthetic test label · Private fixture · GBP"
+      - option "Isolated launch demonstration · Synthetic demonstration · No real money invested · GBP"
+      - option "Browser-created empty demonstration · Synthetic demonstration · No real money invested · GBP" [selected]
+    - button "Refresh ledger"
+    - complementary "Portfolio identity":
+      - paragraph: Demonstration portfolio — synthetic data; no real money invested
+      - paragraph: Private workspace · nothing published. History belongs to this portfolio identity and cannot be relabelled or combined with another mode.
+      - paragraph: Identity recorded 2026-10-13T23:22:54.034449Z. This is the actual creation time, distinct from any example transaction date.
+    - generic "Create a portfolio ledger"
+    - option "Private / unclassified" [selected]
+    - option "Synthetic demonstration — no real money"
+    - heading "2. Preview a manual transaction" [level=3]
+    - paragraph: "All numbers travel as exact decimal strings. Each source and external reference is an idempotency pair: keep it stable when retrying. Dividend amount is net cash received; record any gross amount or tax details in the source note. Corrections are new REVERSAL rows; history is never edited."
+    - text: Transaction type
+    - combobox "Transaction type":
+      - option "BUY" [selected]
+      - option "SELL"
+      - option "DIVIDEND"
+      - option "FEE"
+      - option "DEPOSIT"
+      - option "WITHDRAWAL"
+      - option "FX_CONVERSION"
+      - option "REVERSAL"
+    - text: Effective time (ISO timestamp with UTC offset)
+    - textbox "Effective time (ISO timestamp with UTC offset)":
+      - /placeholder: 2026-09-12T10:30:00+04:00
+    - text: Currency
+    - textbox "Currency": GBP
+    - text: Registered equity security UUID
+    - textbox "Registered equity security UUID"
+    - text: Quantity (exact decimal)
+    - textbox "Quantity (exact decimal)"
+    - text: Price per unit (exact decimal)
+    - textbox "Price per unit (exact decimal)"
+    - text: Fee in source currency (exact decimal)
+    - textbox "Fee in source currency (exact decimal)": "0"
+    - text: Source
+    - textbox "Source": synthetic_demo
+    - text: External reference (stable idempotency key)
+    - textbox "External reference (stable idempotency key)"
+    - text: Note
+    - textbox "Note"
+    - button "Generate stable reference once"
+    - button "Preview transaction" [disabled]
+    - heading "3. Preview canonical normalized CSV" [level=3]
+    - paragraph: This imports the platform’s canonical schema after owner review. It is not a verified native Lightyear CSV parser. Unknown or ambiguous rows block the entire preview; deposits and opening lots are never inferred.
+    - generic "Canonical CSV guide"
+    - text: Source applied to every row
+    - textbox "Source applied to every row": synthetic_demo
+    - text: Canonical CSV text
+    - textbox "Canonical CSV text":
+      - /placeholder: type,effective_at,currency,security_id,quantity,price,amount,fees,to_currency,to_amount,fx_rate,reverses_id,external_reference,note
+    - button "Preview entire CSV batch" [disabled]
+    - heading "4. Holdings, cash and immutable history" [level=3]
+    - paragraph:
+      - text: Base currency
+      - strong: GBP
+    - paragraph:
+      - text: Ledger version
+      - strong: "0"
+    - paragraph:
+      - text: Economic cutoff
+      - strong: 2026-10-13T23:25:48.347612Z
+    - paragraph:
+      - text: Knowledge cutoff
+      - strong: 2026-10-13T23:25:48.347612Z
+    - paragraph: "Convention: trade_date_cash; moving_average_local_cost; corrected_history_at_known_at. Cash is trade-date economic cash, not broker settled or available-to-withdraw cash."
+    - table "Cash derived from active transactions":
+      - caption: Cash derived from active transactions
+      - rowgroup:
+        - row "Currency Amount":
+          - columnheader "Currency"
+          - columnheader "Amount"
+      - rowgroup:
+        - row "No cash balances.":
+          - cell "No cash balances."
+    - table "Holdings and moving-average local cost":
+      - caption: Holdings and moving-average local cost
+      - rowgroup:
+        - row "Security ID Currency Quantity Cost basis Average cost":
+          - columnheader "Security ID"
+          - columnheader "Currency"
+          - columnheader "Quantity"
+          - columnheader "Cost basis"
+          - columnheader "Average cost"
+      - rowgroup:
+        - row "No open positions.":
+          - cell "No open positions."
+    - paragraph: History includes reversals. Rows are immutable and shown newest sequence first.
+    - table "Transaction history · 0 total":
+      - caption: Transaction history · 0 total
+      - rowgroup:
+        - row "# Effective at Type Currency Security Quantity Cash amount Fees External reference":
+          - columnheader "#"
+          - columnheader "Effective at"
+          - columnheader "Type"
+          - columnheader "Currency"
+          - columnheader "Security"
+          - columnheader "Quantity"
+          - columnheader "Cash amount"
+          - columnheader "Fees"
+          - columnheader "External reference"
+      - rowgroup:
+        - row "No recorded transactions.":
+          - cell "No recorded transactions."
+    - heading "5. Value with supplied dated marks" [level=3]
+    - paragraph: The server replays the ledger at the requested economic and knowledge cutoffs, then applies only these supplied prices and FX rates. Missing coverage stays undefined and no partial value is presented as complete NAV.
+    - generic "Price JSON array schema"
+    - generic "FX JSON array schema"
+    - text: Valuation as-of (ISO timestamp with UTC offset)
+    - textbox "Valuation as-of (ISO timestamp with UTC offset)"
+    - text: Optional knowledge cutoff
+    - textbox "Optional knowledge cutoff"
+    - text: Supplied prices JSON
+    - textbox "Supplied prices JSON": "[]"
+    - text: Supplied FX JSON
+    - textbox "Supplied FX JSON": "[]"
+    - button "Calculate supplied-mark valuation" [disabled]

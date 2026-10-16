@@ -51,6 +51,7 @@ explicit historical diagnostic selection; they are not silently used as forecast
 
 ## Project authority
 
+- [Approved public launch plan](PLAN.md) — **current execution handoff**: labelled synthetic demonstration first; no Lightyear account exists. Launch implementation is not yet accepted. Read the plan's live status and explicit deferrals before continuing.
 - [Permanent master brief](docs/MASTER_BRIEF.md) — canonical phase order and rules
 - [Phase 1 audit](docs/PHASE_1_AUDIT.md) — original defects, verification, remaining limits
 - [Phase 2 audit](docs/PHASE_2_AUDIT.md) — analytical coverage, tooling and verification evidence
@@ -264,3 +265,22 @@ bound core tensor workloads; they are not a capacity guarantee for the legacy
 It is not a reference for correct financial results. The optional
 `scripts/capture_baseline.py` now writes a separate v3 diagnostic capture and
 requires live provider access.
+
+Launch continuation: [L1 modes/isolation accepted locally](docs/LAUNCH_L1_AUDIT.md); [current launch stage and next step](PLAN.md). No public deployment is claimed.
+
+[Original synthetic demonstration accepted locally](docs/LAUNCH_L2_AUDIT.md), with [deliberate setup and replay instructions](docs/DEMONSTRATION.md). Public preview/publication and operations remain next.
+
+
+Public presentation L3 is accepted locally: optional `/demo-preview` serves a fixed, labelled original synthetic artifact without private database access. See [public demonstration](docs/PUBLIC_DEMONSTRATION.md) and [L3 audit](docs/LAUNCH_L3_AUDIT.md). Controlled publication and deployment remain unfinished.
+
+
+Controlled publication L4 is accepted locally; [publication contract](docs/PUBLICATION.md) and [L4 evidence](docs/LAUNCH_L4_AUDIT.md) cover immutable synthetic versions, disclosed corrections/withdrawals and actual sanitized download. L5 is underway for Fly.io/Neon within the owner’s US$5/month ceiling. Nothing is deployed yet.
+
+
+Launch update (2026-10-16): L1–L4 are accepted locally. The candidate runs only in a labelled isolated staging environment; hosted replay/restore/rollback and bounded transport checks pass. L5 saved-browser-download acceptance and L6 production promotion remain unfinished. See [current plan](PLAN.md), [L5 progress](docs/LAUNCH_L5_PROGRESS_2026-10-16.md) and [operations](docs/RELEASE_OPERATIONS.md). This is a synthetic demonstration, with no verified personal track record or broker connection.
+
+
+Production update (2026-10-16): the [public synthetic demonstration](https://stochastic-market-simulator.fly.dev/demo) is deployed from the accepted pinned image with its own separate history. Fresh full gate, backup/restore/replay, restart and public/private/browser checks passed. Final production saved-browser-download inspection remains open; see [production progress](docs/LAUNCH_L6_PROGRESS_2026-10-16.md). No real money, broker connection or verified personal track record is claimed.
+
+
+Public source (2026-10-16): [GitHub repository](https://github.com/Iska555/Market-Scenario-Generator) and [live synthetic demonstration](https://stochastic-market-simulator.fly.dev/demo). See [publication preparation](docs/GITHUB_PUBLICATION_2026-10-16.md) for source/evidence scope and private artifact exclusions. The current launch state remains in PLAN.md; synthetic examples are not a verified personal track record.

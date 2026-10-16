@@ -1,2 +1,6 @@
 # Keep the actual provider excerpt byte-identical to its recorded SHA-256.
 backend/tests/fixtures/french_developed_daily/excerpt.csv -text -whitespace
+
+# Preserve recorded bytes, including original CRLF, without reformatting evidence.
+docs/verification/launch-*/** -text -whitespace
+backend/demo/** -text -whitespace

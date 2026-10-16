@@ -1,0 +1,250 @@
+
+> frontend@0.0.0 test
+> node --test
+
+✔ navigation identifies exactly one current workspace and separates all nine destinations (1774.7947ms)
+✔ workspace content has a keyboard skip destination and risk context follows navigation (12.1437ms)
+✔ theme control announces the action for the current theme (5.397ms)
+✔ current product branding and Overview navigation are visible (3.0725ms)
+✔ percentile table renders server percentiles independent of chart samples (2714.4737ms)
+✔ portfolio risk table renders unavailable marginal risk and signed negative contributions (3.4647ms)
+✔ statistics render null ratios and Calmar path coverage as unavailable (6.7935ms)
+✔ completed results identify their captured instruments independently of editable inputs (1.39ms)
+✔ result assumptions disclose the forward return choice in plain language (3.5904ms)
+✔ result assumptions identify single and joint GMM without changing model codes (6.4355ms)
+✔ single form shows ordinary decisions and advanced disclosure without portfolio selectors (1616.8071ms)
+✔ portfolio form keeps covariance and rebalancing in advanced settings (10.6955ms)
+✔ custom year value stays visible and model-specific parameters stay in details (10.7822ms)
+✔ capacity stays secondary at ordinary size and explains disabled oversized requests (21.387ms)
+✔ construction starts disconnected with memory-only credentials and an honest empty state (1759.7286ms)
+✔ comparison shows unavailable strategies and violations without making them usable allocations (76.9619ms)
+✔ asset detail keeps signed risk distinct from weights and expected return contribution (2.7517ms)
+✔ risk-only request leaves investor views absent and preserves explicit units and decimal strings (1.3836ms)
+✔ only an explicitly adopted view reaches construction with matching one-year total return context (2.6641ms)
+✔ history identifiers are rejected when reordered rather than silently reassigned (0.509ms)
+✔ edits and disconnect prevent late private outputs from returning (1.3262ms)
+✔ new owner connection supersedes a pending older connection (0.4004ms)
+✔ changing currency requires explicit readoption instead of reinterpreting an adopted view (0.3405ms)
+✔ private transport masks reflected server and network secrets (0.8585ms)
+✔ ledger starts disconnected with honest persistence and Lightyear defaults (1806.5036ms)
+✔ ledger results render exact holdings, cash, history and undefined valuation honestly (9.4542ms)
+✔ transaction preview labels a captured atomic batch and duplicate replay (6.0698ms)
+✔ manual transaction builder preserves exact decimal text and includes only type fields (3.6311ms)
+✔ choosing a correction copies the original economic timestamp and currency (0.2714ms)
+✔ preview captures the exact request and save reuses it atomically (2.1755ms)
+✔ editing after preview invalidates save and ignores the older preview response (0.6006ms)
+✔ editing valuation while its request is pending clears busy and ignores its result (0.8244ms)
+✔ a preview request cannot overlap an in-flight supplied-mark valuation (0.5894ms)
+✔ account and disconnect generations prevent stale account loads from changing state (2.1083ms)
+✔ switching portfolios clears account-scoped drafts and captured valuation (0.6676ms)
+✔ editing the portfolio draft prevents a late create response from clearing the newer draft (1.1186ms)
+✔ an uncertain save is retried with the same captured idempotency fields (1.6986ms)
+✔ a second save click while the first is pending cannot send a duplicate request (0.975ms)
+✔ successful save invalidates a prior supplied-mark valuation (0.5546ms)
+✔ history loads beyond the first 100 in sequence order without duplicating rows (3.9232ms)
+✔ replaying an old row keeps history pagination contiguous and duplicate-free (1.2175ms)
+✔ duplicate references within a saved batch do not duplicate history rows (0.286ms)
+✔ a stale duplicate retry reloads history from offset zero rather than skipping unseen rows (0.8877ms)
+✔ a mismatched state and history version is not presented as one coherent ledger (0.5629ms)
+✔ a definitive save conflict disables retry until the batch is previewed again (0.5266ms)
+✔ editing another draft after preview removes save permission (0.377ms)
+✔ CSV preview captures the backend normalized request for explicit save (0.8444ms)
+✔ CSV preview displays only the validated failing line number (0.577ms)
+✔ valuation sends supplied price and FX strings without doing browser calculations (0.4091ms)
+✔ accounting request uses private no-store headers and safe errors (1.7658ms)
+✔ canonical CSV errors disclose only their failing line number (0.5508ms)
+✔ locked performance page uses shared unlock and explains supplied evidence without invented results (2049.1888ms)
+✔ performance results preserve decimal history and typed missing reasons with replay download (9.123ms)
+WebSocket server error: Port 24678 is already in use
+✔ benchmark template preserves dates/currency with no invented choice, level or timestamp (1267.2773ms)
+✔ comparison transport keeps the exact private request and no-store policy (1.1042ms)
+✔ one comparison supplies all results; inputs, options and account reload clear all (2.6877ms)
+✔ edited benchmark, lock and late file imports cannot restore stale private results (1.287ms)
+✔ stale ledger and invalid benchmark clear coherent results and expose only safe errors (0.8663ms)
+✔ benchmark results distinguish percentages, active percentage points, ratios and provenance (14.761ms)
+✔ missing comparative values show reasons rather than zero or complete coverage (4.0515ms)
+✔ benchmark input is an explicit optional selection with honest empty-template guidance (2.0032ms)
+(!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:
+  C:/Users/Don/Desktop/Portfolio Management/market_scenario-generator/frontend/index.html
+
+  [31mX [41;31m[[41;97mERROR[41;31m][0m [1mThe server is being restarted or closed. Request is outdated[0m [1m[35m[plugin vite:dep-scan][0m
+
+    src/main.jsx:1:18:
+[37m      1 │ import React from [32m'react'[37m
+        ╵                   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mThe server is being restarted or closed. Request is outdated[0m [1m[35m[plugin vite:dep-scan][0m
+
+    src/main.jsx:2:21:
+[37m      2 │ import ReactDOM from [32m'react-dom/client'[37m
+        ╵                      [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mThe server is being restarted or closed. Request is outdated[0m [1m[35m[plugin vite:dep-scan][0m
+
+    src/main.jsx:3:16:
+[37m      3 │ import App from [32m'./App.jsx'[37m
+        ╵                 [32m~~~~~~~~~~~[0m
+
+
+    at failureErrorWithLog (C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:1752:15)
+    at C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:1211:25
+    at runOnEndCallbacks (C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:1592:45)
+    at buildResponseToResult (C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:1209:7)
+    at C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:1221:9
+    at new Promise (<anonymous>)
+    at requestCallbacks.on-end (C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:1220:54)
+    at handleRequest (C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:911:17)
+    at handleIncomingPacket (C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:936:7)
+    at Socket.readFromStdout (C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:864:7)
+WebSocket server error: Port 24678 is already in use
+✔ contribution endpoint uses private no-store transport and preserves exact input (1359.5908ms)
+✔ one contribution request supplies both coherent results; edits and account changes clear both (3.3875ms)
+✔ lock and edited evidence discard late contribution responses (0.5856ms)
+✔ stale version failure clears both results and asks to reload (0.5455ms)
+✔ contribution presentation distinguishes percentage points, security identity and exact residual (12.3453ms)
+✔ undefined contribution cannot masquerade as a zero or a reconciled result (4.3018ms)
+WebSocket server error: Port 24678 is already in use
+✔ factor template has interval dates/currency and no selected model, factors or invented returns (1375.9422ms)
+✔ factor private transport preserves exact payload and no-store, sanitizes service errors (1.2037ms)
+✔ single factor request supplies selected reports and every evidence edit clears coherent results (3.3944ms)
+✔ factor request embeds optional benchmark and contribution coherently (1.0028ms)
+✔ lock, edited evidence and late factor imports/results cannot restore private state (1.1625ms)
+✔ invalid input and stale ledger clear factor results with safe error messages (0.9922ms)
+✔ factor results display alpha with inference context, signed betas, R² and sample units (17.5379ms)
+✔ factor inputs explicitly separate daily risk-free evidence from annual performance setting (1.9801ms)
+(!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:
+  C:/Users/Don/Desktop/Portfolio Management/market_scenario-generator/frontend/index.html
+
+  [31mX [41;31m[[41;97mERROR[41;31m][0m [1mThe server is being restarted or closed. Request is outdated[0m [1m[35m[plugin vite:dep-scan][0m
+
+    src/main.jsx:1:18:
+[37m      1 │ import React from [32m'react'[37m
+        ╵                   [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mThe server is being restarted or closed. Request is outdated[0m [1m[35m[plugin vite:dep-scan][0m
+
+    src/main.jsx:2:21:
+[37m      2 │ import ReactDOM from [32m'react-dom/client'[37m
+        ╵                      [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mThe server is being restarted or closed. Request is outdated[0m [1m[35m[plugin vite:dep-scan][0m
+
+    src/main.jsx:3:16:
+[37m      3 │ import App from [32m'./App.jsx'[37m
+        ╵                 [32m~~~~~~~~~~~[0m
+
+
+    at failureErrorWithLog (C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:1752:15)
+    at C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:1211:25
+    at runOnEndCallbacks (C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:1592:45)
+    at buildResponseToResult (C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:1209:7)
+    at C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:1221:9
+    at new Promise (<anonymous>)
+    at requestCallbacks.on-end (C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:1220:54)
+    at handleRequest (C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:911:17)
+    at handleIncomingPacket (C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:936:7)
+    at Socket.readFromStdout (C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\frontend\node_modules\esbuild\lib\main.js:864:7)
+✔ request preserves decimal strings and explicit conventions; rejects numeric evidence and dates outside selection (4.2472ms)
+✔ template has consecutive daily empty marks and only active, known, within-window external flow IDs (2.0633ms)
+✔ global session supplies credential and lock clears drafts and rejects late results and file imports (8.308ms)
+✔ account changes discard evidence and use new version; failed reports clear stale results (1.4984ms)
+✔ private performance request has no-store and exact request body, sanitizes server errors (1.0629ms)
+✔ a late account response cannot replace the newly selected account (2.3228ms)
+✔ template paginates real history, uses historical active IDs, and blocks changing ledger versions (1.7753ms)
+✔ evidence validation handles malformed rows and missing provenance without exposing implementation errors (0.4957ms)
+WebSocket server error: Port 24678 is already in use
+✔ private settings transport uses explicit GET/POST and sanitizes errors (1042.6877ms)
+✔ saved choice loads privately, stays opt-in, templates empty levels and links reviewed evidence (4.7058ms)
+✔ save and clear retain retry ID across uncertain writes, reload current history and clear old evidence (1.293ms)
+✔ late settings reads and writes cannot repopulate lock/account state (12.6938ms)
+✔ saved template rejects uncovered window and settings recorded after cutoff (1.206ms)
+✔ settings view exposes permanence, reasons, explicit selection and recent history (15.281ms)
+WebSocket server error: Port 24678 is already in use
+✔ source payload preserves exact text, unknown publication and requires explicit metadata (1349.5086ms)
+✔ source transport is private no-store and sanitizes failures (1.2921ms)
+✔ source review never populates factor evidence or activates regression and edits clear receipt (2.8233ms)
+✔ late source reads and responses cannot restore private state after lock, edits or account switch (0.9088ms)
+✔ source import resets provenance and invalid responses remain sanitized (0.57ms)
+✔ source UI distinguishes native rows, unknown publication, missing values and alignment blockers (18.787ms)
+✔ stress workspace begins disconnected and has no fabricated positions (1476.3484ms)
+✔ server stress results show undefined reasons, units, population and replay provenance (34.7177ms)
+✔ historical replay defaults to buy and hold without changing explicit rebalancing (1.4218ms)
+✔ request preserves explicit decimal weights and security shocks without finance calculations (1.4323ms)
+✔ bootstrap requires explicit integers, mean policy and an actual supplied history (2.2386ms)
+✔ workspace clears results when assumptions change and ignores stale evaluation (1.2169ms)
+✔ disconnect prevents late connection from restoring private data and selection changes invalidate (0.4531ms)
+✔ saved revision displays narrative, immutable metadata and declared units (1104.2248ms)
+✔ review history records false validity and the exact reviewed revision (1.9761ms)
+✔ workspace starts private and disconnected without an automatic decision (2.6603ms)
+✔ draft requests preserve declared decimals and version concurrency without metadata (3.0055ms)
+✔ review requires an explicit decision and validity answer and ties to viewed revision (1.073ms)
+✔ private request sends key only in header and hides server-reflected secrets in errors (0.7347ms)
+✔ disconnect invalidates late private connection responses (1.6922ms)
+✔ a later security selection wins when older response arrives last (0.9773ms)
+✔ conflict preserves editor and expected revision; browsing history does not replace draft (1.1909ms)
+✔ saving a thesis preserves a pending review and its selected historical revision (0.7995ms)
+✔ display strips insignificant decimal zeros without converting exact decimal strings (0.392ms)
+✔ late reload cannot overwrite an edit made after reload started (0.6781ms)
+✔ workspace starts disconnected with a memory-only password field (671.5678ms)
+✔ scenario results show server rates with horizon currency basis and no forced probabilities (21.2551ms)
+✔ historical diagnostic is visibly distinct and undefined SE is not zero (1.5969ms)
+✔ undefined reverse result includes reason and held assumptions (1.7191ms)
+✔ CAPM output is a model estimate and is not labeled an investor view (1.5949ms)
+✔ user return strings reach the API without a floating point round trip (2.902ms)
+✔ scenario probabilities remain absent unless explicitly enabled (1.3892ms)
+✔ changing to another valuation currency requires freshly supplied FX assumptions (0.746ms)
+✔ edits invalidate a pending evaluation and never install stale output (0.9146ms)
+✔ disconnect and a new security reject stale private responses (0.5342ms)
+✔ validation and network errors cannot expose echoed secrets or private input (1.0716ms)
+✔ CAPM requires an explicit sample and preserves rf and ERP inputs (0.3933ms)
+✔ a previous owner connection cannot replace a newer connection (0.4132ms)
+✔ switching security rejects late thesis records for the previous selection (0.4936ms)
+✔ cutoff changes clear selected observations and reject late evidence (1.1725ms)
+✔ application starts on Overview with one global unlock and no example portfolio (1617.7842ms)
+✔ Overview renders exact recorded quantities without inventing values or zero holdings (4.0266ms)
+✔ demo transport is owner-only, no-store and uses deliberate POST only for load (2.2556ms)
+✔ fixture loader refreshes coherent ledger and never targets unclassified history (2.4429ms)
+✔ locked loader response cannot repopulate private demo state (0.4673ms)
+✔ demo report setup selects explicit synthetic inputs but does not calculate or publish (4.214ms)
+✔ late or mismatched demo evidence is rejected after selection and lock (1.3987ms)
+✔ overview reads recorded accounts and exact server holdings without market-value calculations (5.3029ms)
+✔ overview discards late responses on lock and presents unavailable separately from empty (0.6781ms)
+✔ identity labels reserve paper and real and fail closed for legacy or unknown mode (1.4151ms)
+✔ private adapter reads identity list and sends only explicit demo creation fields (1.5754ms)
+✔ legacy creation strips only mode and financial transports retain old accounting contracts (0.9494ms)
+✔ identity failures never fall back to inferred classification (0.3082ms)
+✔ choosing demo resets identity draft and creates a distinct empty ledger deliberately (1.6554ms)
+✔ Overview late demo response cannot attach demo holdings beneath a legacy identity (1.1726ms)
+✔ Performance reload, mode switch and lock clear reports and ignore a late demo response (2.9599ms)
+✔ one validated session connects multiple modules and locking clears their private state (11.9839ms)
+✔ lock cancels pending unlock and late module responses (3.133ms)
+✔ secret never enters browser persistence and failed unlock never exposes error payloads (1.827ms)
+✔ detaching a child clears its state but preserves the shared connection (2.0332ms)
+✔ unlocking a locked workspace does not remount the owner workflow or key form (2.1799ms)
+✔ all private modules share one connection and clear on the global lock (8.1419ms)
+✔ frontend defaults to buy and hold without changing the v3 request fields (3.0941ms)
+✔ estimation presets retain their exact request years and custom input (1.2989ms)
+✔ model labels identify single and portfolio methods precisely (0.3107ms)
+✔ drift labels retain the chosen model without presenting history as a forecast (0.2373ms)
+✔ single request sends the complete v3 assumption contract (0.3512ms)
+✔ portfolio request converts percentage weights and rejects EWMA (0.9198ms)
+✔ displayed percentile rows are unchanged by a misleading chart sample (0.6515ms)
+✔ chart transformation preserves day zero and every server sample point (0.4324ms)
+✔ histogram presentation preserves server bins without rebucketing (0.3986ms)
+✔ null ratios and signed negative metrics remain explicit (0.4311ms)
+✔ normalizing three equal entries allocates the rounding residual exactly (0.4599ms)
+✔ normalizing ten entries remains exactly one hundred percent (0.3824ms)
+✔ v3 response guard rejects stale or incomplete backend payloads (0.3603ms)
+✔ cleared assumptions and weights cannot silently become zero (0.3543ms)
+ℹ tests 165
+ℹ suites 0
+ℹ pass 165
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4720.2598

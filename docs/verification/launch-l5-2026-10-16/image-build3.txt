@@ -1,0 +1,333 @@
+Validating deploy/fly.demo.toml
+==> Verifying app config
+[32m✓[0m Configuration is valid
+--> Verified app config
+WARN ENABLE_PRIVATE_SIMULATIONS may be a potentially sensitive environment variable. Consider setting it as a secret, and removing it from the [env] section: https://fly.io/docs/apps/secrets/
+
+==> Building image
+Waiting for remote builder fly-builder-wispy-sun-1096...
+
+Remote builder fly-builder-wispy-sun-1096 ready
+Waiting for remote builder fly-builder-wispy-sun-1096...
+
+Remote builder fly-builder-wispy-sun-1096 ready
+==> Building image with Docker
+--> docker host: 24.0.7 linux x86_64
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 967B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load .dockerignore
+#2 transferring context: 200B 0.0s done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim-bookworm
+#3 DONE 0.3s
+
+#4 [internal] load metadata for docker.io/library/node:22-bookworm-slim
+#4 DONE 0.3s
+
+#5 [stage-1  1/10] FROM docker.io/library/python:3.12-slim-bookworm@sha256:34386ef0cb081344d7ec1c103ba398e6e9f64e9ab3a1509accc92a4e24a07258
+#5 DONE 0.0s
+
+#6 [frontend 1/6] FROM docker.io/library/node:22-bookworm-slim@sha256:c3de60bf2f9dd0ac6370e6117950ff62d6e339527e7472301c9c78a017978392
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 17.34kB 0.1s done
+#7 DONE 0.1s
+
+#8 [frontend 4/6] RUN npm ci
+#8 CACHED
+
+#9 [frontend 5/6] COPY frontend/ ./
+#9 CACHED
+
+#10 [frontend 3/6] COPY frontend/package.json frontend/package-lock.json ./
+#10 CACHED
+
+#11 [frontend 2/6] WORKDIR /frontend
+#11 CACHED
+
+#12 [stage-1  2/10] WORKDIR /app
+#12 CACHED
+
+#13 [frontend 6/6] RUN npm run build
+#13 CACHED
+
+#14 [stage-1  3/10] COPY backend/requirements.txt ./requirements.txt
+#14 CACHED
+
+#15 [stage-1  4/10] RUN pip install --no-cache-dir -r requirements.txt
+#15 1.594 Collecting fastapi==0.124.4 (from -r requirements.txt (line 2))
+#15 1.694   Downloading fastapi-0.124.4-py3-none-any.whl.metadata (30 kB)
+#15 1.730 Collecting uvicorn==0.38.0 (from uvicorn[standard]==0.38.0->-r requirements.txt (line 3))
+#15 1.735   Downloading uvicorn-0.38.0-py3-none-any.whl.metadata (6.8 kB)
+#15 1.840 Collecting pydantic==2.12.5 (from -r requirements.txt (line 4))
+#15 1.843   Downloading pydantic-2.12.5-py3-none-any.whl.metadata (90 kB)
+#15 1.862 Collecting python-multipart==0.0.20 (from -r requirements.txt (line 5))
+#15 1.866   Downloading python_multipart-0.0.20-py3-none-any.whl.metadata (1.8 kB)
+#15 2.065 Collecting numpy==2.3.5 (from -r requirements.txt (line 8))
+#15 2.068   Downloading numpy-2.3.5-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (62 kB)
+#15 2.187 Collecting pandas==2.3.3 (from -r requirements.txt (line 9))
+#15 2.189   Downloading pandas-2.3.3-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (91 kB)
+#15 2.300 Collecting scikit-learn==1.8.0 (from -r requirements.txt (line 10))
+#15 2.304   Downloading scikit_learn-1.8.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (11 kB)
+#15 2.420 Collecting scipy==1.16.3 (from -r requirements.txt (line 11))
+#15 2.423   Downloading scipy-1.16.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (62 kB)
+#15 2.463 Collecting yfinance==0.2.66 (from -r requirements.txt (line 14))
+#15 2.478   Downloading yfinance-0.2.66-py2.py3-none-any.whl.metadata (6.0 kB)
+#15 2.503 Collecting requests==2.32.5 (from -r requirements.txt (line 15))
+#15 2.505   Downloading requests-2.32.5-py3-none-any.whl.metadata (4.9 kB)
+#15 2.648 Collecting matplotlib==3.10.8 (from -r requirements.txt (line 18))
+#15 2.653   Downloading matplotlib-3.10.8-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (52 kB)
+#15 2.677 Collecting python-dotenv==1.2.1 (from -r requirements.txt (line 21))
+#15 2.680   Downloading python_dotenv-1.2.1-py3-none-any.whl.metadata (25 kB)
+#15 2.961 Collecting SQLAlchemy==2.0.52 (from -r requirements.txt (line 24))
+#15 2.965   Downloading sqlalchemy-2.0.52-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (9.6 kB)
+#15 2.992 Collecting alembic==1.19.2 (from -r requirements.txt (line 25))
+#15 2.997   Downloading alembic-1.19.2-py3-none-any.whl.metadata (7.3 kB)
+#15 3.013 Collecting psycopg==3.3.4 (from psycopg[binary]==3.3.4->-r requirements.txt (line 26))
+#15 3.016   Downloading psycopg-3.3.4-py3-none-any.whl.metadata (4.3 kB)
+#15 3.056 Collecting starlette<0.51.0,>=0.40.0 (from fastapi==0.124.4->-r requirements.txt (line 2))
+#15 3.061   Downloading starlette-0.50.0-py3-none-any.whl.metadata (6.3 kB)
+#15 3.113 Collecting typing-extensions>=4.8.0 (from fastapi==0.124.4->-r requirements.txt (line 2))
+#15 3.116   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#15 3.122 Collecting annotated-doc>=0.0.2 (from fastapi==0.124.4->-r requirements.txt (line 2))
+#15 3.125   Downloading annotated_doc-0.0.5-py3-none-any.whl.metadata (6.5 kB)
+#15 3.142 Collecting click>=7.0 (from uvicorn==0.38.0->uvicorn[standard]==0.38.0->-r requirements.txt (line 3))
+#15 3.144   Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+#15 3.151 Collecting h11>=0.8 (from uvicorn==0.38.0->uvicorn[standard]==0.38.0->-r requirements.txt (line 3))
+#15 3.153   Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+#15 3.161 Collecting annotated-types>=0.6.0 (from pydantic==2.12.5->-r requirements.txt (line 4))
+#15 3.163   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+#15 3.844 Collecting pydantic-core==2.41.5 (from pydantic==2.12.5->-r requirements.txt (line 4))
+#15 3.847   Downloading pydantic_core-2.41.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.3 kB)
+#15 3.856 Collecting typing-inspection>=0.4.2 (from pydantic==2.12.5->-r requirements.txt (line 4))
+#15 3.859   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+#15 3.878 Collecting python-dateutil>=2.8.2 (from pandas==2.3.3->-r requirements.txt (line 9))
+#15 3.881   Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+#15 3.914 Collecting pytz>=2020.1 (from pandas==2.3.3->-r requirements.txt (line 9))
+#15 3.916   Downloading pytz-2026.5-py2.py3-none-any.whl.metadata (22 kB)
+#15 3.929 Collecting tzdata>=2022.7 (from pandas==2.3.3->-r requirements.txt (line 9))
+#15 3.931   Downloading tzdata-2026.5-py2.py3-none-any.whl.metadata (1.4 kB)
+#15 3.962 Collecting joblib>=1.3.0 (from scikit-learn==1.8.0->-r requirements.txt (line 10))
+#15 3.965   Downloading joblib-1.6.0-py3-none-any.whl.metadata (6.5 kB)
+#15 3.974 Collecting threadpoolctl>=3.2.0 (from scikit-learn==1.8.0->-r requirements.txt (line 10))
+#15 3.977   Downloading threadpoolctl-3.7.0-py3-none-any.whl.metadata (24 kB)
+#15 4.016 Collecting multitasking>=0.0.7 (from yfinance==0.2.66->-r requirements.txt (line 14))
+#15 4.018   Downloading multitasking-0.0.13-py3-none-any.whl.metadata (16 kB)
+#15 4.041 Collecting platformdirs>=2.0.0 (from yfinance==0.2.66->-r requirements.txt (line 14))
+#15 4.044   Downloading platformdirs-4.13.0-py3-none-any.whl.metadata (5.5 kB)
+#15 4.085 Collecting frozendict>=2.3.4 (from yfinance==0.2.66->-r requirements.txt (line 14))
+#15 4.089   Downloading frozendict-2.4.7-py3-none-any.whl.metadata (23 kB)
+#15 4.113 Collecting peewee>=3.16.2 (from yfinance==0.2.66->-r requirements.txt (line 14))
+#15 4.116   Downloading peewee-4.5.3-py3-none-any.whl.metadata (10 kB)
+#15 4.131 Collecting beautifulsoup4>=4.11.1 (from yfinance==0.2.66->-r requirements.txt (line 14))
+#15 4.133   Downloading beautifulsoup4-4.15.0-py3-none-any.whl.metadata (3.8 kB)
+#15 4.192 Collecting curl_cffi>=0.7 (from yfinance==0.2.66->-r requirements.txt (line 14))
+#15 4.195   Downloading curl_cffi-0.16.3-cp310-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (17 kB)
+#15 4.387 Collecting protobuf>=3.19.0 (from yfinance==0.2.66->-r requirements.txt (line 14))
+#15 4.390   Downloading protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl.metadata (595 bytes)
+#15 4.491 Collecting websockets>=13.0 (from yfinance==0.2.66->-r requirements.txt (line 14))
+#15 4.494   Downloading websockets-17.2-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.3 kB)
+#15 4.611 Collecting charset_normalizer<4,>=2 (from requests==2.32.5->-r requirements.txt (line 15))
+#15 4.614   Downloading charset_normalizer-3.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (46 kB)
+#15 4.629 Collecting idna<4,>=2.5 (from requests==2.32.5->-r requirements.txt (line 15))
+#15 4.632   Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+#15 4.657 Collecting urllib3<3,>=1.21.1 (from requests==2.32.5->-r requirements.txt (line 15))
+#15 4.661   Downloading urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)
+#15 4.679 Collecting certifi>=2017.4.17 (from requests==2.32.5->-r requirements.txt (line 15))
+#15 4.682   Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+#15 4.735 Collecting contourpy>=1.0.1 (from matplotlib==3.10.8->-r requirements.txt (line 18))
+#15 4.739   Downloading contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)
+#15 4.747 Collecting cycler>=0.10 (from matplotlib==3.10.8->-r requirements.txt (line 18))
+#15 4.749   Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+#15 4.898 Collecting fonttools>=4.22.0 (from matplotlib==3.10.8->-r requirements.txt (line 18))
+#15 4.902   Downloading fonttools-4.67.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (137 kB)
+#15 4.975 Collecting kiwisolver>=1.3.1 (from matplotlib==3.10.8->-r requirements.txt (line 18))
+#15 4.978   Downloading kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (5.2 kB)
+#15 5.037 Collecting packaging>=20.0 (from matplotlib==3.10.8->-r requirements.txt (line 18))
+#15 5.040   Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+#15 5.197 Collecting pillow>=8 (from matplotlib==3.10.8->-r requirements.txt (line 18))
+#15 5.200   Downloading pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.1 kB)
+#15 5.226 Collecting pyparsing>=3 (from matplotlib==3.10.8->-r requirements.txt (line 18))
+#15 5.228   Downloading pyparsing-3.3.3-py3-none-any.whl.metadata (5.9 kB)
+#15 5.362 Collecting greenlet>=1 (from SQLAlchemy==2.0.52->-r requirements.txt (line 24))
+#15 5.366   Downloading greenlet-3.5.6-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)
+#15 5.395 Collecting Mako (from alembic==1.19.2->-r requirements.txt (line 25))
+#15 5.397   Downloading mako-1.4.3-py3-none-any.whl.metadata (2.9 kB)
+#15 5.535 Collecting psycopg-binary==3.3.4 (from psycopg[binary]==3.3.4->-r requirements.txt (line 26))
+#15 5.539   Downloading psycopg_binary-3.3.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.7 kB)
+#15 5.570 Collecting httptools>=0.6.3 (from uvicorn[standard]==0.38.0->-r requirements.txt (line 3))
+#15 5.574   Downloading httptools-0.9.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (3.5 kB)
+#15 5.606 Collecting pyyaml>=5.1 (from uvicorn[standard]==0.38.0->-r requirements.txt (line 3))
+#15 5.610   Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+#15 5.643 Collecting uvloop>=0.15.1 (from uvicorn[standard]==0.38.0->-r requirements.txt (line 3))
+#15 5.647   Downloading uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.1 kB)
+#15 5.714 Collecting watchfiles>=0.13 (from uvicorn[standard]==0.38.0->-r requirements.txt (line 3))
+#15 5.717   Downloading watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.9 kB)
+#15 5.743 Collecting soupsieve>=1.6.1 (from beautifulsoup4>=4.11.1->yfinance==0.2.66->-r requirements.txt (line 14))
+#15 5.746   Downloading soupsieve-3.0.3-py3-none-any.whl.metadata (4.4 kB)
+#15 5.897 Collecting cffi>=2.0.0 (from curl_cffi>=0.7->yfinance==0.2.66->-r requirements.txt (line 14))
+#15 5.900   Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+#15 5.930 Collecting cloudpickle>=3.0 (from joblib>=1.3.0->scikit-learn==1.8.0->-r requirements.txt (line 10))
+#15 5.932   Downloading cloudpickle-3.1.2-py3-none-any.whl.metadata (7.1 kB)
+#15 5.954 Collecting six>=1.5 (from python-dateutil>=2.8.2->pandas==2.3.3->-r requirements.txt (line 9))
+#15 5.957   Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+#15 5.977 Collecting anyio<5,>=3.6.2 (from starlette<0.51.0,>=0.40.0->fastapi==0.124.4->-r requirements.txt (line 2))
+#15 5.980   Downloading anyio-4.15.1-py3-none-any.whl.metadata (4.7 kB)
+#15 6.057 Collecting MarkupSafe>=2.0 (from Mako->alembic==1.19.2->-r requirements.txt (line 25))
+#15 6.060   Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+#15 6.079 Collecting pycparser (from cffi>=2.0.0->curl_cffi>=0.7->yfinance==0.2.66->-r requirements.txt (line 14))
+#15 6.082   Downloading pycparser-3.11-py3-none-any.whl.metadata (8.2 kB)
+#15 6.099 Downloading fastapi-0.124.4-py3-none-any.whl (113 kB)
+#15 6.102 Downloading uvicorn-0.38.0-py3-none-any.whl (68 kB)
+#15 6.106 Downloading pydantic-2.12.5-py3-none-any.whl (463 kB)
+#15 6.111 Downloading python_multipart-0.0.20-py3-none-any.whl (24 kB)
+#15 6.120 Downloading numpy-2.3.5-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.6 MB)
+#15 6.203    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.6/16.6 MB 207.7 MB/s eta 0:00:00
+#15 6.206 Downloading pandas-2.3.3-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (12.4 MB)
+#15 6.265    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.4/12.4 MB 221.6 MB/s eta 0:00:00
+#15 6.269 Downloading scikit_learn-1.8.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (8.9 MB)
+#15 6.310    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.9/8.9 MB 237.5 MB/s eta 0:00:00
+#15 6.314 Downloading scipy-1.16.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (35.7 MB)
+#15 6.476    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.7/35.7 MB 224.4 MB/s eta 0:00:00
+#15 6.480 Downloading yfinance-0.2.66-py2.py3-none-any.whl (123 kB)
+#15 6.484 Downloading requests-2.32.5-py3-none-any.whl (64 kB)
+#15 6.492 Downloading matplotlib-3.10.8-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (8.7 MB)
+#15 6.530    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.7/8.7 MB 248.4 MB/s eta 0:00:00
+#15 6.533 Downloading python_dotenv-1.2.1-py3-none-any.whl (21 kB)
+#15 6.537 Downloading sqlalchemy-2.0.52-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.4 MB)
+#15 6.552    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.4/3.4 MB 262.0 MB/s eta 0:00:00
+#15 6.556 Downloading alembic-1.19.2-py3-none-any.whl (267 kB)
+#15 6.560 Downloading psycopg-3.3.4-py3-none-any.whl (213 kB)
+#15 6.564 Downloading psycopg_binary-3.3.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.2 MB)
+#15 6.591    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.2/5.2 MB 211.9 MB/s eta 0:00:00
+#15 6.594 Downloading pydantic_core-2.41.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+#15 6.605    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 251.4 MB/s eta 0:00:00
+#15 6.608 Downloading annotated_doc-0.0.5-py3-none-any.whl (5.3 kB)
+#15 6.611 Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+#15 6.614 Downloading beautifulsoup4-4.15.0-py3-none-any.whl (109 kB)
+#15 6.618 Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+#15 6.621 Downloading charset_normalizer-3.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (257 kB)
+#15 6.625 Downloading click-8.5.0-py3-none-any.whl (125 kB)
+#15 6.636 Downloading contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (383 kB)
+#15 6.639 Downloading curl_cffi-0.16.3-cp310-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (13.5 MB)
+#15 6.712    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.5/13.5 MB 195.0 MB/s eta 0:00:00
+#15 6.715 Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
+#15 6.722 Downloading fonttools-4.67.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.4 MB)
+#15 6.748    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.4/5.4 MB 225.6 MB/s eta 0:00:00
+#15 6.750 Downloading frozendict-2.4.7-py3-none-any.whl (16 kB)
+#15 6.753 Downloading greenlet-3.5.6-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (621 kB)
+#15 6.758    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 621.4/621.4 kB 301.5 MB/s eta 0:00:00
+#15 6.762 Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+#15 6.767 Downloading httptools-0.9.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (552 kB)
+#15 6.771    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 552.8/552.8 kB 314.1 MB/s eta 0:00:00
+#15 6.774 Downloading idna-3.20-py3-none-any.whl (69 kB)
+#15 6.777 Downloading joblib-1.6.0-py3-none-any.whl (306 kB)
+#15 6.800 Downloading kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (1.5 MB)
+#15 6.807    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.5/1.5 MB 283.0 MB/s eta 0:00:00
+#15 6.812 Downloading multitasking-0.0.13-py3-none-any.whl (16 kB)
+#15 6.815 Downloading packaging-26.3-py3-none-any.whl (129 kB)
+#15 6.819 Downloading peewee-4.5.3-py3-none-any.whl (194 kB)
+#15 6.822 Downloading pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (6.9 MB)
+#15 6.842    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.9/6.9 MB 386.1 MB/s eta 0:00:00
+#15 6.845 Downloading platformdirs-4.13.0-py3-none-any.whl (32 kB)
+#15 6.848 Downloading protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl (343 kB)
+#15 6.851 Downloading pyparsing-3.3.3-py3-none-any.whl (126 kB)
+#15 6.854 Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+#15 6.857 Downloading pytz-2026.5-py2.py3-none-any.whl (506 kB)
+#15 6.861 Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+#15 6.866    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.9/807.9 kB 288.5 MB/s eta 0:00:00
+#15 6.868 Downloading starlette-0.50.0-py3-none-any.whl (74 kB)
+#15 6.871 Downloading threadpoolctl-3.7.0-py3-none-any.whl (26 kB)
+#15 6.873 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#15 6.876 Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+#15 6.879 Downloading tzdata-2026.5-py2.py3-none-any.whl (347 kB)
+#15 6.882 Downloading urllib3-2.8.0-py3-none-any.whl (135 kB)
+#15 6.887 Downloading uvloop-0.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (4.5 MB)
+#15 6.904    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.5/4.5 MB 322.5 MB/s eta 0:00:00
+#15 6.906 Downloading watchfiles-1.3.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (458 kB)
+#15 6.912 Downloading websockets-17.2-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (225 kB)
+#15 6.915 Downloading mako-1.4.3-py3-none-any.whl (80 kB)
+#15 6.918 Downloading anyio-4.15.1-py3-none-any.whl (132 kB)
+#15 6.921 Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)
+#15 6.926 Downloading cloudpickle-3.1.2-py3-none-any.whl (22 kB)
+#15 6.929 Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+#15 6.933 Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+#15 6.936 Downloading soupsieve-3.0.3-py3-none-any.whl (41 kB)
+#15 6.939 Downloading pycparser-3.11-py3-none-any.whl (51 kB)
+#15 7.319 Installing collected packages: pytz, multitasking, websockets, uvloop, urllib3, tzdata, typing-extensions, threadpoolctl, soupsieve, six, pyyaml, python-multipart, python-dotenv, pyparsing, pycparser, psycopg-binary, protobuf, platformdirs, pillow, peewee, packaging, numpy, MarkupSafe, kiwisolver, idna, httptools, h11, greenlet, frozendict, fonttools, cycler, cloudpickle, click, charset_normalizer, certifi, annotated-types, annotated-doc, uvicorn, typing-inspection, SQLAlchemy, scipy, requests, python-dateutil, pydantic-core, psycopg, Mako, joblib, contourpy, cffi, beautifulsoup4, anyio, watchfiles, starlette, scikit-learn, pydantic, pandas, matplotlib, curl_cffi, alembic, yfinance, fastapi
+#15 34.75 Successfully installed Mako-1.4.3 MarkupSafe-3.0.4 SQLAlchemy-2.0.52 alembic-1.19.2 annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.15.1 beautifulsoup4-4.15.0 certifi-2026.7.22 cffi-2.1.1 charset_normalizer-3.5.2 click-8.5.0 cloudpickle-3.1.2 contourpy-1.4.0 curl_cffi-0.16.3 cycler-0.12.1 fastapi-0.124.4 fonttools-4.67.0 frozendict-2.4.7 greenlet-3.5.6 h11-0.16.0 httptools-0.9.0 idna-3.20 joblib-1.6.0 kiwisolver-1.5.1 matplotlib-3.10.8 multitasking-0.0.13 numpy-2.3.5 packaging-26.3 pandas-2.3.3 peewee-4.5.3 pillow-12.3.0 platformdirs-4.13.0 protobuf-7.36.2 psycopg-3.3.4 psycopg-binary-3.3.4 pycparser-3.11 pydantic-2.12.5 pydantic-core-2.41.5 pyparsing-3.3.3 python-dateutil-2.9.0.post0 python-dotenv-1.2.1 python-multipart-0.0.20 pytz-2026.5 pyyaml-6.0.3 requests-2.32.5 scikit-learn-1.8.0 scipy-1.16.3 six-1.17.0 soupsieve-3.0.3 starlette-0.50.0 threadpoolctl-3.7.0 typing-extensions-4.16.0 typing-inspection-0.4.4 tzdata-2026.5 urllib3-2.8.0 uvicorn-0.38.0 uvloop-0.23.0 watchfiles-1.3.0 websockets-17.2 yfinance-0.2.66
+#15 34.75 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#15 34.86 
+#15 34.86 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#15 34.86 [notice] To update, run: pip install --upgrade pip
+#15 DONE 37.4s
+
+#16 [stage-1  5/10] COPY backend/src ./src
+#16 DONE 0.1s
+
+#17 [stage-1  6/10] COPY backend/main.py backend/alembic.ini ./
+#17 DONE 0.0s
+
+#18 [stage-1  7/10] COPY backend/migrations ./migrations
+#18 DONE 0.0s
+
+#19 [stage-1  8/10] COPY backend/demo ./demo
+#19 DONE 0.0s
+
+#20 [stage-1  9/10] COPY --from=frontend /frontend/dist ./frontend-dist
+#20 DONE 0.1s
+
+#21 [stage-1 10/10] RUN useradd --uid 10001 --create-home release
+#21 DONE 0.2s
+
+#22 exporting to image
+#22 exporting layers
+#22 exporting layers 3.1s done
+#22 writing image sha256:fbc5ed967df00366dd721e632da026784437d9360109e0a17c481e9e4ab61374 done
+#22 naming to registry.fly.io/stochastic-market-simulator:deployment-01M4XPGE1QD08JEPSR7Y9E15VJ done
+#22 DONE 3.1s
+--> Building image done
+==> Pushing image to fly
+The push refers to repository [registry.fly.io/stochastic-market-simulator]
+fcb62c966e87: Preparing
+c97b9d38c51e: Preparing
+ba9178ecf7f5: Preparing
+058d5e58121e: Preparing
+4e33ae317376: Preparing
+3c535426d07d: Preparing
+d3a9c3bb7b76: Preparing
+34556c202caf: Preparing
+15baf01d28d4: Preparing
+742affd58633: Preparing
+694fd645f7c3: Preparing
+916eda96356f: Preparing
+e58989146fce: Preparing
+15baf01d28d4: Waiting
+742affd58633: Waiting
+694fd645f7c3: Waiting
+916eda96356f: Waiting
+e58989146fce: Waiting
+3c535426d07d: Waiting
+d3a9c3bb7b76: Waiting
+34556c202caf: Waiting
+fcb62c966e87: Pushed
+058d5e58121e: Pushed
+4e33ae317376: Pushed
+34556c202caf: Layer already exists
+15baf01d28d4: Layer already exists
+c97b9d38c51e: Pushed
+ba9178ecf7f5: Pushed
+742affd58633: Layer already exists
+694fd645f7c3: Layer already exists
+916eda96356f: Layer already exists
+e58989146fce: Layer already exists
+3c535426d07d: Pushed
+d3a9c3bb7b76: Pushed
+deployment-01M4XPGE1QD08JEPSR7Y9E15VJ: digest: sha256:e551fec3da3af812a9cc5fbdc92a365b87e506364d9b39a800f1af3ff310efd4 size: 3036
+--> Pushing image done
+image: registry.fly.io/stochastic-market-simulator:deployment-01M4XPGE1QD08JEPSR7Y9E15VJ
+image size: 695 MB

@@ -1,0 +1,30 @@
+{
+  "mode": "demo",
+  "label": "Demonstration portfolio \u2014 synthetic data; no real money invested",
+  "fixture_id": "original-synthetic-launch-v1",
+  "fixture_sha256": "6da6b7727980e908d68a66a25b0b2ba2e02b8467c96338f0d7a3b3c80376b86e",
+  "fixture_period": [
+    "2025-12-20",
+    "2026-02-05"
+  ],
+  "actual_loaded_at": "2026-10-14T13:15:05.735965+00:00",
+  "public_publication_at": null,
+  "backend_source_sha256": "7c1879cdbd4bd6916ee6378ff6edeb3d3e5f39cabe83c5250910e5bf1eb921e9",
+  "libraries": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.16.3",
+    "pydantic": "2.12.5"
+  },
+  "files": {
+    "comparison.json": "51fbd3fbe5d03cf7c7370be0a1eb71ad3e1cbc12feba58aa3d5174331d02f310",
+    "compatible-source.zip": "9901241533ab743c98b8ea4b1e305ed0f99364e5faabbf1c664b88ebb294f7e4",
+    "contribution.json": "9cc7ffc8a48049d2d8109aea1c8d5b1f200906c3312388d3cc2e43b965743d51",
+    "evidence.json": "284ac1491b091890e6c3b1333bb8215e26d5d3b859cb2222e10e7557c24a362b",
+    "fixture.json": "96742db0d131bb69648bf90ea3eed7e47dc1c9e5f21774b684678efa16bd3ebb",
+    "performance.json": "37eb26b9a0e8a60de520d9c1fe665eff1ab174a22019b7e0dfcb2fc925607dc4",
+    "receipt.json": "0a1ebcb4900ff2a46c8b54e82b3b601887b710d66fd453491e814a3d4fe8aeec"
+  },
+  "archive_scope": "Backend Python, original fixture and replay/loader CLIs only. No migration, DB backup, dependencies, frontend, secrets or hosting.",
+  "warning": "Private replay exports. Not public-safe downloads, real-money history, broker evidence or external attestation."
+}

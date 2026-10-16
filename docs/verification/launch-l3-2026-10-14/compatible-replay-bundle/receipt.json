@@ -1,0 +1,35 @@
+{
+  "fixture_id": "original-synthetic-launch-v1",
+  "fixture_sha256": "6da6b7727980e908d68a66a25b0b2ba2e02b8467c96338f0d7a3b3c80376b86e",
+  "mode": "demo",
+  "portfolio_id": "db486491-24cd-4e9e-b5ec-ba6d3f402c26",
+  "loaded_at": "2026-10-14T13:15:05.735965Z",
+  "start": "2025-12-20",
+  "end": "2026-02-05",
+  "ledger_version": 13,
+  "securities": {
+    "harbor": "e9d65850-1662-456e-80b7-07e98eb78b93",
+    "orchard": "ee890d29-060f-4b87-b81e-f81fb13abf89"
+  },
+  "theses": {
+    "harbor": "2deb9f42-7d7d-4676-8645-c96c2ed1dec2",
+    "orchard": "7ed85357-0c1a-495d-b165-aaf7170dbbf6"
+  },
+  "transactions": {
+    "opening-funding": "1f006af9-47b0-4dab-a4f3-422c7e7fbf25",
+    "harbor-entry": "27b0e547-425f-443f-9ebe-1a91b25f786c",
+    "synthetic-fx": "d1b52138-909b-4c57-99eb-37857cc75251",
+    "orchard-entry": "d84db72f-33e3-4612-a1b6-248af5530e10",
+    "harbor-net-dividend": "4832cc2f-614d-4677-b4bb-5c4cc88f7626",
+    "orchard-net-dividend": "e47329cd-52c1-4690-a93b-2a6a2430f937",
+    "additional-funding": "f11c52f0-9dc3-4d10-88c3-29196632203a",
+    "orchard-closed-loss": "b6c2e55d-a01f-4614-8a02-a214b0b9f7b6",
+    "mistaken-fee": "850c7b8e-8333-4dc5-9254-fa0c9de5d146",
+    "withdrawal": "6079ef8b-0f94-45f7-91c8-f076b712d1cf",
+    "harbor-partial-exit": "e0f12ecb-f7c6-4e9b-bdf1-31a762f7e105",
+    "fee-reversal": "4c5de097-11a5-438e-972b-038184876dfa",
+    "corrected-fee": "3485852e-2844-43af-98a8-148aef7aa65d"
+  },
+  "ledger_sha256": "40abad4bbeffc8ea632f46c60e01dd566a287cbe34318586e80e4d15a768dff2",
+  "research_sha256": "4466ca5d73b5e47d932040b4822bb3806e0c9e260ff1cb82bab558ab2108f087"
+}

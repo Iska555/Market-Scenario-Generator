@@ -312,3 +312,20 @@ Next implement a separately versioned common-boundary measurement under
 FACTOR_ALIGNMENT.md, with analytical wealth/TWR reconciliation. Real integration
 still needs actual reviewed boundary valuations, currency/funding and publication
 evidence. HAC/rolling, Brinson and publication remain subsequent gated scopes.
+
+## Approved public research/demo launch — 2026-10-13
+
+The owner has no Lightyear account and approved a bounded demonstration release
+without waiting for broker evidence. [Root PLAN.md](../PLAN.md) is the active
+execution plan, stage status and continuation handoff for all future agents.
+Read its authority section with AGENTS.md and the permanent master brief.
+
+The six approved stages cover modes/isolation, a reproducible synthetic example,
+public presentation, controlled publication, operations/staging and final release
+acceptance. Initial next step: L1.1, mode contract and compatibility. All launch
+stages are not started at this planning checkpoint; follow PLAN.md for later status.
+
+This prospective scope change permits bounded public/demo work before deferred
+advanced analytics and real-account integration. It does not complete Phase 9
+or revise its audit. Earlier next-step and phase-gate text remains a historical
+record. The original master, audits, reviews and evidence remain unchanged.

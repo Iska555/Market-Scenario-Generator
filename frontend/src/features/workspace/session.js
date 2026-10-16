@@ -38,6 +38,7 @@ export function createPrivateSession(validate) {
       return () => { controllers.delete(controller); controller.disconnect(); };
     },
     reconnect(controller) { if (state.connected && controllers.has(controller)) void controller.connect(key); },
+    authorize(action) { return action(state.connected ? key : ''); },
   };
   return session;
 }

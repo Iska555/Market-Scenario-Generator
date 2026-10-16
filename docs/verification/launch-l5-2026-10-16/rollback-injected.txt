@@ -1,0 +1,5 @@
+Updating machine 85551dc413d018
+Machine 85551dc413d018 updated successfully!
+
+Monitor machine status here:
+https://fly.io/apps/market-scenario-demo-staging/machines/85551dc413d018

@@ -1,0 +1,100 @@
+[2m2026-10-15T16:42:50Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    "/assets", StaticFiles(directory=str(Path(directory) / "assets")), name="release-assets"
+[2m2026-10-15T16:42:50Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2m2026-10-15T16:42:50Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/usr/local/lib/python3.12/site-packages/starlette/staticfiles.py", line 56, in __init__
+[2m2026-10-15T16:42:50Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    raise RuntimeError(f"Directory '{directory}' does not exist")
+[2m2026-10-15T16:42:50Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]RuntimeError: Directory '/app/missing-rehearsal/assets' does not exist
+[2m2026-10-15T16:42:51Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m][32m INFO[0m Main child exited normally with code: 1
+[2m2026-10-15T16:42:51Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m][32m INFO[0m Starting clean up.
+[2m2026-10-15T16:42:51Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m][   11.012990] reboot: Restarting system
+[2m2026-10-15T16:42:56Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]2026-10-15T16:42:56.454087512 [01M5072D2CDYE1116M8059RHZT:main] Running Firecracker v1.14.4
+[2m2026-10-15T16:42:56Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]2026-10-15T16:42:56.454269245 [01M5072D2CDYE1116M8059RHZT:main] Listening on API socket ("/fc.sock").
+[2m2026-10-15T16:42:57Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m][32m INFO[0m Starting init (commit: 6172d83)...
+[2m2026-10-15T16:42:57Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m][32m INFO[0m Preparing to run: `uvicorn main:app --host 0.0.0.0 --port 8000 --workers 1 --no-access-log --limit-concurrency 16` as release
+[2m2026-10-15T16:42:57Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m][32m INFO[0m [fly api proxy] listening at /.fly/api
+[2m2026-10-15T16:42:57Z[0m runner[85551dc413d018] [32miad[0m [[34minfo[0m]Machine started in 1.375s
+[2m2026-10-15T16:42:57Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]2026/10/15 16:42:57 INFO SSH listening listen_address=[fdaa:77:d57c:a7b:68d:fa0c:f442:2]:22
+[2m2026-10-15T16:42:58Z[0m runner[85551dc413d018] [32miad[0m [[34minfo[0m]Pulling container image registry.fly.io/stochastic-market-simulator@sha256:e551fec3da3af812a9cc5fbdc92a365b87e506364d9b39a800f1af3ff310efd4
+[2m2026-10-15T16:42:58Z[0m runner[85551dc413d018] [32miad[0m [[34minfo[0m]Container image registry.fly.io/stochastic-market-simulator@sha256:e551fec3da3af812a9cc5fbdc92a365b87e506364d9b39a800f1af3ff310efd4 already prepared
+[2m2026-10-15T16:42:59Z[0m runner[85551dc413d018] [32miad[0m [[34minfo[0m]Configuring firecracker
+[2m2026-10-15T16:42:59Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m][32m INFO[0m Sending signal SIGINT to main child process w/ PID 634
+[2m2026-10-15T16:43:03Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m][32m INFO[0m Sending signal SIGTERM to main child process w/ PID 634
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]Traceback (most recent call last):
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/usr/local/bin/uvicorn", line 8, in <module>
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    sys.exit(main())
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]             ^^^^^^
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/usr/local/lib/python3.12/site-packages/click/core.py", line 1631, in __call__
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    return self.main(*args, **kwargs)
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/usr/local/lib/python3.12/site-packages/click/core.py", line 1552, in main
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    rv = self.invoke(ctx)
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]         ^^^^^^^^^^^^^^^^
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/usr/local/lib/python3.12/site-packages/click/core.py", line 1415, in invoke
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    return ctx.invoke(self.callback, **ctx.params)
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/usr/local/lib/python3.12/site-packages/click/core.py", line 910, in invoke
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    return callback(*args, **kwargs)
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]           ^^^^^^^^^^^^^^^^^^^^^^^^^
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/usr/local/lib/python3.12/site-packages/uvicorn/main.py", line 423, in main
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    run(
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/usr/local/lib/python3.12/site-packages/uvicorn/main.py", line 593, in run
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    server.run()
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/usr/local/lib/python3.12/site-packages/uvicorn/server.py", line 67, in run
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/usr/local/lib/python3.12/asyncio/runners.py", line 195, in run
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    return runner.run(main)
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]           ^^^^^^^^^^^^^^^^
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/usr/local/lib/python3.12/asyncio/runners.py", line 118, in run
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    return self._loop.run_until_complete(task)
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "uvloop/loop.pyx", line 1515, in uvloop.loop.Loop.run_until_complete
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/usr/local/lib/python3.12/site-packages/uvicorn/server.py", line 71, in serve
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    await self._serve(sockets)
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/usr/local/lib/python3.12/site-packages/uvicorn/server.py", line 78, in _serve
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    config.load()
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/usr/local/lib/python3.12/site-packages/uvicorn/config.py", line 439, in load
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    self.loaded_app = import_from_string(self.app)
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/usr/local/lib/python3.12/site-packages/uvicorn/importer.py", line 19, in import_from_string
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    module = importlib.import_module(module_str)
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/usr/local/lib/python3.12/importlib/__init__.py", line 90, in import_module
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    return _bootstrap._gcd_import(name[level:], package, level)
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/app/main.py", line 53, in <module>
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    install_release(app)
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/app/src/release.py", line 198, in install_release
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    "/assets", StaticFiles(directory=str(Path(directory) / "assets")), name="release-assets"
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]  File "/usr/local/lib/python3.12/site-packages/starlette/staticfiles.py", line 56, in __init__
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]    raise RuntimeError(f"Directory '{directory}' does not exist")
+[2m2026-10-15T16:43:06Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]RuntimeError: Directory '/app/missing-rehearsal/assets' does not exist
+[2m2026-10-15T16:43:07Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m][32m INFO[0m Main child exited normally with code: 1
+[2m2026-10-15T16:43:07Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m][32m INFO[0m Starting clean up.
+[2m2026-10-15T16:43:07Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m][   11.003383] reboot: Restarting system
+[2m2026-10-15T16:43:12Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]2026-10-15T16:43:12.753592391 [01M507433H9R23MW4BMEXF3YK4:main] Running Firecracker v1.14.4
+[2m2026-10-15T16:43:12Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]2026-10-15T16:43:12.753904817 [01M507433H9R23MW4BMEXF3YK4:main] Listening on API socket ("/fc.sock").
+[2m2026-10-15T16:43:13Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m][32m INFO[0m Starting init (commit: 6172d83)...
+[2m2026-10-15T16:43:13Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m][32m INFO[0m Preparing to run: `uvicorn main:app --host 0.0.0.0 --port 8000 --workers 1 --no-access-log --limit-concurrency 16` as release
+[2m2026-10-15T16:43:13Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m][32m INFO[0m [fly api proxy] listening at /.fly/api
+[2m2026-10-15T16:43:13Z[0m runner[85551dc413d018] [32miad[0m [[34minfo[0m]Machine created and started in 15.132s
+[2m2026-10-15T16:43:13Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]2026/10/15 16:43:13 INFO SSH listening listen_address=[fdaa:77:d57c:a7b:68d:fa0c:f442:2]:22
+[2m2026-10-15T16:43:22Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]INFO:     Started server process [636]
+[2m2026-10-15T16:43:22Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]INFO:     Waiting for application startup.
+[2m2026-10-15T16:43:22Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]INFO:     Application startup complete.
+[2m2026-10-15T16:43:22Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+[2m2026-10-15T16:43:22Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]INFO:     release_request category=private status=200 elapsed_ms=3.2
+[2m2026-10-15T16:43:23Z[0m health[85551dc413d018] [32miad[0m [[34minfo[0m]Health check 'servicecheck-00-http-8000' on port 8000 is now passing.
+[2m2026-10-15T16:44:11Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]2026/10/15 16:44:11 INFO New SSH session email=[redacted] verified=true
+[2m2026-10-15T16:44:16Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]2026/10/15 16:44:16 INFO New SSH session email=[redacted] verified=true
+[2m2026-10-15T16:44:18Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]INFO:     release_request category=static status=200 elapsed_ms=3.4
+[2m2026-10-15T16:44:19Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]INFO:     release_request category=public status=410 elapsed_ms=138.6
+[2m2026-10-15T16:44:19Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]INFO:     release_request category=public status=200 elapsed_ms=138.2
+[2m2026-10-15T16:44:22Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]2026/10/15 16:44:22 INFO New SSH session email=[redacted] verified=true
+[2m2026-10-15T16:44:22Z[0m app[85551dc413d018] [32miad[0m [[34minfo[0m]INFO:     release_request category=private status=200 elapsed_ms=1.7

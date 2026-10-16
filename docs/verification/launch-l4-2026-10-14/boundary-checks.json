@@ -1,0 +1,60 @@
+{
+  "checks": [
+    {
+      "path": "/api/public/demo",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/api/public/demo/history",
+      "status": 200,
+      "cache": "no-store"
+    },
+    {
+      "path": "/api/public/demo/versions/193531a6-218d-47c0-9861-ed964166671c",
+      "status": 410,
+      "cache": "no-store"
+    },
+    {
+      "path": "/api/public/demo/versions/4242a56a-e0dc-4d63-9308-6718780d2e4b/download",
+      "status": 410,
+      "cache": "no-store"
+    },
+    {
+      "path": "/api/publication/history",
+      "status": 401,
+      "cache": "no-store"
+    },
+    {
+      "path": "/api/accounting/portfolios",
+      "status": 401,
+      "cache": null
+    },
+    {
+      "path": "/api/research/securities",
+      "status": 401,
+      "cache": null
+    },
+    {
+      "path": "/api/public-preview/original",
+      "status": 404,
+      "cache": "no-store"
+    },
+    {
+      "path": "/api/simulate",
+      "status": 401,
+      "cache": "no-store"
+    },
+    {
+      "path": "/api/simulate-portfolio",
+      "status": 401,
+      "cache": "no-store"
+    }
+  ],
+  "actual_browser_download": true,
+  "version": "079ef599-a949-4d8f-aab3-be5fc5f90c3a",
+  "content_sha256": "8334425874be0865dfcf369cd64862f479063aa0261abcaca8ccadc91ad95d44",
+  "calculation_source_sha256": "595d3bf5ccc73ef61609159edeb700de71c5c5e9bf4632a0beefab84d11c9871",
+  "no_private_fields": true,
+  "synthetic_static_metadata": true
+}

@@ -1,0 +1,77 @@
+{
+  "tables": [
+    {
+      "table": "accounting_portfolios",
+      "count": 1,
+      "sha256": "cbae3d2a987e1b669ac1705fc4e164823af7af293751ab5699aba6c76bf559da"
+    },
+    {
+      "table": "accounting_transactions",
+      "count": 13,
+      "sha256": "2edf882eb8d020180b9d5e8b752364ad32b99e78d14a035c8c87fd89faa63878"
+    },
+    {
+      "table": "alembic_version",
+      "count": 1,
+      "sha256": "27ecb60cc68c20717fa642cb16477500c6672b2dfad720500d51ee73296e1823"
+    },
+    {
+      "table": "demo_load_receipts",
+      "count": 1,
+      "sha256": "dfd0c0b21b4f439ff55ce205b8cb7edd0210b38746f8725162d23a3952de8b20"
+    },
+    {
+      "table": "portfolio_benchmark_settings",
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "table": "portfolio_identities",
+      "count": 1,
+      "sha256": "604967f6d9ba4fcc8536aba41b3fda18a30dc23b683ccac1ecfff41718120946"
+    },
+    {
+      "table": "publication_channels",
+      "count": 1,
+      "sha256": "0693a2c53bebfd245c0dadbace1fc05daae0bc765277a22716cbd500e4f751b5"
+    },
+    {
+      "table": "publication_events",
+      "count": 1,
+      "sha256": "b82f88352e1259d2ac2d71d0b2e324741028f3fd7903c30599464206a1958e80"
+    },
+    {
+      "table": "publication_previews",
+      "count": 1,
+      "sha256": "f90da2b11e28b1928aa4835b9d56b959e612592f237296db74b02ba4fbdd13fb"
+    },
+    {
+      "table": "research_observations",
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "table": "research_securities",
+      "count": 2,
+      "sha256": "d15c6eddaffe863fda27550482968e8c94adb2ebeacc53fdbfe2fc825f41bcac"
+    },
+    {
+      "table": "research_theses",
+      "count": 2,
+      "sha256": "ea4577e29031007d6de669b845ec7832cfbc3a4b18ed78252c2bc353e421c2cc"
+    },
+    {
+      "table": "research_thesis_reviews",
+      "count": 2,
+      "sha256": "3966d3884d66f23352362274419d5606fd97367c79423580fadd91be89185a4e"
+    },
+    {
+      "table": "research_thesis_revisions",
+      "count": 4,
+      "sha256": "a1e8370aebbac004c4ae476fdb5cec85afadacb78fbde9a84d5b7444ea63fd6b"
+    }
+  ],
+  "database_version": "PostgreSQL 17.11 (59c914d) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+  "python": "3.12.15",
+  "source_sha256": "5b6a3e874c3abf945d6a3c1fcbde6dba6cb72067d76a6f742dfa7bd9120a1afe"
+}

@@ -22,6 +22,11 @@ from src.data.providers import CachedPriceProvider, PriceDataError
 from src.factors.routes import router as factors_router
 from src.performance.routes import router as performance_router
 from src.portfolio.construction.routes import router as construction_router
+from src.public_track_record.preview_routes import router as preview_router
+from src.public_track_record.publication_routes import owner_router, public_router
+from src.public_track_record.routes import router as identity_router
+from src.release import frontend_file, install_release
+from src.research.database import require_research_access
 from src.research.routes import router as research_router
 from src.research.thesis.routes import router as thesis_router
 from src.risk.scenarios.historical_routes import router as historical_router
@@ -41,6 +46,11 @@ app.include_router(performance_router)
 app.include_router(attribution_router)
 app.include_router(benchmark_router)
 app.include_router(factors_router)
+app.include_router(identity_router)
+app.include_router(preview_router)
+app.include_router(owner_router)
+app.include_router(public_router)
+install_release(app)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -55,8 +65,40 @@ get_cached_price_data = CachedPriceProvider()
 
 @app.middleware("http")
 async def factor_private_cache(request: Request, call_next: RequestResponseEndpoint) -> Response:
+    if os.getenv("PUBLIC_RELEASE_MODE") == "1" and request.url.path in (
+        "/api/simulate",
+        "/api/simulate-portfolio",
+    ):
+        try:
+            require_research_access(request.headers.get("X-Research-Key"))
+        except HTTPException as exc:
+            return JSONResponse(
+                status_code=exc.status_code,
+                content={"detail": exc.detail},
+                headers={"Cache-Control": "no-store"},
+            )
+        if os.getenv("ENABLE_PRIVATE_SIMULATIONS") == "0":
+            return JSONResponse(
+                status_code=503,
+                content={
+                    "detail": (
+                        "Market-data simulations are unavailable on this bounded demo host. "
+                        "Use the private local workspace."
+                    )
+                },
+                headers={"Cache-Control": "no-store"},
+            )
     response = await call_next(request)
-    if request.url.path.startswith(("/api/factors/", "/api/benchmark/")):
+    if request.url.path.startswith(
+        (
+            "/api/factors/",
+            "/api/benchmark/",
+            "/api/portfolio-identity/",
+            "/api/public-preview/",
+            "/api/publication/",
+            "/api/public/demo",
+        )
+    ):
         response.headers["Cache-Control"] = "no-store"
     return response
 
@@ -76,8 +118,10 @@ async def request_validation_error(request: Request, exc: RequestValidationError
     return JSONResponse(status_code=422, content={"detail": errors})
 
 
-@app.get("/")
-def root() -> dict[str, str]:
+@app.get("/", response_model=None)
+def root() -> Response | dict[str, str]:
+    if os.environ.get("FRONTEND_DIST"):
+        return frontend_file()
     return {"status": "running", "version": API_VERSION}
 
 

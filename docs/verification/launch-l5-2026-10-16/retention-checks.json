@@ -1,0 +1,10 @@
+{
+  "prior_records": 392,
+  "preserved": true,
+  "compatible_code_matches_checkout": true,
+  "extracted_archive_files": 115,
+  "artifact_sha256": "f54cb3fbe0dcb2af42b929eb57256db581b2fa7c9034cfa526ef7b6dc4def724",
+  "private_dumps_keys_and_reports_excluded": true,
+  "staging_download_saved_file_verified": false,
+  "production_promoted": false
+}

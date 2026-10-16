@@ -1,0 +1,22 @@
+- complementary "Staging environment": Staging environment · synthetic demonstration; not the production release.
+- main:
+  - heading "Demonstration unavailable" [level=1]
+  - alert: This demonstration has been withdrawn from public availability.
+  - paragraph: Demonstration portfolio — synthetic data; no real money invested
+  - region "Public publication history":
+    - heading "Publication and correction history" [level=2]
+    - paragraph: Immutable synthetic versions. Withdrawal hides earlier content; previously saved copies cannot be recalled. Reasons and lifecycle dates remain public.
+    - list:
+      - paragraph: Published · 2026-10-14T17:25:03.256805Z · content unavailable
+      - paragraph: Published · 2026-10-14T17:25:04.678184Z · content unavailable
+      - paragraph: "Public reason: Include the original fictional closed-loser review; measured performance is unchanged."
+      - paragraph: Corrects ef0fc525-8b6c-4b91-a0d6-d94cf3668ffe
+      - paragraph: Withdrawn · 2026-10-15T16:38:59.881292Z · content unavailable
+      - paragraph: "Public reason: Staging-only withdrawal rehearsal; private audit records remain."
+      - paragraph: Published · 2026-10-15T16:39:44.573008Z
+      - link "Version f4b14c6a-b241-474d-918b-d8b54aa75b50":
+        - /url: /demo/f4b14c6a-b241-474d-918b-d8b54aa75b50
+      - paragraph: "Public reason: Restore the reviewed synthetic staging demonstration after withdrawal rehearsal."
+      - paragraph: Corrects 7728f864-add3-4d03-ab58-39339167650a
+  - link "Private workspace":
+    - /url: /

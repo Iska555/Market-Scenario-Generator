@@ -1,0 +1,16 @@
+- main:
+  - heading "Demonstration unavailable" [level=1]
+  - alert: This demonstration has been withdrawn from public availability.
+  - paragraph: Demonstration portfolio — synthetic data; no real money invested
+  - region "Public publication history":
+    - heading "Publication and correction history" [level=2]
+    - paragraph: Immutable synthetic versions. Withdrawal hides earlier content; previously saved copies cannot be recalled. Reasons and lifecycle dates remain public.
+    - list:
+      - paragraph: Published · 2026-10-14T16:27:44.691925Z · content unavailable
+      - paragraph: Published · 2026-10-14T16:29:38.265313Z · content unavailable
+      - paragraph: "Public reason: Include the original fictional closed-loser research review; full performance is unchanged."
+      - paragraph: Corrects 193531a6-218d-47c0-9861-ed964166671c
+      - paragraph: Withdrawn · 2026-10-14T16:30:43.439433Z · content unavailable
+      - paragraph: "Public reason: Local synthetic withdrawal rehearsal; no real account is involved."
+  - link "Private workspace":
+    - /url: /

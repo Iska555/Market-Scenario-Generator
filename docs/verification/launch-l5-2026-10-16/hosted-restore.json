@@ -1,0 +1,94 @@
+{
+  "backup_sha256": "52af6bb5f759dd83bf0cb1d756b31f8213ce93acd5abb83a5ed0e11c856d34f3",
+  "backup_bytes": 54815,
+  "backup_seconds": null,
+  "verified_recovery_seconds": 0.46900000001187436,
+  "separate_local_database": "hosted_launch_restore_b940858d6add490c8d55ee692f43211b",
+  "source_preserved": true,
+  "tables": [
+    {
+      "table": "accounting_portfolios",
+      "count": 1,
+      "sha256": "bec84880b9f4fa40ec862f53d90301fa54cfd7f2c9104bf246dd599f9e2eb7d4",
+      "exact_match": true
+    },
+    {
+      "table": "accounting_transactions",
+      "count": 13,
+      "sha256": "b42bc0e8b21609dface6970aaa871167f056e6f88bb2275e0ed3d87008f91658",
+      "exact_match": true
+    },
+    {
+      "table": "alembic_version",
+      "count": 1,
+      "sha256": "27ecb60cc68c20717fa642cb16477500c6672b2dfad720500d51ee73296e1823",
+      "exact_match": true
+    },
+    {
+      "table": "demo_load_receipts",
+      "count": 1,
+      "sha256": "cf06b670e581fc582ca371178d67b0e7daaddc15d0dc85b76318c76a3fe67bc7",
+      "exact_match": true
+    },
+    {
+      "table": "portfolio_benchmark_settings",
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_match": true
+    },
+    {
+      "table": "portfolio_identities",
+      "count": 1,
+      "sha256": "6bcf91c9a40d16b51f360bc4632748b3ff43727b1aed5e56135c860f157b5a46",
+      "exact_match": true
+    },
+    {
+      "table": "publication_channels",
+      "count": 1,
+      "sha256": "0693a2c53bebfd245c0dadbace1fc05daae0bc765277a22716cbd500e4f751b5",
+      "exact_match": true
+    },
+    {
+      "table": "publication_events",
+      "count": 4,
+      "sha256": "91e8341ce0f2e8957caeeac7c76c7269c06c20ebde4e0b8ecbd22a4e89e71998",
+      "exact_match": true
+    },
+    {
+      "table": "publication_previews",
+      "count": 4,
+      "sha256": "fa58f3fedf18667e535ca2bc63aa4efdc3ce629e9006edd0403cad523cd92972",
+      "exact_match": true
+    },
+    {
+      "table": "research_observations",
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_match": true
+    },
+    {
+      "table": "research_securities",
+      "count": 2,
+      "sha256": "d5cee63ddd1af5048d98410e40e95142925cf8f8f2f0752d165ce2827bf4ff25",
+      "exact_match": true
+    },
+    {
+      "table": "research_theses",
+      "count": 2,
+      "sha256": "29a87ab13e848c5e0fe5830a85aaa7c86295bf7c4d75d77a5c37d4174ce8adf1",
+      "exact_match": true
+    },
+    {
+      "table": "research_thesis_reviews",
+      "count": 2,
+      "sha256": "779d12dc454e431e78f7f8889603a7270b22aeba6bfb3b0b036ea4ffea9a65e6",
+      "exact_match": true
+    },
+    {
+      "table": "research_thesis_revisions",
+      "count": 4,
+      "sha256": "4742f44e88c1495f812fa74015e88c25f603cbb966b6987d7e818a7f3d16dce4",
+      "exact_match": true
+    }
+  ]
+}

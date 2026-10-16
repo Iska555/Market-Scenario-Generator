@@ -6,6 +6,9 @@ from alembic import context
 from sqlalchemy import create_engine, pool
 from src.accounting import tables as accounting_tables  # noqa: F401
 from src.benchmark import settings as benchmark_settings  # noqa: F401
+from src.public_track_record import demo as demo_tables  # noqa: F401
+from src.public_track_record import publication as publication_tables  # noqa: F401
+from src.public_track_record import tables as identity_tables  # noqa: F401
 from src.research.tables import Base
 from src.research.thesis import tables as thesis_tables  # noqa: F401
 

@@ -1,0 +1,119 @@
+........................................................................ [  9%]
+........................................................................ [ 18%]
+........................................................................ [ 27%]
+........................................................................ [ 37%]
+........................................................................ [ 46%]
+........................................................................ [ 55%]
+........................................................................ [ 65%]
+........................................................................ [ 74%]
+........................................................................ [ 83%]
+........................................................................ [ 92%]
+.......................................................                  [100%]
+============================== warnings summary ===============================
+backend\.venv\Lib\site-packages\starlette\testclient.py:45
+  C:\Users\Don\Desktop\Portfolio Management\market_scenario-generator\backend\.venv\Lib\site-packages\starlette\testclient.py:45: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=============================== tests coverage ================================
+______________ coverage: platform win32, python 3.12.14-final-0 _______________
+
+Name                                                 Stmts   Miss Branch BrPart   Cover   Missing
+-------------------------------------------------------------------------------------------------
+backend\main.py                                         79      0      2      0 100.00%
+backend\src\__init__.py                                  0      0      0      0 100.00%
+backend\src\accounting\__init__.py                       0      0      0      0 100.00%
+backend\src\accounting\contracts.py                    145      1     20      1  98.79%   95
+backend\src\accounting\imports.py                       25      1      8      1  93.94%   28
+backend\src\accounting\ledger.py                        50      1     22      2  95.83%   50, 76->81
+backend\src\accounting\precision.py                      3      0      0      0 100.00%
+backend\src\accounting\repository.py                   127      9     46      5  91.91%   65, 102-103, 153, 159, 167, 187, 195-196
+backend\src\accounting\routes.py                        52      0      0      0 100.00%
+backend\src\accounting\tables.py                        48      0      0      0 100.00%
+backend\src\accounting\valuation.py                     46      4     24      4  88.57%   21, 23, 26, 32
+backend\src\api\__init__.py                              0      0      0      0 100.00%
+backend\src\api\models.py                              113      0     10      0 100.00%
+backend\src\attribution\__init__.py                      0      0      0      0 100.00%
+backend\src\attribution\contracts.py                    57      1      4      1  96.72%   23
+backend\src\attribution\engine.py                      192      7     60      7  94.44%   107, 134, 244, 269, 271, 318, 324
+backend\src\attribution\replay.py                        7      0      2      0 100.00%
+backend\src\attribution\routes.py                       12      0      0      0 100.00%
+backend\src\benchmark\__init__.py                        0      0      0      0 100.00%
+backend\src\benchmark\contracts.py                      97      0      6      0 100.00%
+backend\src\benchmark\engine.py                         90      0     28      0 100.00%
+backend\src\benchmark\replay.py                         16      0      8      0 100.00%
+backend\src\benchmark\routes.py                         23      0      0      0 100.00%
+backend\src\benchmark\settings.py                       73      2     22      0  97.89%   112-113
+backend\src\correlation.py                               2      0      0      0 100.00%
+backend\src\data\__init__.py                             0      0      0      0 100.00%
+backend\src\data\preparation.py                         54      2     10      2  93.75%   43, 78
+backend\src\data\providers.py                           30      0      4      0 100.00%
+backend\src\data_download.py                            17      2      6      3  78.26%   20, 22->26, 24
+backend\src\ewma_vol.py                                 18      0      6      0 100.00%
+backend\src\factors\__init__.py                          0      0      0      0 100.00%
+backend\src\factors\contracts.py                       109      1     14      1  98.37%   49
+backend\src\factors\engine.py                          112      0     38      0 100.00%
+backend\src\factors\replay.py                           19      0     10      0 100.00%
+backend\src\factors\routes.py                           24      0      0      0 100.00%
+backend\src\factors\source.py                          148      2     40      0  98.94%   62-63
+backend\src\generative_model.py                          9      0      2      0 100.00%
+backend\src\gmm_model.py                                26      0     10      0 100.00%
+backend\src\performance\__init__.py                      0      0      0      0 100.00%
+backend\src\performance\contracts.py                    87      0      4      0 100.00%
+backend\src\performance\engine.py                      172      7     82      8  94.09%   148, 153, 198, 222, 230, 236, 267, 326->331
+backend\src\performance\identity.py                      9      0      0      0 100.00%
+backend\src\performance\metrics.py                     153      4     60      4  96.24%   93, 108, 110, 122, 266->268
+backend\src\performance\replay.py                       29      0     20      0 100.00%
+backend\src\performance\routes.py                       20      0      4      0 100.00%
+backend\src\portfolio\__init__.py                        0      0      0      0 100.00%
+backend\src\portfolio\construction\__init__.py           0      0      0      0 100.00%
+backend\src\portfolio\construction\algorithms.py       118      1     36      1  98.70%   182
+backend\src\portfolio\construction\analytics.py         61      0     20      0 100.00%
+backend\src\portfolio\construction\contracts.py        142      1     26      1  98.81%   70
+backend\src\portfolio\construction\routes.py            17      0      0      0 100.00%
+backend\src\portfolio\construction\service.py           45      0      2      0 100.00%
+backend\src\portfolio\paths.py                          28      0     18      0 100.00%
+backend\src\public_track_record\__init__.py              0      0      0      0 100.00%
+backend\src\public_track_record\contracts.py            25      0      4      0 100.00%
+backend\src\public_track_record\demo.py                144      3     30      3  96.55%   101, 105, 113
+backend\src\public_track_record\preview_routes.py       26      1      6      1  93.75%   24
+backend\src\public_track_record\repository.py           34      2      4      0  94.74%   60-61
+backend\src\public_track_record\routes.py               21      0      0      0 100.00%
+backend\src\public_track_record\snapshot.py            204      3     32      5  96.61%   180, 183, 197, 229->202, 238->232
+backend\src\public_track_record\tables.py               11      0      0      0 100.00%
+backend\src\research\__init__.py                         0      0      0      0 100.00%
+backend\src\research\database.py                        39      0      6      0 100.00%
+backend\src\research\metrics.py                         41      0     10      0 100.00%
+backend\src\research\repository.py                      93      4     18      2  94.59%   26, 39, 103-104
+backend\src\research\routes.py                          47      0      0      0 100.00%
+backend\src\research\schemas.py                         81      2     18      2  95.96%   38, 81
+backend\src\research\tables.py                          59      3      6      3  90.77%   28, 30, 35
+backend\src\research\thesis\__init__.py                  0      0      0      0 100.00%
+backend\src\research\thesis\repository.py               89      0     18      0 100.00%
+backend\src\research\thesis\routes.py                   48      0      0      0 100.00%
+backend\src\research\thesis\schemas.py                  70      0      8      0 100.00%
+backend\src\research\thesis\tables.py                   56      0      0      0 100.00%
+backend\src\returns_preprocess.py                       16      0      2      0 100.00%
+backend\src\risk\__init__.py                             0      0      0      0 100.00%
+backend\src\risk\contracts.py                           42      0      0      0 100.00%
+backend\src\risk\covariance.py                          70      1     20      1  97.78%   61
+backend\src\risk\scenarios\__init__.py                   0      0      0      0 100.00%
+backend\src\risk\scenarios\historical.py                56      0      8      0 100.00%
+backend\src\risk\scenarios\historical_contracts.py     107      1     34      1  98.58%   78
+backend\src\risk\scenarios\historical_routes.py         17      0      0      0 100.00%
+backend\src\risk\scenarios\historical_service.py        40      0      2      0 100.00%
+backend\src\risk\scenarios\service.py                   59      0      6      0 100.00%
+backend\src\risk\statistics.py                          46      0      8      0 100.00%
+backend\src\valuation\__init__.py                        0      0      0      0 100.00%
+backend\src\valuation\arithmetic.py                     18      0      2      0 100.00%
+backend\src\valuation\contracts.py                     258      0     46      0 100.00%
+backend\src\valuation\models.py                         60      0     24      0 100.00%
+backend\src\valuation\routes.py                         17      0      0      0 100.00%
+backend\src\valuation\service.py                        94      1     26      1  98.33%   125
+backend\src\views\__init__.py                            0      0      0      0 100.00%
+backend\src\views\expected_return.py                    72      0     26      0 100.00%
+-------------------------------------------------------------------------------------------------
+TOTAL                                                 4764     67   1038     60  97.81%
+Coverage XML written to file coverage.xml
+Required test coverage of 95.0% reached. Total coverage: 97.81%
+775 passed, 1 warning in 76.44s (0:01:16)

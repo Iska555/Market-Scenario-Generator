@@ -1,0 +1,16 @@
+{
+  "desktop": {
+    "viewport": 1280,
+    "document": 1265
+  },
+  "mobile": {
+    "viewport": 390,
+    "document": 375
+  },
+  "synthetic_title": true,
+  "synthetic_description": true,
+  "staging_banner": false,
+  "keyboard_closed_loser_research_link": true,
+  "deep_version_metadata": true,
+  "credentials_entered_in_browser": false
+}

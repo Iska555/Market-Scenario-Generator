@@ -716,3 +716,92 @@ Recommended next procedure:
 
 Current scope/evidence: FACTOR_SOURCE_IMPORT.md, prospective FACTOR_ALIGNMENT.md,
 new PHASE_9E_AUDIT.md and the separate execution plan. Phase 9 remains incomplete.
+
+## 2026-10-13 — approved first public release without a broker account
+
+After the Phase 9E closeout and readiness discussion, the owner confirmed that
+no Lightyear account exists and explicitly approved the remaining launch work as
+the plan for a new chat. The owner requested a durable, accurate agent handoff.
+The implementation plan and current status now live in [root PLAN.md](../PLAN.md).
+AGENTS.md directs future agents to read it before choosing their next task.
+
+Approved target: a public portfolio-management research platform with an isolated,
+clearly labelled, reproducible synthetic demonstration portfolio. This is a
+prospective release-scope amendment: bounded public/demo work may proceed while
+unfinished advanced Phase 9 analytics are explicitly deferred. Phase 9 and the
+broader master plan remain incomplete. The permanent brief and all previous
+acceptance records retain their original text and qualifications.
+
+Approved sequence: L1 modes/isolation; L2 reproducible demonstration; L3 public
+presentation; L4 controlled publication; L5 operations/staging; L6 release
+acceptance and launch. Each stage needs its own actual verification and dated
+record. No new application stage has been implemented or accepted by this entry.
+
+Demo, prospective paper and future real histories must remain distinct. A demo
+may contain original synthetic equities, transactions, marks, FX, comparison
+levels and example research; it must never imply broker execution, personal
+historical decisions or a verified investment record. Existing unclassified
+records remain private. Later real accounts need their own identities, inception
+dates and broker reconciliation; no splicing of demo/paper returns into real returns.
+
+A native broker importer, real-account verification, prospective paper operation,
+common-boundary factor integration, HAC/rolling, Brinson and unsupported assets
+are deferred as specified in PLAN.md. Privacy separation, reproducible calculations,
+complete example winning/losing history, correction disclosures, actual browser
+download checks, backup restoration and production acceptance remain launch gates.
+No private replay export or third-party fixture is automatically public-safe.
+
+This update documents authorization and the next step (initially L1.1). It does
+not claim fresh test results, numerical acceptance, hosting, a broker connection,
+a database change or public deployment. Hosting destination, account access and
+spending limits must be established before the corresponding external actions.
+
+
+## 2026-10-14 — approved launch L1 accepted locally
+
+Implemented additive immutable portfolio identities and an explicit isolated synthetic-demo creation path. Existing records remain private/unclassified; old accounting/report contracts and archived source stay compatible. Demo, prospective paper and real modes have separate meanings; only demo creation is exposed for this release, with no broker-verification claim. New private adapters label Overview, Ledger and Performance, and clear private context on switching/lock/refresh.
+
+Final verification: 759 backend cases including actual PostgreSQL migrations/API/concurrency, 160 frontend cases, zero skips, 97.92% coverage and all ten configured checks passed. Retained Phase 9A contribution replay passed with matching archived source/runtime. Actual local production-build browser creation/reload/legacy switching/lock/refresh passed. Browser viewport overrides were ineffective; measured default width is recorded and mobile acceptance remains outstanding. No public publication, restoration, hosted CI or deployment is claimed.
+
+See LAUNCH_L1_AUDIT.md, PORTFOLIO_IDENTITY.md and new dated evidence. PLAN.md now identifies L2.1: deterministic synthetic fixture and isolated idempotent loader. Broader Phase 9 and all deferred real-account/factor work remain incomplete. No prior brief/audit/evidence was rewritten.
+
+
+## 2026-10-14 — approved launch L2 accepted locally
+
+Added a wholly original, isolated synthetic demonstration with 13 ledger events, two fictional equities, funding/withdrawal, fees/dividends/FX, a closed loss and correction. Immutable load receipt, separate security/thesis histories and strict empty-demo/idempotency guards preserve existing private histories. Effective fixture dates differ from actual recording/availability timestamps; no broker proof or personal historical decisions are implied.
+
+All three private reports replay from working and separately extracted compatible source. Retry receipt/evidence/three reports are byte-identical. Final configured gate: 770 backend including actual PostgreSQL, 165 frontend, zero skips, 97.89% coverage; all ten checks pass. Browser setup/report/keyboard/lock-refresh and measured desktop/mobile pass. Actual performance saved-file replay passes; contribution/comparison browser delivery is unverified, while their CLI exports replay. Historical qualifications remain intact.
+
+Continue L3.1 with a typed allowlisted public snapshot and safe fixture-backed local preview, then public performance/holdings and selected fictional research/journal with all closed losses. Never expose raw private replay exports. L4 controlled publication and L5/L6 restore/staging/deployment remain ordered gates. Deferred advanced real-factor and account integrations remain unfinished. See LAUNCH_L2_AUDIT.md and DEMONSTRATION.md.
+
+
+## 2026-10-14 — L3 accepted public demonstration presentation
+
+Implemented the approved allowlisted local preview, synthetic charts/partial periods, complete closed loser, original research and correction journal. Actual sanitized JSON download matches the typed artifact. Full gate: 775 backend / 169 frontend, zero skips, 97.81%; ten checks passed. Preserved 311 prior records and compatible three-report replay. See LAUNCH_L3_AUDIT.md. Next L4.1; no publication, restore or deployment claim.
+
+
+## 2026-10-14 — L4 accepted; Fly.io/Neon cost constraint
+
+Owner-approved publication lifecycle is accepted locally: captured allowlisted previews, serialized immutable versions, disclosed corrections, withdrawals hiding prior content/downloads, and separate anonymous reads. Final gate 783 backend / 174 frontend, no skips, 97.62%; ten checks passed. Actual delivered public version download and working/extracted three-report replays passed; 352 prior records preserved. See LAUNCH_L4_AUDIT.md. Owner identified Fly.io and Neon with a total US$5/month ceiling, free preferred. Login/cost/production/recovery/staging/deployment verification remains under L5; no external resource has been created.
+
+
+## 2026-10-16 — L5 hosted progress; saved download gate outstanding
+
+The approved synthetic candidate is deployed to isolated labelled Fly staging with a separate Neon Free branch. Exact-image performance/contribution/comparison replays, actual owner API lifecycle/privacy, hosted request limits and rollback preserving all database fingerprints passed. An owner-approved actual staging pg_dump was restored into a new local database with all table counts/values/identities matching; regenerated three reports replay. Final unchanged application gate ran 2026-10-14: 788 backend / 174 frontend, zero skips, 97.24%, ten exits 0. Preserved 392 earlier records. Temporary builder/cache removed.
+
+L5 remains unaccepted: hosted saved-browser-download delivery is unverified after browser automation stalled. Owner asked to save the public staging download for inspection. HTTP payload checks are distinct evidence. Production is not promoted; its new secrets/origin are staged only. Next L5.3, then L6. See LAUNCH_L5_PROGRESS_2026-10-16.md and RELEASE_OPERATIONS.md for artifact identity, restore/rollback, monitoring/cost boundaries and observed verification defects. No real broker/personal track record, hosted CI, external alert delivery or guaranteed dollar cap is claimed. All prior brief/audit/evidence remains unchanged.
+
+
+## 2026-10-16 - L5 accepted after actual saved staging download
+
+Owner-saved hosted JSON exactly matches the immutable typed staging envelope/content hash. This closes the outstanding gate documented in the unchanged progress record. See LAUNCH_L5_AUDIT.md. Next L6: same accepted image, separate production Neon branch/demo identity/history, actual public deployment and post-launch verification. No production promotion is claimed by this entry.
+
+
+## 2026-10-16 - production deployed; final browser file gate open
+
+Promoted the L5-accepted pinned image to the confirmed Fly app, migrated its separate Neon branch and deliberately published a newly created original synthetic demo. The actual public page is labelled synthetic and includes negative performance and the complete closed loser. Fresh full gate: 788 backend / 174 frontend, zero skips, 97.24%, ten exits 0. Production backup/local restore, working/extracted-source replays, restart and privacy/responsive/deep metadata checks passed. Removed temporary Fly staging compute after retaining its history/archives. Preserved 440 prior records. Final production saved-browser-download inspection remains open; no full L6 acceptance is claimed. See LAUNCH_L6_PROGRESS_2026-10-16.md. All deferred real-account, paper and advanced work remains unfinished.
+
+
+## 2026-10-16 - owner-authorized public GitHub source publication
+
+Owner requested making the project public and pushing the current work. GitHub already reports the repository public. Remote main is an ancestor of the complete development history, so use a normal fast-forward push without rewriting historical commits. Reviewed publishable source/evidence archives and reachable Git blobs with targeted patterns/exact protected-key checks; no findings. Private databases, credentials, hosted raw reports and working verification helpers remain ignored. See GITHUB_PUBLICATION_2026-10-16.md. Preserve the existing working documentation and all historical acceptance records. This request does not close the outstanding production browser-saved-download check or resume deferred analytics/real-account work.

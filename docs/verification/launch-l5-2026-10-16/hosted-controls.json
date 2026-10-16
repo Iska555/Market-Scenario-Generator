@@ -1,0 +1,15 @@
+{
+  "body_limit_status": 413,
+  "concurrency": 3,
+  "requests": 12,
+  "all_success": true,
+  "latency_seconds": {
+    "min": 0.15599999998812564,
+    "median": 0.3279999999940628,
+    "max": 1.2190000000118744
+  },
+  "rate_probe_requests": 108,
+  "rate_limit_status": 429,
+  "retry_after": 60,
+  "capacity_claim": false
+}

@@ -152,7 +152,7 @@ export function buildPerformanceRequest(draft, text, version) {
   return { expected_version: version, known_at: draft.known_at, daily_marks: evidence.daily_marks, flow_marks: evidence.flow_marks, risk_free_rate: riskFree, confidence, max_mark_age_days: age, calendar: 'UTC_calendar_daily', price_convention: 'unadjusted', periods_per_year: 365 };
 }
 
-export function createPerformance(accounting, reportRequest, contributionRequest, comparisonRequest, factorRequest, settingsRequest, sourceRequest) {
+export function createPerformance(accounting, reportRequest, contributionRequest, comparisonRequest, factorRequest, settingsRequest, sourceRequest, demoEvidenceRequest) {
   let state = initial(), key = '', generation = 0;
   const listeners = new Set();
   const update = patch => { state = { ...state, ...patch }; listeners.forEach(listener => listener()); };
@@ -181,6 +181,20 @@ export function createPerformance(accounting, reportRequest, contributionRequest
         const settings = settingsRequest ? await settingsRequest(id, null, key) : null;
         if (token === generation) update({ settings, busy: '' });
       } catch (error) { if (token === generation) update({ busy: '', error: message(error) }); }
+    },
+    async loadDemoEvidence() {
+      const account = state.portfolios.find(row => row.id === state.selectedId);
+      if (!state.connected || state.busy || !demoEvidenceRequest || account?.identity?.mode !== 'demo') return;
+      const id = state.selectedId, token = ++generation;
+      update({ busy: 'demo', error: '', report: null, contribution: null, comparison: null, regression: null, evidence: '', benchmarkEvidence: '', factorEvidence: '' });
+      try {
+        const evidence = await demoEvidenceRequest(id, key);
+        if (token !== generation) return;
+        if (evidence?.mode !== 'demo' || evidence.receipt?.portfolio_id !== id || evidence.performance?.expected_version !== state.ledger?.version) throw new Error('Incoherent demo evidence');
+        update({ busy: '', draft: { ...blankDraft(), start: evidence.receipt.start, end: evidence.receipt.end, known_at: evidence.performance.known_at, max_mark_age_days: '0', include_contribution: true, include_benchmark: true }, evidence: JSON.stringify({ daily_marks: evidence.performance.daily_marks, flow_marks: evidence.performance.flow_marks }, null, 2), benchmarkEvidence: JSON.stringify(evidence.benchmark, null, 2) });
+      } catch {
+        if (token === generation) update({ busy: '', error: 'Original synthetic evidence is unavailable. Load the unchanged example in Ledger and reload this account.' });
+      }
     },
     editSetting(patch) {
       if (!state.connected) return;

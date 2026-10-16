@@ -1,0 +1,15 @@
+**/.venv
+**/env
+**/node_modules
+**/dist
+**/__pycache__
+**/*.pyc
+**/.env*
+.git
+.verification
+docs
+backend/tests
+frontend/**/*.test.*
+coverage.xml
+*.dump
+*.zip

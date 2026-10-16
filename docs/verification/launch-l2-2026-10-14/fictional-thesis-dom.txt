@@ -1,0 +1,195 @@
+- link "Skip to workspace":
+  - /url: "#workspace-content"
+- complementary:
+  - paragraph: Investment Management Workspace
+  - paragraph: Research, portfolios & decisions
+  - navigation "Workspace navigation":
+    - paragraph: Portfolio
+    - button "Overview"
+    - button "Ledger"
+    - button "Construction"
+    - paragraph: Research
+    - button "Thesis" [active]
+    - button "Valuation"
+    - paragraph: Risk & scenarios
+    - button "Single-asset Risk Lab"
+    - button "Portfolio Risk Lab"
+    - button "Historical & shocks"
+    - paragraph: Performance
+    - button "Performance"
+  - paragraph:
+    - text: Evidence informs.
+    - text: You decide.
+  - button "Switch to dark theme":
+- main:
+  - region "Private workspace access":
+    - text: Private workspace
+    - strong: ● Connected
+    - button "Lock workspace"
+    - paragraph: All private modules share this connection. Locking clears unsaved private work; saved records remain on the server.
+  - paragraph: Research
+  - heading "Investment theses" [level=1]
+  - paragraph: Keep your reasoning, evidence, and investment decisions in a versioned research record.
+  - region "Thesis workspace":
+    - paragraph: Private research
+    - heading "Investment theses" [level=2]
+    - paragraph: Record your reasoning, inspect timestamped revisions, and review what changed. Targets and return assumptions are your declared judgments.
+    - paragraph: Unsaved drafts stay in memory only and clear when you leave this page, lock the workspace, or refresh. Save drafts before leaving.
+    - complementary:
+      - heading "Questions before a decision" [level=3]
+      - list:
+        - listitem: If you did not own this security today, would you buy it at the current price?
+        - listitem: Has the investment thesis changed, or has only the price changed?
+        - listitem: What evidence would invalidate the thesis?
+        - listitem: Is the expected return from today's price still sufficient?
+        - listitem: Is another available investment now a better use of capital?
+    - heading "Select a security" [level=3]
+    - text: Research security
+    - combobox "Research security":
+      - option "Choose a securityâ€¦"
+      - option "DEMO-HARBOR Â· DEMO-B623C32440944EB7A4E6 Â· Harbor Workshop — fictional equity"
+      - option "DEMO-ORCHARD Â· DEMO-B623C32440944EB7A4E6 Â· Orchard Systems — fictional equity" [selected]
+      - option "DEMO-HARBOR Â· DEMO-DB48649124CD4E9EB5EC Â· Harbor Workshop — fictional equity"
+      - option "DEMO-ORCHARD Â· DEMO-DB48649124CD4E9EB5EC Â· Orchard Systems — fictional equity"
+    - button "Previous securities" [disabled]
+    - generic: Page 1 Â· up to 100 securities
+    - button "Next securities" [disabled]
+    - generic "Add an equity security"
+    - heading "Theses for this security" [level=3]
+    - button "New thesis"
+    - text: Saved thesis
+    - combobox "Saved thesis":
+      - option "Choose a saved thesisâ€¦"
+      - option "closed Â· revision 2 Â· 2026-10-14T13:19:24.130485Z" [selected]
+    - heading "Edit thesis Â· based on revision 2" [level=3]
+    - button "Reload latest (discard draft)"
+    - paragraph: Saving appends an immutable revision. Matches the loaded saved revision. Active theses require all narrative sections except notes. Draft narratives may be blank.
+    - text: Status *
+    - combobox "Status *":
+      - option "Choose explicitlyâ€¦"
+      - option "Draft"
+      - option "Active"
+      - option "Invalidated"
+      - option "Closed" [selected]
+    - text: Conviction *
+    - combobox "Conviction *":
+      - option "Choose explicitlyâ€¦"
+      - option "Low" [selected]
+      - option "Medium"
+      - option "High"
+    - text: Horizon (months) *
+    - spinbutton "Horizon (months) *": "12"
+    - text: Valuation currency (3-letter code) *
+    - textbox "Valuation currency (3-letter code) *": USD
+    - text: Target low (valuation currency per share)
+    - spinbutton "Target low (valuation currency per share)"
+    - text: Target high (valuation currency per share)
+    - spinbutton "Target high (valuation currency per share)"
+    - text: Required return (annual effective fraction; 0.08 = 8%)
+    - spinbutton "Required return (annual effective fraction; 0.08 = 8%)"
+    - paragraph: Targets are a positive low/high pair in the declared currency. Optional annual returns are effective decimal fractions greater than âˆ’1. No return is calculated here.
+    - text: Variant perception
+    - textbox "Variant perception": Fictional systems renewal case — closed loss
+    - text: Business quality
+    - textbox "Business quality": Original fictional example.
+    - text: Earnings drivers
+    - textbox "Earnings drivers": Illustrative renewals.
+    - text: Catalysts
+    - textbox "Catalysts": Illustrative results review.
+    - text: Risks
+    - textbox "Risks": Fictional competition and execution risk.
+    - text: Bear case
+    - textbox "Bear case": Fictional churn undermines the example thesis.
+    - text: Base case
+    - textbox "Base case": Illustrative product renewals hold; no expected-return adoption.
+    - text: Bull case
+    - textbox "Bull case": Illustrative churn improves.
+    - text: Invalidation conditions
+    - textbox "Invalidation conditions": Fictional churn undermines renewals.
+    - text: Notes
+    - textbox "Notes": "Fictional review revision: Closed losing example: initial churn assumption was wrong. Keep the loss in full performance and closed history."
+    - button "Save new revision" [disabled]
+    - heading "Saved revision history" [level=3]
+    - paragraph: Browsing history does not change the editor above. A review is attached to the revision selected here.
+    - text: Revision to inspect and review
+    - combobox "Revision to inspect and review":
+      - option "Revision 2 Â· closed Â· 2026-10-14T13:19:24.165300Z"
+      - option "Revision 1 Â· active Â· 2026-10-14T13:19:24.130485Z" [selected]
+    - term: Revision
+    - definition: "1"
+    - term: Created at
+    - definition: 2026-10-14T13:19:24.130485Z
+    - term: Ticker
+    - definition: DEMO-ORCHARD
+    - term: Exchange
+    - definition: DEMO-B623C32440944EB7A4E6
+    - term: Status
+    - definition: active
+    - term: Conviction
+    - definition: low
+    - term: Horizon (months)
+    - definition: "12"
+    - term: Valuation currency (3-letter code)
+    - definition: USD
+    - term: Target low (valuation currency per share)
+    - definition: Not supplied
+    - term: Target high (valuation currency per share)
+    - definition: Not supplied
+    - term: Required return (annual effective fraction; 0.08 = 8%)
+    - definition: Not supplied
+    - term: Variant perception
+    - definition: Fictional systems renewal case — closed loss
+    - term: Business quality
+    - definition: Original fictional example.
+    - term: Earnings drivers
+    - definition: Illustrative renewals.
+    - term: Catalysts
+    - definition: Illustrative results review.
+    - term: Risks
+    - definition: Fictional competition and execution risk.
+    - term: Bear case
+    - definition: Fictional churn undermines the example thesis.
+    - term: Base case
+    - definition: Illustrative product renewals hold; no expected-return adoption.
+    - term: Bull case
+    - definition: Illustrative churn improves.
+    - term: Invalidation conditions
+    - definition: Fictional churn undermines renewals.
+    - term: Notes
+    - definition: Synthetic research; example date 2025-12-21; recorded now, not a historical personal belief.
+    - generic "Record identifiers"
+    - heading "Review revision 1" [level=3]
+    - paragraph: Your decision records your judgment. Saving a review neither changes thesis status nor places a trade.
+    - text: Decision *
+    - combobox "Decision *":
+      - option "Choose explicitlyâ€¦" [selected]
+      - option "BUY MORE"
+      - option "HOLD"
+      - option "REDUCE"
+      - option "EXIT"
+      - option "WATCH"
+    - text: Is the thesis still valid? *
+    - combobox "Is the thesis still valid? *":
+      - option "Choose explicitlyâ€¦" [selected]
+      - option "Yes"
+      - option "No"
+    - text: Valuation currency (3-letter code) *
+    - textbox "Valuation currency (3-letter code) *": USD
+    - text: Current price (valuation currency per share)
+    - spinbutton "Current price (valuation currency per share)"
+    - text: Owner-declared updated expected return (annual effective fraction; 0.08 = 8%)
+    - spinbutton "Owner-declared updated expected return (annual effective fraction; 0.08 = 8%)"
+    - text: What changed
+    - textbox "What changed"
+    - text: What was correct
+    - textbox "What was correct"
+    - text: What was wrong
+    - textbox "What was wrong"
+    - text: New information
+    - textbox "New information"
+    - text: Notes
+    - textbox "Notes"
+    - button "Save review for revision 1"
+    - heading "Review history" [level=3]
+    - paragraph: All reviews for this thesis, newest first. Revision numbers are shown when loaded; exact record identifiers remain available.
+    - generic "EXIT Â· 2026-10-14T13:19:24.148111Z Â· Revision 1"

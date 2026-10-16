@@ -1,5 +1,6 @@
 import { useState, useSyncExternalStore } from 'react';
-import { accountingRequest } from '../ledger/ledger.js';
+import { portfolioRequest } from './portfolioIdentity.js';
+import PortfolioIdentity from './PortfolioIdentity.jsx';
 import { researchRequest } from '../thesis/thesis.js';
 import { createOverview } from './overview.js';
 import { useWorkspaceConnection } from './sessionContext.js';
@@ -9,6 +10,7 @@ export function OverviewRecords({ state }) {
   const account = state.portfolios.find(item => item.id === state.selectedId);
   const ledger = state.ledger;
   return <>
+    {account && <PortfolioIdentity portfolio={account} />}
     {account && <dl className="mt-5 grid gap-4 text-sm sm:grid-cols-3">
       <div><dt className="opacity-65">Recorded account</dt><dd className="mt-1 font-semibold">{account.name}</dd></div>
       <div><dt className="opacity-65">Base currency</dt><dd className="mt-1 font-semibold">{account.base_currency}</dd></div>
@@ -27,7 +29,7 @@ export function OverviewRecords({ state }) {
 }
 
 export default function Overview({ apiUrl, isDark, onNavigate }) {
-  const [workspace] = useState(() => createOverview((path, options, key) => accountingRequest(apiUrl, key, path, options), (id, key) => researchRequest(apiUrl, key, `/securities/${encodeURIComponent(id)}`)));
+  const [workspace] = useState(() => createOverview((path, options, key) => portfolioRequest(apiUrl, key, path, options), (id, key) => researchRequest(apiUrl, key, `/securities/${encodeURIComponent(id)}`)));
   useWorkspaceConnection(workspace);
   const state = useSyncExternalStore(workspace.subscribe, workspace.getSnapshot, workspace.getSnapshot);
   const panel = `rounded-2xl border p-5 md:p-6 ${isDark ? 'border-slate-700 bg-[#151e32]' : 'border-slate-200 bg-white'}`;

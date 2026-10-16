@@ -1,0 +1,39 @@
+{
+  "fixture_id": "original-synthetic-launch-v1",
+  "mode": "demo",
+  "base_currency": "GBP",
+  "start": "2025-12-20",
+  "end": "2026-02-05",
+  "purpose": "Coverage example, not selected for attractive performance. Entirely fictional equities, transactions, prices, FX, comparison and research. No real money, broker execution or contemporaneous personal decision.",
+  "valuation_policy": "UTC calendar-day closes; unadjusted synthetic prices; booked net dividends and fees; within each synthetic day prices/FX are flat at the declared point. Six decimal places with half-even interpolation. No market calendar or provider data.",
+  "securities": [
+    {"key": "harbor", "ticker": "DEMO-HARBOR", "name": "Harbor Workshop — fictional equity", "currency": "GBP", "country": "GB", "sector": "Fictional industrials"},
+    {"key": "orchard", "ticker": "DEMO-ORCHARD", "name": "Orchard Systems — fictional equity", "currency": "USD", "country": "US", "sector": "Fictional technology"}
+  ],
+  "price_points": {
+    "harbor": [["2025-12-20", "60"], ["2025-12-21", "60"], ["2026-01-05", "55"], ["2026-01-25", "64"], ["2026-02-05", "66"]],
+    "orchard": [["2025-12-20", "100"], ["2025-12-21", "100"], ["2026-01-10", "80"], ["2026-02-05", "80"]]
+  },
+  "fx_points": [["2025-12-20", "0.8"], ["2026-01-05", "0.78"], ["2026-01-20", "0.81"], ["2026-02-05", "0.82"]],
+  "comparison_points": [["2025-12-20", "100"], ["2026-01-05", "97"], ["2026-01-25", "101"], ["2026-02-05", "102"]],
+  "transactions": [
+    {"type": "DEPOSIT", "effective_at": "2025-12-20T09:00:00Z", "currency": "GBP", "amount": "10000", "external_reference": "opening-funding"},
+    {"type": "BUY", "effective_at": "2025-12-21T10:00:00Z", "currency": "GBP", "security_key": "harbor", "quantity": "50", "price": "60", "fees": "5", "external_reference": "harbor-entry"},
+    {"type": "FX_CONVERSION", "effective_at": "2025-12-21T11:00:00Z", "currency": "GBP", "amount": "2000", "to_currency": "USD", "to_amount": "2500", "fx_rate": "1.25", "fees": "2", "external_reference": "synthetic-fx"},
+    {"type": "BUY", "effective_at": "2025-12-21T12:00:00Z", "currency": "USD", "security_key": "orchard", "quantity": "20", "price": "100", "fees": "5", "external_reference": "orchard-entry"},
+    {"type": "DIVIDEND", "effective_at": "2025-12-28T10:00:00Z", "currency": "GBP", "security_key": "harbor", "amount": "25", "external_reference": "harbor-net-dividend"},
+    {"type": "DIVIDEND", "effective_at": "2026-01-03T10:00:00Z", "currency": "USD", "security_key": "orchard", "amount": "10", "external_reference": "orchard-net-dividend"},
+    {"type": "DEPOSIT", "effective_at": "2026-01-06T12:00:00Z", "currency": "GBP", "amount": "1000", "external_reference": "additional-funding"},
+    {"type": "SELL", "effective_at": "2026-01-10T10:00:00Z", "currency": "USD", "security_key": "orchard", "quantity": "20", "price": "80", "fees": "5", "external_reference": "orchard-closed-loss"},
+    {"type": "FEE", "effective_at": "2026-01-12T10:00:00Z", "currency": "GBP", "amount": "9", "external_reference": "mistaken-fee"},
+    {"type": "WITHDRAWAL", "effective_at": "2026-01-20T12:00:00Z", "currency": "GBP", "amount": "500", "external_reference": "withdrawal"},
+    {"type": "SELL", "effective_at": "2026-01-25T10:00:00Z", "currency": "GBP", "security_key": "harbor", "quantity": "10", "price": "64", "fees": "2", "external_reference": "harbor-partial-exit"},
+    {"type": "REVERSAL", "effective_at": "2026-01-12T10:00:00Z", "currency": "GBP", "reverses_reference": "mistaken-fee", "external_reference": "fee-reversal"},
+    {"type": "FEE", "effective_at": "2026-01-12T10:00:00Z", "currency": "GBP", "amount": "2", "external_reference": "corrected-fee"}
+  ],
+  "research": [
+    {"security_key": "harbor", "example_date": "2025-12-21", "title": "Fictional workshop renewal case", "base_case": "Illustrative stable renewals; no expected-return adoption.", "bear_case": "Fictional renewals fall and margins compress.", "bull_case": "Illustrative renewals and margins improve.", "risk": "Fictional customer concentration and input cost risk.", "review_example_date": "2026-01-25", "review": "Example partial sale after a fictional margin review; this is not the owner's historical decision."},
+    {"security_key": "orchard", "example_date": "2025-12-21", "title": "Fictional systems renewal case — closed loss", "base_case": "Illustrative product renewals hold; no expected-return adoption.", "bear_case": "Fictional churn undermines the example thesis.", "bull_case": "Illustrative churn improves.", "risk": "Fictional competition and execution risk.", "review_example_date": "2026-01-10", "review": "Closed losing example: initial churn assumption was wrong. Keep the loss in full performance and closed history."}
+  ],
+  "hand_checks": {"final_gbp_cash": "6154", "final_usd_cash": "2100", "final_harbor_quantity": "40", "final_harbor_local_cost": "2404", "final_nav_gbp": "10516", "closed_orchard_net_local_pnl_usd": "-400", "note": "Not a TWR assumption: deposits/withdrawals are external flows, and the engines calculate geometric performance independently."}
+}

@@ -1,0 +1,17 @@
+{
+  "hostname": "stochastic-market-simulator.fly.dev",
+  "machines": [
+    {
+      "id": "d89261db090328",
+      "region": "iad",
+      "image_digest": "sha256:e551fec3da3af812a9cc5fbdc92a365b87e506364d9b39a800f1af3ff310efd4",
+      "guest": {
+        "cpu_kind": "shared",
+        "cpus": 1,
+        "memory_mb": 512
+      }
+    }
+  ],
+  "protected_records": 440,
+  "preserved": true
+}
