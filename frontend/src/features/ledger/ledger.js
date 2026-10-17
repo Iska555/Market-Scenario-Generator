@@ -21,13 +21,13 @@ export const emptyManualDraft = () => ({
 export const emptyPortfolioDraft = () => ({
   mode: 'unclassified',
   id: '',
-  name: 'Lightyear ISA',
+  name: '',
   base_currency: 'GBP',
-  broker: 'Lightyear',
-  account_label: 'Stocks & Shares ISA',
+  broker: '',
+  account_label: '',
 });
 
-export const emptyImportDraft = () => ({ csv_text: '', source: 'lightyear_reviewed' });
+export const emptyImportDraft = () => ({ csv_text: '', source: 'canonical_csv' });
 export const emptyValuationDraft = () => ({ as_of: '', known_at: '', prices_text: '[]', fx_text: '[]' });
 
 export const correctionFields = row => ({

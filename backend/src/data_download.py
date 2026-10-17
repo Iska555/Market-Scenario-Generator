@@ -14,7 +14,7 @@ def download_price_data(ticker: str, years: int = 3) -> pd.DataFrame:
         auto_adjust=True,
         progress=False,
         threads=False,
-        timeout=20,
+        timeout=10,
     )
     if data is None or data.empty or "Close" not in data:
         raise ValueError(f"No adjusted-close data for {ticker}")

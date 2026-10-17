@@ -8,7 +8,7 @@ primary_region = "iad"
 [env]
   PUBLIC_RELEASE_MODE = "1"
   ENABLE_DEMO_PREVIEW = "0"
-  ENABLE_PRIVATE_SIMULATIONS = "0"
+  ENABLE_PRIVATE_SIMULATIONS = "1"
   FRONTEND_DIST = "/app/frontend-dist"
 
 [http_service]

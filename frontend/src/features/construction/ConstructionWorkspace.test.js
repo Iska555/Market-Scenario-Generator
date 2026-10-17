@@ -15,7 +15,7 @@ after(async () => { await server?.close(); });
 test('construction starts disconnected with memory-only credentials and an honest empty state', () => {
   const html = renderToStaticMarkup(React.createElement(components.default, { apiUrl: 'http://local', isDark: false }));
   assert.doesNotMatch(html, /type="password"/);
-  assert.match(html, /Unlock private workspace above/);
+  assert.match(html, /Unlock private workspace to continue/);
   assert.match(html, /memory only/);
   assert.match(html, /Your research universe/);
   assert.doesNotMatch(html, /\$[0-9]/);

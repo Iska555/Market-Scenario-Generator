@@ -13,13 +13,12 @@ before(async () => {
 });
 after(async () => { await server?.close(); });
 
-test('ledger starts disconnected with honest persistence and Lightyear defaults', () => {
+test('ledger starts disconnected with honest persistence and no invented broker account', () => {
   const html = renderToStaticMarkup(React.createElement(components.default, { apiUrl: 'http://local', isDark: false }));
   assert.doesNotMatch(html, /type="password"/);
-  assert.match(html, /Unlock private workspace above/);
-  assert.match(html, /Lightyear/);
-  assert.match(html, /Stocks &amp; Shares ISA/);
-  assert.match(html, /value="GBP"/);
+  assert.match(html, /Unlock private workspace to continue/);
+  assert.match(html, /No broker is connected/);
+  assert.doesNotMatch(html, /Planned broker|Stocks &amp; Shares ISA/);
   assert.match(html, /Persisted transactions remain on the server/);
   assert.doesNotMatch(html, /£[0-9]/);
 });

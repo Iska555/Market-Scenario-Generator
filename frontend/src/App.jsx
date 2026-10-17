@@ -1,51 +1,34 @@
 import SimulationConfig from './components/SimulationConfig.jsx';
 import Overview from './features/workspace/Overview.jsx';
-import PublicDemoPage from './features/public/PublicDemoPage.jsx';
 import { PrivateWorkspaceProvider } from './features/workspace/PrivateWorkspace.jsx';
 import { usePrivateSession } from './features/workspace/sessionContext.js';
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { AlertTriangle } from 'lucide-react';
 
-import ScenarioResults from './components/ScenarioResults.jsx';
 import PlatformShell from './components/PlatformShell.jsx';
-import ConstructionWorkspace from './features/construction/ConstructionWorkspace.jsx';
-import LedgerWorkspace from './features/ledger/LedgerWorkspace.jsx';
-import PerformanceWorkspace from './features/performance/PerformanceWorkspace.jsx';
-import StressWorkspace from './features/stress/StressWorkspace.jsx';
-import ThesisWorkspace from './features/thesis/ThesisWorkspace.jsx';
-import ValuationWorkspace from './features/valuation/ValuationWorkspace.jsx';
+import { apiBase, postScenario } from './api.js';
+const PublicDemoPage = lazy(() => import('./features/public/PublicDemoPage.jsx'));
+const ScenarioResults = lazy(() => import('./components/ScenarioResults.jsx'));
+const ConstructionWorkspace = lazy(() => import('./features/construction/ConstructionWorkspace.jsx'));
+const LedgerWorkspace = lazy(() => import('./features/ledger/LedgerWorkspace.jsx'));
+const PerformanceWorkspace = lazy(() => import('./features/performance/PerformanceWorkspace.jsx'));
+const StressWorkspace = lazy(() => import('./features/stress/StressWorkspace.jsx'));
+const ThesisWorkspace = lazy(() => import('./features/thesis/ThesisWorkspace.jsx'));
+const ValuationWorkspace = lazy(() => import('./features/valuation/ValuationWorkspace.jsx'));
 import {
-  assertV3Response,
   buildPortfolioRequest,
   buildSingleRequest,
   DEFAULT_ASSUMPTIONS,
   normalizeWeightPercentages,
 } from './scenarioContract.js';
 
-const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, '') ?? 'http://localhost:8000';
-function parseApiError(detail, fallback) {
-  if (typeof detail === 'string') return detail;
-  if (Array.isArray(detail)) return detail.map((item) => item.msg || JSON.stringify(item)).join('; ');
-  return fallback;
-}
-
-async function postScenario(path, body, key = '') {
-  const response = await fetch(`${API_URL}${path}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...(key ? { 'X-Research-Key': key } : {}) },
-    body: JSON.stringify(body),
-  });
-  if (!response.ok) {
-    const errorBody = await response.json().catch(() => ({}));
-    throw new Error(parseApiError(errorBody.detail, 'Scenario simulation failed.'));
-  }
-  return assertV3Response(await response.json());
-}
+const API_URL = apiBase(import.meta.env.DEV, import.meta.env.VITE_API_URL);
+const loadingView = <p className="workspace-loading" role="status">Loading workspace…</p>;
 
 export default function PortfolioPlatform() {
   const path = typeof window !== 'undefined' ? window.location.pathname.replace(/\/$/, '') : '';
-  if (path === '/demo-preview') return <PublicDemoPage apiUrl={API_URL} />;
-  if (path === '/demo' || path.startsWith('/demo/')) return <PublicDemoPage apiUrl={API_URL} published version={path.slice(6) || null} />;
+  if (path === '/demo-preview') return <Suspense fallback={loadingView}><PublicDemoPage apiUrl={API_URL} /></Suspense>;
+  if (path === '/demo' || path.startsWith('/demo/')) return <Suspense fallback={loadingView}><PublicDemoPage apiUrl={API_URL} published version={path.slice(6) || null} /></Suspense>;
   return <PrivatePortfolioPlatform />;
 }
 
@@ -61,7 +44,7 @@ function SessionContents() {
 }
 
 function PortfolioPlatformContent({ activeTab, setActiveTab, theme, setTheme }) {
-  const { session } = usePrivateSession();
+  const { session, connected } = usePrivateSession();
   const [ticker, setTicker] = useState('');
   const [portfolioAssets, setPortfolioAssets] = useState([
     { ticker: '', weight: '' },
@@ -73,12 +56,11 @@ function PortfolioPlatformContent({ activeTab, setActiveTab, theme, setTheme }) 
   const [portfolioResult, setPortfolioResult] = useState(null);
   const [loading, setLoading] = useState({ single: false, portfolio: false });
   const [errors, setErrors] = useState({ single: null, portfolio: null });
+  const requests = useRef({});
   const error = errors[activeTab];
   const isDark = theme === 'dark';
 
-  useEffect(() => {
-    fetch(`${API_URL}/ping`).catch(() => {});
-  }, []);
+  useEffect(() => { const current = requests.current; return () => Object.values(current).forEach(controller => controller.abort()); }, []);
 
   const totalWeight = portfolioAssets.reduce((sum, asset) => sum + (Number(asset.weight) || 0), 0);
 
@@ -94,25 +76,35 @@ function PortfolioPlatformContent({ activeTab, setActiveTab, theme, setTheme }) 
   };
 
   const runSingle = async () => {
+    if (!connected) { session.requestAccess(); return; }
+    requests.current.single?.abort();
+    const controller = new AbortController();
+    requests.current.single = controller;
     setLoading((current) => ({ ...current, single: true }));
     setErrors((current) => ({ ...current, single: null }));
     try {
-      setSingleResult(await session.authorize(key => postScenario('/api/simulate', buildSingleRequest(ticker, singleAssumptions), key)));
+      const result = await session.authorize(key => postScenario(API_URL, '/api/simulate', buildSingleRequest(ticker, singleAssumptions), key, { signal: controller.signal }));
+      if (!controller.signal.aborted) setSingleResult(result);
     } catch (requestError) {
-      setErrors((current) => ({ ...current, single: requestError.message }));
+      if (!controller.signal.aborted) setErrors((current) => ({ ...current, single: requestError.message }));
     } finally {
       setLoading((current) => ({ ...current, single: false }));
     }
   };
 
   const runPortfolio = async () => {
+    if (!connected) { session.requestAccess(); return; }
+    requests.current.portfolio?.abort();
+    const controller = new AbortController();
+    requests.current.portfolio = controller;
     setLoading((current) => ({ ...current, portfolio: true }));
     setErrors((current) => ({ ...current, portfolio: null }));
     try {
       const request = buildPortfolioRequest(portfolioAssets, portfolioAssumptions);
-      setPortfolioResult(await session.authorize(key => postScenario('/api/simulate-portfolio', request, key)));
+      const result = await session.authorize(key => postScenario(API_URL, '/api/simulate-portfolio', request, key, { signal: controller.signal }));
+      if (!controller.signal.aborted) setPortfolioResult(result);
     } catch (requestError) {
-      setErrors((current) => ({ ...current, portfolio: requestError.message }));
+      if (!controller.signal.aborted) setErrors((current) => ({ ...current, portfolio: requestError.message }));
     } finally {
       setLoading((current) => ({ ...current, portfolio: false }));
     }
@@ -125,6 +117,7 @@ function PortfolioPlatformContent({ activeTab, setActiveTab, theme, setTheme }) 
       isDark={isDark}
       onToggleTheme={() => setTheme((current) => current === 'light' ? 'dark' : 'light')}
     >
+      <Suspense fallback={loadingView}>
         {activeTab === 'overview' ? <Overview apiUrl={API_URL} isDark={isDark} onNavigate={setActiveTab} /> : activeTab === 'ledger' ? <LedgerWorkspace apiUrl={API_URL} isDark={isDark} /> : activeTab === 'performance' ? <PerformanceWorkspace apiUrl={API_URL} isDark={isDark} /> : activeTab === 'construction' ? <ConstructionWorkspace apiUrl={API_URL} isDark={isDark} /> : activeTab === 'stress' ? <StressWorkspace apiUrl={API_URL} isDark={isDark} /> : activeTab === 'valuation' ? <ValuationWorkspace apiUrl={API_URL} isDark={isDark} /> : activeTab === 'thesis' ? <ThesisWorkspace apiUrl={API_URL} isDark={isDark} /> : activeTab === 'single' ? (
           <>
             <SimulationConfig
@@ -137,6 +130,8 @@ function PortfolioPlatformContent({ activeTab, setActiveTab, theme, setTheme }) 
               onRun={runSingle}
               loading={loading.single}
               isDark={isDark}
+              connected={connected}
+              onUnlock={() => session.requestAccess()}
             />
             {singleResult && <ScenarioResults result={singleResult} mode="single" isDark={isDark} />}
           </>
@@ -155,6 +150,8 @@ function PortfolioPlatformContent({ activeTab, setActiveTab, theme, setTheme }) 
               onRun={runPortfolio}
               loading={loading.portfolio}
               isDark={isDark}
+              connected={connected}
+              onUnlock={() => session.requestAccess()}
             />
             {portfolioResult && <ScenarioResults result={portfolioResult} mode="portfolio" isDark={isDark} />}
           </>
@@ -165,6 +162,7 @@ function PortfolioPlatformContent({ activeTab, setActiveTab, theme, setTheme }) 
             <AlertTriangle className="h-4 w-4 shrink-0" /> {error}
           </div>
         )}
+      </Suspense>
     </PlatformShell>
   );
 }

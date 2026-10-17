@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { LockKeyhole, UnlockKeyhole } from 'lucide-react';
 import { researchRequest } from '../thesis/thesis.js';
 import { createPrivateSession } from './session.js';
 import { SessionContext, usePrivateSession } from './sessionContext.js';
@@ -10,25 +11,26 @@ export function PrivateWorkspaceProvider({ apiUrl, children }) {
 }
 
 export default function PrivateWorkspaceControl() {
-  const { session, connected, busy, error } = usePrivateSession();
+  const { session, connected, busy, error, accessOpen } = usePrivateSession();
   const [draft, setDraft] = useState('');
-  const [expanded, setExpanded] = useState(false);
-  const lock = () => { setDraft(''); setExpanded(false); session?.lock(); };
+  const keyInput = useRef(null);
+  useEffect(() => { if (accessOpen) keyInput.current?.focus(); }, [accessOpen]);
+  const lock = () => { setDraft(''); session?.lock(); };
   return <section className="workspace-access" aria-label="Private workspace access">
-    <div className="workspace-access-status"><span>Private workspace <strong>{connected ? '● Connected' : '○ Locked'}</strong></span>
-      {connected || busy ? <button type="button" onClick={lock}>Lock workspace</button> : <button type="button" aria-expanded={expanded} onClick={() => { setDraft(''); setExpanded(!expanded); }}>Unlock private workspace</button>}
+    <div className="workspace-access-status"><span className="workspace-access-label">{connected ? <UnlockKeyhole size={15} aria-hidden="true" /> : <LockKeyhole size={15} aria-hidden="true" />}<strong>{connected ? 'Workspace connected' : 'Private workspace'}</strong></span>
+      <div className="workspace-access-actions"><a href="/demo">View demonstration ↗</a>{connected || busy ? <button type="button" onClick={lock}>Lock workspace</button> : <button type="button" aria-expanded={Boolean(accessOpen)} onClick={() => { setDraft(''); if (accessOpen) session?.dismissAccess(); else session?.requestAccess(); }}>Unlock private workspace</button>}</div>
     </div>
-    {!connected && expanded && <form className="workspace-unlock-form" onSubmit={event => { event.preventDefault(); const candidate = draft; setDraft(''); void session?.unlock(candidate); }}>
-      <label>Private workspace key<input type="password" autoComplete="off" autoCapitalize="none" spellCheck={false} required value={draft} disabled={busy} onChange={event => setDraft(event.target.value)} aria-describedby="workspace-key-help" /></label>
+    {!connected && accessOpen && <form className="workspace-unlock-form" onSubmit={event => { event.preventDefault(); const candidate = draft.trim(); setDraft(''); void session?.unlock(candidate); }}>
+      <label>Private workspace key<input ref={keyInput} type="password" autoComplete="off" autoCapitalize="none" spellCheck={false} required value={draft} disabled={busy} onChange={event => setDraft(event.target.value)} aria-describedby="workspace-key-help" /></label>
       <button disabled={busy || !session}>{busy ? 'Unlocking…' : 'Unlock workspace'}</button>
-      <p id="workspace-key-help">This key unlocks your private Investment Management Workspace. It is not your broker password or market-data credential. It stays in memory only; refresh requires unlocking again.</p>
+      <p id="workspace-key-help">Use the owner access key, not a broker password. It stays in this tab until you lock or refresh.</p>
+      <details className="workspace-key-help"><summary>Where do I get a key?</summary><p>The site operator holds the private key. There is no public sign-up. Visitors can use <a href="/demo">the demonstration portfolio</a> without a key. If you own this deployment, follow the private-access instructions in the project README.</p></details>
     </form>}
     {error && <p role="alert">{error}</p>}
-    {connected && <p className="workspace-access-note">All private modules share this connection. Locking clears unsaved private work; saved records remain on the server.</p>}
   </section>;
 }
 
 export function WorkspaceConnectionNotice({ workspace }) {
   const { session, connected } = usePrivateSession();
-  return <p className="mt-4 text-sm opacity-75">{connected ? <>Opening private records. <button type="button" className="underline" onClick={() => session.reconnect(workspace)}>Retry loading</button></> : 'Unlock private workspace above to access this area.'}</p>;
+  return <p className="mt-4 text-sm opacity-75">{connected ? <>Opening private records. <button type="button" className="underline" onClick={() => session.reconnect(workspace)}>Retry loading</button></> : <button type="button" className="font-semibold underline underline-offset-4" onClick={() => session?.requestAccess()}>Unlock private workspace to continue →</button>}</p>;
 }

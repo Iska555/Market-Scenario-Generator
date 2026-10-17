@@ -2,7 +2,9 @@
 
 import asyncio
 import os
+from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
+from threading import BoundedSemaphore
 
 import pandas as pd
 from fastapi import FastAPI, HTTPException, Request, Response
@@ -33,6 +35,7 @@ from src.risk.scenarios.historical_routes import router as historical_router
 from src.risk.scenarios.service import run_portfolio, run_single
 from src.valuation.routes import router as valuation_router
 from starlette.middleware.base import RequestResponseEndpoint
+from starlette.middleware.gzip import GZipMiddleware
 
 API_VERSION = "3.0.0"
 app = FastAPI(title="Investment Management Workspace — Risk & Scenario Lab", version=API_VERSION)
@@ -51,23 +54,19 @@ app.include_router(preview_router)
 app.include_router(owner_router)
 app.include_router(public_router)
 install_release(app)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        s.strip() for s in os.environ.get("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
-    ],
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT"],
-    allow_headers=["*"],
-)
 get_cached_price_data = CachedPriceProvider()
 
 
 @app.middleware("http")
 async def factor_private_cache(request: Request, call_next: RequestResponseEndpoint) -> Response:
-    if os.getenv("PUBLIC_RELEASE_MODE") == "1" and request.url.path in (
-        "/api/simulate",
-        "/api/simulate-portfolio",
+    if (
+        request.method != "OPTIONS"
+        and os.getenv("PUBLIC_RELEASE_MODE") == "1"
+        and request.url.path
+        in (
+            "/api/simulate",
+            "/api/simulate-portfolio",
+        )
     ):
         try:
             require_research_access(request.headers.get("X-Research-Key"))
@@ -106,6 +105,25 @@ async def factor_private_cache(request: Request, call_next: RequestResponseEndpo
 # The two-cell limit bounds simultaneous tensor memory in this process. Waiting
 # requests allocate no simulation tensors and never block the ASGI event loop.
 _executor = ThreadPoolExecutor(max_workers=2, thread_name_prefix="scenario")
+_release_scenario_slot = BoundedSemaphore(1)
+
+
+async def execute_scenario[ScenarioResult](action: Callable[[], ScenarioResult]) -> ScenarioResult:
+    """No release queue: one tensor workload, even if its caller disconnects."""
+    limited = os.getenv("PUBLIC_RELEASE_MODE") == "1"
+    if limited and not _release_scenario_slot.acquire(blocking=False):
+        raise HTTPException(
+            503, "A simulation is already running. Try again shortly.", headers={"Retry-After": "5"}
+        )
+
+    def work() -> ScenarioResult:
+        try:
+            return action()
+        finally:
+            if limited:
+                _release_scenario_slot.release()
+
+    return await asyncio.shield(asyncio.get_running_loop().run_in_executor(_executor, work))
 
 
 @app.exception_handler(RequestValidationError)
@@ -147,9 +165,7 @@ def price_provider(ticker: str, years: int) -> pd.DataFrame:
 @app.post("/api/simulate", response_model=SimulationResponse)
 async def simulate_scenarios(request: SimulationRequest) -> SimulationResponse:
     try:
-        return await asyncio.get_running_loop().run_in_executor(
-            _executor, run_single, request, price_provider
-        )
+        return await execute_scenario(lambda: run_single(request, price_provider))
     except PriceDataError as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     except (ValueError, FloatingPointError) as exc:
@@ -159,10 +175,21 @@ async def simulate_scenarios(request: SimulationRequest) -> SimulationResponse:
 @app.post("/api/simulate-portfolio", response_model=PortfolioSimulationResponse)
 async def simulate_portfolio(request: PortfolioSimulationRequest) -> PortfolioSimulationResponse:
     try:
-        return await asyncio.get_running_loop().run_in_executor(
-            _executor, run_portfolio, request, price_provider
-        )
+        return await execute_scenario(lambda: run_portfolio(request, price_provider))
     except PriceDataError as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     except (ValueError, FloatingPointError) as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+# CORS wraps authentication too, including rejected requests and preflights.
+app.add_middleware(GZipMiddleware, minimum_size=1000)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        s.strip() for s in os.environ.get("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
+    ],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT"],
+    allow_headers=["*"],
+)

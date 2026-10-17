@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://stochastic-market-simulator.fly.dev/api/:path*" },
+    { "source": "/ping", "destination": "https://stochastic-market-simulator.fly.dev/ping" },
+    { "source": "/demo/:path*", "destination": "/demo/index.html" },
+    { "source": "/((?!assets/).*)", "destination": "/index.html" }
+  ]
+}

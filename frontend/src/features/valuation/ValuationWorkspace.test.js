@@ -17,7 +17,7 @@ const render = result => renderToStaticMarkup(React.createElement(components.Val
 test('workspace starts disconnected with a memory-only password field', () => {
   const html = renderToStaticMarkup(React.createElement(components.default, { apiUrl: 'http://localhost', isDark: false }));
   assert.doesNotMatch(html, /type="password"/);
-  assert.match(html, /Unlock private workspace above/);
+  assert.match(html, /Unlock private workspace to continue/);
   assert.match(html, /memory only/);
   assert.match(html, /Valuation/);
 });

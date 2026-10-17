@@ -1,286 +1,132 @@
-# Investment Management Workspace
+# Portfolio Management
 
-A personal investment portfolio-management research project. The long-term goal
-is an inspectable investment process: research → thesis → construction → risk →
-accounting → performance → attribution → review.
+**Research investments, build allocations, record transactions and understand portfolio performance in one place.**
 
-**Phase 9E: native factor-source review and common-interval specification.**
-The Performance workspace measures daily time-weighted returns, dated XIRR and
-realized statistics using recorded transactions and supplied unadjusted price/FX
-evidence. Missing coverage stays undefined. See the
-[performance guide](docs/PERFORMANCE.md) and [Phase 8 audit](docs/PHASE_8_AUDIT.md).
-Select **Include position contributions** to explain TWR using actual holdings,
-trades, net dividends, fees, cash and FX. Closed equities remain included;
-linked effects show an explicit reconciliation residual. See the
-[contribution methodology](docs/ATTRIBUTION.md) and [Phase 9A audit](docs/PHASE_9A_AUDIT.md).
-Select **Compare with a reviewed benchmark** to supply versioned gross/net
-total-return levels in account currency. The report shows aligned daily returns,
-cumulative differences, relative wealth, realized tracking error, information
-ratio and beta/correlation with explicit missing coverage and sample limitations.
-Portfolio benchmark identities can now be saved with reasons and immutable revisions.
-Reports explicitly opt into a saved revision and retain its selection receipt.
-See [benchmark settings](docs/BENCHMARK_SETTINGS.md) and [Phase 9D audit](docs/PHASE_9D_AUDIT.md).
-See the [benchmark methodology](docs/BENCHMARK.md) and [Phase 9B audit](docs/PHASE_9B_AUDIT.md).
-Select **Analyze reviewed historical factors** to supply one to six research
-factors and matched period-effective risk-free returns. The report fits historical
-portfolio excess returns with OLS, HC3 errors/t-statistics, R² and daily residuals.
-It requires at least 30 fully paired funded intervals. Daily alpha is shown with
-its uncertainty and sample context; it is not a forecast or skill decision.
-See [factor methodology](docs/FACTORS.md) and [Phase 9C audit](docs/PHASE_9C_AUDIT.md).
-Select **Review a public factor source** to inspect a local French developed
-five-factor daily CSV. It preserves native USD/date-label conventions, converts
-percentages to decimals, shows missing values and alignment blockers, and exports
-a replayable source receipt. It does not enable regression. See
-[source import](docs/FACTOR_SOURCE_IMPORT.md), [proposed alignment](docs/FACTOR_ALIGNMENT.md)
-and [Phase 9E acceptance](docs/PHASE_9E_AUDIT.md).
+Portfolio Management connects the work that usually lives across spreadsheets, broker exports and scattered research notes. Record why you own an investment, examine its valuation, test how an allocation behaves, and measure what happened after transactions and cash flows.
 
-The transaction ledger supports holdings and supplied-mark valuation.
-Preview and record immutable transactions, correct mistakes with reversals,
-replay trade-date cash and moving-average local cost, and value positions using
-explicit dated prices and FX. Manual entry and reviewed canonical CSV support
-the planned Lightyear ISA; a native Lightyear parser remains unverified.
-See the [accounting guide](docs/ACCOUNTING.md) and [Phase 7 audit](docs/PHASE_7_AUDIT.md).
-The owner approved Phase 8 acceptance/reproducibility closeout on 2026-10-09
-and the subsequent sequence recorded in [approved suggestions](docs/BRIEF_SUGGESTIONS.md).
-Phase 8 closeout acceptance is recorded in its preserved audit; the owner's
-subsequent Phase 9A authorization and acceptance have a separate record.
-The simulation module is
-the Risk & Scenario Lab. All simulation outputs are conditional scenarios under
-explicit assumptions. Historical sample means are available only through an
-explicit historical diagnostic selection; they are not silently used as forecasts.
+[Open the platform](https://stochastic-market-simulator.fly.dev/) · [Explore the public demonstration](https://stochastic-market-simulator.fly.dev/demo) · [Methodology](docs/METHODOLOGY.md)
 
-## Project authority
+![Portfolio Management workspace](docs/verification/usability-2026-10-17/overview-desktop.png)
 
-- [Approved public launch plan](PLAN.md) — **current execution handoff**: labelled synthetic demonstration first; no Lightyear account exists. Launch implementation is not yet accepted. Read the plan's live status and explicit deferrals before continuing.
-- [Permanent master brief](docs/MASTER_BRIEF.md) — canonical phase order and rules
-- [Phase 1 audit](docs/PHASE_1_AUDIT.md) — original defects, verification, remaining limits
-- [Phase 2 audit](docs/PHASE_2_AUDIT.md) — analytical coverage, tooling and verification evidence
-- [Phase 3 research guide](docs/RESEARCH.md) — PostgreSQL setup, private API and as-of queries
-- [Phase 3 audit](docs/PHASE_3_AUDIT.md) — research implementation and verification evidence
-- [Thesis guide](docs/THESIS.md) — version history, manual reviews and private workspace
-- [Phase 4 audit](docs/PHASE_4_AUDIT.md) — thesis implementation and verification evidence
-- [Phase 5 audit](docs/PHASE_5_AUDIT.md) — authorized valuation scope, current findings and verification status
-- [Phase 6 audit](docs/PHASE_6_AUDIT.md) — construction, supplied stress and frontend verification
-- [Accounting guide](docs/ACCOUNTING.md) — ledger conventions, canonical CSV, corrections and valuation
-- [Phase 7 audit](docs/PHASE_7_AUDIT.md) — implementation, verification and broker limitations
-- [Performance guide](docs/PERFORMANCE.md) — TWR/XIRR, valuation evidence, realized statistics and numerical limits
-- [Phase 8 audit](docs/PHASE_8_AUDIT.md) — preserved performance closeout evidence
-- [Contribution guide](docs/ATTRIBUTION.md) — endpoint accounting, wealth linking, FX allocation and replay
-- [Phase 9A audit](docs/PHASE_9A_AUDIT.md) — preserved contribution acceptance and remaining boundaries
-- [Benchmark guide](docs/BENCHMARK.md) — selection, aligned comparisons, active-risk estimators and replay
-- [Phase 9B audit](docs/PHASE_9B_AUDIT.md) — preserved benchmark acceptance and qualifications
-- [Factor guide](docs/FACTORS.md) — reviewed interval evidence, OLS/HC3, sample limits and replay
-- [Phase 9C audit](docs/PHASE_9C_AUDIT.md) — preserved factor acceptance, fresh evidence and remaining boundaries
-- [Benchmark settings](docs/BENCHMARK_SETTINGS.md) — append-only choices, private workflows and receipts
-- [Factor data readiness](docs/FACTOR_DATA_READINESS.md) — prospective currency/calendar/source acceptance
-- [Phase 9D audit](docs/PHASE_9D_AUDIT.md) — preserved settings acceptance and boundaries
-- [Factor source import](docs/FACTOR_SOURCE_IMPORT.md) — strict native CSV review and replay
-- [Factor alignment](docs/FACTOR_ALIGNMENT.md) — prospective common-boundary measurement specification
-- [Phase 9E audit](docs/PHASE_9E_AUDIT.md) — current local acceptance and remaining boundaries
-- [Methodology](docs/METHODOLOGY.md) — formulas, units, assumptions and failure conditions
-- [Architecture](docs/ARCHITECTURE.md) — domain boundaries and API v3 contract
-- [Asset-type roadmap](docs/ASSET_TYPE_ROADMAP.md) — typed future support beyond equities
-- [Build plan](docs/BUILD_PLAN.md)
-- [Proposed brief additions](docs/BRIEF_SUGGESTIONS.md) — for owner review
+The public demonstration uses **fictional securities, synthetic transactions and synthetic prices. No real money is invested.** It illustrates the workflow; it is not a verified personal track record. The private workspace belongs to the site operator and requires an owner key. There is no public account registration or connected brokerage account.
 
-The September 2026 master brief supersedes earlier plans in
-`docs/superpowers/`. Its dated 2026-09-09 addendum permanently adopts the seven
-approved suggestions and rules A–D. The 2026-09-10 addendum authorizes Phase 6 and
-permanently records the owner's soft, modern portfolio-platform design direction.
-The 2026-09-12 continuation authorizes Phase 7. The owner's 2026-09-15 instruction
-authorizes Phase 8, recorded prospectively in its plan and audit. On 2026-10-09
-the owner explicitly authorized Phase 9A reconciled position contribution.
-The 2026-10-11 continuation authorizes bounded Phase 9B benchmark/active-risk
-analysis, recorded in its separate plan and audit. The next continuation authorizes
-bounded Phase 9C historical factor regression. The subsequent continuation
-authorizes Phase 9D saved portfolio benchmark identities and factor-data readiness.
-The next continuation authorizes Phase 9E native source import/review and alignment
-specification, accepted locally on 2026-10-13. Real factor-to-portfolio alignment
-and regression integration remain subject to separate data acceptance.
-Real factor calendar/currency reconciliation, HAC/rolling analytics, Brinson
-and public publishing retain separate stages. Completion of those later stages also
-requires suitable data, deployment and operational checks.
+## What it helps you do
 
-Phase 3 adds a PostgreSQL equity security master with stable UUIDs, append-only
-fundamental observations, publication/system-knowledge cutoffs, idempotent atomic
-imports and a 28-metric catalogue. Research routes are opt-in and require an owner
-API key; existing simulation endpoints work without a database. This phase exposes
-the research backend through the API/OpenAPI; there is no research dashboard or
-automatic fundamental-data download. See the research guide for setup and examples.
+- **Keep a research record.** Capture a company's investment thesis, supporting observations, valuation cases, risks and the conditions that would change your mind.
+- **Compare allocations.** Examine position weights, diversification, constraints and each holding's contribution to volatility.
+- **Explore downside.** Run single-asset and portfolio scenarios, inspect loss probabilities and drawdowns, and apply historical or explicit shocks.
+- **Maintain a portfolio ledger.** Record trades, funding, dividends, fees, FX and corrections; derive positions and cash from the transaction history.
+- **Measure returns.** Separate investment performance from the timing of your deposits and withdrawals, then inspect calendar returns and position contributions.
+- **Share a controlled demonstration.** Publish selected synthetic research and portfolio snapshots without exposing private drafts or raw account records.
 
-Phase 4 adds a private Thesis workspace, immutable timestamped revisions and
-manual decision reviews tied to an exact revision. Required returns and valuation
-ranges are owner-entered assumptions; they are not calculated forecasts. Run the
-database migrations, then use the global Private workspace control to unlock
-Thesis, Valuation, Construction, Stress, Ledger and Overview with one key.
-See the thesis guide for the complete contract and limitations. Phases 1–3 were
-committed as `88f4390`; the owner authorized Phase 5 on 2026-09-09.
+## Explore without a key
 
-The private key remains in browser memory only. Changing workspaces clears that
-module's unsaved inputs and results while the global unlock remains active.
-Locking the workspace or refreshing the page clears the key and private state;
-saved server records remain. The backend still uses `RESEARCH_API_KEY` and
-`X-Research-Key` for private routes. This is not a broker connection.
+Open the [public demonstration](https://stochastic-market-simulator.fly.dev/demo). It is read-only and includes:
 
-Overview reads recorded account identities, current equity quantities and cash
-balances from the ledger. It does not invent holdings, NAV, returns or portfolio
-weights when no reviewed valuation exists. Construction remains a hypothetical
-allocation workspace with supplied weights; deriving those weights from ledger
-holdings awaits a dated price, cash and FX valuation contract.
+- portfolio growth and drawdown charts;
+- time-weighted returns and a clearly labelled synthetic comparison;
+- monthly and annual returns, with partial periods identified;
+- dated holdings, cash and the complete closed-position history, including losses;
+- fictional investment theses, revisions and example reviews;
+- a decision and correction journal;
+- methodology, publication history and a downloadable synthetic snapshot.
 
-## Implemented Risk Lab
+The demonstration has a deliberately short sample period. Missing measurements stay unavailable; they are not replaced by invented results. New publications receive their own version, and corrections remain visible.
 
-- Gaussian, genuine joint full-covariance GMM and single-asset flat-forecast EWMA
-- Request-local RNG and reproducible seeded requests against unchanged data
-- Explicit zero-log-drift or historical-diagnostic calibration
-- Correct simple-return portfolio arithmetic: buy-and-hold is the new frontend
-  request default; daily per-period rebalancing remains selectable
-- Server-computed full-population percentiles, histograms and scenario statistics
-- Annualized excess-return Sharpe, Sortino, path growth, drawdown and Calmar
-- Signed volatility contributions that reconcile to historical ex-ante risk
-- VaR/CVaR with confidence, modeled horizon, loss sign and currency notional
-- Ledoit–Wolf/sample covariance, component diagnostics and data-quality provenance
+## Workspace guide
 
-Statistical outputs are estimates conditional on a model. Zero log drift is not
-zero expected simple return. VaR is not a loss bound. Scenario volatility and
-historical initial-weight risk decomposition are distinct and labeled separately.
-The app does not provide investment recommendations or manage external capital.
+The platform has nine workspaces. Unlock once to use the private modules; the connection is shared across tabs.
 
-## Local setup
+| Workspace | What you can do | Start with |
+| --- | --- | --- |
+| **Overview** | See your recorded accounts, holdings and cash balances by currency. Move directly into research, valuation or risk analysis. | Select an existing portfolio, or create one in Ledger. |
+| **Ledger** | Create separate portfolio records; enter transactions; review holdings and trade-date cash; import reviewed canonical CSV; record reversals and replacement corrections. Value the account using dated prices and FX supplied by you. | An account name, base currency and reviewed transaction details. |
+| **Construction** | Compare a hypothetical allocation with equal weight, minimum variance, maximum Sharpe and equal risk contribution. Inspect constraints, volatility contributions and explicit return-view assumptions. | Registered equities, aligned total-return history, currency/calendar context and position bounds. |
+| **Thesis** | Register equities, save research observations, write bear/base/bull narratives and invalidation conditions, preserve revisions, and record reviews such as hold, reduce or exit. | A security identity and your investment reasoning. |
+| **Valuation** | Evaluate user-specified returns, scenario sets, fundamental assumptions, reverse valuation, CAPM and historical diagnostics. Save estimates and deliberately adopt a return view. | A security, valuation date, horizon, return conventions and model assumptions. |
+| **Single-asset Risk Lab** | Generate conditional paths for one ticker using Gaussian, Gaussian mixture or EWMA volatility models. Inspect return percentiles, loss probability, volatility, drawdown, VaR and Expected Shortfall. | A ticker, historical window, horizon and initial value. |
+| **Portfolio Risk Lab** | Model assets jointly using Gaussian or joint Gaussian mixture distributions. Compare correlations, signed volatility contributions, tail outcomes and buy-and-hold versus daily rebalancing. | At least two tickers and weights totalling 100%. |
+| **Historical & shocks** | Replay supplied historical observations, resample joint returns using a block bootstrap, or apply explicitly specified asset shocks. | A named scenario, aligned history or shocks, and portfolio weights. |
+| **Performance** | Calculate time-weighted and money-weighted returns, daily unit values, drawdowns, calendar returns and reconciled position contributions. Compare against reviewed benchmarks and inspect supported historical factor analysis. | A ledger, a measurement period and complete dated price/FX evidence. |
 
-Python 3.12 or 3.14 and Node 22 are the CI targets. Python's direct dependencies
-are pinned; the frontend uses its committed npm lockfile.
+Research, allocation and performance tools use the records and inputs you supply. They do not silently fetch fundamentals, choose investment views or infer missing FX rates. The Risk Labs are the separate workflow that downloads historical adjusted-close prices for entered tickers.
+
+## A typical workflow
+
+### 1. Research an investment
+
+In **Thesis**, register the equity with its exchange and currency. Describe the business, the opportunity, the main risks and what would invalidate your reasoning. Save a revision before recording a later review, so the original view remains available.
+
+Use **Valuation** to explore the assumptions behind the opportunity. A bear/base/bull scenario set can show how outcomes depend on your inputs. A model estimate becomes an investor return view only when you explicitly choose it; it is not adopted automatically.
+
+### 2. Test an allocation
+
+In **Construction**, supply aligned return observations and position bounds. Compare candidate weights and inspect risk contributions. Return-dependent strategies require explicit suitable return views; historical averages are not silently treated as forecasts.
+
+For a ticker-based scenario, open **Portfolio Risk Lab**:
+
+1. Enter at least two tickers, for example `NVDA`, `AAPL` and `MSFT`.
+2. Enter weights such as `40`, `40` and `20`. **Normalize** rescales entered weights to 100%.
+3. Choose the historical estimation window, modeled horizon and initial value.
+4. Choose **Multivariate Gaussian** for a single fitted distribution, or **Joint GMM** for a mixture with different covariance structures.
+5. Open **Advanced settings** to change path count, seed, confidence, risk-free rate, covariance estimator or rebalancing.
+6. Run the scenarios. Review the distribution, tail losses and drawdowns alongside the assumptions and data dates.
+
+Prices are cached in the running service for one hour. A repeated run can reuse downloaded history. One hosted simulation runs at a time to fit the small deployment; a busy response asks you to retry. Large requests are rejected before allocating simulation tensors. Market-data availability and host wake-up time can affect the first run.
+
+**These are conditional scenarios, not price targets or forecasts.** The default uses zero mean log return, which does not imply zero expected simple return. The valuation currency labels outputs; it does not perform FX conversion. Changing a saved valuation view does not automatically change simulation drift.
+
+### 3. Record what happened
+
+Create a portfolio in **Ledger**, then record funding and transactions. Review quantities and cash balances before supplying dated valuation inputs. Correct mistakes through reversals and replacement entries rather than rewriting history.
+
+Manual entry and the project's reviewed canonical CSV format are supported. An arbitrary broker CSV is not automatically compatible. There is no live broker synchronization, order execution or automatic reconciliation.
+
+### 4. Review performance and decisions
+
+In **Performance**, select the account and period, then supply the required price and FX coverage. Time-weighted return measures the investment experience independently of external cash-flow timing. Money-weighted return reflects the timing of invested capital; it can be unavailable when no unique meaningful solution exists.
+
+Inspect drawdowns, calendar periods and contributions before returning to **Thesis** to record a review. Benchmarks require an explicit identity and compatible supplied history. Importing a factor dataset does not automatically establish that its dates, currency or return conventions match the portfolio.
+
+## Private workspace access
+
+The hosted private modules are for the operator, not a public multi-user service. Click **Unlock private workspace**, paste the owner key and choose **Unlock workspace**. It is not a broker password or a market-data API key.
+
+The key remains in the current tab's memory. Locking or refreshing clears the connection and unsaved private work; saved server records remain. A key is never embedded in the public frontend or demonstration download.
+
+For the existing operator's Windows checkout, recover the locally protected deployment key with:
 
 ```powershell
-.\scripts\bootstrap.ps1 -PythonExecutable python
-backend/.venv/Scripts/python.exe -m uvicorn main:app --app-dir backend --reload --reload-exclude .venv
+.\scripts\owner-access.ps1
 ```
 
-In a second terminal:
+This creates `.verification/owner-access.txt`, ignored by Git and restricted to the current Windows user. Open that file locally and copy the key into the application. Do not upload or share it. Recovery requires the original protected file and Windows account; a new installation must configure its own server-side `RESEARCH_API_KEY`.
 
-```powershell
-cd frontend
-npm ci
-npm run dev
-```
+## What the numbers mean
 
-The frontend defaults to `http://localhost:8000`; configure `VITE_API_URL` in
-`frontend/.env.local` if needed. Backend allowed origins are configured with
-`ALLOWED_ORIGINS` (default `http://localhost:5173`).
-Interactive API documentation is served at `/docs`.
+- **Assumptions remain visible.** Model, horizon, currency, sample dates, rebalancing, risk-free rate and data limitations accompany results.
+- **Historical risk and expected return are separate.** Observed returns can inform risk estimates; a forward return view requires a declared modelling choice.
+- **Charts illustrate; full populations determine statistics.** Scenario percentiles and risk metrics use all simulated paths, not the small chart sample.
+- **Volatility contribution and performance contribution differ.** One describes portfolio risk under its inputs; the other explains measured returns.
+- **Incomplete inputs stay incomplete.** Missing coverage or undefined metrics are reported explicitly.
+- **Demo, paper and real histories remain distinct.** A synthetic example cannot become a verified funded-account record by changing a label. Prospective paper operation and real-account integration are not part of the current public release.
 
-Recreate environments on each machine; copied environments contain absolute
-interpreter paths. The closeout uses `backend/.venv` and leaves the inherited
-`backend/env` untouched. On Windows/Python 3.12, bootstrap applies the complete
-resolved version constraints in `backend/constraints-py312-windows.txt`.
-That profile was verified with Python 3.12.14; it is not a cross-platform or
-hash-locked installation specification. Python 3.14 uses the original direct pins.
-For other platforms, create a local venv and install both requirements files.
+This is a personal research platform, not investment advice, a recommendation service or an execution venue. Historical performance and synthetic scenarios do not establish future returns.
 
-## Verification
+## Run your own workspace
 
-From the repository root:
+The application uses a React frontend, a Python/FastAPI calculation service and PostgreSQL for private records. A local installation requires Python 3.12, Node.js 22 and a separate PostgreSQL database.
 
-```powershell
-$env:LOKY_MAX_CPU_COUNT='2'
-backend/.venv/Scripts/python.exe -m pytest
-backend/.venv/Scripts/python.exe -m ruff check .
-backend/.venv/Scripts/python.exe -m ruff format --check backend scripts
-backend/.venv/Scripts/python.exe -m mypy
-backend/.venv/Scripts/python.exe -m pip check
-backend/.venv/Scripts/python.exe scripts/benchmark_phase1.py
-```
+1. Run `scripts/bootstrap.ps1` to create the backend environment and install frontend dependencies.
+2. Configure `DATABASE_URL` using the `postgresql+psycopg://` driver and your own `RESEARCH_API_KEY` of at least 32 characters. Keep credentials outside Git.
+3. From `backend`, apply `python -m alembic upgrade head` and run `python -m uvicorn main:app --reload` using the project environment.
+4. From `frontend`, run `npm run dev`. Local development defaults to the API at `http://localhost:8000`.
+5. Unlock with the key you configured, then register securities and create your own portfolio. Synthetic setup is a deliberate separate workflow, described in [Demonstration](docs/DEMONSTRATION.md).
 
-Then run `npm test`, `npm run lint`, and `npm run build` in `frontend`.
-On Windows, `scripts/verify.ps1` runs these checks plus the configured pre-commit
-hooks and records results under ignored `.verification/phase8/`. It requires
-`TEST_DATABASE_URL` for an isolated PostgreSQL test database. Tests create and
-remove unique schemas; never point acceptance at a production database.
-`-AllowDatabaseSkips` is available for diagnostic runs and does not establish
-PostgreSQL acceptance.
+Production builds use same-origin `/api` requests. Fly serves both frontend and API; the Vercel configuration proxies API requests to the same Fly service. There are no frontend secrets. Deployment, backup and access procedures are in [Operations](docs/RELEASE_OPERATIONS.md).
 
-Verify a downloaded private performance report without a database/provider:
+## Further reading
 
-```powershell
-backend/.venv/Scripts/python.exe scripts/replay_performance.py path/to/performance.json
-```
+[Calculation methodology](docs/METHODOLOGY.md) · [Accounting conventions](docs/ACCOUNTING.md) · [Performance measurement](docs/PERFORMANCE.md) · [Valuation models](docs/METHODOLOGY.md#fundamental-terminal-wealth-valuation) · [Portfolio construction](docs/METHODOLOGY.md#allocation-alternatives-and-numerical-limits) · [Public demonstration](docs/PUBLIC_DEMONSTRATION.md)
 
-Replay requires matching backend source and Python/numerical library versions,
-valid input/ledger fingerprints, and identical financial outputs. Older reports
-without source identity must be regenerated; verification does not overwrite them.
-See [PERFORMANCE.md](docs/PERFORMANCE.md) and the current acceptance audit.
-The build script uses Vite's native config loader. If the default development
-loader cannot read parent directories in a restricted Windows checkout, use
-`npm run dev -- --configLoader native`.
-Backend tests use synthetic data and block external provider access.
-The benchmark is offline and reports its workload, environment and timing;
-it does not impose a machine-independent latency promise.
-
-CI is configured in `.github/workflows/ci.yml`. Its hosted execution is separate
-from the local results recorded in the audit.
-
-Pytest measures backend statement and branch coverage, including the API, with a
-95% aggregate minimum and writes `coverage.xml`. A focused test run can use
-`python -m pytest --no-cov backend/tests/test_methodology.py`; full verification
-must use the default coverage configuration. The methodology includes an index
-of each quantitative function and its analytical/regression tests.
-
-Pre-commit runs Ruff lint, formatting checks and mypy using the active Python
-environment; it reports changes needed without editing files. On Windows:
-
-```powershell
-. backend/.venv/Scripts/Activate.ps1
-python -m pre_commit install
-python -m pre_commit run --all-files
-```
-
-On Linux/macOS activate `backend/.venv/bin/activate` instead. Install is a one-time
-local Git hook setup; CI invokes the hooks directly. Pytest and frontend
-tests/lint/build remain mandatory full verification steps outside the commit
-hooks. Direct Python dependencies are pinned in the two requirements files;
-the closeout constraints additionally pin the Windows/Python 3.12 resolved
-environment. Other runtime/platform profiles retain direct pins only.
-CI saves `pip freeze` with its
-coverage artifact for environment identification. These records are not a
-promise of identical random draws across Python, BLAS or operating systems.
-
-## Compatibility and deployment
-
-API v3 is a deliberate breaking response update on the existing simulation
-URLs. Requests require `drift_model`; v2 clients must migrate. Financial
-statistics never fall back to chart samples. See the generated OpenAPI schema.
-
-This checkout includes historical Fly.io configuration, although older
-documentation referred to Render. Existing production deployment state was not
-changed or verified. Deploy frontend and backend together only after reviewing
-this phase. No site was published as part of the correctness rebuild.
-
-Risk Lab scenario limits include no FX conversion, fees/taxes, persistent market-data
-snapshots, exchange-calendar reconciliation, regime persistence or Monte Carlo
-confidence intervals. The two-million-cell request cap and two-worker executor
-bound core tensor workloads; they are not a capacity guarantee for the legacy
-512 MB container.
-
-`docs/golden/baseline_v2.json` preserves historical incorrect output.
-It is not a reference for correct financial results. The optional
-`scripts/capture_baseline.py` now writes a separate v3 diagnostic capture and
-requires live provider access.
-
-Launch continuation: [L1 modes/isolation accepted locally](docs/LAUNCH_L1_AUDIT.md); [current launch stage and next step](PLAN.md). No public deployment is claimed.
-
-[Original synthetic demonstration accepted locally](docs/LAUNCH_L2_AUDIT.md), with [deliberate setup and replay instructions](docs/DEMONSTRATION.md). Public preview/publication and operations remain next.
-
-
-Public presentation L3 is accepted locally: optional `/demo-preview` serves a fixed, labelled original synthetic artifact without private database access. See [public demonstration](docs/PUBLIC_DEMONSTRATION.md) and [L3 audit](docs/LAUNCH_L3_AUDIT.md). Controlled publication and deployment remain unfinished.
-
-
-Controlled publication L4 is accepted locally; [publication contract](docs/PUBLICATION.md) and [L4 evidence](docs/LAUNCH_L4_AUDIT.md) cover immutable synthetic versions, disclosed corrections/withdrawals and actual sanitized download. L5 is underway for Fly.io/Neon within the owner’s US$5/month ceiling. Nothing is deployed yet.
-
-
-Launch update (2026-10-16): L1–L4 are accepted locally. The candidate runs only in a labelled isolated staging environment; hosted replay/restore/rollback and bounded transport checks pass. L5 saved-browser-download acceptance and L6 production promotion remain unfinished. See [current plan](PLAN.md), [L5 progress](docs/LAUNCH_L5_PROGRESS_2026-10-16.md) and [operations](docs/RELEASE_OPERATIONS.md). This is a synthetic demonstration, with no verified personal track record or broker connection.
-
-
-Production update (2026-10-16): the [public synthetic demonstration](https://stochastic-market-simulator.fly.dev/demo) is deployed from the accepted pinned image with its own separate history. Fresh full gate, backup/restore/replay, restart and public/private/browser checks passed. Final production saved-browser-download inspection remains open; see [production progress](docs/LAUNCH_L6_PROGRESS_2026-10-16.md). No real money, broker connection or verified personal track record is claimed.
-
-
-Public source (2026-10-16): [GitHub repository](https://github.com/Iska555/Market-Scenario-Generator) and [live synthetic demonstration](https://stochastic-market-simulator.fly.dev/demo). See [publication preparation](docs/GITHUB_PUBLICATION_2026-10-16.md) for source/evidence scope and private artifact exclusions. The current launch state remains in PLAN.md; synthetic examples are not a verified personal track record.
+Development plans and historical verification records remain in `PLAN.md` and `docs/`; they are separate from this user guide.

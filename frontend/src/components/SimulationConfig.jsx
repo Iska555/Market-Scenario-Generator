@@ -23,7 +23,7 @@ const muted = (isDark) => isDark ? 'text-slate-400' : 'text-slate-500';
 
 export default function SimulationConfig({
   mode, ticker, setTicker, assets, setAssets, updateAsset, totalWeight,
-  normalizeWeights, assumptions, setAssumptions, onRun, loading, isDark,
+  normalizeWeights, assumptions, setAssumptions, onRun, loading, isDark, connected = true, onUnlock,
 }) {
   const [customWindow, setCustomWindow] = useState(estimationWindowPreset(assumptions.years) === 'custom');
   const updateAssumption = (field, value) => setAssumptions((current) => ({ ...current, [field]: value }));
@@ -44,12 +44,12 @@ export default function SimulationConfig({
     <section className={`mb-8 rounded-3xl border p-5 sm:p-6 ${panel(isDark)}`}>
       <div className="mb-6">
         <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{mode === 'single' ? 'Single-asset scenario' : 'Portfolio scenario'}</h2>
-        <p className={`mt-1 text-sm ${muted(isDark)}`}>Conditional risk scenarios based on explicit assumptions. These outputs are not return predictions.</p>
+        <p className={`mt-1 text-sm ${muted(isDark)}`}>Set assets and assumptions. Prices are downloaded on the first run and cached for one hour.</p>
       </div>
 
       {mode === 'single' ? (
         <Field label="Ticker" isDark={isDark}>
-          <input value={ticker} onChange={(event) => setTicker(event.target.value.toUpperCase())} className={input(isDark)} />
+          <input value={ticker} placeholder="e.g. AAPL" autoComplete="off" spellCheck={false} onChange={(event) => setTicker(event.target.value.toUpperCase())} className={input(isDark)} />
         </Field>
       ) : (
         <PortfolioAssets assets={assets} setAssets={setAssets} updateAsset={updateAsset} totalWeight={totalWeight} normalizeWeights={normalizeWeights} isDark={isDark} />
@@ -66,7 +66,6 @@ export default function SimulationConfig({
             </select>
           </Field>
           {windowChoice === 'custom' && <div className="mt-2"><NumberField label="Custom history (years)" value={assumptions.years} onChange={(value) => updateAssumption('years', value)} min="1" max="10" isDark={isDark} /></div>}
-          <p className={`mt-2 text-xs ${muted(isDark)}`}>Shorter windows respond to recent changes but have fewer observations. Longer windows are steadier but can include older market conditions.</p>
         </div>
         <NumberField label="Horizon (modeled periods)" value={assumptions.horizon} onChange={(value) => updateAssumption('horizon', value)} min="1" max="1000" isDark={isDark} />
         <Field label="Forward return assumption" isDark={isDark}>
@@ -96,13 +95,12 @@ export default function SimulationConfig({
         </div>
       </div>
 
-      <p className={`mt-4 text-xs ${muted(isDark)}`}>Forward return controls the average return assumption. Risk-only scenarios examine volatility, tails and drawdown without treating historical averages as forecasts. Daily observations use {assumptions.periodsPerYear} periods per year for annualization.</p>
-      <p className={`mt-5 text-sm ${muted(isDark)}`}>{describeDriftModel(assumptions.driftModel)} The choices here are risk-only or historical diagnostics; thesis-conditioned simulation would use an explicitly chosen investor return view. That connection is not yet available here; saved valuation estimates are never applied automatically.</p>
-      <p className={`mt-2 text-xs ${muted(isDark)}`}>Currency denominates the values shown; no foreign-exchange conversion is performed.</p>
-      {mode === 'portfolio' && <p className={`mt-2 text-sm ${muted(isDark)}`}>{assumptions.rebalance === 'buy_and_hold' ? 'Weight policy: Buy and hold — holdings stay unchanged and weights drift with performance.' : 'Weight policy: Daily rebalancing — target weights reset each modeled period, without costs.'} Change this in Advanced settings.</p>}
+      <div className="scenario-summary"><span>{assumptions.numPaths} paths · {assumptions.horizon} periods · {assumptions.currency}</span>{mode === 'portfolio' && <span>{assumptions.rebalance === 'buy_and_hold' ? 'Weight policy: Buy and hold' : 'Weight policy: Daily rebalancing'}</span>}<span>Conditional scenarios, not forecasts</span></div>
 
       <details className={`mt-6 rounded-2xl border p-4 ${isDark ? 'border-slate-700 bg-[#0f172a]/60' : 'border-slate-200 bg-slate-50'}`}>
         <summary className={`cursor-pointer text-sm font-semibold ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>Advanced settings</summary>
+        <p className={`mt-4 text-sm ${muted(isDark)}`}>{describeDriftModel(assumptions.driftModel)} Saved valuation estimates are not applied automatically. Values use the selected currency without FX conversion; annualization uses {assumptions.periodsPerYear} periods per year.</p>
+        <p className={`mt-2 text-xs ${muted(isDark)}`}>Shorter estimation windows respond to recent changes; longer windows include more observations and older market conditions.</p>
         <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <NumberField label="Simulation paths" value={assumptions.numPaths} onChange={(value) => updateAssumption('numPaths', value)} min="100" max="5000" isDark={isDark} />
           <NumberField label="Random seed" value={assumptions.randomSeed} onChange={(value) => updateAssumption('randomSeed', value)} min="0" max="4294967295" isDark={isDark} />
@@ -137,11 +135,13 @@ export default function SimulationConfig({
         <p className={`mt-4 text-xs ${muted(isDark)}`}>Request capacity: {Number.isFinite(simulationCells) ? simulationCells.toLocaleString() : 'invalid'} of {MAX_SIMULATION_CELLS.toLocaleString()} path × horizon × asset cells.</p>
       </details>
 
-      <button type="button" onClick={onRun} disabled={loading || !weightsValid || !identifiersValid || !sizeValid}
+      {!connected && <div className="scenario-unlock"><p>Simulations require owner access.</p><button type="button" onClick={onUnlock}>Unlock private workspace →</button></div>}
+      <button type="button" onClick={onRun} disabled={!connected || loading || !weightsValid || !identifiersValid || !sizeValid}
         className={`mt-6 flex w-full items-center justify-center gap-3 rounded-xl px-8 py-4 font-bold shadow-lg disabled:cursor-not-allowed disabled:opacity-50 ${isDark ? 'bg-white text-slate-900' : 'bg-slate-900 text-white'}`}>
         {loading ? <RefreshCw className="h-5 w-5 animate-spin" /> : <Layers className="h-5 w-5" />}
         {loading ? 'Running conditional scenarios…' : 'Run conditional scenarios'}
       </button>
+      {loading && <p className="mt-3 text-sm" role="status">Loading market history and calculating scenarios. First runs take longer; repeat runs reuse cached prices.</p>}
       {!weightsValid && <p className="mt-2 text-sm text-red-500">Portfolio weights must total 100%.</p>}
       {!identifiersValid && <p className="mt-2 text-sm text-red-500">Enter {mode === 'single' ? 'a ticker' : 'at least two asset tickers'}.</p>}
       {!sizeValid && <p className="mt-2 text-sm text-red-500">Reduce paths, horizon, or asset count to stay within 2,000,000 simulation cells. Current request: {Number.isFinite(simulationCells) ? simulationCells.toLocaleString() : 'invalid'} cells. See Advanced settings.</p>}

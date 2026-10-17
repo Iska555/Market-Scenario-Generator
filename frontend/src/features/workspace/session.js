@@ -2,17 +2,19 @@
 export function createPrivateSession(validate) {
   let key = '';
   let generation = 0;
-  let state = { connected: false, busy: false, error: '', epoch: 0 };
+  let state = { connected: false, busy: false, error: '', epoch: 0, accessOpen: false };
   const controllers = new Set();
   const listeners = new Set();
   const update = patch => { state = { ...state, ...patch }; listeners.forEach(listener => listener()); };
   const session = {
     getSnapshot: () => state,
     subscribe(listener) { listeners.add(listener); return () => listeners.delete(listener); },
+    requestAccess() { update({ accessOpen: true }); },
+    dismissAccess() { update({ accessOpen: false }); },
     lock() {
       ++generation; key = '';
       controllers.forEach(controller => controller.disconnect());
-      update({ connected: false, busy: false, error: '', epoch: state.epoch + 1 });
+      update({ connected: false, busy: false, error: '', epoch: state.epoch + 1, accessOpen: false });
     },
     async unlock(candidate) {
       if (state.connected) session.lock();
@@ -24,7 +26,7 @@ export function createPrivateSession(validate) {
         await validate(candidate);
         if (token !== generation) return;
         key = candidate;
-        update({ connected: true, busy: false });
+        update({ connected: true, busy: false, accessOpen: false });
         controllers.forEach(controller => { void controller.connect(key); });
       } catch (error) {
         if (token !== generation) return;

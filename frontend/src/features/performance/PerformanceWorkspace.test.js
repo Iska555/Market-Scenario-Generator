@@ -13,7 +13,7 @@ after(async () => { await server?.close(); });
 
 test('locked performance page uses shared unlock and explains supplied evidence without invented results', () => {
   const html = renderToStaticMarkup(React.createElement(components.default, { apiUrl: '', isDark: false }));
-  assert.match(html, /Unlock private workspace above/);
+  assert.match(html, /Unlock private workspace to continue/);
   assert.match(html, /Time-weighted return/);
   assert.match(html, /Money-weighted return/);
   assert.match(html, /unadjusted/);

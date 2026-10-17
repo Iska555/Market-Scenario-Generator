@@ -3,4 +3,5 @@ backend/tests/fixtures/french_developed_daily/excerpt.csv -text -whitespace
 
 # Preserve recorded bytes, including original CRLF, without reformatting evidence.
 docs/verification/launch-*/** -text -whitespace
+docs/verification/usability-2026-10-17/** -text -whitespace
 backend/demo/** -text -whitespace

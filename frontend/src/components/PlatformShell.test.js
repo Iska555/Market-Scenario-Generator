@@ -43,7 +43,7 @@ test('theme control announces the action for the current theme', () => {
 
 test('current product branding and Overview navigation are visible', () => {
   const html = render('overview');
-  assert.match(html, /Investment Management Workspace/);
+  assert.match(html, /Portfolio Management home/);
   assert.match(html, /Overview/);
   assert.doesNotMatch(html, /Portfolio Simulations/);
 });

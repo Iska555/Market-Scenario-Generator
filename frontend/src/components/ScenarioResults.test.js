@@ -127,6 +127,7 @@ test('completed results identify their captured instruments independently of edi
     estimation_observations: 252,
     excluded_interval_count: 0,
     api_version: '3.0.0',
+    assumptions: { num_paths: 1000 },
   };
   const single = renderToStaticMarkup(React.createElement(ResultNotice, {
     result: { ...common, ticker: 'SPY' }, isDark: false,

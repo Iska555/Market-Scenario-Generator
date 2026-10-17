@@ -245,3 +245,69 @@ def test_http_failures_and_build_identity_are_explicit(
         ).status_code
         == 422
     )
+
+
+def test_release_preflight_and_rejected_access_keep_cors(
+    client: TestClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setenv("PUBLIC_RELEASE_MODE", "1")
+    monkeypatch.setenv("DATABASE_URL", "postgresql+psycopg://test@localhost/isolated")
+    monkeypatch.setenv("RESEARCH_API_KEY", "synthetic-release-test-key-123456789")
+    origin = "http://localhost:5173"
+    preflight = client.options(
+        "/api/simulate-portfolio",
+        headers={
+            "Origin": origin,
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "content-type,x-research-key",
+        },
+    )
+    assert preflight.status_code == 200
+    assert preflight.headers["access-control-allow-origin"] == origin
+    rejected = client.post(
+        "/api/simulate-portfolio", json=request_body(), headers={"Origin": origin}
+    )
+    assert rejected.status_code == 401
+    assert rejected.headers["access-control-allow-origin"] == origin
+    assert rejected.headers["cache-control"] == "no-store"
+    monkeypatch.setenv("ENABLE_PRIVATE_SIMULATIONS", "1")
+    accepted = client.post(
+        "/api/simulate-portfolio",
+        json=request_body(),
+        headers={"X-Research-Key": "synthetic-release-test-key-123456789"},
+    )
+    assert accepted.status_code == 200
+    assert accepted.headers["content-encoding"] == "gzip"
+
+
+def test_release_refuses_overlapping_tensor_work_and_recovers(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import asyncio
+    from threading import Event
+
+    import main
+    from fastapi import HTTPException
+
+    monkeypatch.setenv("PUBLIC_RELEASE_MODE", "1")
+    entered, finish = Event(), Event()
+
+    def blocked() -> int:
+        entered.set()
+        assert finish.wait(5)
+        return 7
+
+    async def check() -> None:
+        first = asyncio.create_task(main.execute_scenario(blocked))
+        try:
+            assert await asyncio.to_thread(entered.wait, 3)
+            with pytest.raises(HTTPException) as failure:
+                await main.execute_scenario(lambda: 9)
+            assert failure.value.status_code == 503
+            assert failure.value.headers == {"Retry-After": "5"}
+        finally:
+            finish.set()
+        assert await first == 7
+        assert await main.execute_scenario(lambda: 9) == 9
+
+    asyncio.run(check())

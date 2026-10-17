@@ -65,15 +65,15 @@ export default function ScenarioResults({ result, mode, isDark }) {
                 <XAxis dataKey="day" stroke={isDark ? '#64748b' : '#94a3b8'} />
                 <YAxis stroke={isDark ? '#64748b' : '#94a3b8'} tickFormatter={(value) => formatCurrency(value, currency)} width={92} />
                 {paths.map((_, index) => (
-                  <Line key={index} type="monotone" dataKey={`path_${index}`} stroke={isDark ? '#818cf8' : '#4f46e5'} strokeWidth={1.3} dot={false} strokeOpacity={0.18} isAnimationActive={false} />
+                  <Line key={index} type="monotone" dataKey={`path_${index}`} stroke={isDark ? '#98ceb5' : '#236d58'} strokeWidth={1.3} dot={false} strokeOpacity={0.18} isAnimationActive={false} />
                 ))}
               </LineChart>
             </ResponsiveContainer>
           </ChartCard>
 
-          <ChartCard title="Server terminal-return histogram" icon={BarChart3} isDark={isDark}>
+          <ChartCard title="Terminal return distribution" icon={BarChart3} isDark={isDark}>
             <p className={`mb-4 text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-              The API returns these bins and counts from the complete simulated population.
+              Distribution across all simulated paths.
             </p>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={histogramData}>
@@ -81,7 +81,7 @@ export default function ScenarioResults({ result, mode, isDark }) {
                 <XAxis dataKey="bin" stroke={isDark ? '#64748b' : '#94a3b8'} interval="preserveStartEnd" />
                 <YAxis stroke={isDark ? '#64748b' : '#94a3b8'} allowDecimals={false} />
                 <Tooltip cursor={{ fill: 'transparent' }} formatter={(value) => [value, 'Paths']} />
-                <Bar dataKey="count" fill={isDark ? '#818cf8' : '#4f46e5'} radius={[4, 4, 0, 0]} />
+                <Bar dataKey="count" fill={isDark ? '#98ceb5' : '#236d58'} radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </ChartCard>
@@ -112,7 +112,7 @@ export function ResultNotice({ result, isDark }) {
             Estimation sample: {result.estimation_start} through {result.estimation_end} ({result.estimation_observations} valid intervals; {result.excluded_interval_count} excluded). Valuation date: {result.valuation_date}. Horizon units are modeled observation periods.
           </p>
         </div>
-        <span className={`rounded-full px-3 py-1 text-xs font-bold ${isDark ? 'bg-slate-800 text-slate-300' : 'bg-slate-100 text-slate-600'}`}>API {result.api_version}</span>
+        <span className={`rounded-full px-3 py-1 text-xs font-bold ${isDark ? 'bg-slate-800 text-slate-300' : 'bg-slate-100 text-slate-600'}`}>{result.assumptions.num_paths.toLocaleString()} paths</span>
       </div>
     </div>
   );

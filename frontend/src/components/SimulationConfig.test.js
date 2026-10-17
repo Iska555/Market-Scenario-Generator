@@ -26,13 +26,13 @@ const baseAssumptions = {
   ewmaLambda: 0.94, rebalance: 'buy_and_hold',
 };
 
-function render(mode, overrides = {}) {
+function render(mode, overrides = {}, props = {}) {
   return renderToStaticMarkup(React.createElement(SimulationConfig, {
     mode, ticker: 'SPY', setTicker: () => {},
     assets: [{ ticker: 'SPY', weight: 60 }, { ticker: 'TLT', weight: 40 }],
     setAssets: () => {}, updateAsset: () => {}, totalWeight: 100,
     normalizeWeights: () => {}, assumptions: { ...baseAssumptions, ...overrides },
-    setAssumptions: () => {}, onRun: () => {}, loading: false, isDark: false,
+    setAssumptions: () => {}, onRun: () => {}, loading: false, isDark: false, ...props,
   }));
 }
 
@@ -78,4 +78,12 @@ test('capacity stays secondary at ordinary size and explains disabled oversized 
   const oversized = render('portfolio', { numPaths: 5000, horizon: 1000 });
   assert.ok(oversized.includes('Reduce paths, horizon, or asset count'));
   assert.match(oversized, /disabled=""/);
+});
+
+
+test('locked visitors see an unlock action and cannot submit a simulation', () => {
+  const html = render('portfolio', {}, { connected: false, onUnlock: () => {} });
+  assert.match(html, /Simulations require owner access/);
+  assert.match(html, /Unlock private workspace/);
+  assert.match(html, /disabled=""[^>]*>[\s\S]*Run conditional scenarios/);
 });

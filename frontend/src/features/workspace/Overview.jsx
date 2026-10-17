@@ -34,8 +34,9 @@ export default function Overview({ apiUrl, isDark, onNavigate }) {
   const state = useSyncExternalStore(workspace.subscribe, workspace.getSnapshot, workspace.getSnapshot);
   const panel = `rounded-2xl border p-5 md:p-6 ${isDark ? 'border-slate-700 bg-[#151e32]' : 'border-slate-200 bg-white'}`;
   return <section className="space-y-6" aria-label="Portfolio overview">
-    <div className={panel}><h2 className="text-xl font-semibold">Your portfolio record</h2>
-      <p className="mt-2 text-sm opacity-75">Lightyear Stocks &amp; Shares ISA is the intended broker/account. No broker account is connected. The ledger uses manual entries and reviewed canonical CSV.</p>
+    {!state.connected && <div className="overview-welcome"><div><p className="platform-eyebrow">Get started</p><h2>Research. Allocate.<br />Track your portfolio.</h2><p>Build an investment record with theses, valuations, transactions and performance in one place.</p><a className="overview-primary-link" href="/demo">Explore the synthetic demonstration ↗</a></div><div className="overview-workflow">{[['01', 'Research', 'Write a thesis and compare valuation cases.'],['02', 'Allocate', 'Test weights, correlations and downside scenarios.'],['03', 'Track', 'Record transactions and measure your returns.']].map(([number,title,description])=><div key={number}><span>{number}</span><div><h3>{title}</h3><p>{description}</p></div></div>)}</div></div>}
+    <div className={panel}><h2 className="text-xl font-semibold">Accounts & holdings</h2>
+      <p className="mt-2 text-sm opacity-75">Manual transactions and reviewed CSV imports. No broker account is connected.</p>
       {!state.connected && <WorkspaceConnectionNotice workspace={workspace} />}
       {state.busy && <p className="mt-4 text-sm" role="status">Loading recorded accounts and holdings…</p>}
       {state.error && <p className="mt-4 text-sm" role="alert">{state.error}</p>}
@@ -47,6 +48,5 @@ export default function Overview({ apiUrl, isDark, onNavigate }) {
       ['valuation', 'Inspect return views', 'Compare assumption-dependent estimates before choosing an investor view.'],
       ['portfolio', 'Explore portfolio risk', 'Examine conditional volatility, tails and drawdowns with explicit assumptions.'],
     ].map(([id, title, description]) => <button key={id} onClick={() => onNavigate(id)} className={`${panel} text-left`}><span className="block font-semibold">{title} →</span><span className="mt-2 block text-sm opacity-70">{description}</span></button>)}</div>
-    <p className="text-sm opacity-70">Historical returns are evidence and do not become investor expected-return views. Investment decisions remain yours.</p>
   </section>;
 }

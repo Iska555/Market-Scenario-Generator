@@ -27,7 +27,7 @@ test('workspace starts private and disconnected without an automatic decision', 
   const html = renderToStaticMarkup(React.createElement(components.default, { apiUrl: 'http://localhost:8000', isDark: false }));
   assert.doesNotMatch(html, /Owner research key/);
   assert.doesNotMatch(html, /type="password"/);
-  assert.match(html, /Unlock private workspace above/);
+  assert.match(html, /Unlock private workspace to continue/);
   assert.match(html, /memory/);
   assert.ok(!html.includes('BUY_MORE'));
 });
