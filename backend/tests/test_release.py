@@ -135,3 +135,32 @@ def test_busy_service_fails_fast_and_releases_slots(monkeypatch: pytest.MonkeyPa
         assert limited.active == 0
 
     asyncio.run(run())
+
+
+def test_public_simulation_budget_is_bounded_and_recovers(monkeypatch: pytest.MonkeyPatch) -> None:
+    from types import SimpleNamespace
+
+    clock = [100.0]
+    monkeypatch.setattr(release, "time", SimpleNamespace(monotonic=lambda: clock[0]))
+    monkeypatch.setenv("PUBLIC_RELEASE_MODE", "1")
+    app = application()
+
+    @app.post("/api/simulate")
+    def simulate() -> dict:
+        return {"public": True}
+
+    with TestClient(app) as client:
+        for index in range(12):
+            assert (
+                client.post(
+                    "/api/simulate", json={}, headers={"X-Forwarded-For": str(index)}
+                ).status_code
+                == 200
+            )
+        limited = client.post("/api/simulate", json={})
+        assert limited.status_code == 429
+        assert limited.headers["cache-control"] == "no-store"
+        assert 1 <= int(limited.headers["retry-after"]) <= 61
+        assert client.get("/api/public/check").status_code == 200
+        clock[0] += 61
+        assert client.post("/api/simulate", json={}).status_code == 200

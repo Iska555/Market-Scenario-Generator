@@ -81,9 +81,10 @@ test('capacity stays secondary at ordinary size and explains disabled oversized 
 });
 
 
-test('locked visitors see an unlock action and cannot submit a simulation', () => {
-  const html = render('portfolio', {}, { connected: false, onUnlock: () => {} });
-  assert.match(html, /Simulations require owner access/);
-  assert.match(html, /Unlock private workspace/);
-  assert.match(html, /disabled=""[^>]*>[\s\S]*Run conditional scenarios/);
+test('Risk Labs allow a valid request without private access controls', () => {
+  const html = render('portfolio');
+  assert.doesNotMatch(html, /Simulations require owner access|Unlock private workspace/);
+  assert.match(html, /Run conditional scenarios/);
+  const runButton = html.slice(html.lastIndexOf('<button'), html.lastIndexOf('</button>') + 9);
+  assert.doesNotMatch(runButton, /disabled=""/);
 });

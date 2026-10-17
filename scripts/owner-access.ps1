@@ -31,7 +31,8 @@ Private workspace key:
 $accessPlaintext
 
 Click 'Unlock private workspace', paste the key, and click 'Unlock workspace'.
-It unlocks all private tabs, including the Risk Labs. Lock or refresh to clear it.
+It unlocks saved accounts, research and other private tools. Lock or refresh to clear it.
+The Single-asset and Portfolio Risk Labs require no key.
 This is not a broker password. There is no broker connection.
 "@
     $accessIdentity = [Security.Principal.WindowsIdentity]::GetCurrent().Name

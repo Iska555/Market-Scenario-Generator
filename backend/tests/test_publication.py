@@ -174,7 +174,7 @@ def test_http_owner_boundary_anonymous_download_withdrawal_and_release_mode(
         assert client.get(path).status_code == 401
     monkeypatch.setenv("PUBLIC_RELEASE_MODE", "1")
     for path in ("/api/simulate", "/api/simulate-portfolio"):
-        assert client.post(path, json={}).status_code == 401
+        assert client.post(path, json={}).status_code == 422
         assert (
             client.post(
                 path, json={}, headers={"X-Research-Key": "synthetic-owner-key-for-research-tests"}
@@ -182,7 +182,7 @@ def test_http_owner_boundary_anonymous_download_withdrawal_and_release_mode(
             == 422
         )
     assert client.get("/api/public/demo").status_code == 200
-    monkeypatch.setenv("ENABLE_PRIVATE_SIMULATIONS", "0")
+    monkeypatch.setenv("ENABLE_MARKET_SIMULATIONS", "0")
     assert (
         client.post(
             "/api/simulate",

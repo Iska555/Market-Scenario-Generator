@@ -247,7 +247,7 @@ def test_http_failures_and_build_identity_are_explicit(
     )
 
 
-def test_release_preflight_and_rejected_access_keep_cors(
+def test_release_public_simulations_keep_private_records_protected(
     client: TestClient, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setenv("PUBLIC_RELEASE_MODE", "1")
@@ -264,20 +264,21 @@ def test_release_preflight_and_rejected_access_keep_cors(
     )
     assert preflight.status_code == 200
     assert preflight.headers["access-control-allow-origin"] == origin
-    rejected = client.post(
-        "/api/simulate-portfolio", json=request_body(), headers={"Origin": origin}
+    public = client.post("/api/simulate-portfolio", json=request_body(), headers={"Origin": origin})
+    assert public.status_code == 200
+    assert public.headers["access-control-allow-origin"] == origin
+    assert public.headers["cache-control"] == "no-store"
+    assert public.headers["content-encoding"] == "gzip"
+    single = client.post(
+        "/api/simulate",
+        json={"ticker": "AAA", "drift_model": "zero_log_drift", "num_paths": 100, "horizon": 5},
     )
-    assert rejected.status_code == 401
-    assert rejected.headers["access-control-allow-origin"] == origin
-    assert rejected.headers["cache-control"] == "no-store"
-    monkeypatch.setenv("ENABLE_PRIVATE_SIMULATIONS", "1")
-    accepted = client.post(
-        "/api/simulate-portfolio",
-        json=request_body(),
-        headers={"X-Research-Key": "synthetic-release-test-key-123456789"},
-    )
-    assert accepted.status_code == 200
-    assert accepted.headers["content-encoding"] == "gzip"
+    assert single.status_code == 200
+    private = client.get("/api/research/securities", headers={"Origin": origin})
+    assert private.status_code == 401
+    assert private.headers["access-control-allow-origin"] == origin
+    monkeypatch.setenv("ENABLE_MARKET_SIMULATIONS", "0")
+    assert client.post("/api/simulate-portfolio", json=request_body()).status_code == 503
 
 
 def test_release_refuses_overlapping_tensor_work_and_recovers(

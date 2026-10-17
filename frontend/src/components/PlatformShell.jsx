@@ -22,7 +22,7 @@ export default function PlatformShell({ activeWorkspace, onNavigate, isDark, onT
       <a className="platform-skip-link" href="#workspace-content">Skip to workspace</a>
       <aside className="platform-sidebar">
         <div className="platform-identity">
-          <a href="/" className="platform-brand" aria-label="Portfolio Management home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 21V11h5v10zm8 0V6h5v15zm8 0V1h5v20z" fill="currentColor" /></svg><span>Portfolio<br />Management</span></a>
+          <a href="/" className="platform-brand" aria-label="Portfolio Management home">Portfolio<br />Management</a>
         </div>
         <button className="platform-mobile-menu" type="button" aria-controls="workspace-navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={16} aria-hidden="true" /> : <Menu size={16} aria-hidden="true" />} Workspaces</button>
         <nav id="workspace-navigation" className={`platform-navigation ${menuOpen ? 'is-open' : ''}`} aria-label="Workspace navigation">
@@ -52,7 +52,7 @@ export default function PlatformShell({ activeWorkspace, onNavigate, isDark, onT
         </div>
       </aside>
       <main className="platform-main" id="workspace-content" tabIndex={-1}>
-        <PrivateWorkspaceControl />
+        {['single', 'portfolio'].includes(activeWorkspace) ? <div className="workspace-access"><div className="workspace-access-status"><span>No sign-in required</span><div className="workspace-access-actions"><a href="/demo">View demonstration ↗</a><button type="button" onClick={() => onNavigate('overview')}>Private workspace</button></div></div></div> : <PrivateWorkspaceControl />}
         <header className="platform-page-header">
           <p className="platform-eyebrow">{current.group}</p>
           <h1>{current.title}</h1>

@@ -44,7 +44,6 @@ function SessionContents() {
 }
 
 function PortfolioPlatformContent({ activeTab, setActiveTab, theme, setTheme }) {
-  const { session, connected } = usePrivateSession();
   const [ticker, setTicker] = useState('');
   const [portfolioAssets, setPortfolioAssets] = useState([
     { ticker: '', weight: '' },
@@ -76,14 +75,13 @@ function PortfolioPlatformContent({ activeTab, setActiveTab, theme, setTheme }) 
   };
 
   const runSingle = async () => {
-    if (!connected) { session.requestAccess(); return; }
     requests.current.single?.abort();
     const controller = new AbortController();
     requests.current.single = controller;
     setLoading((current) => ({ ...current, single: true }));
     setErrors((current) => ({ ...current, single: null }));
     try {
-      const result = await session.authorize(key => postScenario(API_URL, '/api/simulate', buildSingleRequest(ticker, singleAssumptions), key, { signal: controller.signal }));
+      const result = await postScenario(API_URL, '/api/simulate', buildSingleRequest(ticker, singleAssumptions), { signal: controller.signal });
       if (!controller.signal.aborted) setSingleResult(result);
     } catch (requestError) {
       if (!controller.signal.aborted) setErrors((current) => ({ ...current, single: requestError.message }));
@@ -93,7 +91,6 @@ function PortfolioPlatformContent({ activeTab, setActiveTab, theme, setTheme }) 
   };
 
   const runPortfolio = async () => {
-    if (!connected) { session.requestAccess(); return; }
     requests.current.portfolio?.abort();
     const controller = new AbortController();
     requests.current.portfolio = controller;
@@ -101,7 +98,7 @@ function PortfolioPlatformContent({ activeTab, setActiveTab, theme, setTheme }) 
     setErrors((current) => ({ ...current, portfolio: null }));
     try {
       const request = buildPortfolioRequest(portfolioAssets, portfolioAssumptions);
-      const result = await session.authorize(key => postScenario(API_URL, '/api/simulate-portfolio', request, key, { signal: controller.signal }));
+      const result = await postScenario(API_URL, '/api/simulate-portfolio', request, { signal: controller.signal });
       if (!controller.signal.aborted) setPortfolioResult(result);
     } catch (requestError) {
       if (!controller.signal.aborted) setErrors((current) => ({ ...current, portfolio: requestError.message }));
@@ -130,8 +127,6 @@ function PortfolioPlatformContent({ activeTab, setActiveTab, theme, setTheme }) 
               onRun={runSingle}
               loading={loading.single}
               isDark={isDark}
-              connected={connected}
-              onUnlock={() => session.requestAccess()}
             />
             {singleResult && <ScenarioResults result={singleResult} mode="single" isDark={isDark} />}
           </>
@@ -150,8 +145,6 @@ function PortfolioPlatformContent({ activeTab, setActiveTab, theme, setTheme }) 
               onRun={runPortfolio}
               loading={loading.portfolio}
               isDark={isDark}
-              connected={connected}
-              onUnlock={() => session.requestAccess()}
             />
             {portfolioResult && <ScenarioResults result={portfolioResult} mode="portfolio" isDark={isDark} />}
           </>

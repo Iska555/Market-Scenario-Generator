@@ -5,3 +5,5 @@ backend/tests/fixtures/french_developed_daily/excerpt.csv -text -whitespace
 docs/verification/launch-*/** -text -whitespace
 docs/verification/usability-2026-10-17/** -text -whitespace
 backend/demo/** -text -whitespace
+
+docs/verification/public-risk-results-2026-10-17/** -text -whitespace

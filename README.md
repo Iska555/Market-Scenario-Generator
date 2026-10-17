@@ -6,9 +6,9 @@ Portfolio Management connects the work that usually lives across spreadsheets, b
 
 [Open the platform](https://stochastic-market-simulator.fly.dev/) · [Explore the public demonstration](https://stochastic-market-simulator.fly.dev/demo) · [Methodology](docs/METHODOLOGY.md)
 
-![Portfolio Management workspace](docs/verification/usability-2026-10-17/overview-desktop.png)
+![Portfolio Management workspace](docs/verification/public-risk-results-2026-10-17/overview-desktop.png)
 
-The public demonstration uses **fictional securities, synthetic transactions and synthetic prices. No real money is invested.** It illustrates the workflow; it is not a verified personal track record. The private workspace belongs to the site operator and requires an owner key. There is no public account registration or connected brokerage account.
+The public demonstration uses **fictional securities, synthetic transactions and synthetic prices. No real money is invested.** It illustrates the workflow; it is not a verified personal track record. The Single-asset and Portfolio Risk Labs work without a key. Saved portfolios and research belong to the site operator and require an owner key. There is no public account registration or connected brokerage account.
 
 ## What it helps you do
 
@@ -35,7 +35,7 @@ The demonstration has a deliberately short sample period. Missing measurements s
 
 ## Workspace guide
 
-The platform has nine workspaces. Unlock once to use the private modules; the connection is shared across tabs.
+The platform has nine workspaces. Both Risk Labs are public and require no key. Unlock once to use saved accounts and research; that private connection is shared across the other tabs.
 
 | Workspace | What you can do | Start with |
 | --- | --- | --- |
@@ -72,7 +72,9 @@ For a ticker-based scenario, open **Portfolio Risk Lab**:
 5. Open **Advanced settings** to change path count, seed, confidence, risk-free rate, covariance estimator or rebalancing.
 6. Run the scenarios. Review the distribution, tail losses and drawdowns alongside the assumptions and data dates.
 
-Prices are cached in the running service for one hour. A repeated run can reuse downloaded history. One hosted simulation runs at a time to fit the small deployment; a busy response asks you to retry. Large requests are rejected before allocating simulation tensors. Market-data availability and host wake-up time can affect the first run.
+The result report groups the main risk measures above supporting ratios. In the path chart, choose a **Focus trace** for its tooltip value, drag the range handles to zoom, or use their arrow-key controls. **Show full sample** expands the visible traces. These display controls do not recalculate statistics. The distribution chart shows full-population counts, with restrained loss/gain colours and exact bin ranges in tooltips. The percentile table highlights the median; portfolio results also include signed volatility contributions and a correlation heatmap. Chart transitions respect reduced-motion preferences.
+
+Prices are cached in the running service for one hour. A repeated run can reuse downloaded history. The public Risk Labs share a limit of 12 requests per minute and one active simulation to fit the small deployment; a busy response asks you to retry. Large requests are rejected before allocating simulation tensors. Market-data availability and host wake-up time can affect the first run.
 
 **These are conditional scenarios, not price targets or forecasts.** The default uses zero mean log return, which does not imply zero expected simple return. The valuation currency labels outputs; it does not perform FX conversion. Changing a saved valuation view does not automatically change simulation drift.
 
@@ -90,7 +92,7 @@ Inspect drawdowns, calendar periods and contributions before returning to **Thes
 
 ## Private workspace access
 
-The hosted private modules are for the operator, not a public multi-user service. Click **Unlock private workspace**, paste the owner key and choose **Unlock workspace**. It is not a broker password or a market-data API key.
+The Risk Labs do not require sign-in or a key. Saved accounts, research and publication controls are for the operator, not a public multi-user service. Click **Unlock private workspace**, paste the owner key and choose **Unlock workspace**. It is not a broker password or a market-data API key.
 
 The key remains in the current tab's memory. Locking or refreshing clears the connection and unsaved private work; saved server records remain. A key is never embedded in the public frontend or demonstration download.
 

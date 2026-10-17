@@ -23,7 +23,7 @@ const muted = (isDark) => isDark ? 'text-slate-400' : 'text-slate-500';
 
 export default function SimulationConfig({
   mode, ticker, setTicker, assets, setAssets, updateAsset, totalWeight,
-  normalizeWeights, assumptions, setAssumptions, onRun, loading, isDark, connected = true, onUnlock,
+  normalizeWeights, assumptions, setAssumptions, onRun, loading, isDark,
 }) {
   const [customWindow, setCustomWindow] = useState(estimationWindowPreset(assumptions.years) === 'custom');
   const updateAssumption = (field, value) => setAssumptions((current) => ({ ...current, [field]: value }));
@@ -135,8 +135,7 @@ export default function SimulationConfig({
         <p className={`mt-4 text-xs ${muted(isDark)}`}>Request capacity: {Number.isFinite(simulationCells) ? simulationCells.toLocaleString() : 'invalid'} of {MAX_SIMULATION_CELLS.toLocaleString()} path × horizon × asset cells.</p>
       </details>
 
-      {!connected && <div className="scenario-unlock"><p>Simulations require owner access.</p><button type="button" onClick={onUnlock}>Unlock private workspace →</button></div>}
-      <button type="button" onClick={onRun} disabled={!connected || loading || !weightsValid || !identifiersValid || !sizeValid}
+      <button type="button" onClick={onRun} disabled={loading || !weightsValid || !identifiersValid || !sizeValid}
         className={`mt-6 flex w-full items-center justify-center gap-3 rounded-xl px-8 py-4 font-bold shadow-lg disabled:cursor-not-allowed disabled:opacity-50 ${isDark ? 'bg-white text-slate-900' : 'bg-slate-900 text-white'}`}>
         {loading ? <RefreshCw className="h-5 w-5 animate-spin" /> : <Layers className="h-5 w-5" />}
         {loading ? 'Running conditional scenarios…' : 'Run conditional scenarios'}

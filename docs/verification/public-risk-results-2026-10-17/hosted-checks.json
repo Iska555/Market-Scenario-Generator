@@ -1,0 +1,140 @@
+[
+  {
+    "path": "/api/health",
+    "status": 200,
+    "seconds": 8.226,
+    "wire_bytes": 51,
+    "decoded_bytes": 33,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/ready",
+    "status": 200,
+    "seconds": 0.439,
+    "wire_bytes": 38,
+    "decoded_bytes": 18,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/research/securities",
+    "status": 401,
+    "seconds": 0.215,
+    "wire_bytes": 57,
+    "decoded_bytes": 37,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/accounting/portfolios",
+    "status": 401,
+    "seconds": 0.287,
+    "wire_bytes": 57,
+    "decoded_bytes": 37,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/publication/history",
+    "status": 401,
+    "seconds": 0.365,
+    "wire_bytes": 57,
+    "decoded_bytes": 37,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/simulate-portfolio",
+    "status": 422,
+    "seconds": 0.122,
+    "wire_bytes": 109,
+    "decoded_bytes": 150,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/simulate-portfolio",
+    "status": 200,
+    "seconds": 0.244,
+    "wire_bytes": 22,
+    "decoded_bytes": 2,
+    "encoding": "gzip",
+    "cache": null,
+    "cors": "https://stochastic-market-simulator.vercel.app"
+  },
+  {
+    "path": "/api/simulate",
+    "status": 200,
+    "seconds": 1.791,
+    "wire_bytes": 100629,
+    "decoded_bytes": 207943,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/simulate-portfolio",
+    "status": 200,
+    "seconds": 1.14,
+    "wire_bytes": 101011,
+    "decoded_bytes": 208135,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/simulate-portfolio",
+    "status": 200,
+    "seconds": 0.712,
+    "wire_bytes": 101011,
+    "decoded_bytes": 208135,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/simulate",
+    "status": 200,
+    "seconds": 1.021,
+    "wire_bytes": 269822,
+    "decoded_bytes": 558838,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/public/demo",
+    "status": 200,
+    "seconds": 0.207,
+    "wire_bytes": 4564,
+    "decoded_bytes": 16599,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/public/demo/history",
+    "status": 200,
+    "seconds": 0.157,
+    "wire_bytes": 182,
+    "decoded_bytes": 226,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "no_owner_key_used": true,
+    "private_records_reject_anonymous": true,
+    "repeat_portfolio_byte_identical": true,
+    "maximum_cells": 2000000,
+    "published_history_preserved": true,
+    "single_and_portfolio_typed_contracts": true
+  }
+]

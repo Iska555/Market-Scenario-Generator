@@ -19,6 +19,7 @@ from src.research.database import get_engine, postgres_url
 
 logger = logging.getLogger("uvicorn.error")
 BODY_LIMIT = 1_048_576
+SIMULATION_PATHS = frozenset(("/api/simulate", "/api/simulate-portfolio"))
 
 
 class ReleaseLimits:
@@ -27,6 +28,7 @@ class ReleaseLimits:
     def __init__(self, app: ASGIApp) -> None:
         self.app = app
         self.public_calls: deque[float] = deque()
+        self.simulation_calls: deque[float] = deque()
         self.active = 0
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
@@ -35,13 +37,27 @@ class ReleaseLimits:
             return
         path = scope["path"]
         category = (
-            "public"
+            "simulation"
+            if path in SIMULATION_PATHS
+            else "public"
             if path.startswith("/api/public/") or path == "/api/ready"
             else "private"
             if path.startswith("/api/")
             else "static"
         )
         started = time.monotonic()
+        if path in SIMULATION_PATHS and scope["method"] == "POST":
+            while self.simulation_calls and self.simulation_calls[0] < started - 60:
+                self.simulation_calls.popleft()
+            if len(self.simulation_calls) >= 12:
+                retry = max(1, int(60 - (started - self.simulation_calls[0])) + 1)
+                await JSONResponse(
+                    {"detail": "Risk Lab request limit reached. Please retry shortly."},
+                    status_code=429,
+                    headers={"Retry-After": str(retry), "Cache-Control": "no-store"},
+                )(scope, receive, send)
+                return
+            self.simulation_calls.append(started)
         # All public queries share one rolling budget, regardless of supplied IP headers.
         if category == "public":
             while self.public_calls and self.public_calls[0] < started - 60:

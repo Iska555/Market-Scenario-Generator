@@ -28,7 +28,6 @@ from src.public_track_record.preview_routes import router as preview_router
 from src.public_track_record.publication_routes import owner_router, public_router
 from src.public_track_record.routes import router as identity_router
 from src.release import frontend_file, install_release
-from src.research.database import require_research_access
 from src.research.routes import router as research_router
 from src.research.thesis.routes import router as thesis_router
 from src.risk.scenarios.historical_routes import router as historical_router
@@ -68,21 +67,15 @@ async def factor_private_cache(request: Request, call_next: RequestResponseEndpo
             "/api/simulate-portfolio",
         )
     ):
-        try:
-            require_research_access(request.headers.get("X-Research-Key"))
-        except HTTPException as exc:
-            return JSONResponse(
-                status_code=exc.status_code,
-                content={"detail": exc.detail},
-                headers={"Cache-Control": "no-store"},
-            )
-        if os.getenv("ENABLE_PRIVATE_SIMULATIONS") == "0":
+        if (
+            os.getenv("ENABLE_MARKET_SIMULATIONS", os.getenv("ENABLE_PRIVATE_SIMULATIONS", "1"))
+            == "0"
+        ):
             return JSONResponse(
                 status_code=503,
                 content={
                     "detail": (
-                        "Market-data simulations are unavailable on this bounded demo host. "
-                        "Use the private local workspace."
+                        "Market-data simulations are temporarily unavailable. Please retry later."
                     )
                 },
                 headers={"Cache-Control": "no-store"},
