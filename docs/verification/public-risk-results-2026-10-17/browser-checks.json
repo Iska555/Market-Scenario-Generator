@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-17",
+  "fly": {
+    "anonymousPortfolio": "NVDA/AAPL/MSFT 40/40/20; 5 years; 365 periods; 1000 paths; Joint GMM",
+    "traceSelection": true,
+    "fullSampleShows30Traces": true,
+    "percentileTableUnchangedByDisplayControls": true,
+    "keyboardRangeZoom": true,
+    "desktopViewport": [
+      1600,
+      1000
+    ],
+    "mobileViewport": [
+      390,
+      844
+    ],
+    "mobileClientWidth": 375,
+    "mobileDocumentWidth": 375,
+    "mobileDarkTheme": true,
+    "decorativeResultIcons": 0,
+    "brandIcons": 0,
+    "alerts": 0
+  },
+  "vercel": {
+    "anonymousSingle": "NVDA; 3 years; 252 periods; 1000 paths; Gaussian",
+    "anonymousPortfolio": "NVDA/AAPL/MSFT 40/40/20; 5 years; 365 periods; 1000 paths; Joint GMM",
+    "consoleErrors": 0,
+    "alerts": 0
+  },
+  "fonts": {
+    "headings": "Georgia, Times New Roman, serif; regular 400",
+    "body": "Inter/system sans",
+    "desktopH1Px": 32,
+    "mobileH1Px": 26
+  },
+  "reducedMotion": "Implemented using matchMedia subscription; local browser preference was false. No reduced-motion emulation acceptance claimed.",
+  "credentialsEntered": false
+}

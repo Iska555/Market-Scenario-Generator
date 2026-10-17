@@ -1,0 +1,10 @@
+{
+  "release_code_commit": "443957f3b03213f7056727b25cf879989d332b6e",
+  "checks": [
+    {
+      "name": "Vercel",
+      "state": "success",
+      "target_url": "https://vercel.com/iska555s-projects/market-scenario-generator/495DWKK2E9Cf2Acm23T8CDVzzozw"
+    }
+  ]
+}

@@ -817,3 +817,25 @@ Owner-authorized source publication completed through a normal fast-forward push
 Owner requested repair of hosted simulations/private access, a feature-led user README and a stronger, less wordy interface. Fixed authentication/CORS preflight handling, same-origin Vercel proxy routing and the disabled hosted simulation profile. One active simulation and bounded memory preserve the existing small host. Recovered the existing owner key locally with current-user file permissions; no key is published. Rewrote the README around the nine workspaces and practical workflows, enlarged the product identity, added mobile navigation and removed personal planned-account defaults/slogans.
 
 790 backend / 178 frontend tests, zero skips, 97.25%; all ten local checks and hosted frontend/Python 3.12/3.14 CI passed. The exact three-asset joint-GMM example works in both live browser deployments; measured repeat API request 0.559 s, with cold-start limitations disclosed. Fresh local restore of the retained production synthetic backup matched 14 tables. Original public version/content/history and all historical records remain preserved. See USABILITY_REPAIR_2026-10-17.md and its dated evidence. L6.2 actual saved production browser JSON remains open; no real account, paper programme or advanced analytics acceptance is inferred.
+
+
+## 2026-10-17 — public Risk Labs and institutional results accepted
+
+Owner explicitly requested that neither ticker-based Risk Lab require an owner key,
+a text-only wordmark, regular serif headings at moderate sizes and an institutional
+results report without decorative icons. Implemented anonymous stateless simulations
+with a shared 12-attempt/minute budget, one active workload and the existing memory
+bound; all saved records and publication controls remain owner-protected. This is
+a prospective exception to the earlier owner-only simulation policy, not a rewrite
+of that historical acceptance.
+
+Compact metrics, trace selection, keyboard/range zoom, exact histogram tooltips,
+restrained signed colours, median emphasis and a signed correlation heatmap preserve
+all backend calculations and the full-population/sample distinction. 791 backend /
+178 frontend, zero skips, 97.26%; all ten local checks, frontend/Python 3.12/3.14 hosted
+CI, and actual anonymous Fly/Vercel browser checks passed. Both live sites run the
+updated release. Retained source/runtime identities, 509 previous records and the
+unchanged synthetic publication/history. No extra permanent resource or database
+change. See PUBLIC_RISK_RESULTS_ACCEPTANCE_2026-10-17.md and its dated evidence.
+Next L6.2 actual saved production JSON inspection remains open; no new broker,
+paper programme, advanced analytics or verified personal record is claimed.

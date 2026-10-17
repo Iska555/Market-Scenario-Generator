@@ -1,7 +1,7 @@
 # Approved public research launch plan
 
 Approved by the owner: **2026-10-13**. Initial planning baseline: **`fb11200`**.
-Status: **L1-L5 accepted; production live; simulation/access/UI/README repair accepted 2026-10-17; L6 saved-download check open**.
+Status: **L1-L5 accepted; production live; public Risk Labs and results/typography repair accepted 2026-10-17; L6 saved-download check open**.
 Next task: **L6.2 — inspect the browser-saved production JSON, then record final launch acceptance**.
 
 ## Handoff for every continuing agent
@@ -94,9 +94,12 @@ knew or decided at that historical date.
 
 ### Public experience and data boundaries
 
-- Public visitors can read published snapshots, methodology and sanitized downloads.
-  They cannot edit portfolios, unlock owner tools, trigger unrestricted calculations
-  or access private drafts. The existing private workspace continues to work.
+- Public visitors can read published snapshots, methodology and sanitized downloads,
+  and run the two bounded stateless ticker-based Risk Labs without an owner key
+  (owner-requested amendment 2026-10-17). They cannot edit portfolios, unlock owner
+  tools, trigger unrestricted calculations or access private drafts. Saved records
+  and publication remain owner-protected. See the new dated acceptance record:
+  [Public Risk Labs and results](docs/PUBLIC_RISK_RESULTS_ACCEPTANCE_2026-10-17.md).
 - Display **Demonstration portfolio — synthetic data; no real money invested**
   prominently and include the mode in chart context, downloads and share metadata.
   Show sample period, base currency, valuation convention and snapshot/data dates.
@@ -133,7 +136,7 @@ Update this table as work proceeds. A completion entry must link to dated eviden
 | L3 — public presentation | Accepted locally 2026-10-14 | Allowlisted synthetic preview, performance, holdings, closed loss and research. | [L3 audit](docs/LAUNCH_L3_AUDIT.md) |
 | L4 — controlled publication | Accepted locally 2026-10-14 | Deliberate preview, immutable versions, disclosed correction/withdrawal and actual public download. | [L4 audit](docs/LAUNCH_L4_AUDIT.md) |
 | L5 — operations and staging | Accepted 2026-10-16 | Actual saved staging download closes hosted replay/restore/rollback/privacy and bounded-controls gates. | [L5 audit](docs/LAUNCH_L5_AUDIT.md) |
-| L6 — release acceptance | Production live; final saved-browser-file check open | Separate production demo, fresh full gate, HTTPS/privacy/browser/restart/backup/replay and temporary compute cleanup passed. | [Production progress](docs/LAUNCH_L6_PROGRESS_2026-10-16.md) |
+| L6 — release acceptance | Production live; final saved-browser-file check open | Separate production demo, fresh full gate, HTTPS/privacy/browser/restart/backup/replay and temporary compute cleanup passed. | [Production progress](docs/LAUNCH_L6_PROGRESS_2026-10-16.md); [public Risk Labs/results repair](docs/PUBLIC_RISK_RESULTS_ACCEPTANCE_2026-10-17.md) |
 
 Stages are ordered. L3 uses safe fixture-backed previews until L4's publication
 boundary is accepted; it must not expose the private database to anonymous readers.
@@ -480,6 +483,7 @@ These are not initial demo launch blockers and remain **unfinished**:
 - **2026-10-16:** owner requested public GitHub source publication. Repository already public; prepared a fast-forward main update with credential/history/archive review and private artifact exclusions. See docs/GITHUB_PUBLICATION_2026-10-16.md. The L6.2 saved-production-browser-file check remains the next unfinished release acceptance step.
 - **2026-10-16:** public GitHub source publication verified. Normal fast-forward main push reached a28fb314dff7b8c3d84389ec0c2958c23bc100a9; unauthenticated API confirmed public visibility and matching main. Ruff/format/mypy commit hooks passed. Hosted Actions was queued at verification, not yet accepted. See docs/GITHUB_PUBLICATION_ACCEPTANCE_2026-10-16.md. Next release task remains L6.2 saved-production-browser-file inspection.
 - **2026-10-17:** accepted the owner-requested simulation/access/product repair. Fixed preflight/CORS and same-origin Vercel routing; enabled bounded owner simulations on the existing host; recovered local owner access; rewrote the README and refreshed the UI. Local 790 backend / 178 frontend, zero skips, 97.25%; all ten checks and hosted Python 3.12/3.14/frontend CI passed. Exact reported browser simulation works on Fly and Vercel; retained synthetic backup freshly restores with all 14 tables matching. Public version/history unchanged. See docs/USABILITY_REPAIR_2026-10-17.md. Next unfinished launch step remains L6.2 saved-production-browser-file inspection.
+- **2026-10-17:** accepted the owner-requested public Risk Labs and institutional results/typography repair. Both ticker-based Risk Labs work anonymously; saved records stay owner-protected. Public simulations share 12 attempts/minute, one active calculation and the existing memory bound. Text-only regular-serif wordmark/headings, compact metrics, trace selection/range zoom, precise histogram tooltips, median table and signed correlation heatmap replace decorative results icons. All ten local checks passed: 791 backend / 178 frontend, zero skips, 97.26%; hosted frontend/Python 3.12/3.14 CI and actual Fly/Vercel browser checks passed. Exact runtime/source identity retained; 509 earlier records and the synthetic publication/history preserved. See docs/PUBLIC_RISK_RESULTS_ACCEPTANCE_2026-10-17.md. Next unfinished launch step remains L6.2 saved-production-browser-file inspection.
 - On each continuation, inspect Git status and the latest audit first. Update the
   stage table, record the next exact step and append a dated change-log entry.
   Preserve existing uncommitted work, including these planning files. Do not

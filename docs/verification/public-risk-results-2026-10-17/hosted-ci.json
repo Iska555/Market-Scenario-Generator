@@ -1,0 +1,21 @@
+{
+  "release_code_commit": "443957f3b03213f7056727b25cf879989d332b6e",
+  "run_url": "https://github.com/Iska555/Market-Scenario-Generator/actions/runs/39067510336",
+  "jobs": [
+    {
+      "name": "backend (3.14)",
+      "conclusion": "success",
+      "url": "https://github.com/Iska555/Market-Scenario-Generator/actions/runs/39067510336/job/117498120245"
+    },
+    {
+      "name": "frontend",
+      "conclusion": "success",
+      "url": "https://github.com/Iska555/Market-Scenario-Generator/actions/runs/39067510336/job/117498120412"
+    },
+    {
+      "name": "backend (3.12)",
+      "conclusion": "success",
+      "url": "https://github.com/Iska555/Market-Scenario-Generator/actions/runs/39067510336/job/117498120426"
+    }
+  ]
+}

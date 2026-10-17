@@ -1,0 +1,9 @@
+{
+  "publishable_files": 825,
+  "zip_members": 2668,
+  "history_blobs": 944,
+  "scanned_bytes": 45883811,
+  "actual_owner_keys_checked": 2,
+  "findings": [],
+  "scope": "Targeted credential patterns and exact protected owner-key values, including ZIP members and all reachable Git blobs; not a universal secret-detection guarantee."
+}
