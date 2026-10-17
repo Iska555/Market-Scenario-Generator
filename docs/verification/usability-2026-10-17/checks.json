@@ -1,0 +1,59 @@
+{
+  "checks": [
+    {
+      "check": "dependencies",
+      "exit_code": 0,
+      "seconds": 1.3240487
+    },
+    {
+      "check": "backend",
+      "exit_code": 0,
+      "seconds": 119.5277526
+    },
+    {
+      "check": "ruff",
+      "exit_code": 0,
+      "seconds": 0.2441897
+    },
+    {
+      "check": "format",
+      "exit_code": 0,
+      "seconds": 0.22142
+    },
+    {
+      "check": "mypy",
+      "exit_code": 0,
+      "seconds": 3.1657849
+    },
+    {
+      "check": "hooks",
+      "exit_code": 0,
+      "seconds": 3.3112014
+    },
+    {
+      "check": "benchmark",
+      "exit_code": 0,
+      "seconds": 5.4651384
+    },
+    {
+      "check": "frontend",
+      "exit_code": 0,
+      "evidence": "frontend.txt"
+    },
+    {
+      "check": "lint",
+      "exit_code": 0,
+      "evidence": "lint.txt"
+    },
+    {
+      "check": "build",
+      "exit_code": 0,
+      "evidence": "build.txt"
+    }
+  ],
+  "backend_tests": 790,
+  "frontend_tests": 178,
+  "skips": 0,
+  "coverage_percent": 97.25,
+  "frontend_note": "Final rerun after copy/encoding changes; initial stale copy assertions were updated to the new unlock action. No backend source change after its full pass."
+}

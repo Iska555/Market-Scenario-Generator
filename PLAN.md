@@ -1,7 +1,7 @@
 # Approved public research launch plan
 
 Approved by the owner: **2026-10-13**. Initial planning baseline: **`fb11200`**.
-Status: **L1–L5 accepted; production deployed/published; L6 final saved-download check open (2026-10-16)**.
+Status: **L1-L5 accepted; production live; simulation/access/UI/README repair accepted 2026-10-17; L6 saved-download check open**.
 Next task: **L6.2 — inspect the browser-saved production JSON, then record final launch acceptance**.
 
 ## Handoff for every continuing agent
@@ -479,6 +479,7 @@ These are not initial demo launch blockers and remain **unfinished**:
 - **2026-10-16:** production now serves the accepted pinned image and its own first synthetic version 51b34ac3-3c73-43b6-b4f8-253eb70ba7a5. Fresh L6 gate: 788 backend / 174 frontend, zero skips, 97.24%, ten exits 0. Production backup/local restore/replays, restart, public/private and responsive browser checks passed; temporary Fly staging compute removed after archival. L6 saved-production-browser-file inspection remains open. See LAUNCH_L6_PROGRESS_2026-10-16.md; do not repeat creation/publication or rewrite prior records.
 - **2026-10-16:** owner requested public GitHub source publication. Repository already public; prepared a fast-forward main update with credential/history/archive review and private artifact exclusions. See docs/GITHUB_PUBLICATION_2026-10-16.md. The L6.2 saved-production-browser-file check remains the next unfinished release acceptance step.
 - **2026-10-16:** public GitHub source publication verified. Normal fast-forward main push reached a28fb314dff7b8c3d84389ec0c2958c23bc100a9; unauthenticated API confirmed public visibility and matching main. Ruff/format/mypy commit hooks passed. Hosted Actions was queued at verification, not yet accepted. See docs/GITHUB_PUBLICATION_ACCEPTANCE_2026-10-16.md. Next release task remains L6.2 saved-production-browser-file inspection.
+- **2026-10-17:** accepted the owner-requested simulation/access/product repair. Fixed preflight/CORS and same-origin Vercel routing; enabled bounded owner simulations on the existing host; recovered local owner access; rewrote the README and refreshed the UI. Local 790 backend / 178 frontend, zero skips, 97.25%; all ten checks and hosted Python 3.12/3.14/frontend CI passed. Exact reported browser simulation works on Fly and Vercel; retained synthetic backup freshly restores with all 14 tables matching. Public version/history unchanged. See docs/USABILITY_REPAIR_2026-10-17.md. Next unfinished launch step remains L6.2 saved-production-browser-file inspection.
 - On each continuation, inspect Git status and the latest audit first. Update the
   stage table, record the next exact step and append a dated change-log entry.
   Preserve existing uncommitted work, including these planning files. Do not

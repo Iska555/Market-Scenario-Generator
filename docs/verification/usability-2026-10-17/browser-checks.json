@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-17",
+  "fly": {
+    "recovered_owner_key_unlock": true,
+    "reported_three_asset_gmm_rendered": true,
+    "alert_elements": 0,
+    "results_clear_on_lock": true,
+    "refresh_clears_access": true,
+    "unlock_action_focuses_password_field": true,
+    "damaged_punctuation": false
+  },
+  "vercel": {
+    "original_reported_url": "https://stochastic-market-simulator.vercel.app/",
+    "recovered_owner_key_unlock_through_proxy": true,
+    "reported_three_asset_gmm_rendered": true,
+    "alert_elements": 0
+  },
+  "mobile": {
+    "viewport_width": 390,
+    "viewport_height": 844,
+    "document_client_width": 375,
+    "document_scroll_width": 375,
+    "responsive_menu_selects_workspace_and_closes": true,
+    "dark_theme_action_verified": true,
+    "results_remain_present": true
+  },
+  "screenshots": {
+    "overview-desktop.png": {
+      "width": 65536,
+      "height": 4292542531
+    },
+    "simulation-desktop.png": {
+      "width": 65536,
+      "height": 4292542531
+    },
+    "simulation-mobile.png": {
+      "width": 65536,
+      "height": 4292542531
+    },
+    "vercel-simulation.png": {
+      "width": 65536,
+      "height": 4292542531
+    },
+    "workspace-mobile-dark.png": {
+      "width": 65536,
+      "height": 4292542531
+    }
+  },
+  "credentials_in_screenshots": false
+}

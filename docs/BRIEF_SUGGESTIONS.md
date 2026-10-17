@@ -810,3 +810,10 @@ Owner requested making the project public and pushing the current work. GitHub a
 ## 2026-10-16 - public GitHub source push verified
 
 Owner-authorized source publication completed through a normal fast-forward push to main at a28fb314dff7b8c3d84389ec0c2958c23bc100a9. Unauthenticated GitHub API confirmed public visibility and the exact remote commit. Existing Ruff/format/mypy hooks passed; hosted CI was queued at verification. See GITHUB_PUBLICATION_ACCEPTANCE_2026-10-16.md. Private dumps/keys remain ignored and historical records preserved. L6.2 actual production browser-saved JSON inspection remains unfinished.
+
+
+## 2026-10-17 - simulation, access and product experience repair accepted
+
+Owner requested repair of hosted simulations/private access, a feature-led user README and a stronger, less wordy interface. Fixed authentication/CORS preflight handling, same-origin Vercel proxy routing and the disabled hosted simulation profile. One active simulation and bounded memory preserve the existing small host. Recovered the existing owner key locally with current-user file permissions; no key is published. Rewrote the README around the nine workspaces and practical workflows, enlarged the product identity, added mobile navigation and removed personal planned-account defaults/slogans.
+
+790 backend / 178 frontend tests, zero skips, 97.25%; all ten local checks and hosted frontend/Python 3.12/3.14 CI passed. The exact three-asset joint-GMM example works in both live browser deployments; measured repeat API request 0.559 s, with cold-start limitations disclosed. Fresh local restore of the retained production synthetic backup matched 14 tables. Original public version/content/history and all historical records remain preserved. See USABILITY_REPAIR_2026-10-17.md and its dated evidence. L6.2 actual saved production browser JSON remains open; no real account, paper programme or advanced analytics acceptance is inferred.

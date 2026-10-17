@@ -1,0 +1,12 @@
+[
+  {
+    "status": 200,
+    "retry_after": null,
+    "seconds": 1.036
+  },
+  {
+    "status": 503,
+    "retry_after": "5",
+    "seconds": 0.239
+  }
+]

@@ -1,0 +1,108 @@
+[
+  {
+    "path": "/api/health",
+    "status": 200,
+    "seconds": 12.669,
+    "wire_bytes": 51,
+    "decoded_bytes": 33,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/ready",
+    "status": 200,
+    "seconds": 1.168,
+    "wire_bytes": 38,
+    "decoded_bytes": 18,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/simulate-portfolio",
+    "status": 401,
+    "seconds": 0.75,
+    "wire_bytes": 57,
+    "decoded_bytes": 37,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/simulate-portfolio",
+    "status": 200,
+    "seconds": 0.201,
+    "wire_bytes": 22,
+    "decoded_bytes": 2,
+    "encoding": "gzip",
+    "cache": null,
+    "cors": "https://stochastic-market-simulator.vercel.app"
+  },
+  {
+    "path": "/api/simulate",
+    "status": 200,
+    "seconds": 1.318,
+    "wire_bytes": 100575,
+    "decoded_bytes": 207986,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/simulate-portfolio",
+    "status": 200,
+    "seconds": 1.053,
+    "wire_bytes": 101064,
+    "decoded_bytes": 208082,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/simulate-portfolio",
+    "status": 200,
+    "seconds": 0.559,
+    "wire_bytes": 101064,
+    "decoded_bytes": 208082,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/simulate",
+    "status": 200,
+    "seconds": 0.951,
+    "wire_bytes": 269880,
+    "decoded_bytes": 558820,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/public/demo",
+    "status": 200,
+    "seconds": 0.198,
+    "wire_bytes": 4564,
+    "decoded_bytes": 16599,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "path": "/api/public/demo/history",
+    "status": 200,
+    "seconds": 0.134,
+    "wire_bytes": 182,
+    "decoded_bytes": 226,
+    "encoding": "gzip",
+    "cache": "no-store",
+    "cors": null
+  },
+  {
+    "repeat_portfolio_byte_identical": true,
+    "maximum_cells": 2000000,
+    "published_history_preserved": true,
+    "single_and_portfolio_typed_contracts": true
+  }
+]

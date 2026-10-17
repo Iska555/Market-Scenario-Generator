@@ -1,0 +1,34 @@
+{
+  "code_commit": "8e879d550d39f038c66bf348dd22e1b35d9f5bb8",
+  "ci": [
+    {
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Iska555/Market-Scenario-Generator/actions/runs/39065184305",
+      "id": 39065184305
+    }
+  ],
+  "vercel": [
+    {
+      "state": "success",
+      "url": "https://vercel.com/iska555s-projects/market-scenario-generator/Ucc6UtHUnSD2sDkhj5A9FjAfaPCh"
+    }
+  ],
+  "jobs": [
+    {
+      "name": "frontend",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "backend (3.14)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "backend (3.12)",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "checks": [
+    {
+      "path": "/api/health",
+      "status": 200,
+      "cache": "no-store",
+      "seconds": 0.311
+    },
+    {
+      "path": "/api/public/demo",
+      "status": 200,
+      "cache": "no-store",
+      "seconds": 0.261
+    },
+    {
+      "path": "/api/public/demo/history",
+      "status": 200,
+      "cache": "no-store",
+      "seconds": 0.268
+    }
+  ],
+  "public_history_preserved": true
+}
